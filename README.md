@@ -26,7 +26,7 @@ Run `maven site`
 
 ## Personal Development Plan
 
-![My Picture](https://user-images.githubusercontent.com/47633984/52824096-96489b80-30b7-11e9-9a02-bd7a8cedf661.jpg =25x75)
+![My Picture](https://user-images.githubusercontent.com/47633984/52824096-96489b80-30b7-11e9-9a02-bd7a8cedf661.jpg | width = 50)
 
 Strong points:
 - I am ambitious and in order to reach my goal I can study a lot
