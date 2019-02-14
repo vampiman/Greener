@@ -26,7 +26,7 @@ Run `maven site`
 
 ## Personal Development Plan
 
-<img src="https://user-images.githubusercontent.com/47633984/52824096-96489b80-30b7-11e9-9a02-bd7a8cedf661.jpg" width="100"/>
+<img src="https://user-images.githubusercontent.com/47633984/52824577-6601fc80-30b9-11e9-9d03-5eda021d9827.jpg" width="100"/>
 
 Strong points:
 - I am ambitious and in order to reach my goal I can study a lot
@@ -37,7 +37,7 @@ Weaker Points:
 - Sometimes, because of a high workload I can be stressed
 - I don’t think this is going to have an effect on the team
 
-![My Core Quadrant](https://user-images.githubusercontent.com/47633984/52824182-f63f4200-30b7-11e9-9186-03209eedabed.png)
+<img src="https://user-images.githubusercontent.com/47633984/52824182-f63f4200-30b7-11e9-9186-03209eedabed.png" width="100"/>
 
 ### G-Goal
 - Developing my java skills
