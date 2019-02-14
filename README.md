@@ -37,7 +37,7 @@ Weaker Points:
 - Sometimes, because of a high workload I can be stressed
 - I don’t think this is going to have an effect on the team
 
-<img src="https://user-images.githubusercontent.com/47633984/52824182-f63f4200-30b7-11e9-9186-03209eedabed.png" width="100"/>
+<img src="https://user-images.githubusercontent.com/47633984/52824182-f63f4200-30b7-11e9-9186-03209eedabed.png" width="500"/>
 
 ### G-Goal
 - Developing my java skills
