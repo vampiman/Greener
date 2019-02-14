@@ -37,7 +37,7 @@ Weaker Points:
 - Sometimes, because of a high workload I can be stressed
 - I don’t think this is going to have an effect on the team
 
-![Core quadrant location]()
+!My Core Quadrant](https://user-images.githubusercontent.com/47633984/52824182-f63f4200-30b7-11e9-9186-03209eedabed.png)
 
 ### G-Goal
 - Developing my java skills
@@ -52,7 +52,7 @@ This is my first project and we just started so I hope it goes well and adds a l
 ### O-Options
 The option I hope is finishing this project successfully and I think we are going to work efficiently as a group and at the end hopefully we will finish this project successfully with a good grade. 
 
-###W-Will
+### W-Will
 - I am going to work a lot in order to reach my goal and I am going to start right now for this. The first step I can take is making a plan with my group mates and then starting our project according to this plan
 - Action Plan:
 -- Determining the things which we are going to do
