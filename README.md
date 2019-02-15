@@ -110,6 +110,7 @@ The option I hope is finishing this project successfully and I think we are goin
 
 # Natalia Struharova (4935519, nstruharova)
 
+### <img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/11232123_821378501308705_164252636500004083_n.jpg?_nc_cat=109&_nc_ht=scontent-amt2-1.xx&oh=00662980269ef215ffc863494dcfeb6c&oe=5CE4D39B">
 
 ## Personal Development plan
 
