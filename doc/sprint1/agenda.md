@@ -3,6 +3,7 @@
 
 ## Opening
 > Here you check if everyone is present
+> Everyone was present
 
 ## Approval of the agenda
 > Make sure everything that needs to be discussed is in the agenda or add it if something is missing.
@@ -38,11 +39,11 @@
             - Gson
             - Jackson
         - SQL
+        - PostgreSQL
         - Plain text
     - GUI
         - JavaFX
     - IDE
-        - Eclipse
         - IntelliJ
 
 
