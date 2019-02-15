@@ -3,6 +3,7 @@
 
 ## Opening
 > Here you check if everyone is present
+
 > Everyone was present
 
 ## Approval of the agenda
