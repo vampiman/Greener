@@ -64,11 +64,11 @@ The option I hope is finishing this project successfully and I think we are goin
 
 # Jaron Rosenberg (4839641, jrosenberg)
 
-<img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/42417325_1352297734900788_1361717405511843840_n.jpg?_nc_cat=107&_nc_ht=scontent-amt2-1.xx&oh=8716ec977519897a0b009fce9e2feaae&oe=5CE432D9" width="120"/>
+<img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/42417325_1352297734900788_1361717405511843840_n.jpg?_nc_cat=107&_nc_ht=scontent-amt2-1.xx&oh=8716ec977519897a0b009fce9e2feaae&oe=5CE432D9" width="200"/>
 
 ## Personal Development Plan
 
-Strong points:
+### Strong points:
 -	Hard working.
 -	Like to take the lead.
 
@@ -83,7 +83,7 @@ Strong points:
 ### Core quadrant:
 ...
 
-Plan of action
+## Plan of action
 ### Goal:
 -	Learn to work with and as a team.
 -	Learn to e.g. read and test other people’s code.
