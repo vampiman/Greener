@@ -64,39 +64,43 @@ The option I hope is finishing this project successfully and I think we are goin
 
 # Jaron Rosenberg (4839641, jrosenberg)
 
-<img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/42417325_1352297734900788_1361717405511843840_n.jpg?_nc_cat=107&_nc_ht=scontent-amt2-1.xx&oh=8716ec977519897a0b009fce9e2feaae&oe=5CE432D9"/>
+<img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/42417325_1352297734900788_1361717405511843840_n.jpg?_nc_cat=107&_nc_ht=scontent-amt2-1.xx&oh=8716ec977519897a0b009fce9e2feaae&oe=5CE432D9" width="700"/>
 
 ## Personal Development Plan
 
 Strong points:
 -	Hard working.
 -	Like to take the lead.
-Examples:
+
+###Examples:
 -	Sending an e-mail out to create a WhatsApp group.
 -	Telling people what I think of something.
-How is shown in a team:
+
+###How is shown in a team:
 -	Usually positive when I give feedback.
 -	Can cause conflict when our opinions differ.
-Core quadrant:
 
-
-
+###Core quadrant:
+...
 
 Plan of action
-Goal:
+###Goal:
 -	Learn to work with and as a team.
 -	Learn to e.g. read and test other people’s code.
 -	This is important, since this is how companies run.
 -	This will be succeeded when we have a final result that we all worked on and can explain.
-Reality:
+
+###Reality:
 -	I’m doing my best to work well to reach that goal.
 -	So far my results are not bad. I’m working hard to pass as much as possible.
 -	I can improve my presentation skills.
-Options:
+
+###Options:
 -	Work as much as possible with my group.
 -	Try to be with the entire group at every lecture/group session.
 -	I can’t decide for others t show up.
-Will:
+
+###Will:
 -	I’ll try to actively give everyone a clear task in the group.
 -	During the week through WhatsApp and during the oopp group sessions.
 -	Make contact with everyone from my group.
