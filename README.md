@@ -174,3 +174,55 @@ I already started communicating with my team in order to set our general course 
 - I want to finish the project knowing that everyone did a great work and that I did a good job in assuring my teammates that my part has been done successfully.
 - I also want to see other people's style of working/coding in order to exchange skills and knowledge
 
+
+# Nick Ouwerkerk (4957032, nouwerkerk)
+
+## Personal Development Plan
+
+### Strong points:
+ - I like to stick to a schedule / I am structural.
+ - I am dedicated and like to make my work as perfect as possible.
+
+Examples:
+ - I usually make a (imaginary) schedule to plan parts of my day.
+ - I mostly am not happy with ‘good enough’, I’ll do my work until I’m personally satisfied with it and it adheres to my personal standards.
+
+How this point is shown in a team:
+ - If working in a team, I can stick to the schedule given to me and plan the work.
+ - I try to make my part of the work as I possibly can.
+
+### Weak points:
+ - Constant and clear communication.
+ - Spending to much time on one element when this is not needed.
+
+Examples
+ - I can have problems notifying about problems on time.
+ - I could spend hours on minor features whereas this time could probably be spent more wisely.
+
+How this point is shown in a team:
+ - In a team, communicating is extremely important for a good workflow. I should definitely improve on this front.
+ - Instead of spending to much time on my own work, I could try to help others.
+
+
+### G - Goal
+ - I want to improve my communication skills. I want to communicate more frequently and communicate about my current status in relation to the project. I would also like to improve the way I code when working with others.
+ - This is important to me because communication is key in such a large project, and since I have had problems with communication in the past which made project unnecessarily hard, I want to improve my communication skills to be able to make the project work. I do not have experience with coding in a team yet.
+ - I feel like I have achieved this goal when the project is done and the team has put out a product which we are satisfied with.
+
+### R – Reality
+ - 	I try to make my code as clear and readable as possible. For communication I try to clear and precise.
+ - 	My code is usually considered quite well-structured. One the other hand. My communication leaves a lot to be desired, but I seem to be considered good in explaining.
+ - 	I could add more comments to further explain the code. I could also communicate more often and be more concrete about the problems I am facing.
+
+### O – Options
+ - 	For communication I could be more pro-active with communicating which problems I am facing. For the code I could start making it a habit to add more comments.
+ - 	Definitely be more proactive, since if the problems are identified earlier, they are easier to solve.
+ -	Being a bit laid back when solving problems, waiting too long with trying to solve the problems I’m facing.
+
+### W - Will
+ - Look up examples of good code, get an idea of what ‘good code’ consists of. Also communicate more during meetings and not try to solve to much by myself.
+ - 	I am going to do this from the first meeting until the end of the project.
+ - 	At this moment, I can already express my thoughts towards the project.
+ - 	I definitely feel like these are problems that I have to solve myself. I can however take note of the coding style of my teammate and learn from this. 
+ - 	I do not think making an “action plan” would be helpful to achieve my goals. Since it are goals that are to be achieve every week and should not be ‘build up’ until the end of the project, I think it would be of much more help if I would evaluate every week if I feel like I communicated well enough and if there are points I could improve on.
+
