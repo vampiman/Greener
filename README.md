@@ -142,3 +142,89 @@ In terms of the server-side programming skill, I haven’t coded it from scratch
 ### Course of action 
 
 I already started communicating with my team in order to set our general course of action. In terms of server side programming, I already started my research on how to create a server and integrate its workings into the app. I hope to be able to maintain my well-balanced time management and, while this will be my priority alongside other subjects, work on my other projects as well.
+
+
+# Robert Mînea (4848993, rminea)
+
+<img src="https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/35476812_1970122483058968_6927082946167832576_n.jpg?_nc_cat=100&_nc_ht=scontent-ams3-1.xx&oh=ad9d096c72b9f03b8661e09477656f0b&oe=5CDFD1FD" width="400"/>
+
+## Personal Development Plan
+
+### Strong Points:
+- Obsession of finishing tasks/assignments as early as possible
+- Determined to work hard when having in mind the image of a final product that can be useful for me/others
+- I love learning/developing new skills
+
+### Weak Points:
+- I tend to avoid putting my trust in other people because I am afraid that they might negatively influence my work (on purpose or by mistake)
+- I usually follow the "cowboy coding" type of programming, without planning too much in advance
+
+### Goals:
+- Learn more about developing a project in a professional manner
+- Doing tests in a more extensive way, such that they are useful for the team, ensuring that the code is well done
+
+### Reality:
+- I am trying to switch to a more plan-oriented style of programming in order to work in a more organized manner, rather than going back and forth through the code to add details
+- I think that working in a team will contribute in switching to the style mentioned above
+
+### Options:
+- For now I am excited to work in a larger group since it will require more planning to maintain order, and it is exactly what I want for now, getting better in working in larger teams with many different people since I may encounter similar situations in my career.
+
+### Will:
+- I want to finish the project knowing that everyone did a great work and that I did a good job in assuring my teammates that my part has been done successfully.
+- I also want to see other people's style of working/coding in order to exchange skills and knowledge
+
+
+# Nick Ouwerkerk (4957032, nouwerkerk)
+
+<img src="/uploads/206bb69fb21553e2b8cb0a409cfd915a/foto_Nick.jpg" width = "200">
+
+## Personal Development Plan
+
+### Strong points:
+ - I like to stick to a schedule / I am structural.
+ - I am dedicated and like to make my work as perfect as possible.
+
+Examples:
+ - I usually make a (imaginary) schedule to plan parts of my day.
+ - I mostly am not happy with ‘good enough’, I’ll do my work until I’m personally satisfied with it and it adheres to my personal standards.
+
+How this point is shown in a team:
+ - If working in a team, I can stick to the schedule given to me and plan the work.
+ - I try to make my part of the work as I possibly can.
+
+### Weak points:
+ - Constant and clear communication.
+ - Spending to much time on one element when this is not needed.
+
+Examples
+ - I can have problems notifying about problems on time.
+ - I could spend hours on minor features whereas this time could probably be spent more wisely.
+
+How this point is shown in a team:
+ - In a team, communicating is extremely important for a good workflow. I should definitely improve on this front.
+ - Instead of spending to much time on my own work, I could try to help others.
+
+
+### G - Goal
+ - I want to improve my communication skills. I want to communicate more frequently and communicate about my current status in relation to the project. I would also like to improve the way I code when working with others.
+ - This is important to me because communication is key in such a large project, and since I have had problems with communication in the past which made project unnecessarily hard, I want to improve my communication skills to be able to make the project work. I do not have experience with coding in a team yet.
+ - I feel like I have achieved this goal when the project is done and the team has put out a product which we are satisfied with.
+
+### R – Reality
+ - 	I try to make my code as clear and readable as possible. For communication I try to clear and precise.
+ - 	My code is usually considered quite well-structured. One the other hand. My communication leaves a lot to be desired, but I seem to be considered good in explaining.
+ - 	I could add more comments to further explain the code. I could also communicate more often and be more concrete about the problems I am facing.
+
+### O – Options
+ - 	For communication I could be more pro-active with communicating which problems I am facing. For the code I could start making it a habit to add more comments.
+ - 	Definitely be more proactive, since if the problems are identified earlier, they are easier to solve.
+ -	Being a bit laid back when solving problems, waiting too long with trying to solve the problems I’m facing.
+
+### W - Will
+ - Look up examples of good code, get an idea of what ‘good code’ consists of. Also communicate more during meetings and not try to solve to much by myself.
+ - 	I am going to do this from the first meeting until the end of the project.
+ - 	At this moment, I can already express my thoughts towards the project.
+ - 	I definitely feel like these are problems that I have to solve myself. I can however take note of the coding style of my teammate and learn from this. 
+ - 	I do not think making an “action plan” would be helpful to achieve my goals. Since it are goals that are to be achieve every week and should not be ‘build up’ until the end of the project, I think it would be of much more help if I would evaluate every week if I feel like I communicated well enough and if there are points I could improve on.
+
