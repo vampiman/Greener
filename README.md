@@ -234,12 +234,12 @@ How this point is shown in a team:
 
 <img src="https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1609/avatar.png?width=400"/>
 
-###Strong points:
+### Strong points:
 - Communication.
 - Planning.
 - Self-motivation.
 
-###Week points:
+### Week points:
 - Taking too many risks.
 - impatience.
 - Public speaking.
