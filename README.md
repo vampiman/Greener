@@ -177,6 +177,8 @@ I already started communicating with my team in order to set our general course 
 
 # Nick Ouwerkerk (4957032, nouwerkerk)
 
+<img src="/uploads/206bb69fb21553e2b8cb0a409cfd915a/foto_Nick.jpg" width = "200">
+
 ## Personal Development Plan
 
 ### Strong points:
