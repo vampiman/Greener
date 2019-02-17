@@ -267,3 +267,37 @@ How this point is shown in a team:
 - During our team meeting and whenever I have a task to handin.
 - Try to communicate with my team meet as efficient as possible.
 - By speaking thier ideas and thoughts outload.
+
+# Lee Chen (4703812, lschen)
+![Lee](https://www.instagram.com/p/BtOmE1fgBWw/)
+
+## Personal Development Plan
+### What are two of my strong points?
+- I keep my promises.
+- I am excited to try out new thinks.
+I hope my team reflects me as a productive person. 
+
+### What are two of my weaker points?
+- My English is not the best.
+- I am not that creative.
+In a team they might think I am more of a lazy person in one of the first meetings.
+
+### G. goal
+I hope to learn how to work with new people and get inspiration from other people, 
+this is important to me because I am sometimes not capable of really expressing myself in a new environment. 
+I think I have achieved this goal when I don't feel nervous with big projects including new people. 
+Not only will this help me in my future career, but also in every day life.
+
+### R. reality
+I am trying to be more of a social person day by day, fortunatly I have met some nice people on campus, which are also my study partners.
+I talk less when I have to say things in English.
+
+### O. options
+I now have another chance to be more social in a new groups. Take my chances this time.
+The only think that holds is, I don't like to come out of my comfort zone.
+
+### W. Will
+To reach my goal I think I have to come up with usefull plans for my team, 
+brainstorm about new ideas for the project that is usefull for my teammates before a meeting starts.
+Right now I am going to spend my weekend learning Git. If I get stuck I can always ask my team for help.
+
