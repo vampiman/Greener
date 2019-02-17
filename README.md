@@ -228,3 +228,42 @@ How this point is shown in a team:
  - 	I definitely feel like these are problems that I have to solve myself. I can however take note of the coding style of my teammate and learn from this. 
  - 	I do not think making an “action plan” would be helpful to achieve my goals. Since it are goals that are to be achieve every week and should not be ‘build up’ until the end of the project, I think it would be of much more help if I would evaluate every week if I feel like I communicated well enough and if there are points I could improve on.
 
+## Mayasa Quacqess (4898109, mquacqess)
+
+## Personal Development Plan
+
+<img src="https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/1609/avatar.png?width=400"/>
+
+###Strong points:
+- Communication.
+- Planning.
+- Self-motivation.
+
+###Week points:
+- Taking too many risks.
+- impatience.
+- Public speaking.
+
+
+### G-Goal
+- Learn how to plan and execute a project within a team.
+- Getting used to writing code tests.
+- Develope my public speaking skills.
+
+
+### R-Reality:
+- Trying to communicate with my team mates.
+- As soon as we start coding I'll try my best to practice writing test for my code.
+- I'll make sure to finish my tasks on time and to communicate efficiently with my team mate. 
+ 
+
+### Options:
+- Collaborating with the team to meet the milestones we set.
+- Presenting our appliction during the demos.	
+
+
+### Will:
+- Spend enough time practicing the soft and hard skills needed to complete this project successfully.
+- During our team meeting and whenever I have a task to handin.
+- Try to communicate with my team meet as efficient as possible.
+- By speaking thier ideas and thoughts outload.
