@@ -230,7 +230,7 @@ How this point is shown in a team:
 
 provides my name, profile picture and personal development plan. 
 
-# Lee Chen (4703812, lchen)
+# Lee Chen (4703812, lschen)
 
 ![Lee](https://www.instagram.com/p/BtOmE1fgBWw/)
 
