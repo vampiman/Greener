@@ -103,7 +103,7 @@
 
     <modules>
         <module>modules/Client</module>
-        <!--<module>modules/RestServer</module>-->
+        <module>modules/Server</module>
     </modules>
 
 </project>
