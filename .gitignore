@@ -1,5 +1,8 @@
 # Maven ignores
 target/
+.idea/
+Client.iml
+Server.iml
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
