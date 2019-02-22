@@ -7,7 +7,7 @@
     <groupId>group-template</groupId>
     <artifactId>OOP-Project</artifactId>
     <version>0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>Starter OOPProject-Template</name>
 
     <properties>
@@ -100,5 +100,10 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <modules>
+        <module>modules/Client</module>
+        <!--<module>modules/RestServer</module>-->
+    </modules>
 
 </project>
