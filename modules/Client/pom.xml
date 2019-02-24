@@ -23,7 +23,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Client</mainClass>
+                            <mainClass>Restclient</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
