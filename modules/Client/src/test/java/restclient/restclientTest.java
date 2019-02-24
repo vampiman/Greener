@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 import static org.junit.Assert.*;
 
-public class restclientTest {
+public class RestclientTest {
 
 
     @Test
@@ -20,6 +20,6 @@ public class restclientTest {
 
         System.setIn(in);
 
-        assertEquals("test", restclient.getUserName());
+        assertEquals("test", Restclient.getUserName());
     }
 }

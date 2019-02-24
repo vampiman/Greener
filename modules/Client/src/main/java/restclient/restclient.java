@@ -6,25 +6,39 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 
 
-public class restclient {
+public class Restclient {
+
+    /**
+     * Method that asks for the name of the client.
+     *
+     * @return String with the username of the client
+     */
 
     public static String getUserName() {
         String username = null;
+        System.out.println("Please provide your username in order to connect:");
         Scanner sc = new Scanner(System.in);
 
         if (sc.hasNext()) {
             username = sc.nextLine();
         }
+
+        System.out.println("Welcome to Greenie, " + username + "!");
+
         return username;
     }
 
+
+    /**
+     * Main method that acts as a client.
+     *
+     * @param args Input for main
+     */
     public static void main(String[] args) {
 
-        String username = restclient.getUserName();
+        getUserName();
 
-        System.out.println(username);
-
-        String url = "http://localhost:8080/OOP-Project-0.1-SNAPSHOT/webapi/myresource";
+        String url = "http://localhost:8080/Server/webapi/myresource/connect";
 
         Client client = ClientBuilder.newClient();
 

@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
@@ -15,6 +15,11 @@ public class MyResource {
 
     private int count = 0;
 
+    public int getCount() {
+        return count;
+    }
+
+
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the restclient as "text/plain" media type.
@@ -27,12 +32,17 @@ public class MyResource {
         return "Got it!";
     }
 
+    /**
+     * Method handling HTTP GET request to the "connect" endpoint.
+     *
+     * @return String with information regarding the total number of connections
+     */
     @GET
     @Path("connect")
     @Produces(MediaType.TEXT_PLAIN)
-    public String connection(){
+    public String connection() {
         count++;
-        return "Server was visited " + count + " time(s) today!";
+        return "Our services were accessed " + count + " time(s) today!";
     }
 
 }
