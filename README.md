@@ -1,3 +1,13 @@
+# Index
+[Irem Ugurlu](#irem-ugurlu)
+[Jaron Rosenberg](#jaron-rosenberg)
+[Natalia Struharova](#natalia-struharova)
+[Robert Mînea](#robert-mînea)
+[Nick Ouwerkerk](#nick-ouwerkerk)
+[Mayasa Quacqess](#mayasa-quacqess)
+[Lee Chen](#lee-chen)
+
+
 # CSE1105 Template Repository
 
 This a template repository to help you get started on making the best project possible!
@@ -22,7 +32,8 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
-# Irem Ugurlu (4851625, iugurlu)
+# Irem Ugurlu
+**(4851625, iugurlu)**
 
 ## Personal Development Plan
 
@@ -62,7 +73,8 @@ The option I hope is finishing this project successfully and I think we are goin
 -- While everyone is working on their part, informing each other about our progress, also we need to be careful about the parts which are connected (two person’s task can be connected so they should act according to this otherwise it can lead a non-compiling code)
 
 
-# Jaron Rosenberg (4839641, jrosenberg)
+# Jaron Rosenberg
+**(4839641, jrosenberg)**
 
 <img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/42417325_1352297734900788_1361717405511843840_n.jpg?_nc_cat=107&_nc_ht=scontent-amt2-1.xx&oh=8716ec977519897a0b009fce9e2feaae&oe=5CE432D9" width="200"/>
 
@@ -108,7 +120,8 @@ The option I hope is finishing this project successfully and I think we are goin
 -	Yes.
 
 
-# Natalia Struharova (4935519, nstruharova)
+# Natalia Struharova 
+**(4935519, nstruharova)**
 
 ### <img src="https://scontent-amt2-1.xx.fbcdn.net/v/t1.0-9/11232123_821378501308705_164252636500004083_n.jpg?_nc_cat=109&_nc_ht=scontent-amt2-1.xx&oh=00662980269ef215ffc863494dcfeb6c&oe=5CE4D39B">
 
@@ -144,7 +157,8 @@ In terms of the server-side programming skill, I haven’t coded it from scratch
 I already started communicating with my team in order to set our general course of action. In terms of server side programming, I already started my research on how to create a server and integrate its workings into the app. I hope to be able to maintain my well-balanced time management and, while this will be my priority alongside other subjects, work on my other projects as well.
 
 
-# Robert Mînea (4848993, rminea)
+# Robert Mînea
+**(4848993, rminea)**
 
 <img src="https://scontent-ams3-1.xx.fbcdn.net/v/t1.0-9/35476812_1970122483058968_6927082946167832576_n.jpg?_nc_cat=100&_nc_ht=scontent-ams3-1.xx&oh=ad9d096c72b9f03b8661e09477656f0b&oe=5CDFD1FD" width="400"/>
 
@@ -175,7 +189,8 @@ I already started communicating with my team in order to set our general course 
 - I also want to see other people's style of working/coding in order to exchange skills and knowledge
 
 
-# Nick Ouwerkerk (4957032, nouwerkerk)
+# Nick Ouwerkerk
+**(4957032, nouwerkerk)**
 
 <img src="/uploads/206bb69fb21553e2b8cb0a409cfd915a/foto_Nick.jpg" width = "200">
 
@@ -228,7 +243,8 @@ How this point is shown in a team:
  - 	I definitely feel like these are problems that I have to solve myself. I can however take note of the coding style of my teammate and learn from this. 
  - 	I do not think making an “action plan” would be helpful to achieve my goals. Since it are goals that are to be achieve every week and should not be ‘build up’ until the end of the project, I think it would be of much more help if I would evaluate every week if I feel like I communicated well enough and if there are points I could improve on.
 
-## Mayasa Quacqess (4898109, mquacqess)
+## Mayasa Quacqess
+**(4898109, mquacqess)**
 
 ## Personal Development Plan
 
@@ -268,7 +284,8 @@ How this point is shown in a team:
 - Try to communicate with my team meet as efficient as possible.
 - By speaking thier ideas and thoughts outload.
 
-# Lee Chen (4703812, lschen)
+# Lee Chen
+**(4703812, lschen)**
 ![Lee](https://www.instagram.com/p/BtOmE1fgBWw/)
 
 ## Personal Development Plan
