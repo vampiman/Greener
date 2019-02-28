@@ -1,11 +1,11 @@
 # Index
-[Irem Ugurlu](#irem-ugurlu)
-[Jaron Rosenberg](#jaron-rosenberg)
-[Natalia Struharova](#natalia-struharova)
-[Robert Mînea](#robert-mînea)
-[Nick Ouwerkerk](#nick-ouwerkerk)
-[Mayasa Quacqess](#mayasa-quacqess)
-[Lee Chen](#lee-chen)
+- [Irem Ugurlu](#irem-ugurlu)
+- [Jaron Rosenberg](#jaron-rosenberg)
+- [Natalia Struharova](#natalia-struharova)
+- [Robert Mînea](#robert-mînea)
+- [Nick Ouwerkerk](#nick-ouwerkerk)
+- [Mayasa Quacqess](#mayasa-quacqess)
+- [Lee Chen](#lee-chen)
 
 
 # CSE1105 Template Repository
