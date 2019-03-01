@@ -1,20 +1,12 @@
 package restclient;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
 import java.util.Scanner;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.MediaType;
 
-import static javafx.application.Application.launch;
 
-
-public class Restclient extends Application {
+public class Restclient {
 
     /**
      * Method that asks for the name of the client.
@@ -36,14 +28,6 @@ public class Restclient extends Application {
         return username;
     }
 
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("loginPage.fxml"));
-        primaryStage.setTitle("Welcome to Greenie");
-        primaryStage.setScene(new Scene(root, 600, 400));
-        primaryStage.show();
-
-    }
-
 
     /**
      * Main method that acts as a client.
@@ -59,7 +43,5 @@ public class Restclient extends Application {
         Client client = ClientBuilder.newClient();
 
         System.out.println(client.target(url).request(MediaType.TEXT_PLAIN).get(String.class));
-
-        launch(args);
     }
 }
