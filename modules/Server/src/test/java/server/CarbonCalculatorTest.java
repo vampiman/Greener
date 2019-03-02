@@ -70,6 +70,11 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(2536, (int)calckg.airTravel(5000));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void foodWrongType() {
+        new CarbonCalculator(1).food(100, 0);
+    }
+
     @Test
     public void foodMeatTest() {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -122,6 +127,11 @@ public class CarbonCalculatorTest {
 
         Assert.assertEquals(1232, (int)calc.food(100,6));
         Assert.assertEquals(559, (int)calckg.food(100, 6));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void serviceWrongType() {
+        new CarbonCalculator(1).servicesAndGoods(100, 5);
     }
 
     @Test
