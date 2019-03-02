@@ -1,5 +1,10 @@
 package server;
 
+/**
+ *  Class implementing a carbon footprint calculator that takes in consideration
+ *  different sides of day-by-day life, like Housing, Transport, Food Consumption and
+ *  other Goods/Services.
+ */
 public class CarbonCalculator {
 
 
@@ -8,10 +13,23 @@ public class CarbonCalculator {
     // 1 for pounds, 2 for grams
     private int metrics;
 
+    /**
+     * Constructor for tha CarbonCalculator class that must be used to select the desired
+     * metric system.
+     *
+     * @param metrics type of metric system, 1 for pounds, 2 for grams
+     */
     public CarbonCalculator(int metrics) {
         this.metrics = metrics;
     }
 
+    /**
+     * Calculates the CO2 emissions based on your electricity consumption per month.
+     *
+     * @param amount Cost of the monthly electricity bill
+     * @param electricityPrice Price per kWh
+     * @return CO2 emissions per year (in pounds or grams)
+     */
     public double electricity(double amount, double electricityPrice) {
         double electricityFactor = 1.37;
         double averageElectricityPrice = 0.2;
@@ -29,6 +47,13 @@ public class CarbonCalculator {
 
     }
 
+    /**
+     * Natural gas CO2 emissions.
+     *
+     * @param amount Monthly natural gas cost
+     * @param naturalGasPrice Price per thousand cubic feet
+     * @return CO2 emissions per year (in pounds or grams)
+     */
     public double naturalGas(double amount, double naturalGasPrice) {
         double naturalGasFactor = 120.61;
         double averageNaturalGasPrice = 14.14;
@@ -45,6 +70,13 @@ public class CarbonCalculator {
 
         return toReturn;
     }
+
+    /**
+     * Fuel Oil CO2 emissions.
+     * @param amount Monthly fuel oil cost
+     * @param oilFuelPrice Price per gallon
+     * @return CO2 emissions per year (in pounds or grams)
+     */
 
     public double fuelOil(double amount, double oilFuelPrice) {
         double oilFuelFactor = 22.37;
@@ -63,6 +95,13 @@ public class CarbonCalculator {
         return toReturn;
     }
 
+    /**
+     * Propane CO2 emissions.
+     *
+     * @param amount Propane monthly cost
+     * @param propanePrice Price per gallon
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double propane(double amount, double propanePrice) {
         double propaneFactor = 12.17;
         double averagePropanePrice = 2.76;
@@ -80,6 +119,12 @@ public class CarbonCalculator {
         return toReturn;
     }
 
+    /**
+     * Personal vehicle CO2 emissions.
+     * @param amount Miles per week
+     * @param milesPerGallon Fuel efficiency (miles per gallon)
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double vehicle(double amount, double milesPerGallon) {
         double vehiclePerGallon = 19.4;
         double vehicleGreenhouse = 1.0526315;
@@ -95,10 +140,14 @@ public class CarbonCalculator {
         return toReturn;
     }
 
-
+    /**
+     * Public Transport CO2 emissions.
+     * @param amount Miles per year
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double publicTransport(double amount) {
-//        double publicPerGallon = 12.48;
-//        double averageMilesPerGallon = 38.3;
+        //double publicPerGallon = 12.48;
+        //double averageMilesPerGallon = 38.3;
         double co2PerMile = 0.357;
 
         double toReturn = amount * co2PerMile;
@@ -110,7 +159,11 @@ public class CarbonCalculator {
         return toReturn;
     }
 
-
+    /**
+     * Air Travel CO2 emissions.
+     * @param milesPerYear Miles traveled per year
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double airTravel(double milesPerYear) {
         double airPerMile = 223;
         double wellToPumpFactor = 1.2;
@@ -127,6 +180,13 @@ public class CarbonCalculator {
         return toReturn;
     }
 
+    /**
+     * Food CO2 emissions.
+     * @param amount Monthly cost for the particular type of food
+     * @param type Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
+     *            5 for eating out and 6 for other food)
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double food(double amount, int type) {
         if (type > 6 || type < 1) {
             throw new IllegalArgumentException("Please insert a valid type of Food!");
@@ -165,6 +225,13 @@ public class CarbonCalculator {
         return toReturn;
     }
 
+    /**
+     * Services and Goods CO2 emissions.
+     * @param amount Monthly cost for the particular type of goods/services
+     * @param type Type of goods/services (1 for clothing, 2 for furniture/appliances,
+     *            3 for other goods and 4 for general services)
+     * @return CO2 emissions per year (in grams or pounds)
+     */
     public double servicesAndGoods(double amount, int type) {
         if (type > 4 || type < 1) {
             throw new IllegalArgumentException("Please insert a valid type of Service/Goods!");
@@ -197,16 +264,15 @@ public class CarbonCalculator {
         return toReturn;
     }
 
-
+    /**
+     * Pounds to kilograms converter.
+     * @param pounds Quantity in pounds
+     * @return Quantity in kilograms
+     */
     public double poundsToKilograms(double pounds) {
         return pounds * 0.45359237;
     }
 
 
-//    For testing
-//    public static void main(String[] args) {
-//        CarbonCalculator calc =  new CarbonCalculator(1);
-//
-//        System.out.println(calc.electricity(100, 0));
-//    }
+
 }
