@@ -65,7 +65,7 @@ public class CarbonCalculator {
 
     public double propane(double amount, double propanePrice) {
         double propaneFactor = 12.17;
-        double averagePropanePrice = 2.88;
+        double averagePropanePrice = 2.76;
 
         if (propanePrice == 0) {
             propanePrice = averagePropanePrice;
@@ -97,10 +97,11 @@ public class CarbonCalculator {
 
 
     public double publicTransport(double amount) {
-        double publicPerGallon = 19.4;
-        double averageMilesPerGallon = 38.3;
+//        double publicPerGallon = 12.48;
+//        double averageMilesPerGallon = 38.3;
+        double co2PerMile = 0.357;
 
-        double toReturn = (amount / averageMilesPerGallon) * publicPerGallon;
+        double toReturn = amount * co2PerMile;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -144,7 +145,7 @@ public class CarbonCalculator {
             case 3: specificFactor = 1911;
             break;
             // fruitFactor = 1176
-            case 4: specificFactor = 368;
+            case 4: specificFactor = 1176;
             break;
             // eatingOutFactor = 368
             case 5: specificFactor = 368;
@@ -202,10 +203,10 @@ public class CarbonCalculator {
     }
 
 
-
-    public static void main(String[] args) {
-        CarbonCalculator calc =  new CarbonCalculator(1);
-
-        System.out.println(calc.electricity(100, 0));
-    }
+//    For testing
+//    public static void main(String[] args) {
+//        CarbonCalculator calc =  new CarbonCalculator(1);
+//
+//        System.out.println(calc.electricity(100, 0));
+//    }
 }
