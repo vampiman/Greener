@@ -14,6 +14,9 @@ public class RestclientTest {
     public void main() {
     }
 
+    /**
+     * Test for inserting the username
+     */
     @Test
     public void getUserName() {
         InputStream in = new ByteArrayInputStream("test".getBytes());

@@ -5,9 +5,6 @@ public class CarbonCalculator {
 
     private double gramToPound = 0.0022;
 
-
-
-
     // 1 for pounds, 2 for grams
     private int metrics;
 
@@ -206,7 +203,9 @@ public class CarbonCalculator {
 
 
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
+        CarbonCalculator calc =  new CarbonCalculator(1);
 
+        System.out.println(calc.electricity(100, 0));
     }
 }
