@@ -1,5 +1,7 @@
 package restclient;
 
+import cn.hutool.json.JSONObject;
+
 import java.util.Scanner;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -36,12 +38,24 @@ public class Restclient {
      */
     public static void main(String[] args) {
 
-        getUserName();
+       JSONObject obj = PublicTransportClient.NotCarButPublicTransport();
 
-        String url = "http://localhost:8080/server/webapi/myresource/connect";
+        PublicTransportClient.getPublicTransport(); //should give 0
 
-        Client client = ClientBuilder.newClient();
+       if (obj != null) {
+           PublicTransportClient.postPublicTransport(obj);
+        }
 
-        System.out.println(client.target(url).request(MediaType.TEXT_PLAIN).get(String.class));
+       System.out.println("All went well!");
+
+       PublicTransportClient.getPublicTransport(); //should give given value
+
+        //getUserName();
+
+        // String url = "http://localhost:8080/server/webapi/myresource/connect";
+
+       //Client client = ClientBuilder.newClient();
+
+       //System.out.println(client.target(url).request(MediaType.TEXT_PLAIN).get(JSONObject.class));
     }
 }
