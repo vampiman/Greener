@@ -12,11 +12,15 @@ public class MyResourceTest {
         Assert.assertEquals("Got it!", new MyResource().getIt());
     }
 
+    /**
+     * Test for the connection counter.
+     */
     @Test
     public void connectionCount() {
         MyResource res = new MyResource();
         int count = res.getCount() + 1;
 
-        Assert.assertEquals("Our services were accessed " + count + " time(s) today!", res.connection());
+        Assert.assertEquals("Our services were accessed " + count
+                + " time(s) today!", res.connection());
     }
 }

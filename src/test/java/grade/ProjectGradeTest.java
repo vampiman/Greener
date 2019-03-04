@@ -7,6 +7,9 @@ public class ProjectGradeTest {
 
     private static final double DELTA = 0.001;
 
+    /**
+     * .
+     */
     @Test
     public void getGoodGradeIfCorrect() {
 
@@ -15,6 +18,9 @@ public class ProjectGradeTest {
         Assert.assertEquals(7.5, grade, DELTA);
     }
 
+    /**
+     * .
+     */
     @Test
     public void getBadGradeIfNotCompiles() {
 
@@ -23,6 +29,9 @@ public class ProjectGradeTest {
         Assert.assertEquals(1, grade, DELTA);
     }
 
+    /**
+     * .
+     */
     @Test
     public void getBadGradeIfNotUsedGit() {
 
@@ -31,11 +40,17 @@ public class ProjectGradeTest {
         Assert.assertEquals(1, grade, DELTA);
     }
 
+    /**
+     * .
+     */
     @Test
     public void testTaIsNotHappy() {
         Assert.assertFalse(ProjectGrade.taIsHappy(false));
     }
 
+    /**
+     * .
+     */
     @Test
     public void testTaIsHappy() {
         Assert.assertTrue(ProjectGrade.taIsHappy(true));

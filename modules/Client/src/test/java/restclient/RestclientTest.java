@@ -1,11 +1,14 @@
 package restclient;
 
+import static junit.framework.TestCase.assertEquals;
+
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.Assert.*;
+
+
 
 public class RestclientTest {
 
@@ -14,6 +17,9 @@ public class RestclientTest {
     public void main() {
     }
 
+    /**
+     * Test for inserting the username.
+     */
     @Test
     public void getUserName() {
         InputStream in = new ByteArrayInputStream("test".getBytes());
