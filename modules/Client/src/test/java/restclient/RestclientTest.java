@@ -1,14 +1,10 @@
 package restclient;
 
-import static junit.framework.TestCase.assertEquals;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-
-
-
 
 public class RestclientTest {
 
@@ -18,7 +14,8 @@ public class RestclientTest {
     }
 
     /**
-     * Test for inserting the username.
+     * Tests the equality of input and a pre-set string.
+     * Expects true.
      */
     @Test
     public void getUserName() {
@@ -26,6 +23,6 @@ public class RestclientTest {
 
         System.setIn(in);
 
-        assertEquals("test", Restclient.getUserName());
+        Assert.assertEquals("test", Restclient.getUserName());
     }
 }
