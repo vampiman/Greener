@@ -3,8 +3,6 @@ package server;
 import org.junit.Assert;
 import org.junit.Test;
 
-
-
 public class MyResourceTest {
 
     @Test
@@ -12,8 +10,11 @@ public class MyResourceTest {
         Assert.assertEquals("Got it!", new MyResource().getIt());
     }
 
+
     /**
-     * Test for the connection counter.
+     * Tests equality between the MyResource.connection() method output
+     * and a pre-set string.
+     * Expects true.
      */
     @Test
     public void connectionCount() {
