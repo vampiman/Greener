@@ -8,7 +8,6 @@ import java.io.InputStream;
 
 public class RestclientTest {
 
-
     @Test
     public void main() {
     }
