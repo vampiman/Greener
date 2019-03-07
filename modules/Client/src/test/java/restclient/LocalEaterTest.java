@@ -19,7 +19,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class BikerTest {
+public class LocalEaterTest {
+
 
     @Mock
     WebTarget target;
@@ -34,7 +35,7 @@ public class BikerTest {
     Response res;
 
     @InjectMocks
-    Biker bikeClient;
+    LocalEater leClient;
 
 
     /**
@@ -44,10 +45,10 @@ public class BikerTest {
     @Before
     public void setup() {
         client = mock(Client.class);
-        bikeClient = new Biker(client);
+        leClient = new LocalEater(client);
 
         JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
+        jo.append("Weight", "100");
         res = mock(Response.class);
 
         when(res.readEntity(JSONObject.class)).thenReturn(jo);
@@ -60,7 +61,7 @@ public class BikerTest {
         target = mock(WebTarget.class);
         when(target.path(anyString())).thenReturn(target);
         when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(bikeClient.client.target("testBike")).thenReturn(target);
+        when(leClient.client.target("testLocalEater")).thenReturn(target);
 
     }
 
@@ -73,8 +74,8 @@ public class BikerTest {
     @Test
     public void getRequestCorrect() {
         JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
-        Assert.assertEquals(bikeClient.getActivityInfo("testBike")
+        jo.append("Weight", "100");
+        Assert.assertEquals(leClient.getActivityInfo("testLocalEater")
                 .toJSONString(10), jo.toJSONString(10));
     }
 
@@ -87,8 +88,8 @@ public class BikerTest {
     @Test
     public void getRequestIncorrect() {
         JSONObject jo = new JSONObject();
-        jo.append("Dst", "200km");
-        Assert.assertNotEquals(bikeClient.getActivityInfo("testBike")
+        jo.append("W", "200g");
+        Assert.assertNotEquals(leClient.getActivityInfo("testLocalEater")
                 .toJSONString(10), jo.toJSONString(10));
     }
 
@@ -100,8 +101,8 @@ public class BikerTest {
     @Test
     public void postRequestCorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Distance", "10");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
+        j1.append("Weight", "100");
+        JSONObject j2 = leClient.postActivityInfo("testLocalEater");
         Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
@@ -113,8 +114,8 @@ public class BikerTest {
     @Test
     public void postRequestIncorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Distance", "2050");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
+        j1.append("Wieght", "2050");
+        JSONObject j2 = leClient.postActivityInfo("testLocalEater");
         Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
