@@ -12,15 +12,16 @@ import javax.ws.rs.core.Response;
 @Path("publictransport")
 public class PublicTransport {
 
-    static int integer = 0;
+    private int integer = 100;
+
     /**
      * Handles the GET-requests from the client.
-     * @return Response object with a JSON object
+     * @return Response object with a JSON object.
      */
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public static Response getData() {
+    public Response getData() {
 
             JSONObject jo = new JSONObject();
             jo.put("Points", integer);
@@ -31,13 +32,13 @@ public class PublicTransport {
 
     /**
      * Handles the GET-requests from the client.
-     * @return Integer which is the distance travelled by public transport sent from the client
+     * @return Integer which is the distance travelled by public transport sent from the client.
      */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public static Response postData(@FormParam("Distance") int param1) {
+    public Response postData(JSONObject obj) {
 
-        return Response.status(200).entity(param1).build();
+        return Response.status(200).entity(obj).build();
     }
 }
