@@ -11,8 +11,8 @@ import javax.ws.rs.core.Response;
 
 
 /**
- * Class for all client-side necessities to ask for public transport information
- * and sending this to the server.
+ * Class for all client-side necessities to send heat consumption information
+ * to the server.
  */
 
 public class HeatConsumptionClient {
