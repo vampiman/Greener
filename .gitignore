@@ -2,6 +2,7 @@
 target/
 .idea/
 Client.iml
+OOP-Project.iml
 server.iml
 pom.xml.tag
 pom.xml.releaseBackup

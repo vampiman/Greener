@@ -91,18 +91,47 @@
         </plugins>
     </build>
 
+    <!--<reporting>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+                <!--<version>${checkstyle.plugin.version}</version>-->
+                <!--&lt;!&ndash; Specifying configuration here will take effect on the execution of "mvn site",-->
+                     <!--but will not take effect on the execution of "mvn checkstyle:checkstyle"  &ndash;&gt;-->
+                <!--<configuration>-->
+                    <!--<configLocation>CSE1105.checkstyle.xml</configLocation>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</reporting>-->
+
+    <!--To be used for server test coverage report-->
     <reporting>
         <plugins>
+            <!-- Normally, we take off the dependency report, saves time. -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${checkstyle.plugin.version}</version>
-                <!-- Specifying configuration here will take effect on the execution of "mvn site",
-                     but will not take effect on the execution of "mvn checkstyle:checkstyle"  -->
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.7</version>
                 <configuration>
-                    <configLocation>CSE1105.checkstyle.xml</configLocation>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
                 </configuration>
             </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <formats>
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                </configuration>
+            </plugin>
+
         </plugins>
     </reporting>
 
