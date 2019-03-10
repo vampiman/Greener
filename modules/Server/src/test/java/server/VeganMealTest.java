@@ -1,11 +1,10 @@
 package server;
 
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.Result;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -14,11 +13,15 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.naming.NamingException;
-import javax.ws.rs.core.Response;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import javax.ws.rs.core.Response;
+
+
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(VeganMeal.class)
@@ -32,8 +35,11 @@ public class VeganMealTest {
 
     @InjectMocks private VeganMeal veganMeal;
 
+    /**
+     * Setup method for the test methods that depend on mocks.
+     */
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         mockConnection = Mockito.mock(Connection.class);
         mockStatement = Mockito.mock(Statement.class);
@@ -41,23 +47,43 @@ public class VeganMealTest {
 
     }
 
+    /**
+     * Test for the /veganmeal/post endpoint.
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
+     */
     @Test
     public void postIt() throws SQLException, ClassNotFoundException {
         veganMeal = new VeganMeal();
         mockStatic(DriverManager.class);
-        Mockito.when(DriverManager.getConnection("jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false","sammy","temporary")).thenReturn(mockConnection);
+        Mockito.when(DriverManager
+                .getConnection(
+                        "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
+                        "sammy","temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         veganMeal.postIt();
 
     }
 
+    /**
+     * Test for the /veganmeal/totalVegan endpoint.
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
+     */
     @Test
-    public void getAll() throws SQLException, ClassNotFoundException, NamingException {
+    public void getAll() throws SQLException, ClassNotFoundException {
         veganMeal = new VeganMeal();
         mockStatic(DriverManager.class);
-        Mockito.when(DriverManager.getConnection("jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false","sammy","temporary")).thenReturn(mockConnection);
+        Mockito.when(DriverManager
+                .getConnection(
+                        "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
+                        "sammy","temporary")).thenReturn(mockConnection);
+
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        Mockito.when(mockStatement.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'")).thenReturn(rs);
+        Mockito.when(mockStatement
+                .executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'"))
+                .thenReturn(rs);
+
         Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
         Response value = veganMeal.getAll();
@@ -65,6 +91,6 @@ public class VeganMealTest {
 
         System.out.println(value.getEntity());
         Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
-//        Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
+        //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }
 }

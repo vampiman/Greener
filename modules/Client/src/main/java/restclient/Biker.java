@@ -3,7 +3,7 @@ package restclient;
 import cn.hutool.json.JSONObject;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
+
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -58,16 +58,16 @@ public class Biker {
         return j2;
     }
 
-//  Used for testing only
-//    /**
-//     * Main method that simulates the client.
-//     *
-//     * @param args Input for main
-//     */
-//    public static void main(String[] args) {
-//        Biker biker = new Biker(ClientBuilder.newClient());
-//
-//        biker.getActivityInfo("http://localhost:8080/server/webapi/bike/get");
-//        biker.postActivityInfo("http://localhost:8080/server/webapi/bike/post");
-//    }
+    //  Used for testing only
+    //    /**
+    //     * Main method that simulates the client.
+    //     *
+    //     * @param args Input for main
+    //     */
+    //    public static void main(String[] args) {
+    //        Biker biker = new Biker(ClientBuilder.newClient());
+    //
+    //        biker.getActivityInfo("http://localhost:8080/server/webapi/bike/get");
+    //        biker.postActivityInfo("http://localhost:8080/server/webapi/bike/post");
+    //    }
 }

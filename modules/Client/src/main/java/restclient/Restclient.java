@@ -21,7 +21,7 @@ public class Restclient {
         Scanner sc = new Scanner(System.in);
 
 
-            username = sc.nextLine();
+        username = sc.nextLine();
 
 
         System.out.println("Welcome to Greenie, " + username + "!");

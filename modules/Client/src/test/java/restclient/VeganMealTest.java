@@ -1,5 +1,7 @@
 package restclient;
 
+import static org.mockito.Mockito.when;
+
 import cn.hutool.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,8 +16,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+
 
 public class VeganMealTest {
 
@@ -37,6 +38,9 @@ public class VeganMealTest {
     @InjectMocks
     VeganMeal veganMeal;
 
+    /**
+     * Setup for the following mock-dependant tests.
+     */
     @Before
     public void setup() {
         client = Mockito.mock(Client.class);
@@ -55,12 +59,19 @@ public class VeganMealTest {
         when(jo.getInt("total")).thenReturn(1);
 
     }
-//NEED TO ADD SOME RETURN MESSAGE
+    //NEED TO ADD SOME RETURN MESSAGE
+
+    /**
+     * Test for the sendVeganMeal method.
+     */
     @Test
     public void sendVeganMeal() {
         veganMeal.sendVeganMeal();
     }
 
+    /**
+     * Test for the getTotalVeganMeals method.
+     */
     @Test
     public void getTotalVeganMeals() {
         int result = veganMeal.getTotalVeganMeals();
