@@ -5,7 +5,6 @@ import cn.hutool.json.JSONObject;
 //import java.util.Scanner;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -54,15 +53,17 @@ public class LocalEater {
         return j2;
     }
 
-    /**
-     * Main method that simulates the client.
-     *
-     * @param args Input for main
-     */
-    public static void main(String[] args) {
-        LocalEater le = new LocalEater(ClientBuilder.newClient());
+    //      Used for testing only
+    //    /**
+    //     * Main method that simulates the client.
+    //     *
+    //     * @param args Input for main
+    //     */
+    //    public static void main(String[] args) {
+    //        LocalEater le = new LocalEater(ClientBuilder.newClient());
+    //
+    //        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
+    //        le.postActivityInfo("http://localhost:8080/server/webapi/localproduce/post");
+    //    }
 
-        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
-        le.postActivityInfo("http://localhost:8080/server/webapi/localproduce/post");
-    }
 }

@@ -20,9 +20,9 @@ public class Restclient {
         System.out.println("Please provide your username in order to connect:");
         Scanner sc = new Scanner(System.in);
 
-        if (sc.hasNext()) {
-            username = sc.nextLine();
-        }
+
+        username = sc.nextLine();
+
 
         System.out.println("Welcome to Greenie, " + username + "!");
 
