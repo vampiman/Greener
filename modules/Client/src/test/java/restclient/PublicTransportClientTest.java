@@ -1,6 +1,5 @@
 package restclient;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -13,14 +12,15 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+
 
 public class PublicTransportClientTest {
 
@@ -37,7 +37,7 @@ public class PublicTransportClientTest {
     Response res;
 
     @InjectMocks
-    PublicTransportClient PTClient;
+    PublicTransportClient publicTransportClient;
 
 
     /**
@@ -47,7 +47,7 @@ public class PublicTransportClientTest {
     @Before
     public void setup() {
         client = mock(Client.class);
-        PTClient = new PublicTransportClient(client);
+        publicTransportClient = new PublicTransportClient(client);
 
         JSONObject jo = new JSONObject();
         jo.append("Points", 100);
@@ -63,7 +63,7 @@ public class PublicTransportClientTest {
         target = mock(WebTarget.class);
         when(target.path(anyString())).thenReturn(target);
         when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(PTClient.client.target("Test")).thenReturn(target);
+        when(publicTransportClient.client.target("Test")).thenReturn(target);
     }
 
     /**
@@ -76,7 +76,7 @@ public class PublicTransportClientTest {
     public void getRequestCorrect() {
         JSONObject jo = new JSONObject();
         jo.append("Points", 100);
-        Assert.assertEquals(PTClient.getPublicTransport("Test")
+        Assert.assertEquals(publicTransportClient.getPublicTransport("Test")
                 .toJSONString(100), jo.toJSONString(100));
     }
 
@@ -90,7 +90,7 @@ public class PublicTransportClientTest {
     public void getRequestIncorrect() {
         JSONObject jo = new JSONObject();
         jo.append("Points", 600);
-        Assert.assertNotEquals(PTClient.getPublicTransport("Test")
+        Assert.assertNotEquals(publicTransportClient.getPublicTransport("Test")
                 .toJSONString(10), jo.toJSONString(10));
     }
 
@@ -104,7 +104,7 @@ public class PublicTransportClientTest {
         JSONObject j1 = new JSONObject();
         j1.append("Points", 100);
 
-        JSONObject j2 = PTClient.postPublicTransport(j1, "Test");
+        JSONObject j2 = publicTransportClient.postPublicTransport(j1, "Test");
         Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
@@ -118,7 +118,7 @@ public class PublicTransportClientTest {
         JSONObject j1 = new JSONObject();
         j1.append("Points", 100);
 
-        JSONObject j2 = PTClient.postPublicTransport(j1, "Test");
+        JSONObject j2 = publicTransportClient.postPublicTransport(j1, "Test");
         Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
@@ -129,14 +129,15 @@ public class PublicTransportClientTest {
      * Expects equal.
      */
     @Test
-    public void createJSONObject() {
+    public void createJsonObject() {
 
         InputStream in2 = new ByteArrayInputStream("100".getBytes());
         System.setIn(in2);
 
         JSONObject obj = new JSONObject().put("Distance", 100);
 
-        Assert.assertEquals(obj.toJSONString(10), PublicTransportClient.NotCarButPublicTransport().toJSONString(10));
+        Assert.assertEquals(obj.toJSONString(10),
+                PublicTransportClient.notCarButPublicTransport().toJSONString(10));
     }
 
 }

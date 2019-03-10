@@ -1,14 +1,15 @@
 package server;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
 import cn.hutool.json.JSONObject;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
-
 
 public class PublicTransportTest {
 
-    server.PublicTransport PTserver = new server.PublicTransport();
+    server.PublicTransport server = new server.PublicTransport();
 
 
     /**
@@ -18,7 +19,7 @@ public class PublicTransportTest {
      */
     @Test
     public void getMethodStatus() {
-        assertEquals(200, PTserver.getData().getStatus());
+        assertEquals(200, server.getData().getStatus());
     }
 
     /**
@@ -29,7 +30,7 @@ public class PublicTransportTest {
     @Test
     public void postMethodStatus() {
         JSONObject obj = new JSONObject();
-        assertEquals(200, PTserver.postData(obj).getStatus());
+        assertEquals(200, server.postData(obj).getStatus());
     }
 
     /**
@@ -39,11 +40,11 @@ public class PublicTransportTest {
      * Expects equal.
      */
     @Test
-    public void getDataJSON() {
+    public void getDataJson() {
         JSONObject obj = new JSONObject();
         obj.put("Points", 100);
 
-        assertEquals(obj, PTserver.getData().getEntity());
+        assertEquals(obj, server.getData().getEntity());
     }
 
     /**
@@ -52,10 +53,10 @@ public class PublicTransportTest {
      * Expects equal.
      */
     @Test
-    public void postDataJSON() {
+    public void postDataJson() {
         JSONObject obj = new JSONObject();
         obj.put("Points", 10000);
-        assertEquals(obj, PTserver.postData(obj).getEntity());
+        assertEquals(obj, server.postData(obj).getEntity());
     }
 
     /**
@@ -65,7 +66,7 @@ public class PublicTransportTest {
      */
     @Test
     public void getMethodStatusIncorrect() {
-        assertNotEquals(404, PTserver.getData().getStatus());
+        assertNotEquals(404, server.getData().getStatus());
     }
 
     /**
@@ -76,7 +77,7 @@ public class PublicTransportTest {
     @Test
     public void postMethodStatusIncorrect() {
         JSONObject obj = new JSONObject();
-        assertNotEquals(404, PTserver.postData(obj).getStatus());
+        assertNotEquals(404, server.postData(obj).getStatus());
     }
 
     /**
@@ -86,26 +87,27 @@ public class PublicTransportTest {
      * Expects unequal.
      */
     @Test
-    public void getDataJSONIncorrect() {
+    public void getDataJsonIncorrect() {
         JSONObject obj = new JSONObject();
         obj.put("Points", 5);
 
-        assertNotEquals(obj, PTserver.getData().getEntity());
+        assertNotEquals(obj, server.getData().getEntity());
     }
 
     /**
-     * Tests if an JSON object different from the JSON object that is send to the server using a post-request
+     * Tests if an JSON object different from the JSON object
+     * that is send to the server using a post-request
      * is the same as the object that is send in the response of the request.
      * Expects unequal.
      */
     @Test
-    public void postDataJSONIncorrect() {
+    public void postDataJsonIncorrect() {
         JSONObject obj = new JSONObject();
         obj.put("Points", 10000);
 
         JSONObject obj2 = new JSONObject();
         obj2.put("Points", 5);
-        assertNotEquals(obj2, PTserver.postData(obj).getEntity());
+        assertNotEquals(obj2, server.postData(obj).getEntity());
     }
 
 }

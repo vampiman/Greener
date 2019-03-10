@@ -3,13 +3,18 @@ package restclient;
 import cn.hutool.json.JSONObject;
 
 import java.util.Scanner;
-import javax.ws.rs.client.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
 /**
- * Class for all client-side necessities to ask for public transport information and sending this to the server.
+ * Class for all client-side necessities to ask for public transport information
+ * and sending this to the server.
  */
 
 public class PublicTransportClient {
@@ -21,10 +26,11 @@ public class PublicTransportClient {
     }
 
     /**
-     * Asks for information about travelling with public transport and converts this data into JSON format.
+     * Asks for information about travelling with public transport
+     * and converts this data into JSON format.
      * @return JSON object with the distance travelled with public transport.
      */
-    public static JSONObject NotCarButPublicTransport() {
+    public static JSONObject notCarButPublicTransport() {
 
         int distanceInKilometer = 0;
 
@@ -81,7 +87,7 @@ public class PublicTransportClient {
     public static void main(String[] args) {
 
         PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
-        JSONObject obj = PublicTransportClient.NotCarButPublicTransport();
+        JSONObject obj = PublicTransportClient.notCarButPublicTransport();
 
         if (obj != null) {
             client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");

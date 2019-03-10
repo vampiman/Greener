@@ -1,7 +1,5 @@
 package restclient;
 
-import cn.hutool.json.JSONObject;
-
 import java.util.Scanner;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
