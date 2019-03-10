@@ -19,6 +19,10 @@ public class HeatConsumptionClient {
 
     protected Client client;
 
+    public HeatConsumptionClient(Client client) {
+        this.client = client;
+    }
+
     /**
      * Acquires JSON file from server via get-request.
      * @return JSON object with information gotten from get-request to server.
