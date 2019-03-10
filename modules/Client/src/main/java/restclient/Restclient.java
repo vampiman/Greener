@@ -38,24 +38,12 @@ public class Restclient {
      */
     public static void main(String[] args) {
 
-       JSONObject obj = PublicTransportClient.NotCarButPublicTransport();
+        getUserName();
 
-        PublicTransportClient.getPublicTransport(); //should give 0
+        String url = "http://localhost:8080/server/webapi/myresource/connect";
 
-       if (obj != null) {
-           PublicTransportClient.postPublicTransport(obj);
-        }
+        Client client = ClientBuilder.newClient();
 
-       System.out.println("All went well!");
-
-       PublicTransportClient.getPublicTransport(); //should give given value
-
-        //getUserName();
-
-        // String url = "http://localhost:8080/server/webapi/myresource/connect";
-
-       //Client client = ClientBuilder.newClient();
-
-       //System.out.println(client.target(url).request(MediaType.TEXT_PLAIN).get(JSONObject.class));
+        System.out.println(client.target(url).request(MediaType.TEXT_PLAIN).get(String.class));
     }
 }

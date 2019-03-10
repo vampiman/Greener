@@ -1,80 +1,92 @@
 package restclient;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 
-import javax.ws.rs.FormParam;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
 import java.util.Scanner;
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 
 /**
- * Class for all client-side necessities to ask for public transport information and sending this to the server
- *
+ * Class for all client-side necessities to ask for public transport information and sending this to the server.
  */
 
 public class PublicTransportClient {
 
-    /**
-     * Asks for information about travelling with public transport and converts this data into JSON format
-     * @return JSON object with the distance travelled with public transport.
-     */
-    public static JSONObject NotCarButPublicTransport() {
-        boolean rodePublicTransport = false;
-        int distanceInKilometer = 0;
+    protected Client client;
 
-        System.out.println("Did you take public transport instead of the car?");
-        Scanner scanner = new Scanner(System.in);
-
-        if (scanner.nextLine().equals("yes")) {
-            rodePublicTransport = true;
-            System.out.println(rodePublicTransport);
-
-            System.out.println("How many kilometers did you travel?");
-            distanceInKilometer = scanner.nextInt();
-
-            JSONObject obj = new JSONObject().put("Distance", distanceInKilometer);
-            System.out.println(obj);
-            return obj;
-        }
-
-        else {
-            System.out.println("No changes have been made");
-            return null;
-        }
+    public PublicTransportClient(Client client) {
+        this.client = client;
     }
 
     /**
-     * Acquires JSON file from server via get-request
-     * @return JSON object with information gotten from get-request to server
+     * Asks for information about travelling with public transport and converts this data into JSON format.
+     * @return JSON object with the distance travelled with public transport.
      */
-    public static JSONObject getPublicTransport() {
+    public static JSONObject NotCarButPublicTransport() {
 
-        Client client = ClientBuilder.newClient();
-        String url = "http://localhost:8080/server/webapi/publictransport/get";
+        int distanceInKilometer = 0;
 
-        JSONObject obj = client.target(url).request(MediaType.APPLICATION_JSON).get(JSONObject.class);
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("How many kilometers did you travel?");
+        distanceInKilometer = scanner.nextInt();
+
+        JSONObject obj = new JSONObject().put("Distance", distanceInKilometer);
         System.out.println(obj);
+        return obj;
+    }
 
-        int points = (int) obj.get("Points");
-        System.out.println(points);
+    /**
+     * Acquires JSON file from server via get-request.
+     * @param uri to the URI of the resource of the server which handles the get-request.
+     * @return JSON object with information gotten from get-request to server.
+     */
+    public JSONObject getPublicTransport(String uri) {
+
+        WebTarget webTarget = this.client.target(uri);
+
+        Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
+        Response res = builder.get(Response.class);
+
+        JSONObject obj = res.readEntity(JSONObject.class);
+        System.out.println(obj.toString());
 
         return obj;
     }
 
     /**
-     * Post a JSON file to the server through a post-request
-     * @return JSON file with the information posted to the server by this method
+     * Post a JSON file to the server through a post-request.
+     * @param info JSONObject which has to be send to the server
+     * @param uri to the URI of the resource of the server which handles the post-request.
+     * @return JSONObject send back from the server.
      */
-    public static void postPublicTransport(JSONObject info) {
+    public JSONObject postPublicTransport(JSONObject info, String uri) {
 
-        Client client = ClientBuilder.newClient();
+        JSONObject j1 = this.client.target(uri)
+                              .request(MediaType.APPLICATION_JSON)
+                              .post(Entity.json(info))
+                              .readEntity(JSONObject.class);
 
-        client.target("http://localhost:8080/server/webapi/publictransport/post")
-                                        .request(MediaType.APPLICATION_JSON)
-                                        .post(Entity.json(info));
-        System.out.println(info.toString());
+        System.out.println(j1.toString());
+
+        return j1;
+    }
+
+    /**
+     * Main method that emulates the client.
+     * @param args Input for main.
+     */
+    public static void main(String[] args) {
+
+        PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
+        JSONObject obj = PublicTransportClient.NotCarButPublicTransport();
+
+        if (obj != null) {
+            client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
+        }
+
+        client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
     }
 }
