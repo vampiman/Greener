@@ -58,16 +58,16 @@ public class Biker {
         return j2;
     }
 
-
-    /**
-     * Main method that simulates the client.
-     *
-     * @param args Input for main
-     */
-    public static void main(String[] args) {
-        Biker biker = new Biker(ClientBuilder.newClient());
-
-        biker.getActivityInfo("http://localhost:8080/server/webapi/bike/get");
-        biker.postActivityInfo("http://localhost:8080/server/webapi/bike/post");
-    }
+//  Used for testing only
+//    /**
+//     * Main method that simulates the client.
+//     *
+//     * @param args Input for main
+//     */
+//    public static void main(String[] args) {
+//        Biker biker = new Biker(ClientBuilder.newClient());
+//
+//        biker.getActivityInfo("http://localhost:8080/server/webapi/bike/get");
+//        biker.postActivityInfo("http://localhost:8080/server/webapi/bike/post");
+//    }
 }
