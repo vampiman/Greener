@@ -2,7 +2,6 @@ package restclient;
 
 import cn.hutool.json.JSONObject;
 
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
