@@ -28,7 +28,7 @@ public class VeganMeal {
         JSONObject jo = new JSONObject();
         jo.put("type","dairy");
         //Insert http://134.209.120.167 for online server
-        this.client.target("http://134.209.120.167:8080/server/webapi/veganmeal/post")
+        this.client.target("http://localhost:8080/server/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(jo));
 
