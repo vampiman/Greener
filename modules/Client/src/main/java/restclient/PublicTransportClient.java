@@ -4,7 +4,6 @@ import cn.hutool.json.JSONObject;
 
 import java.util.Scanner;
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -80,19 +79,17 @@ public class PublicTransportClient {
         return j1;
     }
 
-    /**
-     * Main method that emulates the client.
-     * @param args Input for main.
-     */
-    public static void main(String[] args) {
 
-        PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
-        JSONObject obj = PublicTransportClient.notCarButPublicTransport();
+    // main method for testing only
+    //public static void main(String[] args) {
 
-        if (obj != null) {
-            client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
-        }
+    //    PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
+    //    JSONObject obj = PublicTransportClient.notCarButPublicTransport();
 
-        client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
-    }
+    //    if (obj != null) {
+    //        client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
+    //}
+
+    //    client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
+    //}
 }

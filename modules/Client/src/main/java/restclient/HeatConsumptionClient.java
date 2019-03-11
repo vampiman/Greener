@@ -2,6 +2,7 @@ package restclient;
 
 import cn.hutool.json.JSONObject;
 
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
@@ -57,4 +58,14 @@ public class HeatConsumptionClient {
 
         return j1;
     }
+
+    //main method for testing only
+    //public static void main(String[] args) {
+
+    //    HeatConsumptionClient client = new HeatConsumptionClient(ClientBuilder.newClient());
+    //    JSONObject obj = new JSONObject();
+
+    //    client.postHeatConsumption(obj, "http://localhost:8080/server/webapi/heatconsumption/post");
+    //    client.getHeatConsumption("http://localhost:8080/server/webapi/heatconsumption/get");
+    //}
 }
