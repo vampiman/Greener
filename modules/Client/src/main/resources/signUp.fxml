@@ -12,6 +12,7 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane fx:controller="restclient.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<children>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E4053;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <AnchorPane layoutY="1.0" prefHeight="400.0" prefWidth="250.0">
@@ -71,5 +72,7 @@
             </font>
         </Text>
         <Button fx:id="sign_up_personal1" layoutX="482.0" layoutY="360.0" mnemonicParsing="false" onAction="#handleSignUpPersonalAction" prefHeight="27.0" prefWidth="104.0" style="-fx-background-color: #00ffbc;" text="Next" textFill="WHITE" />
+    </children>
+</AnchorPane>
     </children>
 </AnchorPane>

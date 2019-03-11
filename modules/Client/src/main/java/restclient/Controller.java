@@ -41,12 +41,12 @@ public class Controller {
     private Button sign_up_diet4;
 
     @FXML
-    private Button sign_up_goods5;
+    private Button sign_up_diet5;
 
     @FXML
     protected void handleSignUpPersonalAction(ActionEvent event) throws IOException {
 
-        Parent sign_up_personal_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("utilities.fxml"));
+        Parent sign_up_personal_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("signUp2utilities.fxml"));
         Scene sign_up_personal_page_scene = new Scene(sign_up_personal_page_parent);
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(sign_up_personal_page_scene);
@@ -54,46 +54,13 @@ public class Controller {
     }
 
     @FXML
-    protected void handleSignUpUtilitiesAction(ActionEvent event) throws IOException {
-
-
-        Parent sign_up_utilities_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("transportation.fxml"));
-        Scene sign_up_utilities_page_scene = new Scene(sign_up_utilities_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(sign_up_utilities_page_scene);
-        app_stage.show();
-    }
+    protected void handleTemperatureAction(ActionEvent event) throws IOException {}
 
     @FXML
-    protected void handleSignUpTransportationAction(ActionEvent event) throws IOException {
-
-
-        Parent sign_up_transportation_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("diet.fxml"));
-        Scene sign_up_transportation_page_scene = new Scene(sign_up_transportation_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(sign_up_transportation_page_scene);
-        app_stage.show();
-    }
+    protected void handleTransportAction(ActionEvent event) throws IOException {}
 
     @FXML
-    protected void handleSignUpDietAction(ActionEvent event) throws IOException {
+    protected void handleSolarAction(ActionEvent event) throws IOException {}
 
 
-        Parent sign_up_diet_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("goods.fxml"));
-        Scene sign_up_diet_page_scene = new Scene(sign_up_diet_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(sign_up_diet_page_scene);
-        app_stage.show();
-    }
-
-    @FXML
-    protected void handleSignUpGoodsAction(ActionEvent event) throws IOException {
-
-
-        Parent sign_up_goods_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("logIn.fxml"));
-        Scene sign_up_goods_page_scene = new Scene(sign_up_goods_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(sign_up_goods_page_scene);
-        app_stage.show();
-    }
 }
