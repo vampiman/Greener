@@ -80,19 +80,16 @@ public class PublicTransportClient {
         return j1;
     }
 
-    /**
-     * Main method that emulates the client.
-     * @param args Input for main.
-     */
-    public static void main(String[] args) {
+    //main method for testing only
+    //public static void main(String[] args) {
 
-        PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
-        JSONObject obj = PublicTransportClient.notCarButPublicTransport();
+    //    PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
+    //    JSONObject obj = PublicTransportClient.notCarButPublicTransport();
 
-        if (obj != null) {
-            client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
-        }
+    //    if (obj != null) {
+    //        client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
+    //    }
 
-        client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
-    }
+    //    client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
+    //}
 }
