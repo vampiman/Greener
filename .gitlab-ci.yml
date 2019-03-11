@@ -1,6 +1,8 @@
+
 image: java:8
 
 
 
 maven_build:
+    image: maven:3.6.0
     script: mvn verify
