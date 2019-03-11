@@ -43,6 +43,7 @@
                 <version>RELEASE</version>
                 <scope>test</scope>
             </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -58,11 +59,13 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.24.5</version>
         </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -70,10 +73,12 @@
         </dependency>
 
         <!-- JSON dependency -->
+
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-json-jackson</artifactId>
             <version>2.28</version>
+
         </dependency>
         <dependency>
             <groupId>org.powermock</groupId>
@@ -94,6 +99,8 @@
             <scope>test</scope>
         </dependency>
         <!-- End of JSON dependency -->
+
+        </dependency>
 
     </dependencies>
     <properties>
