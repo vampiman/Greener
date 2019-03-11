@@ -28,8 +28,8 @@ public class PublicTransport {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getData() {
 
-            JSONObject jo = new JSONObject();
-            jo.put("Points", integer);
+        JSONObject jo = new JSONObject();
+        jo.put("Points", integer);
 
         Response res = Response.status(200).entity(jo).build();
         return res;
