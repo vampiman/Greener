@@ -24,6 +24,8 @@ import javax.ws.rs.core.Response;
 
 public class PublicTransportClientTest {
 
+    JSONObject jo = new JSONObject().append("Points", 100);
+
     @Mock
     WebTarget target;
 
@@ -49,8 +51,6 @@ public class PublicTransportClientTest {
         client = mock(Client.class);
         publicTransportClient = new PublicTransportClient(client);
 
-        JSONObject jo = new JSONObject();
-        jo.append("Points", 100);
         res = mock(Response.class);
 
         when(res.readEntity(JSONObject.class)).thenReturn(jo);
@@ -116,10 +116,10 @@ public class PublicTransportClientTest {
     @Test
     public void postRequestIncorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Points", 100);
+        j1.append("Points", 300);
 
-        JSONObject j2 = publicTransportClient.postPublicTransport(j1, "Test");
-        Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
+        JSONObject j2 = publicTransportClient.postPublicTransport(jo, "Test");
+        Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
     /**
