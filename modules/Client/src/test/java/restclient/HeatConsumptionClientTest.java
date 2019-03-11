@@ -22,6 +22,8 @@ import javax.ws.rs.core.Response;
 
 public class HeatConsumptionClientTest {
 
+    JSONObject jo = new JSONObject().append("Points", 100);
+
     @Mock
     WebTarget target;
 
@@ -47,8 +49,7 @@ public class HeatConsumptionClientTest {
         client = mock(Client.class);
         heatConsumptionClient = new HeatConsumptionClient(client);
 
-        JSONObject jo = new JSONObject();
-        jo.append("Points", 100);
+
         res = mock(Response.class);
 
         when(res.readEntity(JSONObject.class)).thenReturn(jo);
@@ -63,6 +64,8 @@ public class HeatConsumptionClientTest {
         when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
         when(heatConsumptionClient.client.target("Test")).thenReturn(target);
     }
+
+
 
     /**
      * Tests the equality between an JSON object
@@ -114,9 +117,9 @@ public class HeatConsumptionClientTest {
     @Test
     public void postRequestIncorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Points", 100);
+        j1.append("Points", 300);
 
-        JSONObject j2 = heatConsumptionClient.postHeatConsumption(j1, "Test");
-        Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
+        JSONObject j2 = heatConsumptionClient.postHeatConsumption(jo, "Test");
+        Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 }
