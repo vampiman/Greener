@@ -28,9 +28,9 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-          <groupId>org.openjfx</groupId>
-          <artifactId>javafx-controls</artifactId>
-          <version>11.0.2</version>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
         </dependency>
 
         <dependency>
@@ -99,18 +99,18 @@
     </build>
 
     <!--<reporting>-->
-        <!--<plugins>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-                <!--<version>${checkstyle.plugin.version}</version>-->
-                <!--&lt;!&ndash; Specifying configuration here will take effect on the execution of "mvn site",-->
-                     <!--but will not take effect on the execution of "mvn checkstyle:checkstyle"  &ndash;&gt;-->
-                <!--<configuration>-->
-                    <!--<configLocation>CSE1105.checkstyle.xml</configLocation>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-        <!--</plugins>-->
+    <!--<plugins>-->
+    <!--<plugin>-->
+    <!--<groupId>org.apache.maven.plugins</groupId>-->
+    <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
+    <!--<version>${checkstyle.plugin.version}</version>-->
+    <!--&lt;!&ndash; Specifying configuration here will take effect on the execution of "mvn site",-->
+    <!--but will not take effect on the execution of "mvn checkstyle:checkstyle"  &ndash;&gt;-->
+    <!--<configuration>-->
+    <!--<configLocation>CSE1105.checkstyle.xml</configLocation>-->
+    <!--</configuration>-->
+    <!--</plugin>-->
+    <!--</plugins>-->
     <!--</reporting>-->
 
     <!--To be used for server test coverage report-->
