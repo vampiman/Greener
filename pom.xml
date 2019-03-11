@@ -66,12 +66,13 @@
             <artifactId>javafx-media</artifactId>
             <version>11.0.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/com.zenjava/javafx-maven-plugin -->
+        <!-- https://mvnrepository.com/artifact/org.jfxtras/javafx-maven-plugin -->
         <dependency>
-            <groupId>com.zenjava</groupId>
+            <groupId>org.jfxtras</groupId>
             <artifactId>javafx-maven-plugin</artifactId>
-            <version>8.8.3</version>
+            <version>1.0.0</version>
         </dependency>
+
     </dependencies>
 
     <build>
