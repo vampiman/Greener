@@ -22,11 +22,11 @@ public class VeganMeal {
      * Method for sending a JSON-based request to the server with
      * the total number of eaten vegan meals.
      */
-    public void sendVeganMeal() {
+    public void sendVeganMeal(int total) {
 
 
         JSONObject jo = new JSONObject();
-        jo.put("type","dairy");
+        jo.put("total", total);
 
         this.client.target("http://localhost:8080/server/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
