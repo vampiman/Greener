@@ -1,8 +1,21 @@
-
-image: java:8
+image: maven:3.6.0
 
 
 
 maven_build:
-    image: maven:3.6.0
-    script: mvn verify
+  stage: build
+  script: mvn compile -e
+
+test:
+  image: maven:3.6.0-jdk-10
+  stage: test
+  script: mvn clean test -e
+  allow_failure: true
+
+checkstyle:
+  stage: test
+  script:
+    - mvn checkstyle:checkstyle
+    - cat target/checkstyle-result.xml
+    - cat modules/Server/target/checkstyle-result.xml
+  allow_failure: true

@@ -6,9 +6,8 @@ import org.junit.Test;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertEquals;
-
 public class RestclientTest {
+
 
     @Test
     public void main() {

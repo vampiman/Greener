@@ -1,8 +1,12 @@
 package GUI;
 
-import javafx.animation.*;
-import javafx.event.*;
-import javafx.fxml.*;
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -17,8 +21,12 @@ import javafx.util.Duration;
 
 import restclient.VeganMeal;
 
-import javax.ws.rs.client.ClientBuilder;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class MainPageController {
     @FXML
@@ -47,16 +55,31 @@ public class MainPageController {
     private Button addButtonVeganMeal;
     @FXML
     private TextField mealPortion;
+    @FXML
+    private TextField todaysTip;
+    @FXML
+    private TextField activities;
 
 
     @FXML
-    private void handleDashboardButtonAction(ActionEvent event) throws IOException {
+    private void textGenerator(ActionEvent event) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File("deneme.txt"));
+        List<String> lines = new ArrayList<String>();
+        while(scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
+        }
+        String text = lines.get(1);
+        System.out.println(todaysTip.getText() + " is the current text");
+        todaysTip.setText(text);
+        System.out.println(todaysTip.getText() + " is the last text");
+    }
+
+    @FXML
+    private void handleDashboardButtonAction() throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
-
         parentContainer.getChildren().add(root);
-
         Timeline timeline = new Timeline();
         KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
@@ -66,6 +89,7 @@ public class MainPageController {
         });
         timeline.play();
     }
+
 
     @FXML
     private void handleActivitiesButtonAction(ActionEvent event) throws IOException {
@@ -374,11 +398,15 @@ public class MainPageController {
         Window owner = addButtonVeganMeal.getScene().getWindow();
         if(mealPortion.getText().isEmpty()) {
             LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                    "Please enter the percentage of decrease in your electricity consumption");
+                    "Please enter how much vegan meal you had");
             return;
         } else {
-            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal();
+            int portions = Integer.parseInt(mealPortion.getText());
+            System.out.println(portions);
+            VeganMeal.sendVeganMeal(portions);
+//            activities.setText("You had " + VeganMeal.getTotalVeganMeals() + " vegan meals");
         }
+
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
@@ -394,9 +422,4 @@ public class MainPageController {
         });
         timeline.play();
     }
-
-
-
-
-
 }

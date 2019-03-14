@@ -7,12 +7,12 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.StackPane?>
-<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainPageController">
+<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainPageController">
     <children>
-        <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+        <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
            <children>
                <SplitPane fx:id="splitPane" dividerPositions="0.2157190635451505" prefHeight="400.0" prefWidth="600.0">
                    <items>
@@ -23,7 +23,7 @@
                                        <Font name="Comic Sans MS Bold" size="18.0" />
                                    </font>
                                </TextField>
-                               <Button fx:id="dashboardButton" alignment="CENTER" layoutX="13.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleDashboardButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Dashboard" textFill="#ffffff" textOverrun="CLIP">
+                               <Button fx:id="dashboardButton" alignment="CENTER" layoutX="13.0" layoutY="72.0" mnemonicParsing="false" onAction="#textGenerator" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Dashboard" textFill="#ffffff" textOverrun="CLIP">
                                    <font>
                                        <Font name="Comic Sans MS Bold" size="12.0" />
                                    </font>
@@ -58,7 +58,7 @@
                                        <Font name="Comic Sans MS Bold" size="12.0" />
                                    </font>
                                </Button>
-                               <Button fx:id="logoutButton" layoutX="29.0" layoutY="327.0" mnemonicParsing="false" style="-fx-background-color: #000000;" text="LOG OUT" textFill="#00ffbc" onAction="#handleLogoutButtonAction">
+                               <Button fx:id="logoutButton" layoutX="29.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleLogoutButtonAction" style="-fx-background-color: #000000;" text="LOG OUT" textFill="#00ffbc">
                                    <font>
                                        <Font name="Comic Sans MS Bold" size="12.0" />
                                    </font>
@@ -97,6 +97,7 @@
                                       <Font name="Comic Sans MS Bold" size="15.0" />
                                    </font>
                                 </TextField>
+                              <TextField fx:id="todaysTip" alignment="TOP_LEFT" editable="false" layoutX="9.0" layoutY="53.0" prefHeight="94.0" prefWidth="150.0" style="-fx-background-color: #ebf8ee;" text="tip" />
                              </children>
                           </AnchorPane>
                           <BarChart layoutY="208.0" prefHeight="173.0" prefWidth="229.0">

@@ -5,6 +5,7 @@ import cn.hutool.json.JSONObject;
 //import java.util.Scanner;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -13,11 +14,43 @@ import javax.ws.rs.core.Response;
 
 public class LocalEater {
 
-    protected Client client;
-
-    public LocalEater(Client client) {
-        this.client = client;
-    }
+    //    /**
+    //     * Method that asks the client for information on buying local produce.
+    //     *
+    //     * @return JSONObject with the data about local produce bought: date of expiry and weight.
+    //     *          If no local produce was bought, method returns null.
+    //     */
+    //
+    //    public static JSONObject boughtLocalProduce() {
+    //        String choice = null;
+    //        String expDate = "";
+    //        String weight = "";
+    //        System.out.println("Did you buy local produce?");
+    //        Scanner sc = new Scanner(System.in);
+    //
+    //        if (sc.hasNext()) {
+    //            choice = sc.nextLine();
+    //        }
+    //
+    //        if (choice.equals("yes")) {
+    //            System.out.println("What is it's expiry date?");
+    //            if (sc.hasNext()) {
+    //                expDate = sc.nextLine();
+    //            }
+    //            System.out.println("What's the weight of the food in grams?");
+    //            if (sc.hasNext()) {
+    //                weight = sc.nextLine();
+    //            }
+    //            JSONObject jo = new JSONObject();
+    //            jo.append("Expiry Date", expDate);
+    //            jo.append("Weight", weight);
+    //
+    //            return jo;
+    //        } else {
+    //            return null;
+    //        }
+    //
+    //    }
 
     /**
      * The method creates a client and a GET request
@@ -25,10 +58,13 @@ public class LocalEater {
      *
      * @return JSON object contained in the server response.
      */
-    public JSONObject getActivityInfo(String uri) {
-        WebTarget webTarget = this.client.target(uri);
+    public static JSONObject getActivityInfo() {
 
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        Client client = ClientBuilder.newClient();
+        WebTarget webTarget = client.target("http://localhost:8080/server/webapi");
+        WebTarget target = webTarget.path("localproduce/get");
+
+        Invocation.Builder invocationBuilder = target.request(MediaType.APPLICATION_JSON);
         Response response = invocationBuilder.get(Response.class);
 
         JSONObject jo = response.readEntity(JSONObject.class);
@@ -43,9 +79,10 @@ public class LocalEater {
      *
      * @return the JSON object from server response (the one which was posted)
      */
-    public JSONObject postActivityInfo(String uri) {
+    public static JSONObject postActivityInfo() {
+        Client client = ClientBuilder.newClient();
         JSONObject j1 = new JSONObject().append("Weight", "100");
-        JSONObject j2 = client.target(uri)
+        JSONObject j2 = client.target("http://localhost:8080/server/webapi/localproduce/post")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(j1))
                 .readEntity(JSONObject.class);
@@ -53,17 +90,11 @@ public class LocalEater {
         return j2;
     }
 
-    //      Used for testing only
-    //    /**
-    //     * Main method that simulates the client.
-    //     *
-    //     * @param args Input for main
-    //     */
-    //    public static void main(String[] args) {
-    //        LocalEater le = new LocalEater(ClientBuilder.newClient());
-    //
-    //        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
-    //        le.postActivityInfo("http://localhost:8080/server/webapi/localproduce/post");
-    //    }
-
+    /**
+     * Main method that simulates the client.
+     *
+     * @param args Input for main
+     */
+    public static void main(String[] args) {
+    }
 }

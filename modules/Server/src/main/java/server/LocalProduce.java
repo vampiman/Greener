@@ -27,9 +27,9 @@ public class LocalProduce {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getData() {
+    public Response respondWithJson() {
         JSONObject jo = new JSONObject();
-        jo.append("Weight", "100");
+        jo.append("Weight", "200");
         return Response.status(Response.Status.OK).entity(jo).build();
     }
 

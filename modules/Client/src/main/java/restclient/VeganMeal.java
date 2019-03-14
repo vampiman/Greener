@@ -1,60 +1,44 @@
 package restclient;
 
+import cn.hutool.json.JSON;
 import cn.hutool.json.JSONObject;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
-
 public class VeganMeal {
 
-    protected Client client;
 
-    public VeganMeal(Client client) {
-        this.client = client;
-    }
-
-    /**
-     * Method for sending a JSON-based request to the server with
-     * the total number of eaten vegan meals.
-     */
-    public void sendVeganMeal() {
-
+    public static void sendVeganMeal(int portions) {
+        Client client = ClientBuilder.newClient();
 
         JSONObject jo = new JSONObject();
-        jo.put("type","dairy");
-        //Insert http://134.209.120.167 for online server
-        this.client.target("http://localhost:8080/server/webapi/veganmeal/post")
+        jo.put("total",portions);
+
+        client.target("http://134.209.120.167:8080/server1/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(jo));
 
     }
 
-    /**
-     * Method for sending a JSON-based request to the server in order to retrieve
-     * the total number of eaten vegan meals.
-     * @return Total number of eaten vegan meals
-     */
-    public int getTotalVeganMeals() {
-        //Client client =  ClientBuilder.newClient();
+    public static int getTotalVeganMeals() {
+        Client client =  ClientBuilder.newClient();
 
-        Response resp = this.client.target("http://localhost:8080/server/webapi/veganmeal/totalVegan")
-                .request(MediaType.APPLICATION_JSON)
-                .get(Response.class);
-
+        Response resp = client.target("http://localhost:8080/server/webapi/veganmeal/totalVegan")
+                        .request(MediaType.APPLICATION_JSON)
+                        .get(Response.class);
 
         JSONObject jo = resp.readEntity(JSONObject.class);
 
         return jo.getInt("total");
     }
 
-    //      For testing only
-    //    public static void main(String[] args) {
-    //        //VeganMeal.sendVeganMeal();
-    //        System.out.println(getTotalVeganMeals());
-    //    }
+
+    public static void main(String[] args) {
+        //VeganMeal.sendVeganMeal();
+        sendVeganMeal(0);
+    }
 }
