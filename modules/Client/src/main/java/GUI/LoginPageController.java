@@ -39,12 +39,12 @@ public class LoginPageController {
     @FXML
     private void loadSecond(ActionEvent event) throws IOException {
         Window owner = loginButton.getScene().getWindow();
-        if(nameField.getText().isEmpty()) {
+        if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
                     "Please enter your username");
             return;
         }
-        if(passwordField.getText().isEmpty()) {
+        if (passwordField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
                     "Please enter a password");
             return;
@@ -67,7 +67,17 @@ public class LoginPageController {
     }
 
     public static class AlertHelper {
-        public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+
+        /**
+         * The method which gives alert with a specific message.
+         * @param alertType the type of the alert
+         * @param owner the owner of the alert
+         * @param title the title of the alert
+         * @param message the message of the alert
+         */
+
+        public static void showAlert(Alert.AlertType alertType,
+                                     Window owner, String title, String message) {
             Alert alert = new Alert(alertType);
             alert.setTitle(title);
             alert.setHeaderText(null);

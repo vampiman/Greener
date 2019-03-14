@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import cn.hutool.json.JSONObject;
 

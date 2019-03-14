@@ -1,4 +1,4 @@
-package server;
+package Server;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class PublicTransportTest {
 
-    server.PublicTransport server = new server.PublicTransport();
+    PublicTransport server = new PublicTransport();
 
 
     /**

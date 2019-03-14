@@ -1,11 +1,12 @@
-package server;
+package Server;
 
 import cn.hutool.json.JSONObject;
 
+import java.sql.*;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.sql.*;
+
 
 @Path("veganmeal")
 @Singleton

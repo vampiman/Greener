@@ -19,15 +19,16 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
-import restclient.VeganMeal;
-
-import javax.ws.rs.client.ClientBuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.ws.rs.client.ClientBuilder;
+
+import restclient.VeganMeal;
+
 
 public class MainPageController {
     @FXML
@@ -66,7 +67,7 @@ public class MainPageController {
     private void textGenerator(ActionEvent event) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File("deneme.txt"));
         List<String> lines = new ArrayList<String>();
-        while(scanner.hasNextLine()) {
+        while (scanner.hasNextLine()) {
             lines.add(scanner.nextLine());
         }
         String text = lines.get(1);
@@ -246,7 +247,8 @@ public class MainPageController {
 
     @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("publicTransport.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("publicTransport.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
 
@@ -303,16 +305,18 @@ public class MainPageController {
         String numKilometers = null;
         String option;
         Window owner = addButtonPublicTransport.getScene().getWindow();
-        if(kilometers.getText().isEmpty()) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (kilometers.getText().isEmpty()) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the number of kilometers which you travelled");
             return;
         } else {
             numKilometers = kilometers.getText();
             System.out.println(kilometers.getText() + " kilometers");
         }
-        if(publicTransport.getValue() == null) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (publicTransport.getValue() == null) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the type of public transport");
             return;
         } else {
@@ -340,21 +344,24 @@ public class MainPageController {
     @FXML
     private void handleAddTemperatureButtonAction(ActionEvent event) throws IOException {
         Window owner = addButtonTemperature.getScene().getWindow();
-        if(beforeTemperature.getText().isEmpty()) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (beforeTemperature.getText().isEmpty()) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the temperature before decreasing");
             return;
         } else {
             System.out.println(beforeTemperature.getText() + " °C");
         }
-        if(afterTemperature.getText().isEmpty()) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (afterTemperature.getText().isEmpty()) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the temperature after decreasing");
             return;
         } else {
             System.out.println(afterTemperature.getText() + " °C");
         }
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));
+        Parent root = FXMLLoader.load(getClass()
+                .getClassLoader().getResource("addActivity.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
 
@@ -373,14 +380,16 @@ public class MainPageController {
     @FXML
     private void handleAddSolarPanelButtonAction(ActionEvent event) throws IOException {
         Window owner = addButtonSolarPanel.getScene().getWindow();
-        if(electricityPercentage.getText().isEmpty()) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (electricityPercentage.getText().isEmpty()) {
+            LoginPageController.AlertHelper.showAlert(
+                    Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the percentage of decrease in your electricity consumption");
             return;
         } else {
             System.out.println("% " + electricityPercentage.getText());
         }
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));
+        Parent root = FXMLLoader.load(getClass()
+                .getClassLoader().getResource("addActivity.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
 
@@ -399,8 +408,9 @@ public class MainPageController {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButtonVeganMeal.getScene().getWindow();
-        if(mealPortion.getText().isEmpty()) {
-            LoginPageController.AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+        if (mealPortion.getText().isEmpty()) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter how much vegan meal you had");
             return;
         } else {
@@ -410,7 +420,8 @@ public class MainPageController {
 
         }
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("addActivity.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
 
