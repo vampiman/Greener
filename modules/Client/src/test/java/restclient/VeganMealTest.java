@@ -66,7 +66,7 @@ public class VeganMealTest {
      */
     @Test
     public void sendVeganMeal() {
-        veganMeal.sendVeganMeal();
+        veganMeal.sendVeganMeal(1);
     }
 
     /**

@@ -21,6 +21,7 @@ import javafx.util.Duration;
 
 import restclient.VeganMeal;
 
+import javax.ws.rs.client.ClientBuilder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -94,10 +95,12 @@ public class MainPageController {
     @FXML
     private void handleActivitiesButtonAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("activities.fxml"));
+
         Scene scene = dashboardButton.getScene();
         root.translateYProperty().set(scene.getHeight());
 
         parentContainer.getChildren().add(root);
+
 
         Timeline timeline = new Timeline();
         KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
@@ -403,8 +406,8 @@ public class MainPageController {
         } else {
             int portions = Integer.parseInt(mealPortion.getText());
             System.out.println(portions);
-            VeganMeal.sendVeganMeal(portions);
-//            activities.setText("You had " + VeganMeal.getTotalVeganMeals() + " vegan meals");
+            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+
         }
 
         Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));

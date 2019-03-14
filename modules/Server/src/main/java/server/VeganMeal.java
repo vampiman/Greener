@@ -5,7 +5,6 @@ import cn.hutool.json.JSONObject;
 import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.sql.*;
 
 @Path("veganmeal")
@@ -26,12 +25,12 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt() throws ClassNotFoundException, SQLException {
+    public void postIt(VeganMealResource vm) throws ClassNotFoundException, SQLException {
             getDBConnection();
 
-
+            System.out.println(vm.getTotal());
             Statement st = dbConnection.createStatement();
-            st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + 1 WHERE Name = 'Robert'");
+            st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + " + vm.getTotal() + " WHERE Name = 'Robert'");
 
             st.close();
             dbConnection.close();
@@ -42,7 +41,7 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAll() throws ClassNotFoundException, SQLException {
+    public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
 
 
             getDBConnection();
@@ -54,13 +53,17 @@ public class VeganMeal {
             rs.next();
             int total = rs.getInt("Vegan_meal");
 
+            VeganMealResource vm = new VeganMealResource();
+
+            vm.setTotal(total);
+
             st.close();
             dbConnection.close();
             JSONObject jo = new JSONObject();
             jo.put("total", total);
             st.close();
             dbConnection.close();
-            return Response.status(Response.Status.OK).entity(jo).build();
+            return vm;
 
 
     }
