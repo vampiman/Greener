@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import javafx.util.Duration;
@@ -29,10 +30,21 @@ public class LoginPageController {
 
     @FXML
     private Button loginButton;
+
+    @FXML
+    private Button signUpButton;
+
+    @FXML
+    private Button signUpPageButton;
+
     @FXML
     private GridPane anchorRoot;
+
     @FXML
     private GridPane parentContainer;
+
+    @FXML
+    private AnchorPane rootContainer;
 
 
 
@@ -62,6 +74,44 @@ public class LoginPageController {
         timeline.getKeyFrames().add(kf);
         timeline.setOnFinished(t -> {
             parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+    }
+
+    @FXML
+    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("signUp.fxml"));
+        Scene scene = signUpButton.getScene();
+        root.translateYProperty().set(scene.getHeight());
+
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+    }
+
+    @FXML
+    private void handleSignUpPageButtonAction(ActionEvent event) throws IOException {
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("loginPage.fxml"));
+        Scene scene = signUpPageButton.getScene();
+        root.translateYProperty().set(scene.getHeight());
+
+        rootContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            rootContainer.getChildren().remove(anchorRoot);
         });
         timeline.play();
     }
