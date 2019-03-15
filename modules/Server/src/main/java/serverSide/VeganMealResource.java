@@ -1,4 +1,4 @@
-package server;
+package serverside;
 
 public class VeganMealResource {
 

@@ -41,7 +41,7 @@ public class Restclient {
 
         getUserName();
 
-        String url = "http://localhost:8080/server/webapi/myresource/connect";
+        String url = "http://localhost:8080/serverside/webapi/myresource/connect";
 
         Client client = ClientBuilder.newClient();
 

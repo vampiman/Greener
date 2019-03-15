@@ -70,7 +70,7 @@ public class HeatConsumptionClientTest {
     /**
      * Tests the equality between an JSON object
      * and the JSON object received from the mock
-     * server through a get-request.
+     * serverside through a get-request.
      * Expects equal.
      */
     @Test
@@ -84,7 +84,7 @@ public class HeatConsumptionClientTest {
     /**
      * Tests the equality between an JSON object
      * and the JSON object received from the mock
-     * server through a get-request.
+     * serverside through a get-request.
      * Expects unequal.
      */
     @Test

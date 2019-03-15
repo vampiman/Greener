@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import restclient.VeganMeal;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.util.List;
 import java.util.Scanner;
 import javax.ws.rs.client.ClientBuilder;
 
-import restclient.VeganMeal;
+
 
 
 public class MainPageController {

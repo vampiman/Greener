@@ -1,4 +1,4 @@
-package restclient;
+package gui;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

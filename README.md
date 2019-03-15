@@ -138,23 +138,23 @@ The option I hope is finishing this project successfully and I think we are goin
 
 ### Goals
 
-What therefore I hope to achieve during the OOP Project is improving in computer science, namely server programming, and my communicational skills within a team.
+What therefore I hope to achieve during the OOP Project is improving in computer science, namely serverside programming, and my communicational skills within a team.
 
 ### Motivation behind these goals
 
 In the future I would like to work in the field of computer science. I know I will be working with people, and that’s the reason why working in a team is my priority skill to improve. I believe that an efficient team can really make a great job at delivering the best product possible.
 
-Despite the fact that most of my future projects may be group work, I would like to posses the skills to be able to support any part of development. The thing I mainly lack in general knowledge is the server-side programming, which I hope to learn about and practice during OOP Project.
+Despite the fact that most of my future projects may be group work, I would like to posses the skills to be able to support any part of development. The thing I mainly lack in general knowledge is the serverside-side programming, which I hope to learn about and practice during OOP Project.
 
 ### Current stage
 
 Currently I am not getting much teamwork experience outside school, but while at school I have started improving by teaming up with other people, even people I didn’t know before, and managed to make everything work. Our communication and results were the best they could have been in all of our group assignments. I think I am on the right track, and I expect OOP to help me even more.
 
-In terms of the server-side programming skill, I haven’t coded it from scratch, I use libraries that take care of this when I am working on my personal projects, such as the iOS game applications. So far I have encountered server programming at school only at Web & Database Technology course when programming a web game, but again, I hope that OOP Project will offer me more room to practice this skill.
+In terms of the serverside-side programming skill, I haven’t coded it from scratch, I use libraries that take care of this when I am working on my personal projects, such as the iOS game applications. So far I have encountered serverside programming at school only at Web & Database Technology course when programming a web game, but again, I hope that OOP Project will offer me more room to practice this skill.
 
 ### Course of action 
 
-I already started communicating with my team in order to set our general course of action. In terms of server side programming, I already started my research on how to create a server and integrate its workings into the app. I hope to be able to maintain my well-balanced time management and, while this will be my priority alongside other subjects, work on my other projects as well.
+I already started communicating with my team in order to set our general course of action. In terms of serverside side programming, I already started my research on how to create a serverside and integrate its workings into the app. I hope to be able to maintain my well-balanced time management and, while this will be my priority alongside other subjects, work on my other projects as well.
 
 
 # Robert Mînea

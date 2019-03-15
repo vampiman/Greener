@@ -24,10 +24,10 @@ public class Biker {
 
     /**
      * The method creates a client and a GET request
-     * for retrieval of data on the server in a JSON file.
+     * for retrieval of data on the serverside in a JSON file.
      *
      * @param uri specifies the URI of the resource
-     * @return JSON object contained in the server response.
+     * @return JSON object contained in the serverside response.
      */
     public JSONObject getActivityInfo(String uri) {
         WebTarget webTarget = this.client.target(uri);
@@ -43,10 +43,10 @@ public class Biker {
 
     /**
      * The method creates a client and a POST request
-     * for upload of the entered data to the server as JSON.
+     * for upload of the entered data to the serverside as JSON.
      *
      * @param uri specifies the URI of the resource
-     * @return JSON object from server response (the one which was posted)
+     * @return JSON object from serverside response (the one which was posted)
      */
     public JSONObject postActivityInfo(String uri) {
         JSONObject j1 = new JSONObject().append("Distance", "10");
@@ -67,7 +67,7 @@ public class Biker {
     public static void main(String[] args) {
         Biker biker = new Biker(ClientBuilder.newClient());
 
-        biker.getActivityInfo("http://localhost:8080/server/webapi/bike/get");
-        biker.postActivityInfo("http://localhost:8080/server/webapi/bike/post");
+        biker.getActivityInfo("http://localhost:8080/serverside/webapi/bike/get");
+        biker.postActivityInfo("http://localhost:8080/serverside/webapi/bike/post");
     }
 }

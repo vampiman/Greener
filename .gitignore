@@ -3,7 +3,7 @@ target/
 .idea/
 OOP-Project.iml
 Client.iml
-server.iml
+serverside.iml
 deneme.txt
 pom.xml.tag
 pom.xml.releaseBackup

@@ -1,31 +1,10 @@
-package server;
+package serverside;
 
 import cn.hutool.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public class LocalProduceTest {
-
-    private LocalProduce lp;
-    private JSONObject joCor; //correct JSON object for response testing
-    private JSONObject joIncor; //incorrect JSON object for response testing
-
-
-    /**
-     * Sets up all the variables
-     * needed for testing before
-     * the tests are executed.
-     */
-    @Before
-    public void setup() {
-        lp = new LocalProduce();
-
-        joCor = new JSONObject();
-        joCor.append("Weight", "100");
-        joIncor = new JSONObject();
-        joIncor.append("Weight", "200");
-    }
+public class BikeTest {
 
     /**
      * Tests the equality between an arbitrary
@@ -35,8 +14,11 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataCorrectEntity() {
-        Assert.assertEquals(lp.getData().getEntity(),
-                joCor);
+        JSONObject jo = new JSONObject();
+        jo.append("Distance", "10");
+        Bike bikeServer = new Bike();
+        Assert.assertEquals(bikeServer.getData().getEntity(),
+                jo);
     }
 
     /**
@@ -47,8 +29,11 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataIncorrectEntity() {
-        Assert.assertNotEquals(lp.getData().getEntity(),
-                joIncor);
+        JSONObject jo = new JSONObject();
+        jo.append("Distance", "1000");
+        Bike bikeServer = new Bike();
+        Assert.assertNotEquals(bikeServer.getData().getEntity(),
+                jo);
     }
 
     /**
@@ -59,7 +44,8 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataCorrectStatus() {
-        Assert.assertEquals(lp.getData().getStatus(), 200);
+        Bike bikeServer = new Bike();
+        Assert.assertEquals(bikeServer.getData().getStatus(), 200);
     }
 
     /**
@@ -70,7 +56,8 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataIncorrectStatus() {
-        Assert.assertNotEquals(lp.getData().getStatus(), 404);
+        Bike bikeServer = new Bike();
+        Assert.assertNotEquals(bikeServer.getData().getStatus(), 404);
     }
 
     /**
@@ -81,8 +68,11 @@ public class LocalProduceTest {
      */
     @Test
     public void postDataCorrectEntity() {
-        Assert.assertEquals(lp.postData(joCor).getEntity(),
-                joCor);
+        JSONObject jo = new JSONObject();
+        jo.append("Distance", "10");
+        Bike bikeServer = new Bike();
+        Assert.assertEquals(bikeServer.postData(jo).getEntity(),
+                jo);
     }
 
     /**
@@ -93,8 +83,13 @@ public class LocalProduceTest {
      */
     @Test
     public void postDataIncorrectEntity() {
-        Assert.assertNotEquals(lp.postData(joCor).getEntity(),
-                joIncor);
+        JSONObject jo1 = new JSONObject();
+        jo1.append("Distance", "10");
+        JSONObject jo2 = new JSONObject();
+        jo2.append("Distnce", "1011");
+        Bike bikeServer = new Bike();
+        Assert.assertNotEquals(bikeServer.postData(jo1).getEntity(),
+                jo2);
     }
 
     /**
@@ -105,7 +100,10 @@ public class LocalProduceTest {
      */
     @Test
     public void postDataCorrectStatus() {
-        Assert.assertEquals(lp.postData(joCor).getStatus(),
+        JSONObject jo = new JSONObject();
+        jo.append("Distance", "10");
+        Bike bikeServer = new Bike();
+        Assert.assertEquals(bikeServer.postData(jo).getStatus(),
                 200);
     }
 
@@ -117,7 +115,10 @@ public class LocalProduceTest {
      */
     @Test
     public void postDataIncorrectStatus() {
-        Assert.assertNotEquals(lp.postData(joCor).getStatus(),
+        JSONObject jo = new JSONObject();
+        jo.append("Distance", "10");
+        Bike bikeServer = new Bike();
+        Assert.assertNotEquals(bikeServer.postData(jo).getStatus(),
                 404);
     }
 }

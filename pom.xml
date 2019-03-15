@@ -145,7 +145,7 @@
         </plugins>
     </build>
 
-    <!--To be used for server test coverage report-->
+    <!--To be used for serverside test coverage report-->
     <reporting>
         <plugins>
             <!-- Normally, we take off the dependency report, saves time. -->

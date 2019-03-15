@@ -1,10 +1,20 @@
-package server;
+package serverside;
 
 import cn.hutool.json.JSONObject;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.inject.Singleton;
-import javax.ws.rs.*;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 
@@ -14,7 +24,12 @@ public class VeganMeal {
 
     private Connection dbConnection;
 
-    public void getDBConnection() throws ClassNotFoundException, SQLException {
+    /**
+     * Method for initializing the connection with the database server through jdbc.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
+     */
+    public void getDbConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
         String user = "sammy";
         String pass = "temporary";
@@ -23,11 +38,18 @@ public class VeganMeal {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+
+    /**
+     * Endpoint /veganmeal/post that modifies the number of eaten vegan meals in
+     * the database.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
+     */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
     public void postIt(VeganMealResource vm) throws ClassNotFoundException, SQLException {
-        getDBConnection();
+        getDbConnection();
 
         System.out.println(vm.getTotal());
         Statement st = dbConnection.createStatement();
@@ -40,13 +62,21 @@ public class VeganMeal {
 
     }
 
+
+    /**
+     * Endpoint /veganmeal/totalVegan that returns the total number of
+     * vegan meals consumed.
+     * @return Total number of vegan meals consumed
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
+     */
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
     public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
 
 
-        getDBConnection();
+        getDbConnection();
 
 
         Statement st = dbConnection.createStatement();

@@ -1,4 +1,4 @@
-package server;
+package serverside;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -9,12 +9,12 @@ import org.junit.Test;
 
 public class HeatConsumptionTest {
 
-    server.HeatConsumption server = new server.HeatConsumption();
+    serverside.HeatConsumption server = new serverside.HeatConsumption();
 
 
     /**
-     * Tests if the status of the response from the server
-     * is 200 (OK) after performing an get-request on the server.
+     * Tests if the status of the response from the serverside
+     * is 200 (OK) after performing an get-request on the serverside.
      * Expects equal.
      */
     @Test
@@ -23,8 +23,8 @@ public class HeatConsumptionTest {
     }
 
     /**
-     * Tests if the status of the response from the server
-     * is 200 (OK) after performing an post-request on the server.
+     * Tests if the status of the response from the serverside
+     * is 200 (OK) after performing an post-request on the serverside.
      * Expects equal.
      */
     @Test
@@ -35,7 +35,7 @@ public class HeatConsumptionTest {
 
     /**
      * Tests if the JSON object created in the test
-     * is the same as the received JSON from the server after making
+     * is the same as the received JSON from the serverside after making
      * an get-request.
      * Expects equal.
      */
@@ -48,7 +48,7 @@ public class HeatConsumptionTest {
     }
 
     /**
-     * Tests if the JSON object that is send to the server using a post request
+     * Tests if the JSON object that is send to the serverside using a post request
      * is the same as the object that is send in the response of the request.
      * Expects equal.
      */
@@ -60,8 +60,8 @@ public class HeatConsumptionTest {
     }
 
     /**
-     * Tests if the status of the response from the server
-     * is 404 (Method not found) after performing an get-request on the server.
+     * Tests if the status of the response from the serverside
+     * is 404 (Method not found) after performing an get-request on the serverside.
      * Expects unequal.
      */
     @Test
@@ -70,8 +70,8 @@ public class HeatConsumptionTest {
     }
 
     /**
-     * Tests if the status of the response from the server
-     * is 404 (Method not found) after performing an post-request on the server.
+     * Tests if the status of the response from the serverside
+     * is 404 (Method not found) after performing an post-request on the serverside.
      * Expects unequal.
      */
     @Test
@@ -82,7 +82,7 @@ public class HeatConsumptionTest {
 
     /**
      * Tests if the JSON object created in the test
-     * is the same as the received JSON from the server after making
+     * is the same as the received JSON from the serverside after making
      * an get-request.
      * Expects unequal.
      */
@@ -96,7 +96,7 @@ public class HeatConsumptionTest {
 
     /**
      * Tests if an JSON object different from the JSON object
-     * that is send to the server using a post-request
+     * that is send to the serverside using a post-request
      * is the same as the object that is send in the response of the request.
      * Expects unequal.
      */

@@ -7,12 +7,12 @@
     <artifactId>Server</artifactId>
     <packaging>war</packaging>
     <version>0.1-SNAPSHOT</version>
-    <name>server</name>
+    <name>serverside</name>
 
 
 
     <build>
-        <finalName>server</finalName>
+        <finalName>serverside</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

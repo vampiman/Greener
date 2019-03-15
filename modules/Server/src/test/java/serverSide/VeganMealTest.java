@@ -1,4 +1,4 @@
-//package server;
+//package serverside;
 //
 //import cn.hutool.json.JSON;
 //import cn.hutool.json.JSONObject;
