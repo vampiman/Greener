@@ -25,16 +25,21 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet-core:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.3.0-b05" level="project" />
-    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-server:2.9.1" level="project" />
+    <orderEntry type="module" module-name="Client" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-client:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-api:2.3.0-b05" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-utils:2.3.0-b05" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2.external:aopalliance-repackaged:2.3.0-b05" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.hk2:hk2-locator:2.3.0-b05" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.18.1-GA" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:12-ea+14" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:12-ea+14" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:12-ea+14" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:12-ea+14" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.containers:jersey-container-servlet-core:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.hk2.external:javax.inject:2.3.0-b05" level="project" />
+    <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-server:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.annotation:javax.annotation-api:1.2" level="project" />
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.core:jersey-common:2.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.glassfish.jersey.bundles.repackaged:jersey-guava:2.9.1" level="project" />
@@ -55,10 +60,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-jaxb-annotations:2.9.8" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:11.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:11.0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:11.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-api-mockito2:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-api-support:2.0.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.powermock:powermock-reflect:2.0.0" level="project" />

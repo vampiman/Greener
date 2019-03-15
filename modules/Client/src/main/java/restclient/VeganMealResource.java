@@ -8,6 +8,7 @@ public class VeganMealResource {
 
     }
 
+
     public int getTotal() {
         return total;
     }
