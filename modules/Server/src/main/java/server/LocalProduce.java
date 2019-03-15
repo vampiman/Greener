@@ -28,8 +28,9 @@ public class LocalProduce {
 
     /**
      * Method for initializing the connection with the database server through jdbc.
+     *
      * @throws ClassNotFoundException Class not found error
-     * @throws SQLException SQL-related error
+     * @throws SQLException           SQL-related error
      */
     public void getDbConnection() throws ClassNotFoundException, SQLException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
@@ -42,9 +43,10 @@ public class LocalProduce {
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "JSON" media type.
-     * @throws ClassNotFoundException Class not found error
-     * @throws SQLException SQL-related error
+     *
      * @return JSONObject returned as an OK response.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException           SQL-related error
      */
     @GET
     @Path("get")
@@ -80,9 +82,10 @@ public class LocalProduce {
     /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on buying local produce.
-     * @throws ClassNotFoundException Class not found error
-     * @throws SQLException SQL-related error
+     *
      * @return JSONObject returned as an OK response.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException           SQL-related error
      */
     @POST
     @Path("post")
