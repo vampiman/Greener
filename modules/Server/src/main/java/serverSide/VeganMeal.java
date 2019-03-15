@@ -1,7 +1,6 @@
 package serverside;
 
 import cn.hutool.json.JSONObject;
-import restclient.VeganMealResource;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

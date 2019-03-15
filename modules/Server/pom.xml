@@ -53,11 +53,11 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>group-template</groupId>
-            <artifactId>Client</artifactId>
-            <version>0.1-SNAPSHOT</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>group-template</groupId>-->
+            <!--<artifactId>Client</artifactId>-->
+            <!--<version>0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>

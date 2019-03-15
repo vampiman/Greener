@@ -3,6 +3,7 @@ target/
 .idea/
 OOP-Project.iml
 Client.iml
+Server.iml
 serverside.iml
 deneme.txt
 pom.xml.tag
