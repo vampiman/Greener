@@ -23,7 +23,7 @@ import javax.ws.rs.core.Response;
 
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(VeganMeal.class)
+@PrepareForTest(SolarPanels.class)
 public class SolarPanelsTest {
 
 
@@ -35,7 +35,7 @@ public class SolarPanelsTest {
     private ResultSet rs;
 
     @InjectMocks
-    private VeganMeal veganMeal;
+    private SolarPanels veganMeal;
 
     /**
      * Setup method for the test methods that depend on mocks.
@@ -57,14 +57,14 @@ public class SolarPanelsTest {
      */
     @Test
     public void postAmount() throws SQLException, ClassNotFoundException {
-        veganMeal = new VeganMeal();
+        veganMeal = new SolarPanels();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
                 .getConnection(
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        veganMeal.postIt();
+        veganMeal.postAmount();
 
     }
 
@@ -76,7 +76,7 @@ public class SolarPanelsTest {
      */
     @Test
     public void getAmount() throws SQLException, ClassNotFoundException {
-        veganMeal = new VeganMeal();
+        veganMeal = new SolarPanels();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
                 .getConnection(
@@ -90,7 +90,7 @@ public class SolarPanelsTest {
 
         Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Response value = veganMeal.getAll();
+        Response value = veganMeal.getAmount();
 
         System.out.println(value.getEntity());
         Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
