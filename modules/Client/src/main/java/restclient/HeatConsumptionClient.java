@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * Class for all client-side necessities to send heat consumption information
- * to the server.
+ * to the serverside.
  */
 
 public class HeatConsumptionClient {
@@ -24,8 +24,8 @@ public class HeatConsumptionClient {
     }
 
     /**
-     * Acquires JSON file from server via get-request.
-     * @return JSON object with information gotten from get-request to server.
+     * Acquires JSON file from serverside via get-request.
+     * @return JSON object with information gotten from get-request to serverside.
      */
     public JSONObject getHeatConsumption(String uri) {
 
@@ -41,10 +41,10 @@ public class HeatConsumptionClient {
     }
 
     /**
-     * Post a JSON file to the server through a post-request.
-     * @param info JSONObject which has to be send to the server
-     * @param uri to the URI of the resource of the server which handles the post-request.
-     * @return JSONObject send back from the server.
+     * Post a JSON file to the serverside through a post-request.
+     * @param info JSONObject which has to be send to the serverside
+     * @param uri to the URI of the resource of the serverside which handles the post-request.
+     * @return JSONObject send back from the serverside.
      */
     public JSONObject postHeatConsumption(JSONObject info, String uri) {
 

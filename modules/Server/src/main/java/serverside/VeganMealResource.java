@@ -1,8 +1,12 @@
-package server;
+package serverside;
 
 public class VeganMealResource {
 
     int total;
+
+    public VeganMealResource(){
+
+    }
 
 
     public int getTotal() {
@@ -14,8 +18,6 @@ public class VeganMealResource {
     }
 
 
-    public VeganMealResource(){
 
-    }
 
 }

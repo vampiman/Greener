@@ -1,4 +1,4 @@
-package GUI;
+package gui;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -9,20 +9,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-
 import javafx.scene.control.Button;
-
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 import javafx.util.Duration;
 import restclient.VeganMeal;
 
-
-import javax.ws.rs.client.ClientBuilder;
 import java.io.IOException;
+import javax.ws.rs.client.ClientBuilder;
+
 
 
 public class AddActivityController {
@@ -35,18 +32,17 @@ public class AddActivityController {
     @FXML
     private TextField activities;
 
-    int num;
-
-
     @FXML
     public void initialize() {
-        activities.setText("You had " + new VeganMeal(ClientBuilder.newClient()).getTotalVeganMeals() + " vegan meals");
+        activities.setText("You had " + new VeganMeal(ClientBuilder.newClient())
+                .getTotalVeganMeals() + " vegan meals");
     }
 
 
     @FXML
     private void handleDashboardButtonAction() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("dashboard.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
         parentContainer.getChildren().add(root);

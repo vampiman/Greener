@@ -19,7 +19,7 @@ public class VeganMeal {
     }
 
     /**
-     * Method for sending a JSON-based request to the server with
+     * Method for sending a JSON-based request to the serverside with
      * the total number of eaten vegan meals.
      */
     public void sendVeganMeal(int total) {
@@ -28,21 +28,23 @@ public class VeganMeal {
         JSONObject jo = new JSONObject();
         jo.put("total", total);
 
-        this.client.target("http://localhost:8080/server/webapi/veganmeal/post")
+        VeganMealResource vm = new VeganMealResource();
+        vm.setTotal(total);
+
+        this.client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(jo));
+                .post(Entity.json(vm));
 
     }
 
     /**
-     * Method for sending a JSON-based request to the server in order to retrieve
+     * Method for sending a JSON-based request to the serverside in order to retrieve
      * the total number of eaten vegan meals.
      * @return Total number of eaten vegan meals
      */
     public int getTotalVeganMeals() {
         //Client client =  ClientBuilder.newClient();
-
-        Response resp = this.client.target("http://localhost:8080/server/webapi/veganmeal/totalVegan")
+        Response resp = this.client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan")
                 .request(MediaType.APPLICATION_JSON)
                 .get(Response.class);
 

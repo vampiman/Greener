@@ -1,4 +1,4 @@
-package server;
+package serverside;
 
 import cn.hutool.json.JSONObject;
 
@@ -12,12 +12,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- * Root resource (exposed at "publictransport" path).
+ * Root resource (exposed at "heatconsumption" path).
  */
-@Path("publictransport")
-public class PublicTransport {
-
-    private int integer = 100;
+@Path("heatconsumption")
+public class HeatConsumption {
 
     /**
      * Handles the GET-requests from the client.
@@ -29,7 +27,7 @@ public class PublicTransport {
     public Response getData() {
 
         JSONObject jo = new JSONObject();
-        jo.put("Points", integer);
+        jo.put("Points", 100);
 
         Response res = Response.status(200).entity(jo).build();
         return res;

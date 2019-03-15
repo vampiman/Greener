@@ -7,12 +7,13 @@
     <artifactId>Server</artifactId>
     <packaging>war</packaging>
     <version>0.1-SNAPSHOT</version>
-    <name>server</name>
+    <name>serverside</name>
 
 
 
     <build>
-        <finalName>server</finalName>
+
+        <finalName>serverside</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -49,11 +50,14 @@
 
 
         </dependencies>
-
-
     </dependencyManagement>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>group-template</groupId>-->
+            <!--<artifactId>Client</artifactId>-->
+            <!--<version>0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.glassfish.jersey.containers</groupId>
             <artifactId>jersey-container-servlet-core</artifactId>
