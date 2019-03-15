@@ -5,6 +5,9 @@ import org.junit.Test;
 
 public class VeganMealResourceTest {
 
+    /**
+     * Test for the "total" field getter.
+     */
     @Test
     public void getTotal() {
         VeganMealResource vm = new VeganMealResource();
@@ -12,6 +15,9 @@ public class VeganMealResourceTest {
         Assert.assertEquals(vm.getTotal(),2);
     }
 
+    /**
+     * Test for the "total" field setter.
+     */
     @Test
     public void setTotal() {
         VeganMealResource vm = new VeganMealResource();
