@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import javax.inject.Singleton;
 import javax.ws.rs.GET;

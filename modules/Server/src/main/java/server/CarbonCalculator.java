@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 /**
  *  Class implementing a carbon footprint calculator that takes in consideration

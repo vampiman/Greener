@@ -1,6 +1,5 @@
 package restclient;
 
-import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -35,27 +33,36 @@ public class Controller {
     @FXML
     protected void handleLoginButtonAction(ActionEvent event) throws IOException {
         Window owner = loginButton.getScene().getWindow();
-        if(nameField.getText().isEmpty()) {
+        if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
                     "Please enter your username");
             return;
         }
-        if(passwordField.getText().isEmpty()) {
+        if (passwordField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
                     "Please enter a password");
             return;
         }
 
-        Parent add_activity_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
-        Scene add_activity_page_scene = new Scene(add_activity_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(add_activity_page_scene);
-        app_stage.show();
+        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("dashboard.fxml"));
+        Scene addActivityPageScene = new Scene(addActivityPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(addActivityPageScene);
+        appStage.show();
     }
 
     public static class AlertHelper {
 
-        public static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {
+        /**
+         * The method which gives alert with a specific message.
+         * @param alertType the type of the alert
+         * @param owner the owner of the alert
+         * @param title the title of the alert
+         * @param message the message of the alert
+         */
+        public static void showAlert(Alert.AlertType alertType,
+                                     Window owner, String title, String message) {
             Alert alert = new Alert(alertType);
             alert.setTitle(title);
             alert.setHeaderText(null);
@@ -67,73 +74,82 @@ public class Controller {
 
     @FXML
     protected void handleSignupButtonAction(ActionEvent event) throws IOException {
-        Parent add_activity_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("signup.fxml"));
-        Scene add_activity_page_scene = new Scene(add_activity_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(add_activity_page_scene);
-        app_stage.show();
+        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("signup.fxml"));
+        Scene addActivityPageScene = new Scene(addActivityPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(addActivityPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleDashboardButtonAction(ActionEvent event) throws IOException {
-        Parent dashboard_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
-        Scene dashboard_page_scene = new Scene(dashboard_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(dashboard_page_scene);
-        app_stage.show();
+        Parent dashboardPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("dashboard.fxml"));
+        Scene dashboardPageScene = new Scene(dashboardPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(dashboardPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        Parent groups_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("activities.fxml"));
-        Scene groups_page_scene = new Scene(groups_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(groups_page_scene);
-        app_stage.show();
+        Parent groupsPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("activities.fxml"));
+        Scene groupsPageScene = new Scene(groupsPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(groupsPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleGroupsButtonAction(ActionEvent event) throws IOException {
-        Parent groups_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("groups.fxml"));
-        Scene groups_page_scene = new Scene(groups_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(groups_page_scene);
-        app_stage.show();
+        Parent groupsPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("groups.fxml"));
+        Scene groupsPageScene = new Scene(groupsPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(groupsPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        Parent achievements_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("achievements.fxml"));
-        Scene achievements_page_scene = new Scene(achievements_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(achievements_page_scene);
-        app_stage.show();
+        Parent achievementsPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("achievements.fxml"));
+        Scene achievementsPageScene = new Scene(achievementsPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(achievementsPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        Parent scoreboard_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("scoreboard.fxml"));
-        Scene scoreboard_page_scene = new Scene(scoreboard_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(scoreboard_page_scene);
-        app_stage.show();
+        Parent scoreboardPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("scoreboard.fxml"));
+        Scene scoreboardPageScene = new Scene(scoreboardPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(scoreboardPageScene);
+        appStage.show();
     }
+
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        Parent you_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("youPage.fxml"));
-        Scene you_page_scene = new Scene(you_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(you_page_scene);
-        app_stage.show();
+        Parent youPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("youPage.fxml"));
+        Scene youPageScene = new Scene(youPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(youPageScene);
+        appStage.show();
     }
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        Parent add_activity_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("addActivity.fxml"));
-        Scene add_activity_page_scene = new Scene(add_activity_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(add_activity_page_scene);
-        app_stage.show();
+        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("addActivity.fxml"));
+        Scene addActivityPageScene = new Scene(addActivityPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(addActivityPageScene);
+        appStage.show();
     }
 
     @FXML
@@ -144,11 +160,12 @@ public class Controller {
 
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
-        Parent add_activity_page_parent = FXMLLoader.load(getClass().getClassLoader().getResource("loginPage.fxml"));
-        Scene add_activity_page_scene = new Scene(add_activity_page_parent);
-        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        app_stage.setScene(add_activity_page_scene);
-        app_stage.show();
+        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("loginPage.fxml"));
+        Scene addActivityPageScene = new Scene(addActivityPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(addActivityPageScene);
+        appStage.show();
     }
 
 

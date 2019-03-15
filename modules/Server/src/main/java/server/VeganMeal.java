@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 import cn.hutool.json.JSONObject;
 
@@ -19,7 +19,7 @@ public class VeganMeal {
         String user = "sammy";
         String pass = "temporary";
 
-//        Class.forName("com.mysql.jdbc.Driver");
+        //        Class.forName("com.mysql.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -27,14 +27,15 @@ public class VeganMeal {
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
     public void postIt(VeganMealResource vm) throws ClassNotFoundException, SQLException {
-            getDBConnection();
+        getDBConnection();
 
-            System.out.println(vm.getTotal());
-            Statement st = dbConnection.createStatement();
-            st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + " + vm.getTotal() + " WHERE Name = 'Robert'");
+        System.out.println(vm.getTotal());
+        Statement st = dbConnection.createStatement();
+        st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
+                + vm.getTotal() + " WHERE Name = 'Robert'");
 
-            st.close();
-            dbConnection.close();
+        st.close();
+        dbConnection.close();
 
 
     }
@@ -45,26 +46,26 @@ public class VeganMeal {
     public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
 
 
-            getDBConnection();
+        getDBConnection();
 
 
-            Statement st = dbConnection.createStatement();
-            ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
+        Statement st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
 
-            rs.next();
-            int total = rs.getInt("Vegan_meal");
+        rs.next();
+        int total = rs.getInt("Vegan_meal");
 
-            VeganMealResource vm = new VeganMealResource();
+        VeganMealResource vm = new VeganMealResource();
 
-            vm.setTotal(total);
+        vm.setTotal(total);
 
-            st.close();
-            dbConnection.close();
-            JSONObject jo = new JSONObject();
-            jo.put("total", total);
-            st.close();
-            dbConnection.close();
-            return vm;
+        st.close();
+        dbConnection.close();
+        JSONObject jo = new JSONObject();
+        jo.put("total", total);
+        st.close();
+        dbConnection.close();
+        return vm;
 
 
     }

@@ -1,4 +1,4 @@
-package Server;
+package server;
 
 public class VeganMealResource {
 
@@ -7,6 +7,7 @@ public class VeganMealResource {
     public VeganMealResource(){
 
     }
+
 
     public int getTotal() {
         return total;
