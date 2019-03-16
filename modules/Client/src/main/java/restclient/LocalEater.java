@@ -1,10 +1,11 @@
 package restclient;
 
 import cn.hutool.json.JSONObject;
-
-//import java.util.Scanner;
+import io.jsonwebtoken.Jwts;
+import server.KeyGen;
 
 import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -13,10 +14,23 @@ import javax.ws.rs.core.Response;
 
 public class LocalEater {
 
-    protected Client client;
+    private Client client;
+    private String token;
+    private String credentials;
 
+
+    /**
+     * Constructor for LocalEater.
+     * @param client to use as the client for requests to the service
+     */
     public LocalEater(Client client) {
         this.client = client;
+        this.token = null;
+        this.credentials = Jwts.builder()
+                .claim("username", "Nat")
+                .claim("password", "123" )
+                .signWith(KeyGen.KEY)
+                .compact();
     }
 
     /**
@@ -26,12 +40,31 @@ public class LocalEater {
      * @return JSON object contained in the server response.
      */
     public JSONObject getActivityInfo(String uri) {
+        System.out.println("Token is " + token);
+        System.out.println("Credentials are " + credentials);
         WebTarget webTarget = this.client.target(uri);
 
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        String auth = "Bearer ";
+        if (token == null) {
+            auth = auth + credentials;
+        } else {
+            auth = auth + token;
+        }
+
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth);
         Response response = invocationBuilder.get(Response.class);
+        System.out.println(response.getStatusInfo());
 
         JSONObject jo = response.readEntity(JSONObject.class);
+
+        if (token == null) {
+            token = jo.get("Token").toString();
+            token = token.replaceAll("\\[", "");
+            token = token.replaceAll("\\]", "");
+            token = token.replaceAll("\"", "");
+        }
+
         System.out.println(jo.toJSONString(10));
         return jo;
 
@@ -53,17 +86,16 @@ public class LocalEater {
         return j2;
     }
 
-    //      Used for testing only
-    //    /**
-    //     * Main method that simulates the client.
-    //     *
-    //     * @param args Input for main
-    //     */
-    //    public static void main(String[] args) {
-    //        LocalEater le = new LocalEater(ClientBuilder.newClient());
-    //
-    //        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
-    //        le.postActivityInfo("http://localhost:8080/server/webapi/localproduce/post");
-    //    }
+    /**
+     * Main method that simulates the client.
+     *
+     * @param args Input for main
+     */
+    public static void main(String[] args) {
+        LocalEater le = new LocalEater(ClientBuilder.newClient());
+
+        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
+        le.getActivityInfo("http://localhost:8080/server/webapi/localproduce/get");
+    }
 
 }

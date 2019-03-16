@@ -35,7 +35,7 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataCorrectEntity() {
-        Assert.assertEquals(lp.getData().getEntity(),
+        Assert.assertEquals(lp.getData(null).getEntity(),
                 joCor);
     }
 
@@ -47,7 +47,7 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataIncorrectEntity() {
-        Assert.assertNotEquals(lp.getData().getEntity(),
+        Assert.assertNotEquals(lp.getData(null).getEntity(),
                 joIncor);
     }
 
@@ -59,7 +59,7 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataCorrectStatus() {
-        Assert.assertEquals(lp.getData().getStatus(), 200);
+        Assert.assertEquals(lp.getData(null).getStatus(), 200);
     }
 
     /**
@@ -70,7 +70,7 @@ public class LocalProduceTest {
      */
     @Test
     public void getDataIncorrectStatus() {
-        Assert.assertNotEquals(lp.getData().getStatus(), 404);
+        Assert.assertNotEquals(lp.getData(null).getStatus(), 404);
     }
 
     /**
