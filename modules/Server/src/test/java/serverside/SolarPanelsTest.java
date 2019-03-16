@@ -69,7 +69,7 @@ public class SolarPanelsTest {
     }
 
     /**
-     * Test for the /localproduce/totalproduce endpoint.
+     * Test for the /solarpanels/totalPanels endpoint.
      *
      * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found error
