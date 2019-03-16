@@ -56,7 +56,7 @@ public class BikeTest {
     }
 
     /**
-     * Test for the /biker/totalVegan endpoints.
+     * Test for the /biker/Bike endpoints.
      */
 
     @Test
@@ -66,7 +66,7 @@ public class BikeTest {
         Mockito.when(DriverManager.getConnection("jdbc:mysql://localhost3306/greener?autoReconnect=true&useSSL=false", "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Mockito.when(mockStatement.executeQuery("SELECT Bike FROM person WHERE Name = 'Robert'")).thenReturn(rs);
-        Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
+        Mockito.when(rs.getInt("Bike")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
         Response value = bike.getData();
 
