@@ -3,12 +3,11 @@ package server;
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.InvalidClaimException;
+import io.jsonwebtoken.IncorrectClaimException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
 
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -19,9 +18,9 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class JwtVerifier implements ContainerRequestFilter {
 
-    public static final String AUTHORIZATION_HEADER_KEY = "Authorization";
-    public static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
-    public static final long CLOCK_SKEW = 3 * 60; //in seconds
+    private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
+    private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
+    private static final long CLOCK_SKEW = 3 * 60; //in seconds
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
@@ -34,7 +33,7 @@ public class JwtVerifier implements ContainerRequestFilter {
                     return;
                 } else {
                     System.out.println("SECRET TOKEN IS " + authToken);
-                    String token = issueToken(authToken);
+                    String token = issueJwt(authToken);
                     if (token.equals("NO")) {
                         JSONObject jo = new JSONObject();
                         jo.append("Error", "Can't get in");
@@ -56,7 +55,7 @@ public class JwtVerifier implements ContainerRequestFilter {
      * @param token obtained from Authorization header (either token or credentials)
      * @return "OK" if token is validated, Exception if it's not
      */
-    public Object verifyJwt(String token) {
+    public static Object verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .setAllowedClockSkewSeconds(CLOCK_SKEW)
@@ -66,7 +65,7 @@ public class JwtVerifier implements ContainerRequestFilter {
             System.out.println("NO PROBLEM WITH VALIDATION");
         } catch (SignatureException se) {
             return se;
-        } catch (InvalidClaimException ice) {
+        } catch (IncorrectClaimException ice) {
             return ice;
         } catch (ExpiredJwtException eje) {
             return eje;
@@ -80,7 +79,7 @@ public class JwtVerifier implements ContainerRequestFilter {
      * @param credentials received from the Authorization header
      * @return Object: JWT as an encoded String if credentials are verified, Exception if not
      */
-    public String issueToken(String credentials) {
+    public static String issueJwt(String credentials) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .setAllowedClockSkewSeconds(CLOCK_SKEW)
@@ -88,7 +87,7 @@ public class JwtVerifier implements ContainerRequestFilter {
                     .require("password", "123")
                     .setSigningKey(KeyGen.KEY)
                     .parseClaimsJws(credentials);
-        } catch (InvalidClaimException ice) {
+        } catch (IncorrectClaimException ice) {
             return "NO";
         } catch (SignatureException se) {
             return "NO";
@@ -97,11 +96,11 @@ public class JwtVerifier implements ContainerRequestFilter {
         }
 
         Calendar today = Calendar.getInstance();
-        today.set(Calendar.YEAR, 2020);
+        //        today.set(Calendar.YEAR, 2020);
 
         return Jwts.builder()
                 .setSubject("id")
-                .setExpiration(today.getTime())
+                //                .setExpiration(today.getTime())
                 .signWith(KeyGen.KEY_VALIDATE)
                 .compact();
     }
