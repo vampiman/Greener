@@ -62,7 +62,7 @@ public class LocalProduceTest {
     }
 
     /**
-     * Test for the /localproduce/totalVegan endpoint.
+     * Test for the /localproduce/totalProduce endpoint.
      *
      * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found error
@@ -81,13 +81,12 @@ public class LocalProduceTest {
                 .executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'"))
                 .thenReturn(rs);
 
-        Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
+        Mockito.when(rs.getInt("Local_produce")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
         Response value = localProduce.getData();
 
 
         System.out.println(value.getEntity());
         Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
-        //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
-    }
+     }
 }
