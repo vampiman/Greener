@@ -1,6 +1,7 @@
 package restclient;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +22,6 @@ import javax.ws.rs.core.Response;
 
 public class LocalEaterTest {
 
-
     @Mock
     WebTarget target;
 
@@ -37,7 +37,6 @@ public class LocalEaterTest {
     @InjectMocks
     LocalEater leClient;
 
-
     /**
      * Method that initialises all objects needed for testing
      * and specifies mocks' behaviour.
@@ -46,6 +45,7 @@ public class LocalEaterTest {
     public void setup() {
         client = mock(Client.class);
         leClient = new LocalEater(client);
+        leClient.token = "";
 
         JSONObject jo = new JSONObject();
         jo.append("Weight", "100");
@@ -55,12 +55,14 @@ public class LocalEaterTest {
         when(res.getStatus()).thenReturn(200); //The OK status
 
         builder = mock(Invocation.Builder.class);
+        when(builder.header(eq("Authorization"), eq("Bearer "))).thenReturn(builder);
         when(builder.get(Response.class)).thenReturn(res);
         when(builder.post(Entity.json(jo))).thenReturn(res);
 
         target = mock(WebTarget.class);
         when(target.path(anyString())).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        when(target.request(MediaType.APPLICATION_JSON))
+                .thenReturn(builder);
         when(leClient.client.target("testLocalEater")).thenReturn(target);
 
     }

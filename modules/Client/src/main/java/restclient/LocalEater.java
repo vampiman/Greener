@@ -2,7 +2,6 @@ package restclient;
 
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Jwts;
-import server.KeyGen;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -14,9 +13,9 @@ import javax.ws.rs.core.Response;
 
 public class LocalEater {
 
-    private Client client;
-    private String token;
-    private String credentials;
+    protected Client client;
+    protected String token;
+    protected String credentials;
 
 
     /**
@@ -29,7 +28,7 @@ public class LocalEater {
         this.credentials = Jwts.builder()
                 .claim("username", "Nat")
                 .claim("password", "123" )
-                .signWith(KeyGen.KEY)
+                .signWith(KeyGenClient.KEY)
                 .compact();
     }
 
@@ -51,10 +50,9 @@ public class LocalEater {
             auth = auth + token;
         }
 
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON)
-                .header("Authorization", auth);
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
         Response response = invocationBuilder.get(Response.class);
-        System.out.println(response.getStatusInfo());
 
         JSONObject jo = response.readEntity(JSONObject.class);
 
