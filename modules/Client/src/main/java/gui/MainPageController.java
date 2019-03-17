@@ -248,9 +248,46 @@ public class MainPageController {
     }
 
     @FXML
+    private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("localProduct.fxml"));
+        Scene scene = dashboardButton.getScene();
+        root.translateXProperty().set(scene.getHeight());
+
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+    }
+
+    @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getClassLoader()
                 .getResource("publicTransport.fxml"));
+        Scene scene = dashboardButton.getScene();
+        root.translateXProperty().set(scene.getHeight());
+
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+    }
+
+    @FXML
+    private void handleBikeButtonAction(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("bike.fxml"));
         Scene scene = dashboardButton.getScene();
         root.translateXProperty().set(scene.getHeight());
 
