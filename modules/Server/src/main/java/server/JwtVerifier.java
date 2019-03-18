@@ -32,7 +32,6 @@ public class JwtVerifier implements ContainerRequestFilter {
                 if (verifyJwt(authToken).equals("OK")) {
                     return;
                 } else {
-                    System.out.println("SECRET TOKEN IS " + authToken);
                     String token = issueJwt(authToken);
                     if (token.equals("NO")) {
                         JSONObject jo = new JSONObject();
@@ -62,7 +61,6 @@ public class JwtVerifier implements ContainerRequestFilter {
                     .requireSubject("id")
                     .setSigningKey(KeyGen.KEY_VALIDATE)
                     .parseClaimsJws(token);
-            System.out.println("NO PROBLEM WITH VALIDATION");
         } catch (SignatureException se) {
             return se;
         } catch (IncorrectClaimException ice) {
@@ -70,7 +68,6 @@ public class JwtVerifier implements ContainerRequestFilter {
         } catch (ExpiredJwtException eje) {
             return eje;
         }
-        System.out.println("OK");
         return "OK";
     }
 

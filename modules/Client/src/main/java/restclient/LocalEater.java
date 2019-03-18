@@ -39,8 +39,6 @@ public class LocalEater {
      * @return JSON object contained in the server response.
      */
     public JSONObject getActivityInfo(String uri) {
-        System.out.println("Token is " + token);
-        System.out.println("Credentials are " + credentials);
         WebTarget webTarget = this.client.target(uri);
 
         String auth = "Bearer ";
@@ -63,7 +61,6 @@ public class LocalEater {
             token = token.replaceAll("\"", "");
         }
 
-        System.out.println(jo.toJSONString(10));
         return jo;
 
     }
@@ -80,7 +77,6 @@ public class LocalEater {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(j1))
                 .readEntity(JSONObject.class);
-        System.out.println(j2.toJSONString(10));
         return j2;
     }
 
