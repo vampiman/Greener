@@ -7,13 +7,16 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
@@ -33,8 +36,10 @@ public class LoginPageController {
     private GridPane anchorRoot;
     @FXML
     private GridPane parentContainer;
-
-
+    @FXML
+    private AnchorPane holderPane;
+    @FXML
+    private AnchorPane mainPane;
 
     @FXML
     private void loadSecond(ActionEvent event) throws IOException {
@@ -50,20 +55,13 @@ public class LoginPageController {
             return;
         }
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
-        Scene scene = loginButton.getScene();
-        root.translateYProperty().set(scene.getHeight());
+        Parent groupsPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("menu.fxml"));
+        Scene groupsPageScene = new Scene(groupsPageParent);
+        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        appStage.setScene(groupsPageScene);
+        appStage.show();
 
-        parentContainer.getChildren().add(root);
-
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.setOnFinished(t -> {
-            parentContainer.getChildren().remove(anchorRoot);
-        });
-        timeline.play();
     }
 
     public static class AlertHelper {
