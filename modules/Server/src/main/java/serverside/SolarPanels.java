@@ -16,13 +16,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Root resource (exposed at "localproduce" path).
- */
-@Path("localproduce")
-@Singleton
-public class LocalProduce {
 
+@Path("solarpanels")
+@Singleton
+public class SolarPanels {
 
     private Connection dbConnection;
 
@@ -37,30 +34,48 @@ public class LocalProduce {
         String user = "sammy";
         String pass = "temporary";
 
+        //Class.forName("com.mysql.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
     /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "JSON" media type.
+     * Endpoint /solarpanels/post that modifies the number of solarpanels in the database.
      *
-     * @return JSONObject returned as an OK response.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException           SQL-related error
+     */
+    @POST
+    @Path("post")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void postAmount() throws ClassNotFoundException, SQLException {
+        getDbConnection();
+        Statement st = dbConnection.createStatement();
+        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + 1 WHERE Name = 'Robert'");
+
+        st.close();
+        dbConnection.close();
+
+    }
+
+    /**
+     * Endpoint /solarpanels/totalSolar that returns the total number of solar panels installed.
+     *
+     * @return Total number of vegan meals consumed
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException           SQL-related error
      */
     @GET
-    @Path("get")
+    @Path("totalSolar")
     @Produces(MediaType.APPLICATION_JSON)
-
-    public Response getData() throws ClassNotFoundException, SQLException {
+    public Response getAmount() throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery("SELECT Solar_panels FROM person WHERE Name = 'Robert'");
 
         rs.next();
-        int total = rs.getInt("Local_produce");
+        int total = rs.getInt("Solar_panels");
 
         st.close();
         dbConnection.close();
@@ -70,36 +85,5 @@ public class LocalProduce {
         dbConnection.close();
         return Response.status(Response.Status.OK).entity(jo).build();
 
-
     }
-
-//    public Response getData() {
-//        JSONObject jo = new JSONObject();
-//        jo.append("Weight", "100");
-//        return Response.status(Response.Status.OK).entity(jo).build();
-//    }
-
-    /**
-     * Method handling HTTP POST requests. It accepts the JSON
-     * file containing information on buying local produce.
-     *
-     * @return JSONObject returned as an OK response.
-     * @throws ClassNotFoundException Class not found error
-     * @throws SQLException           SQL-related error
-     */
-    @POST
-    @Path("post")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void postData() throws ClassNotFoundException, SQLException {
-        getDbConnection();
-        Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Local_produce = Local_produce + 1 WHERE Name = 'Robert'");
-
-        st.close();
-        dbConnection.close();
-    }
-
-//    public Response postData(JSONObject jo) {
-//        return Response.status(200).entity(jo).build();
-//    }
 }
