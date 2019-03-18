@@ -14,7 +14,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
 @Path("solarpanels")
@@ -47,10 +46,14 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount() throws ClassNotFoundException, SQLException {
+    public void postAmount(VeganMealResource vm) throws ClassNotFoundException, SQLException {
+
         getDbConnection();
+
+        System.out.println(vm.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + 1 WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Percentage = Percentage + "
+                + vm.getTotal_Percentage() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
@@ -58,32 +61,37 @@ public class SolarPanels {
     }
 
     /**
-     * Endpoint /solarpanels/totalSolar that returns the total number of solar panels installed.
+     * Endpoint /solarpanels/totalSolar that returns the total percentage electricity safed.
      *
-     * @return Total number of vegan meals consumed
+     * @return Total percentage of electricity safed
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException           SQL-related error
+     *
      */
     @GET
-    @Path("totalSolar")
+    @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAmount() throws ClassNotFoundException, SQLException {
+    public VeganMealResource getAmount() throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Solar_panels FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery(
+                "SELECT Solar_panels FROM person WHERE Name = 'Robert'");
 
         rs.next();
-        int total = rs.getInt("Solar_panels");
+        int percentage = rs.getInt("Percentage");
+
+        VeganMealResource vm = new VeganMealResource();
+
+        vm.setTotal_Percentage(percentage);
 
         st.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
-        jo.put("total", total);
         st.close();
         dbConnection.close();
-        return Response.status(Response.Status.OK).entity(jo).build();
+        return vm;
 
     }
 }
