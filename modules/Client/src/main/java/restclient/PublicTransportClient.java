@@ -13,7 +13,7 @@ import javax.ws.rs.core.Response;
 
 /**
  * Class for all client-side necessities to ask for public transport information
- * and sending this to the server.
+ * and sending this to the serverside.
  */
 
 public class PublicTransportClient {
@@ -44,9 +44,9 @@ public class PublicTransportClient {
     }
 
     /**
-     * Acquires JSON file from server via get-request.
-     * @param uri to the URI of the resource of the server which handles the get-request.
-     * @return JSON object with information gotten from get-request to server.
+     * Acquires JSON file from serverside via get-request.
+     * @param uri to the URI of the resource of the serverside which handles the get-request.
+     * @return JSON object with information gotten from get-request to serverside.
      */
     public JSONObject getPublicTransport(String uri) {
 
@@ -62,10 +62,10 @@ public class PublicTransportClient {
     }
 
     /**
-     * Post a JSON file to the server through a post-request.
-     * @param info JSONObject which has to be send to the server
-     * @param uri to the URI of the resource of the server which handles the post-request.
-     * @return JSONObject send back from the server.
+     * Post a JSON file to the serverside through a post-request.
+     * @param info JSONObject which has to be send to the serverside
+     * @param uri to the URI of the resource of the serverside which handles the post-request.
+     * @return JSONObject send back from the serverside.
      */
     public JSONObject postPublicTransport(JSONObject info, String uri) {
 

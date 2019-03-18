@@ -42,7 +42,7 @@
         - SQL
         - PostgreSQL
         - Plain text
-    - GUI
+    - gui
         - JavaFX
     - IDE
         - IntelliJ

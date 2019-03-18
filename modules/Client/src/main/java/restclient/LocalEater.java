@@ -21,9 +21,9 @@ public class LocalEater {
 
     /**
      * The method creates a client and a GET request
-     * for retrieval of data on the server in a JSON file.
+     * for retrieval of data on the serverside in a JSON file.
      *
-     * @return JSON object contained in the server response.
+     * @return JSON object contained in the serverside response.
      */
     public JSONObject getActivityInfo(String uri) {
         WebTarget webTarget = this.client.target(uri);
@@ -39,9 +39,9 @@ public class LocalEater {
 
     /**
      * The method creates a client and a POST request
-     * for upload of the entered data to the server as JSON.
+     * for upload of the entered data to the serverside as JSON.
      *
-     * @return the JSON object from server response (the one which was posted)
+     * @return the JSON object from serverside response (the one which was posted)
      */
     public JSONObject postActivityInfo(String uri) {
         JSONObject j1 = new JSONObject().append("Weight", "100");

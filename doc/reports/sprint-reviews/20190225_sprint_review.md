@@ -2,7 +2,7 @@
 
 ## Main problems Encountered
 
-- Problems related to the deployment of the Web Service to the Glassfish server due to different computer configurations of each member
+- Problems related to the deployment of the Web Service to the Glassfish serverside due to different computer configurations of each member
 
 - A lot of resources that had to be parsed before understanding and starting to employ the coding techniques
 

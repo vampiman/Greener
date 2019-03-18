@@ -1,9 +1,11 @@
 # Maven ignores
 target/
 .idea/
-Client.iml
 OOP-Project.iml
-server.iml
+Client.iml
+Server.iml
+serverside.iml
+deneme.txt
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
