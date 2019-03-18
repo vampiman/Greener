@@ -32,11 +32,11 @@ public class AddActivityController {
     @FXML
     private TextField activities;
 
-    @FXML
-    public void initialize() {
-        activities.setText("You had " + new VeganMeal(ClientBuilder.newClient())
-                .getTotalVeganMeals() + " vegan meals");
-    }
+//    @FXML
+//    public void initialize() {
+////        activities.setText("You had " + new VeganMeal(ClientBuilder.newClient())
+////                .getTotalVeganMeals() + " vegan meals");
+//    }
 
 
     @FXML

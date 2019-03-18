@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import restclient.LocalEater;
 import restclient.VeganMeal;
 
 import java.io.File;
@@ -57,6 +58,10 @@ public class MainPageController {
     private TextField electricityPercentage;
     @FXML
     private Button addButtonVeganMeal;
+    @FXML
+    private Button addLocalProductButton;
+    @FXML
+    private TextField productQuantity;
     @FXML
     private TextField mealPortion;
     @FXML
@@ -456,6 +461,38 @@ public class MainPageController {
             int portions = Integer.parseInt(mealPortion.getText());
             System.out.println(portions);
             new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+
+        }
+
+        Parent root = FXMLLoader.load(getClass().getClassLoader()
+                .getResource("addActivity.fxml"));
+        Scene scene = dashboardButton.getScene();
+        root.translateXProperty().set(scene.getHeight());
+
+        parentContainer.getChildren().add(root);
+
+        Timeline timeline = new Timeline();
+        KeyValue kv = new KeyValue(root.translateXProperty(), 0, Interpolator.EASE_IN);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.setOnFinished(t -> {
+            parentContainer.getChildren().remove(anchorRoot);
+        });
+        timeline.play();
+    }
+
+    @FXML
+    private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
+        Window owner = addLocalProductButton.getScene().getWindow();
+        if (productQuantity.getText().isEmpty()) {
+            LoginPageController.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter how much you bought today");
+            return;
+        } else {
+            String weight = productQuantity.getText();
+            System.out.println(weight);
+            new LocalEater(ClientBuilder.newClient()).postActivityInfo(weight);
 
         }
 
