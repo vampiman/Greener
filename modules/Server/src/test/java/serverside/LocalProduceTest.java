@@ -1,5 +1,7 @@
 package serverside;
 
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +13,16 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.ws.rs.core.Response;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import javax.ws.rs.core.Response;
+
+
+
 
 
 @RunWith(PowerMockRunner.class)
@@ -88,5 +96,5 @@ public class LocalProduceTest {
 
         System.out.println(value.getEntity());
         Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
-     }
+    }
 }
