@@ -74,21 +74,59 @@ public class Bike {
     /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on riding a bike from the client.
-     *
      * */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void postData() throws ClassNotFoundException, SQLException {
+    public void postData(VeganMealResource vm) throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
+
+        System.out.println(vm.getTotal_Distance());
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Bike = Bike + 1 WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Distance = Distance + "
+                + vm.getTotal_Distance() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
     }
+
+
+    /**
+     * Endpoint /bike/distance that returns the total cycled distance.
+     * @return Total distance of cycled distance
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException
+     *
+     */
+    @GET
+    @Path("distance")
+    @Produces(MediaType.APPLICATION_JSON)
+    public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
+
+        getDbConneciton();
+
+        Statement st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery(
+                "SELECT Bike FROM person WHERE Name = 'Robert'");
+        rs.next();
+        int distance = rs.getInt("Distance");
+
+        VeganMealResource vm = new VeganMealResource();
+
+        vm.setTotal_Distance(distance);
+
+        st.close();
+        dbConnection.close();
+        JSONObject jo = new JSONObject();
+        st.close();
+        dbConnection.close();
+        return vm;
+    }
+
+
+
 
     //public Response postData(JSONObject jo) {
     //return Response.status(200).entity(jo).build();
