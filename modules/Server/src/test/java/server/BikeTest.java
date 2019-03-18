@@ -20,7 +20,7 @@ import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(LocalProduce.class)
+@PrepareForTest(Bike.class)
 public class BikeTest {
 
     @Mock
@@ -47,7 +47,7 @@ public class BikeTest {
      * Test for the /biker/post endpoints.
      */
     @Test
-   public void postData() throws ClassNotFoundException, SQLException{
+    public void postData() throws ClassNotFoundException, SQLException{
         bike = new Bike();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager.getConnection("jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false", "sammy", "temporary")).thenReturn(mockConnection);
