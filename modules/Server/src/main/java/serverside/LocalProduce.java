@@ -73,17 +73,15 @@ public class LocalProduce {
 
     }
 
-//    public Response getData() {
-//        JSONObject jo = new JSONObject();
-//        jo.append("Weight", "100");
-//        return Response.status(Response.Status.OK).entity(jo).build();
-//    }
+    // public Response getData() {
+    //   JSONObject jo = new JSONObject();
+    // jo.append("Weight", "100");
+    // return Response.status(Response.Status.OK).entity(jo).build(); }
 
     /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on buying local produce.
      *
-     * @return JSONObject returned as an OK response.
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException           SQL-related error
      */
@@ -93,13 +91,15 @@ public class LocalProduce {
     public void postData() throws ClassNotFoundException, SQLException {
         getDbConnection();
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Local_produce = Local_produce + 1 WHERE Name = 'Robert'");
+        st.executeUpdate(
+                "UPDATE person SET Local_produce = Local_produce + 1 WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
     }
 
-//    public Response postData(JSONObject jo) {
-//        return Response.status(200).entity(jo).build();
-//    }
+    //    public Response postData(JSONObject jo) {
+    //        return Response.status(200).entity(jo).build();
+    //    }
+
 }
