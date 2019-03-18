@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.layout.GridPane?>
 
+<?import javafx.scene.control.Label?>
 <GridPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoginPageController">
    <children>
       <GridPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -19,16 +20,16 @@
               <items>
                 <AnchorPane  style="-fx-background-color: #00ffbc;">
                      <children>
-                        <TextField alignment="CENTER" editable="false" layoutX="132.0" layoutY="12.0" prefHeight="68.0" prefWidth="339.0" style="-fx-background-color: #00FFBC;" text="GREENER">
+                        <Label alignment="CENTER" layoutX="132.0" layoutY="12.0" prefHeight="68.0" prefWidth="339.0" style="-fx-background-color: #00FFBC;" text="GREENER">
                            <font>
                               <Font name="Comic Sans MS Bold" size="40.0" />
                            </font>
-                        </TextField>
-                        <TextField alignment="CENTER" editable="false" layoutX="427.0" layoutY="28.0" prefHeight="34.0" prefWidth="106.0" style="-fx-background-color: #00FFBC;" text="Not member?">
+                        </Label>
+                        <Label alignment="CENTER" disable="true" layoutX="427.0" layoutY="28.0" prefHeight="34.0" prefWidth="106.0" style="-fx-background-color: #00FFBC;" text="Not member?">
                            <font>
                               <Font name="Comic Sans MS" size="12.0" />
                            </font>
-                        </TextField>
+                        </Label>
                         <Button layoutX="524.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="69.0" style="-fx-background-color: black;" text="Sign up!" textAlignment="CENTER" textFill="#978a8a" >
                            <font>
                               <Font name="Comic Sans MS Bold" size="12.0" />
