@@ -25,11 +25,11 @@
                               <Font name="Comic Sans MS Bold" size="40.0" />
                            </font>
                         </Label>
-                        <TextField alignment="CENTER" disable="true" editable="false" layoutX="427.0" layoutY="28.0" prefHeight="34.0" prefWidth="106.0" style="-fx-background-color: #00FFBC;" text="Not member?">
+                        <Label alignment="CENTER" disable="true" layoutX="427.0" layoutY="28.0" prefHeight="34.0" prefWidth="106.0" style="-fx-background-color: #00FFBC;" text="Not member?">
                            <font>
                               <Font name="Comic Sans MS" size="12.0" />
                            </font>
-                        </TextField>
+                        </Label>
                         <Button layoutX="524.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="69.0" style="-fx-background-color: black;" text="Sign up!" textAlignment="CENTER" textFill="#978a8a" >
                            <font>
                               <Font name="Comic Sans MS Bold" size="12.0" />
