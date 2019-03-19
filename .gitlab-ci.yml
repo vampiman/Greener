@@ -9,7 +9,7 @@ Client_Test:
   stage: test
   script:
   - cd modules/Client
-  - mvn clean test -e
+  - mvn surefire:test -e
   allow_failure: true
   
 Server_Test:
