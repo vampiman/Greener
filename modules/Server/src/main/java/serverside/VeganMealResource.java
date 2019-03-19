@@ -1,21 +1,21 @@
 package serverside;
 
-public class VeganMealResource {
+public class Resource {
 
     int total;
     int distance;
     int percentage;
 
-    public VeganMealResource(){
+    public Resource(){
 
     }
 
 
-    public int getTotal() {
+    public int getTotal_Meals() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal_Meals(int total) {
         this.total = total;
     }
 
