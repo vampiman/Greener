@@ -35,11 +35,11 @@ public class PublicTransportClient {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("How many kilometers did you travel?");
+//        System.out.println("How many kilometers did you travel?");
         distanceInKilometer = scanner.nextInt();
 
         JSONObject obj = new JSONObject().put("Distance", distanceInKilometer);
-        System.out.println(obj);
+//        System.out.println(obj);
         return obj;
     }
 
@@ -56,7 +56,7 @@ public class PublicTransportClient {
         Response res = builder.get(Response.class);
 
         JSONObject obj = res.readEntity(JSONObject.class);
-        System.out.println(obj.toString());
+//        System.out.println(obj.toString());
 
         return obj;
     }
@@ -74,7 +74,7 @@ public class PublicTransportClient {
                               .post(Entity.json(info))
                               .readEntity(JSONObject.class);
 
-        System.out.println(j1.toString());
+//        System.out.println(j1.toString());
 
         return j1;
     }
