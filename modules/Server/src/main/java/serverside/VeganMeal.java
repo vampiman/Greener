@@ -48,13 +48,13 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(VeganMealResource vm) throws ClassNotFoundException, SQLException {
+    public void postIt(Resource vm) throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        System.out.println(vm.getTotal());
+        System.out.println(vm.getTotal_Meals());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + vm.getTotal() + " WHERE Name = 'Robert'");
+                + vm.getTotal_Meals() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
@@ -73,7 +73,7 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
+    public Resource getAll() throws ClassNotFoundException, SQLException {
 
 
         getDbConnection();
@@ -85,9 +85,9 @@ public class VeganMeal {
         rs.next();
         int total = rs.getInt("Vegan_meal");
 
-        VeganMealResource vm = new VeganMealResource();
+        Resource re = new Resource();
 
-        vm.setTotal(total);
+        re.setTotal_Meals(total);
 
         st.close();
         dbConnection.close();
@@ -95,7 +95,7 @@ public class VeganMeal {
         jo.put("total", total);
         st.close();
         dbConnection.close();
-        return vm;
+        return re;
 
 
     }
