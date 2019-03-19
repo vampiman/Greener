@@ -46,7 +46,7 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount(VeganMealResource vm) throws ClassNotFoundException, SQLException {
+    public void postAmount(Resource vm) throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
@@ -71,7 +71,7 @@ public class SolarPanels {
     @GET
     @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public VeganMealResource getAmount() throws ClassNotFoundException, SQLException {
+    public Resource getAmount() throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
@@ -82,16 +82,16 @@ public class SolarPanels {
         rs.next();
         int percentage = rs.getInt("Percentage");
 
-        VeganMealResource vm = new VeganMealResource();
+        Resource re = new Resource();
 
-        vm.setTotal_Percentage(percentage);
+        re.setTotal_Percentage(percentage);
 
         st.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
         st.close();
         dbConnection.close();
-        return vm;
+        return re;
 
     }
 }
