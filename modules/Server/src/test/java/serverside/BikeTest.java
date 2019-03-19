@@ -58,9 +58,9 @@ public class BikeTest {
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
 
-        VeganMealResource vm = new VeganMealResource();
-        vm.setTotal_Distance(1);
-        bike.postData(vm);
+        Resource re = new Resource();
+        re.setTotal_Distance(1);
+        bike.postData(re);
     }
 
     /**
@@ -84,7 +84,7 @@ public class BikeTest {
         Mockito.when(rs.getInt("Distance")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
 
-        VeganMealResource rs = bike.getAll();
+        Resource rs = bike.getAll();
 
         Assert.assertEquals(rs.getTotal_Distance(), 1);
 
