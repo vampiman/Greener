@@ -48,13 +48,13 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource vm) throws ClassNotFoundException, SQLException {
+    public void postIt(Resource re) throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        System.out.println(vm.getTotal_Meals());
+        System.out.println(re.getTotal_Meals());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + vm.getTotal_Meals() + " WHERE Name = 'Robert'");
+                + re.getTotal_Meals() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
