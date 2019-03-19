@@ -39,31 +39,6 @@ public class Bike {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
-    /**
-     * Method handling HTTP GET requests. The returned object will be sent
-     * to the client as "JSON" media type.
-     *
-     * @return JSONObject returned as an OK response.
-     */
-    @GET
-    @Path("get")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response getData() throws ClassNotFoundException, SQLException {
-
-        getDbConneciton();
-
-        Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Bike FROM person WHERE Name = 'Robert'");
-        rs.next();
-        int total = rs.getInt("Bike");
-        st.close();
-        dbConnection.close();
-        JSONObject jo = new JSONObject();
-        jo.put("total", total);
-        dbConnection.close();
-        st.close();
-        return Response.status(Response.Status.OK).entity(jo).build();
-    }
 
     //    public Response getData() {
     //        JSONObject jo = new JSONObject();
