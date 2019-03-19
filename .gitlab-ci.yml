@@ -15,11 +15,11 @@ Client_Checkstyle:
   script:
     - mvn checkstyle:checkstyle
     - cat target/checkstyle-result.xml
-    - cat modules/Server/target/checkstyle-result.xml
+    - cat modules/Client/target/checkstyle-result.xml
   allow_failure: true
   
-#   Server_Checkstyle:
-#   stage: test
-#   script:
-#     - mvn checkstyle:checkstyle
-#     - cat modules/Server/target/checkstyle-result.xml
+Server_Checkstyle:
+  stage: test
+  script:
+    - mvn checkstyle:checkstyle
+    - cat modules/Server/target/checkstyle-result.xml
