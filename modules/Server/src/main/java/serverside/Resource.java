@@ -5,6 +5,7 @@ public class Resource {
     int total;
     int distance;
     int percentage;
+    int produce;
 
     public Resource(){
 
