@@ -46,14 +46,14 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount(Resource vm) throws ClassNotFoundException, SQLException {
+    public void postAmount(Resource re) throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
-        System.out.println(vm.getTotal_Percentage());
+        System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Percentage = Percentage + "
-                + vm.getTotal_Percentage() + " WHERE Name = 'Robert'");
+                + re.getTotal_Percentage() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
