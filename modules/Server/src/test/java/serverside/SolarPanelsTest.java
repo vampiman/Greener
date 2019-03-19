@@ -61,9 +61,9 @@ public class SolarPanelsTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        VeganMealResource vm = new VeganMealResource();
-        vm.setTotal_Percentage(1);
-        solarPanels.postAmount(vm);
+        Resource re = new Resource();
+        re.setTotal_Percentage(1);
+        solarPanels.postAmount(re);
 
     }
 
@@ -89,7 +89,7 @@ public class SolarPanelsTest {
 
         Mockito.when(rs.getInt("Percentage")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        VeganMealResource rs = solarPanels.getAmount();
+        Resource rs = solarPanels.getAmount();
 
         Assert.assertEquals(rs.getTotal_Percentage(), 1);
     }
