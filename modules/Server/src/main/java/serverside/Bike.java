@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.annotation.Resource;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -24,7 +23,7 @@ import javax.ws.rs.core.Response;
  */
 @Path("bike")
 @Singleton
-@Resource
+@javax.annotation.Resource
 public class Bike {
 
     private Connection dbConnection;
@@ -79,7 +78,7 @@ public class Bike {
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void postData(VeganMealResource vm) throws ClassNotFoundException, SQLException {
+    public void postData(Resource vm) throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
@@ -103,7 +102,7 @@ public class Bike {
     @GET
     @Path("distance")
     @Produces(MediaType.APPLICATION_JSON)
-    public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
+    public Resource getAll() throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
@@ -113,16 +112,16 @@ public class Bike {
         rs.next();
         int distance = rs.getInt("Distance");
 
-        VeganMealResource vm = new VeganMealResource();
+        Resource re = new Resource();
 
-        vm.setTotal_Distance(distance);
+        re.setTotal_Distance(distance);
 
         st.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
         st.close();
         dbConnection.close();
-        return vm;
+        return re;
     }
 
 
