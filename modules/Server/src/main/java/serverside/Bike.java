@@ -78,14 +78,14 @@ public class Bike {
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void postData(Resource vm) throws ClassNotFoundException, SQLException {
+    public void postData(Resource re) throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
-        System.out.println(vm.getTotal_Distance());
+        System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Distance = Distance + "
-                + vm.getTotal_Distance() + " WHERE Name = 'Robert'");
+                + re.getTotal_Distance() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
