@@ -85,7 +85,7 @@ public class Bike {
         ResultSet rs = st.executeQuery(
                 "SELECT Bike FROM person WHERE Name = 'Robert'");
         rs.next();
-        int distance = rs.getInt("Distance");
+        int distance = rs.getInt("Bike");
 
         Resource re = new Resource();
 
