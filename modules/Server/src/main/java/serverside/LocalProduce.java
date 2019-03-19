@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Locale;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -60,15 +59,15 @@ public class LocalProduce {
         ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'");
 
         rs.next();
-        int product = rs.getInt("Local_produce");
+        int produce = rs.getInt("Local_produce");
 
         Resource lp = new Resource();
-        lp.setTotal_Produce(product);
+        lp.setTotal_Produce(produce);
 
         st.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
-        jo.put("product", product);
+        jo.put("product", produce);
         st.close();
         dbConnection.close();
         return lp;
@@ -97,7 +96,7 @@ public class LocalProduce {
         System.out.println(lp.getTotal_Produce());
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
-                "UPDATE person SET product = product" + lp.getTotal_Produce() + "WHERE Name = 'Robert'");
+                "UPDATE person SET produce = produce" + lp.getTotal_Produce() + "WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
