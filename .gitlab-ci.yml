@@ -11,6 +11,14 @@ Client_Test:
   - cd modules/Client
   - mvn clean test -e
   allow_failure: true
+  
+Server_Test:
+  image: maven:3.6.0-jdk-8
+  stage: test
+  script:
+  - cd modules/Server
+  - mvn clean test -e
+  allow_failure: true
 
 Client_Checkstyle:
   stage: test
@@ -25,3 +33,4 @@ Server_Checkstyle:
   script:
     - mvn checkstyle:checkstyle
     - cat modules/Server/target/checkstyle-result.xml
+  allow_failure: true
