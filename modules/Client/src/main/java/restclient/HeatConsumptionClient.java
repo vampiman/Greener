@@ -35,7 +35,7 @@ public class HeatConsumptionClient {
         Response res = builder.get(Response.class);
 
         JSONObject obj = res.readEntity(JSONObject.class);
-        System.out.println(obj.toString());
+//        System.out.println(obj.toString());
 
         return obj;
     }
@@ -53,7 +53,7 @@ public class HeatConsumptionClient {
                 .post(Entity.json(info))
                 .readEntity(JSONObject.class);
 
-        System.out.println(j1.toString());
+//        System.out.println(j1.toString());
 
         return j1;
     }
