@@ -4,10 +4,12 @@ Maven_Build:
   stage: build
   script: mvn compile -e
 
-Test:
+Client_Test:
   image: maven:3.6.0-jdk-10
   stage: test
-  script: mvn clean test -e
+  script:
+  - cd modules/Client
+  - mvn clean test -e
   allow_failure: true
 
 Client_Checkstyle:
