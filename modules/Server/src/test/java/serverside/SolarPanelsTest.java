@@ -87,7 +87,7 @@ public class SolarPanelsTest {
                 .executeQuery("SELECT Solar_panels FROM person WHERE Name = 'Robert'"))
                 .thenReturn(rs);
 
-        Mockito.when(rs.getInt("Percentage")).thenReturn(1);
+        Mockito.when(rs.getInt("Solar_panels")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
         Resource rs = solarPanels.getAmount();
 
