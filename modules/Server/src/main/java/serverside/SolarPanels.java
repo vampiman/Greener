@@ -80,7 +80,7 @@ public class SolarPanels {
                 "SELECT Solar_panels FROM person WHERE Name = 'Robert'");
 
         rs.next();
-        int percentage = rs.getInt("Percentage");
+        int percentage = rs.getInt("Solar_panels");
 
         Resource re = new Resource();
 
