@@ -81,7 +81,7 @@ public class BikeTest {
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Mockito.when(mockStatement.executeQuery(
                 "SELECT Bike FROM person WHERE Name = 'Robert'")).thenReturn(rs);
-        Mockito.when(rs.getInt("Distance")).thenReturn(1);
+        Mockito.when(rs.getInt("Bike")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
 
         Resource rs = bike.getAll();
