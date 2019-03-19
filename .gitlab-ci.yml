@@ -5,7 +5,7 @@ Maven_Build:
   script: mvn compile -e
 
 Client_Test:
-  image: maven:3.6.0-jdk-10
+  image: maven:3.6.0-jdk-8
   stage: test
   script:
   - cd modules/Client
@@ -24,7 +24,6 @@ Client_Checkstyle:
   stage: test
   script:
     - mvn checkstyle:checkstyle
-    - cat target/checkstyle-result.xml
     - cat modules/Client/target/checkstyle-result.xml
   allow_failure: true
   
