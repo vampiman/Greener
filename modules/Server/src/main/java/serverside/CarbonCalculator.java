@@ -269,10 +269,10 @@ public class CarbonCalculator {
      * @param pounds Quantity in pounds
      * @return Quantity in kilograms
      */
-    public double poundsToKilograms(double pounds) {
-        return pounds * 0.45359237;
+    public double poundsToKilograms(double pounds) {return pounds * 0.45359237;
     }
-    
+
+
     /**
      * Solar panel calculator.
      * @param Kwh consumption per month
@@ -293,9 +293,9 @@ public class CarbonCalculator {
         return toReturn;
 
     }
-    
-     /**
-     * get the CO2 emission of the localproduce feature
+
+    /**
+     * get the CO2 emission of the veganmeal feature
      * @param amount
      * @param type of meal
      * @return 10 times the CO2 emission
@@ -305,6 +305,7 @@ public class CarbonCalculator {
             throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
 
+        int points_converter = 10;
         double sort = 0;
 
         switch (type) {
@@ -327,10 +328,45 @@ public class CarbonCalculator {
             default:
                 break;
         }
-        return amount * sort * 10;
+        return amount * sort * points_converter;
     }
 
 
+    /**
+     * get the CO2 emission of the localproduce feature
+     * @param amount
+     * @param type of meal
+     * @return 10 times the CO2 emission
+     */
+    public double Localproduce_Calculator(double amount, int type){
+        if (type > 4 || type < 1) {
+            throw new IllegalArgumentException("Please insert a valid type of Food!");
+        }
 
+        int points_converter = 10;
+        double sort = 0;
+
+        switch (type) {
+            case 1:
+                //fruit
+                sort = 0.42 * 0.93;
+                break;
+            case 2:
+                //dairy
+                sort = 7.7 * 0.93;
+                break;
+            case 3:
+                //vegetables
+                sort = 2.0 * 0.93;
+                break;
+            case 4:
+                //meat
+                sort = 21.3 * 0.93;
+                break;
+            default:
+                break;
+        }
+        return amount * sort * points_converter;
+    }
 
 }
