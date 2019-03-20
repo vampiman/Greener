@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -23,100 +24,61 @@ public class BikerTest {
 
 
     @Mock
-    WebTarget target;
+    JSONObject jo;
 
     @Mock
-    Invocation.Builder builder;
+    WebTarget webTarget;
+
+    @Mock
+    Invocation.Builder ib;
 
     @Mock
     Client client;
 
     @Mock
-    Response res;
+    Response resp;
 
     @InjectMocks
-    Biker bikeClient;
+    Biker biker;
 
 
     /**
-     * Method that initialises all objects needed for testing
-     * and specifies mocks' behaviour.
+     * Setup for the following mock-dependant tests.
      */
     @Before
     public void setup() {
-        client = mock(Client.class);
-        bikeClient = new Biker(client);
+        client = Mockito.mock(Client.class);
+        resp = Mockito.mock(Response.class);
+        jo = Mockito.mock(JSONObject.class);
+        webTarget = Mockito.mock(WebTarget.class);
+        ib = Mockito.mock(Invocation.Builder.class);
+        biker = new Biker(client);
 
-        JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
-        res = mock(Response.class);
+        when(client.target("http://localhost:8080/serverside/webapi/bike/distance")).thenReturn(webTarget);
+        when(client.target("http://localhost:8080/serverside/webapi/bike/post")).thenReturn(webTarget);
+        when(webTarget.request(MediaType.APPLICATION_JSON)).thenReturn(ib);
+        when(ib.get(Response.class)).thenReturn(resp);
 
-        when(res.readEntity(JSONObject.class)).thenReturn(jo);
-        when(res.getStatus()).thenReturn(200); //The OK status
+        when(resp.readEntity(JSONObject.class)).thenReturn(jo);
+        when(jo.getInt("distance")).thenReturn(1);
 
-        builder = mock(Invocation.Builder.class);
-        when(builder.get(Response.class)).thenReturn(res);
-        when(builder.post(Entity.json(jo))).thenReturn(res);
+    }
+    //NEED TO ADD SOME RETURN MESSAGE
 
-        target = mock(WebTarget.class);
-        when(target.path(Matchers.anyString())).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(bikeClient.client.target("testBike")).thenReturn(target);
-
+    /**
+     * Test for the sendBiker method.
+     */
+    @Test
+    public void sendBiker() {
+        biker.sendBikers(1);
     }
 
     /**
-     * Tests the equality between an arbitrary
-     * JSON value equal to the pre-set
-     * value in GET response body.
-     * Expects true.
+     * Test for the getTotalDistance method.
      */
     @Test
-    public void getRequestCorrect() {
-        JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
-        Assert.assertEquals(bikeClient.getActivityInfo("testBike")
-                .toJSONString(10), jo.toJSONString(10));
+    public void getTotal_Distance() {
+        int result = biker.getTotalBikers();
+        Assert.assertEquals(1, result);
     }
-
-    /**
-     * Tests the (in)equality between an arbitrary
-     * JSON value not equal to the pre-set
-     * value in GET response body.
-     * Expects false.
-     */
-    @Test
-    public void getRequestIncorrect() {
-        JSONObject jo = new JSONObject();
-        jo.append("Dst", "200km");
-        Assert.assertNotEquals(bikeClient.getActivityInfo("testBike")
-                .toJSONString(10), jo.toJSONString(10));
-    }
-
-    /**
-     * Tests (in)equality between an arbitrary value of distance
-     * equal to the pre-set value in the post method.
-     * Expects true.
-     */
-    @Test
-    public void postRequestCorrect() {
-        JSONObject j1 = new JSONObject();
-        j1.append("Distance", "10");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
-        Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
-    }
-
-    /**
-     * Tests (in)equality between an arbitrary value of distance
-     * not equal to the pre-set value in the POST method.
-     * Expects false.
-     */
-    @Test
-    public void postRequestIncorrect() {
-        JSONObject j1 = new JSONObject();
-        j1.append("Distance", "2050");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
-        Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
-    }
-
 }
