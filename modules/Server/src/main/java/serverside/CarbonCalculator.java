@@ -272,6 +272,27 @@ public class CarbonCalculator {
     public double poundsToKilograms(double pounds) {
         return pounds * 0.45359237;
     }
+    
+    /**
+     * Solar panel calculator.
+     * @param Kwh consumption per month
+     * @return amount of pounds you use more than average
+     */
+    public double SolarPanel_Points_Calculator (double Kwh) {
+
+        double ElectricityFactor = 1.37;
+        double AVG_Kwh_per_month = 3340;
+
+        double Delta = AVG_Kwh_per_month - Kwh;
+        double toReturn = Delta * ElectricityFactor;
+
+        if (metrics == 2) {
+            return poundsToKilograms(toReturn);
+        }
+
+        return toReturn;
+
+    }
 
 
 
