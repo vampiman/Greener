@@ -65,7 +65,7 @@ public class ResourceTest {
         Assert.assertEquals(re.getTotal_Percentage(),3);
     }
     
-        /**
+    /**
      * Test for the "total" field getter.
      */
 
@@ -85,6 +85,46 @@ public class ResourceTest {
         Resource vm = new Resource();
         vm.setTotal_Produce(3);
         Assert.assertEquals(vm.getTotal_Produce(),3);
+    }
+
+    /**
+     * Test for the "publicTransport" field getter.
+     */
+    @Test
+    public void getTotal_PublicTransport() {
+        Resource vm = new Resource();
+        vm.setTotal_publicTransport(2);
+        Assert.assertEquals(vm.getTotal_publicTransport(),2);
+    }
+
+    /**
+     * Test for the "publicTransport" field setter.
+     */
+    @Test
+    public void setTotal_PublicTransport() {
+        Resource vm = new Resource();
+        vm.setTotal_publicTransport(3);
+        Assert.assertEquals(vm.getTotal_publicTransport(),3);
+    }
+
+    /**
+     * Test for the "heatConsumption" field getter.
+     */
+    @Test
+    public void getTotal_HeatConsumption() {
+        Resource vm = new Resource();
+        vm.setTotal_heatConsumption(2);
+        Assert.assertEquals(vm.getTotal_heatConsumption(),2);
+    }
+
+    /**
+     * Test for the "heatConsumption" field setter.
+     */
+    @Test
+    public void setTotal_HeatConsumption() {
+        Resource vm = new Resource();
+        vm.setTotal_heatConsumption(3);
+        Assert.assertEquals(vm.getTotal_heatConsumption(),3);
     }
 
 }
