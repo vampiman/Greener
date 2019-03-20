@@ -20,7 +20,7 @@ public class SolarPanels {
 
     /**
      * Method for sending a JSON-based request to the serverside with
-     * the total number of eaten vegan meals.
+     * the total number of solar panels.
      */
     public void sendSolarPanels(int total) {
 
@@ -39,8 +39,8 @@ public class SolarPanels {
 
     /**
      * Method for sending a JSON-based request to the serverside in order to retrieve
-     * the total number of eaten vegan meals.
-     * @return Total number of eaten vegan meals
+     * the total number of solar panels.
+     * @return Total number of solar panels
      */
     public int getTotalSolarPanels() {
         //Client client =  ClientBuilder.newClient();
