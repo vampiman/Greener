@@ -6,6 +6,8 @@ public class Resource {
     int distance;
     int percentage;
     int produce;
+    int publicTransport;
+    int heatConsumption;
 
     public Resource(){
 
@@ -35,13 +37,25 @@ public class Resource {
     public void setTotal_Percentage(int percentage) {
         this.percentage = percentage;
     }
-    
-    public int getTotal_Produce(){ 
-        return produce;
+
+    public int getTotal_Produce() { return produce; }
+
+    public void setTotal_Produce(int produce){ this.produce = produce; }
+
+    public int getTotal_publicTransport(){
+        return publicTransport;
     }
 
-    public void setTotal_Produce(int produce){
-        this.produce = produce;
+    public void setTotal_publicTransport(int publicTransport){
+        this.publicTransport = publicTransport;
+    }
+
+    public int getTotal_heatConsumption(){
+        return heatConsumption;
+    }
+
+    public void setTotal_heatConsumption(int heatConsumption){
+        this.heatConsumption = heatConsumption;
     }
 
 
