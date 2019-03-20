@@ -1,113 +1,93 @@
 package serverside;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
-import cn.hutool.json.JSONObject;
-
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(HeatConsumption.class)
 
 public class HeatConsumptionTest {
 
-    serverside.HeatConsumption server = new serverside.HeatConsumption();
+    @Mock
+    private Connection mockConnection;
 
+    @Mock
+    private Statement mockStatement;
+
+    @Mock
+    private ResultSet rs;
+
+    @InjectMocks
+    private HeatConsumption heatConsumption;
 
     /**
-     * Tests if the status of the response from the serverside
-     * is 200 (OK) after performing an get-request on the serverside.
-     * Expects equal.
+     * The set up for the behaviour of all the mock objects used in the tests.
+     * @throws SQLException SQL error
      */
-    @Test
-    public void getMethodStatus() {
-        assertEquals(200, server.getData().getStatus());
+    @Before
+    public void setUp() throws SQLException {
+        MockitoAnnotations.initMocks(this);
+        mockConnection = mock(Connection.class);
+        mockStatement = mock(Statement.class);
+        rs = mock(ResultSet.class);
+
+        mockStatic(DriverManager.class);
+        when(DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
+                "sammy", "temporary")).thenReturn(mockConnection);
+        when(mockConnection.createStatement()).thenReturn(mockStatement);
+
+        when(mockStatement.executeQuery(
+                "SELECT Lowering_home_temperature "
+                        + "FROM person WHERE Name = 'Robert'")).thenReturn(rs);
+        when(rs.getInt("Lowering_home_temperature")).thenReturn(100);
+        when(rs.next()).thenReturn(true);
     }
 
     /**
-     * Tests if the status of the response from the serverside
-     * is 200 (OK) after performing an post-request on the serverside.
-     * Expects equal.
+     * Tests if no errors occur during the
+     * execution of the post-method of the server.
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
      */
     @Test
-    public void postMethodStatus() {
-        JSONObject obj = new JSONObject();
-        assertEquals(200, server.postData(obj).getStatus());
+    public void postHeatConsumption() throws SQLException, ClassNotFoundException {
+        heatConsumption = new HeatConsumption();
+        Resource resource = new Resource();
+        resource.setTotal_heatConsumption(100);
+        heatConsumption.postData(resource);
     }
 
     /**
-     * Tests if the JSON object created in the test
-     * is the same as the received JSON from the serverside after making
-     * an get-request.
-     * Expects equal.
+     * Tests to see if an integer received from the get-method of the server
+     * is the same as the expected value.
+     * Expects equal
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
      */
     @Test
-    public void getDataJson() {
-        JSONObject obj = new JSONObject();
-        obj.put("Points", 100);
+    public void getHeatConsumption() throws SQLException, ClassNotFoundException {
+        heatConsumption = new HeatConsumption();
+        Resource resource = heatConsumption.getData();
 
-        assertEquals(obj, server.getData().getEntity());
+        Assert.assertEquals(resource.getTotal_heatConsumption(), 100);
     }
-
-    /**
-     * Tests if the JSON object that is send to the serverside using a post request
-     * is the same as the object that is send in the response of the request.
-     * Expects equal.
-     */
-    @Test
-    public void postDataJson() {
-        JSONObject obj = new JSONObject();
-        obj.put("Points", 10000);
-        assertEquals(obj, server.postData(obj).getEntity());
-    }
-
-    /**
-     * Tests if the status of the response from the serverside
-     * is 404 (Method not found) after performing an get-request on the serverside.
-     * Expects unequal.
-     */
-    @Test
-    public void getMethodStatusIncorrect() {
-        assertNotEquals(404, server.getData().getStatus());
-    }
-
-    /**
-     * Tests if the status of the response from the serverside
-     * is 404 (Method not found) after performing an post-request on the serverside.
-     * Expects unequal.
-     */
-    @Test
-    public void postMethodStatusIncorrect() {
-        JSONObject obj = new JSONObject();
-        assertNotEquals(404, server.postData(obj).getStatus());
-    }
-
-    /**
-     * Tests if the JSON object created in the test
-     * is the same as the received JSON from the serverside after making
-     * an get-request.
-     * Expects unequal.
-     */
-    @Test
-    public void getDataJsonIncorrect() {
-        JSONObject obj = new JSONObject();
-        obj.put("Points", 5);
-
-        assertNotEquals(obj, server.getData().getEntity());
-    }
-
-    /**
-     * Tests if an JSON object different from the JSON object
-     * that is send to the serverside using a post-request
-     * is the same as the object that is send in the response of the request.
-     * Expects unequal.
-     */
-    @Test
-    public void postDataJsonIncorrect() {
-        JSONObject obj = new JSONObject();
-        obj.put("Points", 10000);
-
-        JSONObject obj2 = new JSONObject();
-        obj2.put("Points", 5);
-        assertNotEquals(obj2, server.postData(obj).getEntity());
-    }
-
 }
+
