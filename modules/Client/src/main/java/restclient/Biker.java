@@ -23,51 +23,38 @@ public class Biker {
     }
 
     /**
-     * The method creates a client and a GET request
-     * for retrieval of data on the serverside in a JSON file.
-     *
-     * @param uri specifies the URI of the resource
-     * @return JSON object contained in the serverside response.
+     * Method for sending a JSON-based request to the serverside with
+     * the total number of cycled distance.
      */
-    public JSONObject getActivityInfo(String uri) {
-        WebTarget webTarget = this.client.target(uri);
+    public void sendBikers(int distance) {
 
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        Response response = invocationBuilder.get(Response.class);
 
-        JSONObject jo = response.readEntity(JSONObject.class);
-//        System.out.println(jo.toJSONString(10));
-        return jo;
+        JSONObject jo = new JSONObject();
+        jo.put("distance", distance);
+
+        Resource vm = new Resource();
+        vm.setTotal_Distance(distance);
+
+        this.client.target("http://localhost:8080/serverside/webapi/bike/post")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(vm));
+
     }
-
 
     /**
-     * The method creates a client and a POST request
-     * for upload of the entered data to the serverside as JSON.
-     *
-     * @param uri specifies the URI of the resource
-     * @return JSON object from serverside response (the one which was posted)
+     * Method for sending a JSON-based request to the serverside in order to retrieve
+     * the total number of cycled distance.
+     * @return Total number of cycled distance
      */
-    public JSONObject postActivityInfo(String uri) {
-        JSONObject j1 = new JSONObject().append("Distance", "10");
-        JSONObject j2 = this.client.target(uri)
+    public int getTotalBikers() {
+        //Client client =  ClientBuilder.newClient();
+        Response resp = this.client.target("http://localhost:8080/serverside/webapi/bike/distance")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(j1))
-                .readEntity(JSONObject.class);
-//        System.out.println(j2.toJSONString(10));
-        return j2;
+                .get(Response.class);
+
+
+        JSONObject jo = resp.readEntity(JSONObject.class);
+
+        return jo.getInt("distance");
     }
-
-
-    //    /**
-    //     * Main method that simulates the client.
-    //     *
-    //     * @param args Input for main
-    //     */
-    //    public static void main(String[] args) {
-    //        Biker biker = new Biker(ClientBuilder.newClient());
-    //
-    //        biker.getActivityInfo("http://localhost:8080/serverside/webapi/bike/get");
-    //        biker.postActivityInfo("http://localhost:8080/serverside/webapi/bike/post");
-    //    }
 }
