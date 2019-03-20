@@ -249,5 +249,39 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(1835,(int)calc.SolarPanel_Points_Calculator(2000));
         Assert.assertEquals(832,(int)calc_kg.SolarPanel_Points_Calculator(2000));
     }
+    
+        @Test
+    public void Veganmeal_CalculatorTest1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(42, (int) calc.Veganmeal_Calculator(10, 1));
+    }
+
+    @Test
+    public void Veganmeal_CalculatorTest2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(77, (int) calc.Veganmeal_Calculator(1, 2));
+    }
+
+    @Test
+    public void Veganmeal_CalculatorTest3() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(20, (int) calc.Veganmeal_Calculator(1, 3));
+    }
+
+    @Test
+    public void Veganmeal_CalculatorTest4() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(213, (int) calc.Veganmeal_Calculator(1, 4));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void Veganmeal_wrongType() {
+        new CarbonCalculator(1).Veganmeal_Calculator(100, 0);
+    }
+
 
 }
