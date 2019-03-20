@@ -14,7 +14,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "localproduce" path).
@@ -52,7 +51,7 @@ public class LocalProduce {
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Response getData() throws ClassNotFoundException, SQLException {
+    public Resource getData() throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
@@ -60,15 +59,18 @@ public class LocalProduce {
         ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'");
 
         rs.next();
-        int total = rs.getInt("Local_produce");
+        int produce = rs.getInt("Local_produce");
+
+        Resource lp = new Resource();
+        lp.setTotal_Produce(produce);
 
         st.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
-        jo.put("total", total);
+        jo.put("product", produce);
         st.close();
         dbConnection.close();
-        return Response.status(Response.Status.OK).entity(jo).build();
+        return lp;
 
 
     }
@@ -88,11 +90,13 @@ public class LocalProduce {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData() throws ClassNotFoundException, SQLException {
+    public void postData(Resource lp) throws ClassNotFoundException, SQLException {
         getDbConnection();
+
+        System.out.println(lp.getTotal_Produce());
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
-                "UPDATE person SET Local_produce = Local_produce + 1 WHERE Name = 'Robert'");
+                "UPDATE person SET produce = produce" + lp.getTotal_Produce() + "WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();

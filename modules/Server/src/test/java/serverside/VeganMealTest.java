@@ -61,9 +61,9 @@ public class VeganMealTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                 "sammy","temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        VeganMealResource vm = new VeganMealResource();
-        vm.setTotal(1);
-        veganMeal.postIt(vm);
+        Resource re = new Resource();
+        re.setTotal_Meals(1);
+        veganMeal.postIt(re);
 
     }
 
@@ -85,9 +85,9 @@ public class VeganMealTest {
                 "SELECT Vegan_meal FROM person WHERE Name = 'Robert'")).thenReturn(rs);
         Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        VeganMealResource resource = veganMeal.getAll();
+        Resource resource = veganMeal.getAll();
 
 
-        Assert.assertEquals(resource.getTotal(), 1);
+        Assert.assertEquals(resource.getTotal_Meals(), 1);
     }
 }

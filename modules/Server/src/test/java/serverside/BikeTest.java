@@ -2,6 +2,7 @@ package serverside;
 
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,9 +18,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.ws.rs.core.Response;
-
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Bike.class)
@@ -47,6 +45,8 @@ public class BikeTest {
 
     /**
      * Test for the /biker/post endpoints.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
      */
     @Test
     public void postData() throws ClassNotFoundException, SQLException {
@@ -57,11 +57,17 @@ public class BikeTest {
                 "sammy",
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        bike.postData();
+
+        Resource re = new Resource();
+        re.setTotal_Distance(1);
+        bike.postData(re);
     }
 
     /**
      * Test for the /biker/Bike endpoints.
+     *
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
      */
 
     @Test
@@ -77,7 +83,10 @@ public class BikeTest {
                 "SELECT Bike FROM person WHERE Name = 'Robert'")).thenReturn(rs);
         Mockito.when(rs.getInt("Bike")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Response value = bike.getData();
+
+        Resource rs = bike.getAll();
+
+        Assert.assertEquals(rs.getTotal_Distance(), 1);
 
         //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }

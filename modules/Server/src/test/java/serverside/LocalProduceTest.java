@@ -66,7 +66,9 @@ public class LocalProduceTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        localProduce.postData();
+        Resource lp = new Resource();
+        lp.setTotal_Produce(1);
+        localProduce.postData(lp);
     }
 
     /**
@@ -76,7 +78,7 @@ public class LocalProduceTest {
      * @throws ClassNotFoundException Class not found error
      */
     @Test
-    public void getAll() throws SQLException, ClassNotFoundException {
+    public void getData() throws SQLException, ClassNotFoundException {
         localProduce = new LocalProduce();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
@@ -91,10 +93,9 @@ public class LocalProduceTest {
 
         Mockito.when(rs.getInt("Local_produce")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Response value = localProduce.getData();
 
+        Resource rs = localProduce.getData();
 
-        System.out.println(value.getEntity());
-        Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
+        Assert.assertEquals(rs.getTotal_Produce(), 1);
     }
 }

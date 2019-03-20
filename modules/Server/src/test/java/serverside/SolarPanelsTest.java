@@ -19,8 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.ws.rs.core.Response;
-
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SolarPanels.class)
@@ -33,7 +31,6 @@ public class SolarPanelsTest {
     private Statement mockStatement;
     @Mock
     private ResultSet rs;
-
     @InjectMocks
     private SolarPanels solarPanels;
 
@@ -64,12 +61,14 @@ public class SolarPanelsTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        solarPanels.postAmount();
+        Resource re = new Resource();
+        re.setTotal_Percentage(1);
+        solarPanels.postAmount(re);
 
     }
 
     /**
-     * Test for the /localproduce/totalproduce endpoint.
+     * Test for the /solarpanels/percentage endpoint.
      *
      * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found error
@@ -90,9 +89,8 @@ public class SolarPanelsTest {
 
         Mockito.when(rs.getInt("Solar_panels")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Response value = solarPanels.getAmount();
+        Resource rs = solarPanels.getAmount();
 
-        System.out.println(value.getEntity());
-        Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
+        Assert.assertEquals(rs.getTotal_Percentage(), 1);
     }
 }
