@@ -40,9 +40,7 @@ public class Resource {
 
     public int getTotal_Produce(){ return produce; }
 
-    public void setTotal_Produce(int produce){
-        this.produce = produce;
-    }
+    public void setTotal_Produce(int produce) { this.produce = produce; }
 
     public int getTotal_publicTransport(){
         return publicTransport;
