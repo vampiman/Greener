@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<?import javafx.scene.control.Label?>
+<GridPane fx:controller="gui.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" percentHeight="35.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="45.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" percentHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" GridPane.rowIndex="1">
+         <children>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutX="14.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="How many KM did you cycle today?" wrappingWidth="337.80000050365925">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" GridPane.rowIndex="2" />
+      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <children>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tell us more ..." textAlignment="CENTER" wrappingWidth="600.0000000298023">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="18.0" />
+               </font>
+            </Text>
+            <Text fill="WHITE" fontSmoothingType="LCD" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="  Well Done!" wrappingWidth="600.0000127903804">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="20.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Button fx:id="addBikingDistanceButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="97.0" style="-fx-background-color: #00ffbc;" text="ADD" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets right="40.0" />
+         </GridPane.margin>
+      </Button>
+      <Label fx:id="bikingDistance" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="42.0" prefWidth="79.0" style="-fx-background-color: white;" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets left="350.0" />
+         </GridPane.margin>
+      </Label>
+   </children>
+</GridPane>
