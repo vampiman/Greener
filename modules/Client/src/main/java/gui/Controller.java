@@ -23,7 +23,7 @@ public class Controller {
     private Button loginButton;
 
     @FXML
-    private void loadDashboardPage(ActionEvent event) throws IOException {
+    private void loadMenuPageLogin(ActionEvent event) throws IOException {
         Window owner = loginButton.getScene().getWindow();
         if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
@@ -36,7 +36,13 @@ public class Controller {
             return;
         }
 
-        loadPage(event, "dashboard.fxml");
+        loadPage(event, "menu.fxml");
+
+    }
+
+    @FXML
+    private void loadMenuPage(ActionEvent event) throws IOException {
+        loadPage(event, "menu.fxml");
 
     }
 

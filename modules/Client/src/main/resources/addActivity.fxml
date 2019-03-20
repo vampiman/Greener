@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:controller="gui.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,6 +23,7 @@
     <RowConstraints maxHeight="97.60001220703123" minHeight="10.0" percentHeight="30.0" prefHeight="97.60001220703123" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="3" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -110,6 +111,22 @@
             <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
          </GridPane.margin>
       </Button>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" />
+      <Button maxWidth="-Infinity" mnemonicParsing="false" onAction="#loadMenuPage" style="-fx-background-color: #000000;" text="BACK" textFill="#ebf8ee" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <font>
+            <Font name="Comic Sans MS Bold" size="15.0" />
+         </font>
+         <GridPane.margin>
+            <Insets right="20.0" />
+         </GridPane.margin>
+      </Button>
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;">
+         <children>
+            <Text layoutX="42.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose an activity">
+               <font>
+                  <Font name="Comic Sans MS" size="24.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
    </children>
 </GridPane>

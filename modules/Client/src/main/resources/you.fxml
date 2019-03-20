@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,8 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.Label?>
-<GridPane fx:controller="gui.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.4000244140625" minWidth="10.0" percentWidth="40.0" prefWidth="236.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.199951171875" minWidth="10.0" percentWidth="20.0" prefWidth="128.8" />
@@ -26,7 +27,14 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.rowIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" />
-      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00ffbc;" />
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00ffbc;">
+         <children>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadMenuPage" style="-fx-background-color: #000000;" text="BACK" textFill="#00ffbc">
+               <font>
+                  <Font name="Comic Sans MS Bold" size="15.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
       <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="202.0" prefWidth="216.0" style="-fx-background-color: #ebf8ee;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <children>
             <Label alignment="CENTER" prefHeight="54.0" prefWidth="216.0" style="-fx-background-color: #ebf8ee;" text="Personal Details">
