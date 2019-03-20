@@ -293,6 +293,43 @@ public class CarbonCalculator {
         return toReturn;
 
     }
+    
+     /**
+     * get the CO2 emission of the localproduce feature
+     * @param amount
+     * @param type of meal
+     * @return 10 times the CO2 emission
+     */
+    public double Veganmeal_Calculator(double amount, int type){
+        if (type > 4 || type < 1) {
+            throw new IllegalArgumentException("Please insert a valid type of Food!");
+        }
+
+        double sort = 0;
+
+        switch (type) {
+            case 1:
+                //fruit
+                sort = 0.42;
+                break;
+            case 2:
+                //dairy
+                sort = 7.7;
+                break;
+            case 3:
+                //vegetables
+                sort = 2.0;
+                break;
+            case 4:
+                //meat
+                sort = 21.3;
+                break;
+            default:
+                break;
+        }
+        return amount * sort * 10;
+    }
+
 
 
 
