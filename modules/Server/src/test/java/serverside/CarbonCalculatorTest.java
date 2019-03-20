@@ -2,7 +2,7 @@ package serverside;
 
 import org.junit.Assert;
 import org.junit.Test;
-
+import sun.java2d.pipe.SolidTextRenderer;
 
 
 public class CarbonCalculatorTest {
@@ -236,9 +236,10 @@ public class CarbonCalculatorTest {
 
         Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
     }
-    
+
+
     /**
-     *  Test for calculating pounds or kg for solar panels 
+     *  Test for calculating pounds or kg for solar panels.
      */
     @Test
     public void Solar_points_Test() {
@@ -249,14 +250,20 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(1835,(int)calc.SolarPanel_Points_Calculator(2000));
         Assert.assertEquals(832,(int)calc_kg.SolarPanel_Points_Calculator(2000));
     }
-    
-        @Test
+
+    /**
+     *  Test for veganmeal CO2 emissions type 1 (fruit).
+     */
+    @Test
     public void Veganmeal_CalculatorTest1() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(42, (int) calc.Veganmeal_Calculator(10, 1));
     }
 
+    /**
+     *  Test for veganmeal CO2 emissions type 2 (dairy).
+     */
     @Test
     public void Veganmeal_CalculatorTest2() {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -264,6 +271,9 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(77, (int) calc.Veganmeal_Calculator(1, 2));
     }
 
+    /**
+     *  Test for veganmeal CO2 emissions type 3 (vegetables).
+     */
     @Test
     public void Veganmeal_CalculatorTest3() {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -271,6 +281,9 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(20, (int) calc.Veganmeal_Calculator(1, 3));
     }
 
+    /**
+     *  Test for veganmeal CO2 emissions type 4 (meat).
+     */
     @Test
     public void Veganmeal_CalculatorTest4() {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -278,10 +291,60 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(213, (int) calc.Veganmeal_Calculator(1, 4));
     }
 
+    /**
+     *  Test for veganmeal CO2 emissions, case when the type is illegal.
+     */
     @Test(expected = IllegalArgumentException.class)
     public void Veganmeal_wrongType() {
         new CarbonCalculator(1).Veganmeal_Calculator(100, 0);
     }
 
 
+    /**
+     *  Test for localproduce CO2 emissions type 1 (fruit).
+     */
+    @Test
+    public void Localproduce_CalculatorTest1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(39, (int) calc.Localproduce_Calculator(10, 1));
+    }
+
+    /**
+     *  Test for localproduce CO2 emissions type 2 (dairy).
+     */
+    @Test
+    public void Localproduce_CalculatorTest2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(71, (int) calc.Localproduce_Calculator(1, 2));
+    }
+
+    /**
+     *  Test for localproduce CO2 emissions type 3 (vegetables).
+     */
+    @Test
+    public void Localproduce_CalculatorTest3() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(18, (int) calc.Localproduce_Calculator(1, 3));
+    }
+
+    /**
+     *  Test for localproduce CO2 emissions type 4 (meat).
+     */
+    @Test
+    public void Localproduce_CalculatorTest4() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(198, (int) calc.Localproduce_Calculator(1, 4));
+    }
+
+    /**
+     *  Test for localproduce CO2 emissions, case when the type is illegal.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void Localproduce_wrongType() {
+        new CarbonCalculator(1).Localproduce_Calculator(100, 0);
+    }
 }
