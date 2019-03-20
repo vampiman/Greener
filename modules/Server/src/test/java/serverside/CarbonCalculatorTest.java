@@ -236,5 +236,18 @@ public class CarbonCalculatorTest {
 
         Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
     }
+    
+    /**
+     *  Test for calculating pounds or kg for solar panels 
+     */
+    @Test
+    public void Solar_points_Test() {
+
+        CarbonCalculator calc = new CarbonCalculator(1);
+        CarbonCalculator calc_kg = new CarbonCalculator(2);
+
+        Assert.assertEquals(1835,(int)calc.SolarPanel_Points_Calculator(2000));
+        Assert.assertEquals(832,(int)calc_kg.SolarPanel_Points_Calculator(2000));
+    }
 
 }
