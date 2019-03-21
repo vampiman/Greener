@@ -279,7 +279,7 @@ public class CarbonCalculator {
      *  into CO2 for electric boilers.
      * @return grams of CO2 per kWh for electric based boiler.
      */
-    public static double kWhToCo2Electric() {
+    public static double energyToCarbonElectric() {
         //expected value in 2020
         return 250.0;
     }
@@ -289,7 +289,7 @@ public class CarbonCalculator {
      *  into CO2 for non-electric boilers.
      * @return grams of CO2 per kWh for non-electric based boiler.
      */
-    public static double kWhToCo2NonElectric() {
+    public static double energyToCarbonNonElectric() {
         //Oil boilers: 430.0
         //Gas boilers: 295.0
         //Bio-sourced gases: 60.0
@@ -300,18 +300,18 @@ public class CarbonCalculator {
 
     /**
      * Calculated the grams of CO2 equal to the given kWh.
-     * @param kWh amount of kWh saved by user.
+     * @param energyKiloWattHour amount of kWh saved by user.
      * @param energyType type of energy to
      *                   power the boiler (electric or non-electric).
      * @return CO2 saved with the given kWh.
      */
-    public double HomeHeatConsumptionSaved(double kWh, String energyType) {
+    public double homeHeatConsumptionSaved(double energyKiloWattHour, String energyType) {
         if (energyType.equalsIgnoreCase("Electric")) {
-            double CO2 = kWhToCo2Electric();
-            return kWh * CO2;
+            double co2 = energyToCarbonElectric();
+            return energyKiloWattHour * co2;
         }
 
-        double CO2 = kWhToCo2NonElectric();
-        return kWh * CO2;
+        double co2 = energyToCarbonNonElectric();
+        return energyKiloWattHour * co2;
     }
 }
