@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -38,9 +35,25 @@ public class Controller {
     private PasswordField rePassword;
 
     @FXML
-    protected void initialize(ActionEvent event) throws IOException {
-        loadPage(event, "menuPage.fxml");
-    }
+    private Button addButton;
+
+    @FXML
+    private TextField mealPortion;
+
+    @FXML
+    private TextField beforeTemperature;
+
+    @FXML
+    private TextField afterTemperature;
+
+    @FXML
+    private TextField electricityPercentage;
+
+    @FXML
+    private TextField kilometers;
+
+    @FXML
+    private ChoiceBox publicTransport;
 
     @FXML
     private void loadMenuPageLogin(ActionEvent event) throws IOException {
@@ -55,15 +68,12 @@ public class Controller {
                     "Please enter a password");
             return;
         }
-
         loadPage(event, "menu.fxml");
-
     }
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
         loadPage(event, "menu.fxml");
-
     }
 
     @FXML
@@ -94,8 +104,6 @@ public class Controller {
                     "Please retype your password");
             return;
         }
-
-
         loadPage(event, "loginPage.fxml");
     }
 
@@ -203,83 +211,98 @@ public class Controller {
 
     @FXML
     private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
-        //        String numKilometers = null;
-        //        String option;
-        //        Window owner = addButtonPublicTransport.getScene().getWindow();
-        //        if (kilometers.getText().isEmpty()) {
-        //            LoginPageController.AlertHelper
-        //                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                            "Please enter the number of kilometers which you travelled");
-        //            return;
-        //        } else {
-        //            numKilometers = kilometers.getText();
-        //            System.out.println(kilometers.getText() + " kilometers");
-        //        }
-        //        if (publicTransport.getValue() == null) {
-        //            LoginPageController.AlertHelper
-        //                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                            "Please enter the type of public transport");
-        //            return;
-        //        } else {
-        //            option = publicTransport.getValue().toString();
-        //            System.out.println(option);
-        //        }
-
+        Window owner = addButton.getScene().getWindow();
+        if (kilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
+        } else if (publicTransport.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the type of public transport");
+            return;
+        } else {
+            try{
+                Double numberOfKilometers = Double.parseDouble(kilometers.getText());
+                String option = publicTransport.getValue().toString();
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate number of kilometers you go");
+                return;
+            }
+        }
         loadPage(event, "addActivity.fxml");
     }
 
     @FXML
     private void handleAddTemperatureButtonAction(ActionEvent event) throws IOException {
-        //        Window owner = addButtonTemperature.getScene().getWindow();
-        //        if (beforeTemperature.getText().isEmpty()) {
-        //            AlertHelper
-        //                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                            "Please enter the temperature before decreasing");
-        //            return;
-        //        } else {
-        //            System.out.println(beforeTemperature.getText() + " °C");
-        //        }
-        //        if (afterTemperature.getText().isEmpty()) {
-        //            Controller.AlertHelper
-        //                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                            "Please enter the temperature after decreasing");
-        //            return;
-        //        } else {
-        //            System.out.println(afterTemperature.getText() + " °C");
-        //        }
+        Window owner = addButton.getScene().getWindow();
+        if (beforeTemperature.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the temperature before decreasing");
+            return;
+        } else if (afterTemperature.getText().isEmpty()) {
+            Controller.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the temperature after decreasing");
+            return;
+        } else {
+            try{
+                Double before = Double.parseDouble(beforeTemperature.getText());
+                Double after = Double.parseDouble(afterTemperature.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate your home's temperature");
+                return;
+            }
+        }
         loadPage(event, "addActivity.fxml");
     }
 
     @FXML
     private void handleAddSolarPanelButtonAction(ActionEvent event) throws IOException {
-        //        Window owner = addButtonSolarPanel.getScene().getWindow();
-        //        if (electricityPercentage.getText().isEmpty()) {
-        //            Controller.AlertHelper.showAlert(
-        //                    Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                    "Please enter the percentage of decrease
-        //                    in your electricity consumption");
-        //            return;
-        //        } else {
-        //            System.out.println("% " + electricityPercentage.getText());
-        //        }
+        Window owner = addButton.getScene().getWindow();
+        if (electricityPercentage.getText().isEmpty()) {
+            Controller.AlertHelper.showAlert(
+                    Alert.AlertType.ERROR, owner, "Unfilled field!",
+                    "Please enter the percentage of decrease in your electricity consumption");
+            return;
+        } else {
+            try{
+                Double percentage = Double.parseDouble(electricityPercentage.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate your electricity percentage");
+                return;
+            }
+        }
         loadPage(event, "addActivity.fxml");
     }
 
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
-        //        Window owner = addButtonVeganMeal.getScene().getWindow();
-        //        if (mealPortion.getText().isEmpty()) {
-        //            LoginPageController.AlertHelper
-        //                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-        //                            "Please enter how much vegan meal you had");
-        //            return;
-        //        } else {
-        //            int portions = Integer.parseInt(mealPortion.getText());
-        //            System.out.println(portions);
-        //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-        //
-        //        }
-        //
+        Window owner = addButton.getScene().getWindow();
+        if (mealPortion.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter how much vegan meal you had");
+            return;
+        } else {
+            try{
+                int portions = Integer.parseInt(mealPortion.getText());
+                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a number to indicate your meal portion");
+                return;
+            }
+        }
         loadPage(event, "addActivity.fxml");
     }
 

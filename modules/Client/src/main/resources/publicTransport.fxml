@@ -47,7 +47,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.rowIndex="1" />
-            <TextField id="series" fx:id="kilometers" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="126.0" promptText="km" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+            <TextField fx:id="kilometers" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="126.0" promptText="km" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets left="10.0" top="25.0" />
                </GridPane.margin>

@@ -43,7 +43,7 @@
             <Insets bottom="50.0" right="140.0" />
          </GridPane.margin>
       </Text>
-      <TextField fx:id="electricityPercentage" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="93.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <TextField fx:id="mealPortion" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="26.0" prefWidth="93.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
             <Insets bottom="50.0" left="230.0" />
          </GridPane.margin>
@@ -56,7 +56,7 @@
             <Insets bottom="30.0" left="30.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddSolarPanelButtonAction" text="ADD" textFill="#00ffbc" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+      <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAddVeganMealButtonAction" text="ADD" textFill="#00ffbc" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
          <font>
             <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
