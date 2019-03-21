@@ -237,4 +237,43 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
     }
 
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void Electric() {
+        Assert.assertEquals(250.0, CarbonCalculator.kWhToCo2Electric(), 0.001);
+    }
+
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void NonElectric() {
+        Assert.assertEquals(221.875, CarbonCalculator.kWhToCo2NonElectric(), 0.001);
+    }
+
+    /**
+     * Test the heat consumption saved for the electric energy source.
+     */
+    @Test
+    public void HomeHeatConsumptionSavedElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String type = "Electric";
+        int integer = 2000;
+        Assert.assertEquals(2000*CarbonCalculator.kWhToCo2Electric(),
+                calc.HomeHeatConsumptionSaved(integer, type), 0.001);
+    }
+
+    /**
+     * Test the heat consumption saved for the non-electric energy source.
+     */
+    @Test
+    public void HomeHeatConsumptionSavedNonElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String type = "non-electric";
+        int integer = 7000;
+        Assert.assertEquals(7000*CarbonCalculator.kWhToCo2NonElectric(),
+                calc.HomeHeatConsumptionSaved(integer, type), 0.001);
+    }
 }
