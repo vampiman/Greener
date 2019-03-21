@@ -1,0 +1,56 @@
+#loginButton{
+	-fx-background-color: #00ffbc;
+}
+
+#loginButton:hover{
+	-fx-background-color: linear-gradient(#00ffbc, #ffffff);
+}
+
+#sign_up_personal{
+	-fx-background-color: #00ffbc;
+}
+
+#sign_up_personal:hover{
+	-fx-background-color: linear-gradient(#00ffbc, grey);
+}
+
+#addActivityButton{
+	-fx-background-color: #000000;
+}
+
+#addActivityButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#signUpButton{
+	-fx-background-color: #000000;
+}
+
+#signUpButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+.button{
+	-fx-background-color: #000000;
+}
+
+.button:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#backButton{
+	-fx-background-color: #000000;
+}
+
+#backButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#addButton{
+	-fx-background-color: #000000;
+}
+
+#addButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
