@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,6 +39,17 @@ public class SolarPanels {
     }
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Endpoint /solarpanels/post that modifies the number of solarpanels in the database.
      *
      * @throws ClassNotFoundException Class not found error
@@ -46,9 +58,12 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount(Resource re) throws ClassNotFoundException, SQLException {
+    public void postAmount(Resource re, @HeaderParam("Token") String token)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
+
+        passToken(token, re);
 
         System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
@@ -71,7 +86,8 @@ public class SolarPanels {
     @GET
     @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAmount() throws ClassNotFoundException, SQLException {
+    public Resource getAmount(@HeaderParam("Token") String token)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
@@ -83,7 +99,7 @@ public class SolarPanels {
         int percentage = rs.getInt("Solar_panels");
 
         Resource re = new Resource();
-
+        passToken(token, re);
         re.setTotal_Percentage(percentage);
 
         st.close();

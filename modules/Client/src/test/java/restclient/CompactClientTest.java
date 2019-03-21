@@ -1,5 +1,7 @@
 package restclient;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -9,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import javax.ws.rs.client.Client;
@@ -19,8 +20,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class BikerTest {
-
+public class CompactClientTest {
 
     @Mock
     WebTarget target;
@@ -35,8 +35,7 @@ public class BikerTest {
     Response res;
 
     @InjectMocks
-    Biker bikeClient;
-
+    CompactClient ccClient;
 
     /**
      * Method that initialises all objects needed for testing
@@ -45,23 +44,26 @@ public class BikerTest {
     @Before
     public void setup() {
         client = mock(Client.class);
-        bikeClient = new Biker(client);
+        ccClient = new CompactClient(client);
+        ccClient.token = "";
 
         JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
+        jo.append("Weight", "100");
         res = mock(Response.class);
 
         when(res.readEntity(JSONObject.class)).thenReturn(jo);
         when(res.getStatus()).thenReturn(200); //The OK status
 
         builder = mock(Invocation.Builder.class);
+        when(builder.header(eq("Authorization"), eq("Bearer "))).thenReturn(builder);
         when(builder.get(Response.class)).thenReturn(res);
         when(builder.post(Entity.json(jo))).thenReturn(res);
 
         target = mock(WebTarget.class);
-        when(target.path(Matchers.anyString())).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(bikeClient.client.target("testBike")).thenReturn(target);
+        when(target.path(anyString())).thenReturn(target);
+        when(target.request(MediaType.APPLICATION_JSON))
+                .thenReturn(builder);
+        when(ccClient.client.target("testCompactClient")).thenReturn(target);
 
     }
 
@@ -74,8 +76,8 @@ public class BikerTest {
     @Test
     public void getRequestCorrect() {
         JSONObject jo = new JSONObject();
-        jo.append("Distance", "10");
-        Assert.assertEquals(bikeClient.getActivityInfo("testBike")
+        jo.append("Weight", "100");
+        Assert.assertEquals(ccClient.getActivityInfo("testCompactClient")
                 .toJSONString(10), jo.toJSONString(10));
     }
 
@@ -88,8 +90,8 @@ public class BikerTest {
     @Test
     public void getRequestIncorrect() {
         JSONObject jo = new JSONObject();
-        jo.append("Dst", "200km");
-        Assert.assertNotEquals(bikeClient.getActivityInfo("testBike")
+        jo.append("W", "200g");
+        Assert.assertNotEquals(ccClient.getActivityInfo("testCompactClient")
                 .toJSONString(10), jo.toJSONString(10));
     }
 
@@ -101,8 +103,8 @@ public class BikerTest {
     @Test
     public void postRequestCorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Distance", "10");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
+        j1.append("Weight", "100");
+        JSONObject j2 = ccClient.postActivityInfo("testCompactClient");
         Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
@@ -114,8 +116,8 @@ public class BikerTest {
     @Test
     public void postRequestIncorrect() {
         JSONObject j1 = new JSONObject();
-        j1.append("Distance", "2050");
-        JSONObject j2 = bikeClient.postActivityInfo("testBike");
+        j1.append("Wieght", "2050");
+        JSONObject j2 = ccClient.postActivityInfo("testCompactClient");
         Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
