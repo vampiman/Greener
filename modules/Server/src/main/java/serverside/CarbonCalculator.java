@@ -274,5 +274,44 @@ public class CarbonCalculator {
     }
 
 
+    /**
+     *  Converter for the home heat consumption. Coverts the kWh
+     *  into CO2 for electric boilers.
+     * @return grams of CO2 per kWh for electric based boiler.
+     */
+    public static double kWhToCo2Electric() {
+        //expected value in 2020
+        return 250.0;
+    }
 
+    /**
+     *  Converter for the home heat consumption. Coverts the kWh
+     *  into CO2 for non-electric boilers.
+     * @return grams of CO2 per kWh for non-electric based boiler.
+     */
+    public static double kWhToCo2NonElectric() {
+        //Oil boilers: 430.0
+        //Gas boilers: 295.0
+        //Bio-sourced gases: 60.0
+        //Biomass boilers: 102.5
+        //average:
+        return 221.875;
+    }
+
+    /**
+     * Calculated the grams of CO2 equal to the given kWh.
+     * @param kWh amount of kWh saved by user.
+     * @param energyType type of energy to
+     *                   power the boiler (electric or non-electric).
+     * @return CO2 saved with the given kWh.
+     */
+    public double HomeHeatConsumptionSaved(double kWh, String energyType) {
+        if (energyType.equalsIgnoreCase("Electric")) {
+            double CO2 = kWhToCo2Electric();
+            return kWh * CO2;
+        }
+
+        double CO2 = kWhToCo2NonElectric();
+        return kWh * CO2;
+    }
 }
