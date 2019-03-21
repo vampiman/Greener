@@ -63,7 +63,7 @@ public class SolarPanelsTest {
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Resource re = new Resource();
         re.setTotal_Percentage(1);
-        solarPanels.postAmount(re);
+        solarPanels.postAmount(re,"token");
 
     }
 
@@ -89,8 +89,24 @@ public class SolarPanelsTest {
 
         Mockito.when(rs.getInt("Solar_panels")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Resource rs = solarPanels.getAmount();
+        Resource rs = solarPanels.getAmount("token");
 
         Assert.assertEquals(rs.getTotal_Percentage(), 1);
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }
