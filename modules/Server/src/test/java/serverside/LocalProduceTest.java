@@ -19,12 +19,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import javax.ws.rs.core.Response;
-
-
-
-
-
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(LocalProduce.class)
 public class LocalProduceTest {
