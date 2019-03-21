@@ -1,4 +1,4 @@
-package serverside;
+package restclient;
 
 public class Resource {
 

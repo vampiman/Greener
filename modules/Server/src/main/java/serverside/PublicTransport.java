@@ -1,6 +1,12 @@
 package serverside;
 
-import cn.hutool.json.JSONObject;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.inject.Singleton;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -9,41 +15,80 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "publictransport" path).
  */
 @Path("publictransport")
+@Singleton
 public class PublicTransport {
 
-    private int integer = 100;
+    private Connection dbConnection;
 
     /**
-     * Handles the GET-requests from the client.
-     * @return Response object with a JSON object.
+     * Method used to create an connection with the database.
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
+     */
+
+    public void getDbConnection() throws SQLException, ClassNotFoundException {
+        String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
+        String user = "sammy";
+        String pass = "temporary";
+
+        //Class.forName("com.mysql.jdbc.Driver");
+        dbConnection = DriverManager.getConnection(url, user, pass);
+    }
+
+
+    /**
+     * Endpoint /publictransport/get that returns the
+     * amount of kilometers travelled with public
+     * transport.
+     * @return kilometers travelled with public transport
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found error
      */
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getData() {
+    public Resource getData() throws SQLException, ClassNotFoundException {
 
-        JSONObject jo = new JSONObject();
-        jo.put("Points", integer);
+        getDbConnection();
 
-        Response res = Response.status(200).entity(jo).build();
-        return res;
+        Statement st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Public_transport FROM person WHERE Name = 'Robert'");
+
+        rs.next();
+        int total = rs.getInt("Public_transport");
+
+        Resource re = new Resource();
+        re.setTotal_publicTransport(total);
+
+        st.close();
+        dbConnection.close();
+
+        return re;
     }
 
     /**
-     * Handles the GET-requests from the client.
-     * @return Integer which is the distance travelled by public transport sent from the client.
+     * Endpoint /publictransport/post that
+     * handles the POST-requests from the client.
+     * @param re which has the information which needs to be placed in the database.
+     * @throws SQLException SQL error
+     * @throws ClassNotFoundException Class not found
      */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response postData(JSONObject obj) {
+    public void postData(Resource re) throws SQLException, ClassNotFoundException {
 
-        return Response.status(200).entity(obj).build();
+        getDbConnection();
+        Statement st = dbConnection.createStatement();
+        st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
+                + re.getTotal_publicTransport() + " WHERE Name = 'Robert'");
+
+        st.close();
+        dbConnection.close();
     }
 }
