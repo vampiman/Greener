@@ -6,6 +6,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.IncorrectClaimException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.security.SignatureException;
 
 import java.util.Calendar;
@@ -20,7 +21,6 @@ public class JwtVerifier implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
-    private static final long CLOCK_SKEW = 3 * 60; //in seconds
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
@@ -57,18 +57,25 @@ public class JwtVerifier implements ContainerRequestFilter {
     public static Object verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setAllowedClockSkewSeconds(CLOCK_SKEW)
-                    .requireSubject("id")
                     .setSigningKey(KeyGen.KEY_VALIDATE)
                     .parseClaimsJws(token);
+
+            String username = claims.getBody().getSubject();
+            if (username.equals("username")) {
+                return "OK";
+            } else {
+                return "NOT OK";
+            }
         } catch (SignatureException se) {
             return se;
         } catch (IncorrectClaimException ice) {
             return ice;
         } catch (ExpiredJwtException eje) {
             return eje;
+        } catch (MissingClaimException mce) {
+            return mce;
         }
-        return "OK";
+
     }
 
     /**
@@ -79,8 +86,7 @@ public class JwtVerifier implements ContainerRequestFilter {
     public static String issueJwt(String credentials) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setAllowedClockSkewSeconds(CLOCK_SKEW)
-                    .require("username", "Nat")
+                    .require("email", "nstruharova@tudelft.nl")
                     .require("password", "123")
                     .setSigningKey(KeyGen.KEY)
                     .parseClaimsJws(credentials);
@@ -90,14 +96,16 @@ public class JwtVerifier implements ContainerRequestFilter {
             return "NO";
         } catch (ExpiredJwtException eje) {
             return "NO";
+        } catch (MissingClaimException mce) {
+            return "NO";
         }
 
         Calendar today = Calendar.getInstance();
-        //        today.set(Calendar.YEAR, 2020);
+        today.set(Calendar.DAY_OF_MONTH, today.get(Calendar.DAY_OF_MONTH) + 1);
 
         return Jwts.builder()
-                .setSubject("id")
-                //                .setExpiration(today.getTime())
+                .setSubject("username")
+                .setExpiration(today.getTime())
                 .signWith(KeyGen.KEY_VALIDATE)
                 .compact();
     }

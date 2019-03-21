@@ -17,7 +17,7 @@ public class JwtVerifierTest {
     public void setup() {
         correctCredentials = Jwts.builder()
                 .signWith(KeyGen.KEY)
-                .claim("username", "Nat")
+                .claim("email", "nstruharova@tudelft.nl")
                 .claim("password", "123")
                 .compact();
 
@@ -27,16 +27,19 @@ public class JwtVerifierTest {
                 .claim("password", "321")
                 .compact();
 
+        Calendar today = Calendar.getInstance();
+        today.set(Calendar.DAY_OF_MONTH, today.get(Calendar.DAY_OF_MONTH) + 1);
         validToken = Jwts.builder()
+                .setSubject("username")
+                .setExpiration(today.getTime())
                 .signWith(KeyGen.KEY_VALIDATE)
-                .setSubject("id")
                 .compact();
 
         Calendar lastYear = Calendar.getInstance();
         lastYear.set(Calendar.YEAR, 2018);
         invalidToken = Jwts.builder()
                 .signWith(KeyGen.KEY_VALIDATE)
-                .setSubject("id")
+                .setSubject("user")
                 .setExpiration(lastYear.getTime())
                 .compact();
     }

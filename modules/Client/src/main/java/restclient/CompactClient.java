@@ -26,7 +26,7 @@ public class CompactClient {
         this.client = client;
         this.token = null;
         this.credentials = Jwts.builder()
-                .claim("username", "Nat")
+                .claim("email", "nstruharova@tudelft.nl")
                 .claim("password", "123" )
                 .signWith(KeyGenClient.KEY)
                 .compact();
@@ -57,9 +57,8 @@ public class CompactClient {
         Response response = invocationBuilder.get(Response.class);
 
         JSONObject jo = response.readEntity(JSONObject.class);
-        System.out.println(jo.toJSONString(10));
 
-        if (token == null) {
+        if (token == null && jo.containsKey("token")) {
             token = jo.get("token").toString();
             token = token.replaceAll("\\[", "");
             token = token.replaceAll("\\]", "");
@@ -85,16 +84,17 @@ public class CompactClient {
         return j2;
     }
 
-    //    /**
-    //     * Main method that simulates the client.
-    //     *
-    //     * @param args Input for main
-    //     */
-    //    public static void main(String[] args) {
-    //        CompactClient cc = new CompactClient(ClientBuilder.newClient());
+    //        FOR TESTING ONLY
+    //        /**
+    //         * Main method that simulates the client.
+    //         *
+    //         * @param args Input for main
+    //         */
+    //        public static void main(String[] args) {
+    //            CompactClient cc = new CompactClient(ClientBuilder.newClient());
     //
-    //        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //    }
+    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //        }
 
 }

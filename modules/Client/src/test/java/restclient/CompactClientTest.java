@@ -46,6 +46,7 @@ public class CompactClientTest {
         client = mock(Client.class);
         ccClient = new CompactClient(client);
         ccClient.token = "";
+        ccClient.credentials = "";
 
         JSONObject jo = new JSONObject();
         jo.append("Weight", "100");
