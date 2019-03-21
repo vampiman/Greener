@@ -19,23 +19,23 @@ public class LocalEater {
         this.client = client;
     }
 
-    /**
-     * The method creates a client and a GET request
-     * for retrieval of data on the serverside in a JSON file.
-     *
-     * @return JSON object contained in the serverside response.
-     */
-    public JSONObject getActivityInfo(String uri) {
-        WebTarget webTarget = this.client.target(uri);
+//     /**
+//      * The method creates a client and a GET request
+//      * for retrieval of data on the serverside in a JSON file.
+//      *
+//      * @return JSON object contained in the serverside response.
+//      */
+//     public JSONObject getActivityInfo(String uri) {
+//         WebTarget webTarget = this.client.target(uri);
 
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        Response response = invocationBuilder.get(Response.class);
+//         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+//         Response response = invocationBuilder.get(Response.class);
 
-        JSONObject jo = response.readEntity(JSONObject.class);
-//        System.out.println(jo.toJSONString(10));
-        return jo;
+//         JSONObject jo = response.readEntity(JSONObject.class);
+// //        System.out.println(jo.toJSONString(10));
+//         return jo;
 
-    }
+//     }
 
     /**
      * The method creates a client and a POST request
