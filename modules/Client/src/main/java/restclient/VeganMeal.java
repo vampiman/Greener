@@ -28,8 +28,8 @@ public class VeganMeal {
         JSONObject jo = new JSONObject();
         jo.put("total", total);
 
-        VeganMealResource vm = new VeganMealResource();
-        vm.setTotal(total);
+        Resource vm = new Resource();
+        vm.setTotal_Meals(total);
 
         this.client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
