@@ -1,0 +1,35 @@
+image: maven:3.6.0
+
+Maven_Build:
+  stage: build
+  script: mvn compile -e
+
+Client_Test:
+  image: maven:3.6.0-jdk-10
+  stage: test
+  script:
+  - cd modules/Client
+  - mvn clean test -e
+  allow_failure: true
+  
+Server_Test:
+  image: maven:3.6.0-jdk-8
+  stage: test
+  script:
+  - cd modules/Server
+  - mvn clean test -e
+  allow_failure: true
+
+Client_Checkstyle:
+  stage: test
+  script:
+    - mvn checkstyle:checkstyle
+    - cat modules/Client/target/checkstyle-result.xml
+  allow_failure: true
+  
+Server_Checkstyle:
+  stage: test
+  script:
+    - mvn checkstyle:checkstyle
+    - cat modules/Server/target/checkstyle-result.xml
+  allow_failure: true

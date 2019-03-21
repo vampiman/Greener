@@ -50,8 +50,8 @@ public class VeganMealTest {
         ib = Mockito.mock(Invocation.Builder.class);
         veganMeal = new VeganMeal(client);
 
-        when(client.target("http://localhost:8080/server/webapi/veganmeal/totalVegan")).thenReturn(webTarget);
-        when(client.target("http://localhost:8080/server/webapi/veganmeal/post")).thenReturn(webTarget);
+        when(client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan")).thenReturn(webTarget);
+        when(client.target("http://localhost:8080/serverside/webapi/veganmeal/post")).thenReturn(webTarget);
         when(webTarget.request(MediaType.APPLICATION_JSON)).thenReturn(ib);
         when(ib.get(Response.class)).thenReturn(resp);
 
@@ -66,7 +66,7 @@ public class VeganMealTest {
      */
     @Test
     public void sendVeganMeal() {
-        veganMeal.sendVeganMeal();
+        veganMeal.sendVeganMeal(1);
     }
 
     /**

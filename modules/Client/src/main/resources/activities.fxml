@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Label?>
+<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.AddActivityController">
+    <children>
+        <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+           <children>
+               <SplitPane fx:id="splitPane" dividerPositions="0.2157190635451505" prefHeight="400.0" prefWidth="600.0">
+                   <items>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #000000;">
+                           <children>
+                               <Label alignment="CENTER" layoutX="8.0" layoutY="13.0" prefHeight="38.0" prefWidth="111.0" style="-fx-background-color: #000000; -fx-text-fill: #00ffbc" text="GREENER">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="18.0" />
+                                   </font>
+                               </Label>
+                               <Button fx:id="dashboardButton" alignment="CENTER" layoutX="13.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleDashboardButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Dashboard" textFill="#ffffff" textOverrun="CLIP">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="activitiesButton" layoutX="13.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleActivitiesButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Activities" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="groupsButton" layoutX="13.0" layoutY="132.0" mnemonicParsing="false" onAction="#handleGroupsButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Groups" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="achievementsButton" layoutX="13.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleAchievementsButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Achievements" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="scoreboardButton" layoutX="13.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleScoreboardButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Scoreboard" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="youButton" layoutX="13.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleYouButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="You" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="exitButton" layoutX="24.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #000000;" text="EXIT" textFill="#00ffbc">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="logoutButton" layoutX="29.0" layoutY="327.0" mnemonicParsing="false" onAction="#handleLogoutButtonAction" style="-fx-background-color: #000000;" text="LOG OUT" textFill="#00ffbc">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                           </children>
+                       </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="441.0" prefWidth="524.0" style="-fx-background-color: #00ffbc;">
+                       <children>
+                          <AnchorPane layoutX="47.0" layoutY="164.0" prefHeight="210.0" prefWidth="372.0" style="-fx-background-color: #ebf8ee;">
+                             <children>
+                                <TextField alignment="CENTER" layoutX="103.0" prefHeight="38.0" prefWidth="166.0" style="-fx-background-color: #ebf8ee;" text="ACTIVITIES">
+                                   <font>
+                                      <Font name="Comic Sans MS Bold" size="15.0" />
+                                   </font>
+                                </TextField>
+                                <TextField fx:id="activities" alignment="CENTER" editable="false" layoutX="22.0" layoutY="42.0" prefHeight="116.0" prefWidth="328.0" style="-fx-background-color: #ebf8ee;">
+                                   <font>
+                                      <Font name="Comic Sans MS Bold Italic" size="24.0" />
+                                   </font>
+                                </TextField>
+                                <Button layoutX="258.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #f5e356\;" text="Add Activity">
+                                   <font>
+                                      <Font name="Comic Sans MS Bold" size="13.0" />
+                                   </font>
+                                </Button>
+                             </children>
+                          </AnchorPane>
+                          <LineChart layoutX="96.0" layoutY="14.0" prefHeight="100.0" prefWidth="274.0" title="Your Carbon Footprint">
+                            <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                            </xAxis>
+                            <yAxis>
+                              <NumberAxis side="LEFT" />
+                            </yAxis>
+                          </LineChart>
+                       </children></AnchorPane>
+                </items>
+              </SplitPane>
+           </children>
+        </AnchorPane>
+    </children>
+</StackPane>

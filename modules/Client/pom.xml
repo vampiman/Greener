@@ -9,6 +9,34 @@
     <name>client</name>
 
     <dependencies>
+        <!--<dependency>-->
+            <!--<groupId>group-template</groupId>-->
+            <!--<artifactId>Server</artifactId>-->
+            <!--<version>0.1-SNAPSHOT</version>-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.24.5</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13-beta-2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.glassfish.jersey.core</groupId>
             <artifactId>jersey-client</artifactId>
@@ -18,11 +46,6 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>4.0.12</version>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.24.5</version>
         </dependency>
         <!-- JSON dependency -->
         <dependency>
@@ -56,17 +79,69 @@
             <scope>runtime</scope>
         </dependency>
         -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>12-ea+14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>12-ea+14</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
+            <!--<plugin>-->
+                <!--<groupId>com.zenjava</groupId>-->
+                <!--<artifactId>javafx-maven-plugin</artifactId>-->
+                <!--<version>8.8.3</version>-->
+                <!--<configuration>-->
+                    <!--<mainClass>gui.Main</mainClass>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-jar-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<archive>-->
+                        <!--<manifest>-->
+                            <!--<mainClass>Restclient</mainClass>-->
+                        <!--</manifest>-->
+                    <!--</archive>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>3.0.0-M3</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.5.1</version>
                 <inherited>true</inherited>
                 <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -78,5 +153,4 @@
         <version>0.1-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
-
 </project>

@@ -1,6 +1,5 @@
 package restclient;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -13,7 +12,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -22,7 +20,8 @@ import javax.ws.rs.core.Response;
 
 public class HeatConsumptionClientTest {
 
-    JSONObject jo = new JSONObject().append("Points", 100);
+    @Mock
+    JSONObject jo;
 
     @Mock
     WebTarget target;
@@ -47,79 +46,52 @@ public class HeatConsumptionClientTest {
     @Before
     public void setup() {
         client = mock(Client.class);
+        res = mock(Response.class);
+        jo = mock(JSONObject.class);
+        target = mock(WebTarget.class);
+        builder = mock(Invocation.Builder.class);
         heatConsumptionClient = new HeatConsumptionClient(client);
 
-
-        res = mock(Response.class);
+        when(client.target("http://localhost:8080/serverside/webapi/heatconsumption/get")).thenReturn(target);
+        when(client.target("http://localhost:8080/serverside/webapi/heatconsumption/post")).thenReturn(target);
+        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        when(builder.get(Response.class)).thenReturn(res);
 
         when(res.readEntity(JSONObject.class)).thenReturn(jo);
-        when(res.getStatus()).thenReturn(200);
-
-        builder = mock(Invocation.Builder.class);
-        when(builder.get(Response.class)).thenReturn(res);
-        when(builder.post(Entity.json(jo))).thenReturn(res);
-
-        target = mock(WebTarget.class);
-        when(target.path(anyString())).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(heatConsumptionClient.client.target("Test")).thenReturn(target);
-    }
-
-
-
-    /**
-     * Tests the equality between an JSON object
-     * and the JSON object received from the mock
-     * server through a get-request.
-     * Expects equal.
-     */
-    @Test
-    public void getRequestCorrect() {
-        JSONObject jo = new JSONObject();
-        jo.append("Points", 100);
-        Assert.assertEquals(heatConsumptionClient.getHeatConsumption("Test")
-                .toJSONString(100), jo.toJSONString(100));
+        when(jo.getInt("heatConsumption")).thenReturn(100);
     }
 
     /**
-     * Tests the equality between an JSON object
-     * and the JSON object received from the mock
-     * server through a get-request.
-     * Expects unequal.
+     * Tests the get-method of the HeatConsumptionClient. This test
+     * compares an arbitrary integer to the integer send back from the
+     * (mock)server.
+     * Expects equal
      */
     @Test
-    public void getRequestIncorrect() {
-        JSONObject jo = new JSONObject();
-        jo.append("Points", 600);
-        Assert.assertNotEquals(heatConsumptionClient.getHeatConsumption("Test")
-                .toJSONString(10), jo.toJSONString(10));
+    public void getHeatConsumption() {
+        int get = heatConsumptionClient.getHeatConsumption();
+        Assert.assertEquals(100, get);
     }
 
     /**
-     * Tests equality between an JSON object and
-     * the JSON object received through the post method.
-     * Expects equal.
+     * Tests the get-method of the HeatConsumptionClient. This test
+     * compares an arbitrary integer to the integer send back from the
+     * (mock)server.
+     * Expects unequal
      */
     @Test
-    public void postRequestCorrect() {
-        JSONObject j1 = new JSONObject();
-        j1.append("Points", 100);
-
-        JSONObject j2 = heatConsumptionClient.postHeatConsumption(j1, "Test");
-        Assert.assertEquals(j2.toJSONString(10), j1.toJSONString(10));
+    public void getHeatConsumptionIncorrect() {
+        int get = heatConsumptionClient.getHeatConsumption();
+        Assert.assertNotEquals(500, get);
     }
 
     /**
-     * Tests equality between an JSON object and
-     * the JSON object received through the post method.
-     * Expects unequal.
+     * Tests the post-method of the HeatConsumptionClient. This test
+     * checks if no errors occur when the post-method is called.
      */
     @Test
-    public void postRequestIncorrect() {
-        JSONObject j1 = new JSONObject();
-        j1.append("Points", 300);
-
-        JSONObject j2 = heatConsumptionClient.postHeatConsumption(jo, "Test");
-        Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
+    public void postHeatConsumption() {
+        heatConsumptionClient.postHeatConsumption(500);
     }
 }
+

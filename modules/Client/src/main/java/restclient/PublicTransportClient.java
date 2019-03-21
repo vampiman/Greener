@@ -2,18 +2,15 @@ package restclient;
 
 import cn.hutool.json.JSONObject;
 
-import java.util.Scanner;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 
 /**
  * Class for all client-side necessities to ask for public transport information
- * and sending this to the server.
+ * and sending this to the serverside.
  */
 
 public class PublicTransportClient {
@@ -25,58 +22,33 @@ public class PublicTransportClient {
     }
 
     /**
-     * Asks for information about travelling with public transport
-     * and converts this data into JSON format.
-     * @return JSON object with the distance travelled with public transport.
+     * Acquires JSON file from serverside via get-request.
+     * @return integer with distance travelled by public transport in kilometers
      */
-    public static JSONObject notCarButPublicTransport() {
+    public int getPublicTransport() {
 
-        int distanceInKilometer = 0;
+        Response resp = this.client.target("http://localhost:8080/serverside/webapi/publictransport/get")
+                .request(MediaType.APPLICATION_JSON)
+                .get(Response.class);
 
-        Scanner scanner = new Scanner(System.in);
+        JSONObject jo = resp.readEntity(JSONObject.class);
 
-        System.out.println("How many kilometers did you travel?");
-        distanceInKilometer = scanner.nextInt();
-
-        JSONObject obj = new JSONObject().put("Distance", distanceInKilometer);
-        System.out.println(obj);
-        return obj;
+        return jo.getInt("publicTransport");
     }
 
     /**
-     * Acquires JSON file from server via get-request.
-     * @param uri to the URI of the resource of the server which handles the get-request.
-     * @return JSON object with information gotten from get-request to server.
+     * Post a JSON file to the serverside through a post-request with
+     * the distance travelled by public transport in kilometers.
+     * @param distance distance travelled by public transport
      */
-    public JSONObject getPublicTransport(String uri) {
+    public void postPublicTransport(int distance) {
 
-        WebTarget webTarget = this.client.target(uri);
+        Resource pt = new Resource();
+        pt.setTotal_publicTransport(distance);
 
-        Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
-        Response res = builder.get(Response.class);
-
-        JSONObject obj = res.readEntity(JSONObject.class);
-        System.out.println(obj.toString());
-
-        return obj;
-    }
-
-    /**
-     * Post a JSON file to the server through a post-request.
-     * @param info JSONObject which has to be send to the server
-     * @param uri to the URI of the resource of the server which handles the post-request.
-     * @return JSONObject send back from the server.
-     */
-    public JSONObject postPublicTransport(JSONObject info, String uri) {
-
-        JSONObject j1 = this.client.target(uri)
-                              .request(MediaType.APPLICATION_JSON)
-                              .post(Entity.json(info))
-                              .readEntity(JSONObject.class);
-
-        System.out.println(j1.toString());
-
-        return j1;
+        this.client.target("http://localhost:8080/serverside/webapi/publictransport/post")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(pt));
     }
 
 
@@ -84,12 +56,9 @@ public class PublicTransportClient {
     //public static void main(String[] args) {
 
     //    PublicTransportClient client = new PublicTransportClient(ClientBuilder.newClient());
-    //    JSONObject obj = PublicTransportClient.notCarButPublicTransport();
 
-    //    if (obj != null) {
-    //        client.postPublicTransport(obj, "http://localhost:8080/server/webapi/publictransport/post");
-    //}
-
-    //    client.getPublicTransport("http://localhost:8080/server/webapi/publictransport/get");
+    //    System.out.println(client.getPublicTransport());
+    //    client.postPublicTransport(500);
+    //    System.out.println(client.getPublicTransport());
     //}
 }

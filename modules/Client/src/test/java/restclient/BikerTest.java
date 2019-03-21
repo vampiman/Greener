@@ -1,6 +1,5 @@
 package restclient;
 
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 
 import javax.ws.rs.client.Client;
@@ -20,6 +20,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 public class BikerTest {
+
 
     @Mock
     WebTarget target;
@@ -58,7 +59,7 @@ public class BikerTest {
         when(builder.post(Entity.json(jo))).thenReturn(res);
 
         target = mock(WebTarget.class);
-        when(target.path(anyString())).thenReturn(target);
+        when(target.path(Matchers.anyString())).thenReturn(target);
         when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
         when(bikeClient.client.target("testBike")).thenReturn(target);
 
