@@ -47,7 +47,7 @@
                      </children></Pane>
                   <ImageView fitHeight="108.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
-                        <Image url="@userImage.jpg" />
+                        <Image url="@../images/userImage.jpg" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -55,7 +55,7 @@
                   </ImageView>
                   <ImageView fitHeight="108.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
-                        <Image url="@userImage.jpg" />
+                        <Image url="@../images/userImage.jpg" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -63,7 +63,7 @@
                   </ImageView>
                   <ImageView fitHeight="108.0" fitWidth="117.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                      <image>
-                        <Image url="@userImage.jpg" />
+                        <Image url="@../images/userImage.jpg" />
                      </image>
                      <GridPane.margin>
                         <Insets left="30.0" />
@@ -128,6 +128,6 @@
       </ScrollPane>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
 </GridPane>

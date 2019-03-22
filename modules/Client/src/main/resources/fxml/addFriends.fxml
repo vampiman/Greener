@@ -13,6 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import java.net.URL?>
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
   <columnConstraints>
       <ColumnConstraints />
@@ -28,7 +29,7 @@
    <children>
       <ImageView fitHeight="391.0" fitWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <image>
-            <Image url="@800px_COLOURBOX3127965.jpg" />
+            <Image url="@../images/800px_COLOURBOX3127965.jpg" />
          </image>
          <cursor>
             <Cursor fx:constant="SE_RESIZE" />
@@ -36,10 +37,10 @@
       </ImageView>
       <ImageView fitHeight="163.0" fitWidth="186.0" GridPane.columnIndex="1">
          <image>
-            <Image url="@bring-your-friends.gif" />
+            <Image url="@../images/bring-your-friends.gif" />
          </image>
       </ImageView>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Connect with frinds!" GridPane.columnIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Connect with friends!" GridPane.columnIndex="2">
          <font>
             <Font name="Comic Sans MS Bold" size="36.0" />
          </font>
@@ -54,15 +55,18 @@
          </fill>
       </Text>
       <TextField GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button fx:id="backButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" style="-fx-background-color: black; -fx-alignment: center;" text="BACK" textAlignment="CENTER" textFill="#00ffbc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button fx:id="backButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textAlignment="CENTER" textFill="#00ffbc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
             <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="addButton" mnemonicParsing="false" style="-fx-background-color: black;" text="ADD" textFill="#00ffbc" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <Button fx:id="addButton" mnemonicParsing="false" text="ADD" textFill="#00ffbc" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" onAction="#handleScoreboardButtonAction">
          <font>
             <Font name="Comic Sans MS Bold" size="12.0" />
          </font>
       </Button>
    </children>
+    <stylesheets>
+        <URL value="@../css/style.css" />
+    </stylesheets>
 </GridPane>

@@ -63,6 +63,6 @@
       </Button>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
 </GridPane>

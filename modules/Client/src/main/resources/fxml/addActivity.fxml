@@ -63,7 +63,7 @@
          <graphic>
             <ImageView fitHeight="96.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@vegetarian.png" />
+                  <Image url="@../images/vegetarian.png" />
                </image>
             </ImageView>
          </graphic>
@@ -74,7 +74,7 @@
          <graphic>
             <ImageView fitHeight="96.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@solar_panel.png" />
+                  <Image url="@../images/solar_panel.png" />
                </image>
             </ImageView>
          </graphic>
@@ -85,7 +85,7 @@
          <graphic>
             <ImageView fitHeight="91.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@publicTransport.jpg" />
+                  <Image url="@../images/publicTransport.jpg" />
                </image>
             </ImageView>
          </graphic>
@@ -96,7 +96,7 @@
          <graphic>
             <ImageView fitHeight="92.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@bike.png" />
+                  <Image url="@../images/bike.png" />
                </image>
             </ImageView>
          </graphic>
@@ -107,7 +107,7 @@
          <graphic>
             <ImageView fitHeight="95.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@home.png" />
+                  <Image url="@../images/home.png" />
                </image>
             </ImageView>
          </graphic>
@@ -118,7 +118,7 @@
          <graphic>
             <ImageView fitHeight="79.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@shopping.jpg" />
+                  <Image url="@../images/shopping.jpg" />
                </image>
             </ImageView>
          </graphic>
@@ -127,6 +127,6 @@
          </tooltip></Button>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
 </GridPane>

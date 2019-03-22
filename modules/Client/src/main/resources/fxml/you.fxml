@@ -66,7 +66,7 @@
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="2" />
       <ImageView fitHeight="109.0" fitWidth="111.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <image>
-            <Image url="@userImage.jpg" />
+            <Image url="@../images/userImage.jpg" />
          </image>
       </ImageView>
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -84,6 +84,6 @@
       </AnchorPane>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
 </GridPane>

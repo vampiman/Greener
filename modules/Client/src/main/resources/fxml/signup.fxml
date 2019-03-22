@@ -28,7 +28,7 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" />
       <ImageView fitHeight="500.0" pickOnBounds="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <image>
-            <Image url="@green.jpg" />
+            <Image url="@../images/green.jpg" />
          </image>
          <GridPane.margin>
             <Insets />
@@ -159,6 +159,6 @@
       </Text>
    </children>
    <stylesheets>
-      <URL value="@style.css" />
+      <URL value="@../css/style.css" />
    </stylesheets>
 </GridPane>

@@ -72,17 +72,17 @@ public class Controller {
                     "Please enter a password");
             return;
         }
-        loadPage(event, "menu.fxml");
+        loadPage(event, "fxml/menu.fxml");
     }
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
-        loadPage(event, "menu.fxml");
+        loadPage(event, "fxml/menu.fxml");
     }
 
     @FXML
     private void handleSignUpButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "signup.fxml");
+        loadPage(event, "fxml/signup.fxml");
     }
 
     @FXML
@@ -108,7 +108,7 @@ public class Controller {
                     "Please retype your password");
             return;
         }
-        loadPage(event, "loginPage.fxml");
+        loadPage(event, "fxml/loginPage.fxml");
     }
 
     public static class AlertHelper {
@@ -134,32 +134,37 @@ public class Controller {
 
     @FXML
     public void handleDashboardButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "dashboard.fxml");
+        loadPage(event, "fxml/dashboard.fxml");
     }
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "activities.fxml");
+        loadPage(event, "fxml/activities.fxml");
+    }
+
+    @FXML
+    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "fxml/addFriends.fxml");
     }
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "achievements.fxml");
+        loadPage(event, "fxml/achievements.fxml");
     }
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "scoreboard.fxml");
+        loadPage(event, "fxml/scoreboard.fxml");
     }
 
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "you.fxml");
+        loadPage(event, "fxml/you.fxml");
     }
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
@@ -170,7 +175,7 @@ public class Controller {
 
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "loginPage.fxml");
+        loadPage(event, "fxml/loginPage.fxml");
     }
 
     @FXML
@@ -185,32 +190,32 @@ public class Controller {
 
     @FXML
     private void handleVegetarianMealButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "veganMeal.fxml");
+        loadPage(event, "fxml/veganMeal.fxml");
     }
 
     @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "publicTransport.fxml");
+        loadPage(event, "fxml/publicTransport.fxml");
     }
 
     @FXML
     private void handleTemperatureButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "temperature.fxml");
+        loadPage(event, "fxml/temperature.fxml");
     }
 
     @FXML
     private void handleSolarPanelButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "solarPanel.fxml");
+        loadPage(event, "fxml/solarPanel.fxml");
     }
 
     @FXML
     private void handleBikeButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "bike.fxml");
+        loadPage(event, "fxml/bike.fxml");
     }
 
     @FXML
     private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "localProduct.fxml");
+        loadPage(event, "fxml/localProduct.fxml");
     }
 
     @FXML
@@ -238,7 +243,7 @@ public class Controller {
                 return;
             }
         }
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
@@ -265,7 +270,7 @@ public class Controller {
                 return;
             }
         }
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
@@ -287,7 +292,7 @@ public class Controller {
                 return;
             }
         }
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
@@ -309,12 +314,12 @@ public class Controller {
                 return;
             }
         }
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
     private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "addActivity.fxml");
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
 }
