@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
@@ -11,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import java.net.URL?>
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -40,7 +40,7 @@
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="2" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="1" />
-      <Button fx:id="vegetarianMealButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVegetarianMealButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff; " GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="vegetarianMealButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVegetarianMealButtonAction" prefHeight="131.0" prefWidth="170.0" style="-fx-background-color: #ffffff; -fx-border-radius: 50px;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <graphic>
             <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="22.0" layoutY="86.0">
                <image>
@@ -64,7 +64,7 @@
             <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="localProduceButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="localProduceButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLocalProductButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <graphic>
             <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="170.0" layoutY="228.0">
                <image>
@@ -100,7 +100,7 @@
             <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="bikeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <Button fx:id="bikeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBikeButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <graphic>
             <ImageView fitHeight="121.0" fitWidth="126.0" layoutX="168.0" layoutY="86.0">
                <image>
