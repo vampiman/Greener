@@ -30,14 +30,6 @@
 	-fx-background-color: linear-gradient(#000000, grey);
 }
 
-.button{
-	-fx-background-color: #000000;
-}
-
-.button:hover{
-	-fx-background-color: linear-gradient(#000000, grey);
-}
-
 #backButton{
 	-fx-background-color: #000000;
 }
@@ -54,7 +46,62 @@
 	-fx-background-color: linear-gradient(#000000, grey);
 }
 
-#vegetarianMealButton{
-	-fx-border-radius: 50;
+#addVeganMealButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
 }
 
+#addVeganMealButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addSolarPanelButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addSolarPanelButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addPublicTransportButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addPublicTransportButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addBikeButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addBikeButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addLocalProductButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addLocalProductButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addTemperatureButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addTemperatureButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}

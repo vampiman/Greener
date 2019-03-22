@@ -6,7 +6,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -223,13 +227,14 @@ public class Controller {
                             "Please enter the type of public transport");
             return;
         } else {
-            try{
+            try {
                 Double numberOfKilometers = Double.parseDouble(kilometers.getText());
                 String option = publicTransport.getValue().toString();
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double number to indicate number of kilometers you go");
+                                "Please enter a "
+                                        + "double number to indicate number of kilometers you go");
                 return;
             }
         }
@@ -250,7 +255,7 @@ public class Controller {
                             "Please enter the temperature after decreasing");
             return;
         } else {
-            try{
+            try {
                 Double before = Double.parseDouble(beforeTemperature.getText());
                 Double after = Double.parseDouble(afterTemperature.getText());
             } catch (NumberFormatException e) {
@@ -272,12 +277,13 @@ public class Controller {
                     "Please enter the percentage of decrease in your electricity consumption");
             return;
         } else {
-            try{
+            try {
                 Double percentage = Double.parseDouble(electricityPercentage.getText());
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double number to indicate your electricity percentage");
+                                "Please enter a double "
+                                        + "number to indicate your electricity percentage");
                 return;
             }
         }
@@ -293,7 +299,7 @@ public class Controller {
                             "Please enter how much vegan meal you had");
             return;
         } else {
-            try{
+            try {
                 int portions = Integer.parseInt(mealPortion.getText());
                 //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
             } catch (NumberFormatException e) {

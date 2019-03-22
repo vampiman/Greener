@@ -3,6 +3,7 @@
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -11,23 +12,27 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.util.Duration?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-  </columnConstraints>
-  <rowConstraints>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+   </columnConstraints>
+   <rowConstraints>
       <RowConstraints maxHeight="298.7999633789062" minHeight="10.0" percentHeight="10.0" prefHeight="78.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="258.40001525878904" minHeight="10.0" percentHeight="30.0" prefHeight="122.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="166.39999999999998" minHeight="10.0" percentHeight="30.0" prefHeight="75.99998779296874" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="97.60001220703123" minHeight="10.0" percentHeight="30.0" prefHeight="97.60001220703123" vgrow="SOMETIMES" />
-  </rowConstraints>
+      <RowConstraints maxHeight="258.40001525878904" minHeight="10.0" percentHeight="30.0" prefHeight="122.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="166.39999999999998" minHeight="10.0" percentHeight="30.0" prefHeight="75.99998779296874" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="97.60001220703123" minHeight="10.0" percentHeight="30.0" prefHeight="97.60001220703123" vgrow="SOMETIMES" />
+   </rowConstraints>
    <children>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="3" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="3" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="2" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" />
       <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;">
          <children>
             <Text layoutX="42.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose an activity">
@@ -37,81 +42,6 @@
             </Text>
          </children>
       </Pane>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="2" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ebf8ee;" GridPane.rowIndex="1" />
-      <Button fx:id="vegetarianMealButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleVegetarianMealButtonAction" prefHeight="131.0" prefWidth="170.0" style="-fx-background-color: #ffffff; -fx-border-radius: 50px;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="22.0" layoutY="86.0">
-               <image>
-                  <Image url="@vegetarian.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="temperatureButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleTemperatureButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="318.0" layoutY="228.0">
-               <image>
-                  <Image url="@home.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="localProduceButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLocalProductButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="170.0" layoutY="228.0">
-               <image>
-                  <Image url="@shopping.jpg" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="solarPanelButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleSolarPanelButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="22.0" layoutY="228.0">
-               <image>
-                  <Image url="@solar_panel.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="publicTransportButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handlePublicTransportButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="121.0" layoutX="318.0" layoutY="86.0">
-               <image>
-                  <Image url="@publicTransport.jpg" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
-      <Button fx:id="bikeButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleBikeButtonAction" prefHeight="120.0" prefWidth="120.0" style="-fx-background-color: #ffffff;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <graphic>
-            <ImageView fitHeight="121.0" fitWidth="126.0" layoutX="168.0" layoutY="86.0">
-               <image>
-                  <Image url="@bike.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="150.0" right="150.0" top="30.0" />
-         </GridPane.margin>
-      </Button>
       <Button fx:id="backButton" maxWidth="-Infinity" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textFill="#ebf8ee" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
             <Font name="Comic Sans MS Bold" size="15.0" />
@@ -129,6 +59,72 @@
             </Text>
          </children>
       </Pane>
+      <Button fx:id="addVeganMealButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleVegetarianMealButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="95.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@vegetarian.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Add Vegan Meal"/>
+         </tooltip></Button>
+      <Button fx:id="addSolarPanelButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleSolarPanelButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="96.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@solar_panel.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Add Solar Panel" />
+         </tooltip></Button>
+      <Button fx:id="addPublicTransportButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handlePublicTransportButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="91.0" fitWidth="92.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@publicTransport.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Use public transport instaed of car" />
+         </tooltip></Button>
+      <Button fx:id="addBikeButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleBikeButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="92.0" fitWidth="94.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@bike.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Use bike instead of car" />
+         </tooltip></Button>
+      <Button fx:id="addTemperatureButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleTemperatureButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="95.0" fitWidth="93.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@home.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Lower the temperature of your home" />
+         </tooltip></Button>
+      <Button fx:id="addLocalProductButton" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleLocalProductButtonAction" prefHeight="132.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="79.0" fitWidth="110.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@shopping.jpg" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Use local products" />
+         </tooltip></Button>
    </children>
    <stylesheets>
       <URL value="@style.css" />
