@@ -29,9 +29,7 @@ public class JwtVerifier implements ContainerRequestFilter {
             if (authHeader != null && authHeader.size() > 0) {
                 String authToken = authHeader.get(0);
                 authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
-                if (verifyJwt(authToken).equals("OK")) {
-                    return;
-                } else {
+                if (!verifyJwt(authToken).equals("OK")) {
                     String token = issueJwt(authToken);
                     if (token.equals("NO")) {
                         JSONObject jo = new JSONObject();
@@ -41,7 +39,6 @@ public class JwtVerifier implements ContainerRequestFilter {
                         requestContext.abortWith(res);
                     } else {
                         requestContext.getHeaders().add("Token", token);
-                        return;
                     }
                 }
             }
@@ -66,14 +63,9 @@ public class JwtVerifier implements ContainerRequestFilter {
             } else {
                 return "NOT OK";
             }
-        } catch (SignatureException se) {
+        } catch (SignatureException | IncorrectClaimException
+                | ExpiredJwtException | MissingClaimException se) {
             return se;
-        } catch (IncorrectClaimException ice) {
-            return ice;
-        } catch (ExpiredJwtException eje) {
-            return eje;
-        } catch (MissingClaimException mce) {
-            return mce;
         }
 
     }
@@ -90,13 +82,8 @@ public class JwtVerifier implements ContainerRequestFilter {
                     .require("password", "123")
                     .setSigningKey(KeyGen.KEY)
                     .parseClaimsJws(credentials);
-        } catch (IncorrectClaimException ice) {
-            return "NO";
-        } catch (SignatureException se) {
-            return "NO";
-        } catch (ExpiredJwtException eje) {
-            return "NO";
-        } catch (MissingClaimException mce) {
+        } catch (SignatureException | ExpiredJwtException
+                | MissingClaimException | IncorrectClaimException se) {
             return "NO";
         }
 
