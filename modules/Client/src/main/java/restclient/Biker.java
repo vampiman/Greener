@@ -5,14 +5,12 @@ import cn.hutool.json.JSONObject;
 import javax.ws.rs.client.Client;
 
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
- *  The class Biker contains the client-side implementation for GET & POST request
- *  specific to the "Bike instead of driving" feature.
+ * The class Biker contains the client-side implementation for GET & POST request
+ * specific to the "Bike instead of driving" feature.
  */
 public class Biker {
 
@@ -44,6 +42,7 @@ public class Biker {
     /**
      * Method for sending a JSON-based request to the serverside in order to retrieve
      * the total number of cycled distance.
+     *
      * @return Total number of cycled distance
      */
     public int getTotalBikers() {

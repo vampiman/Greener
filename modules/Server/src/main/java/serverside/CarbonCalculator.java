@@ -1,9 +1,9 @@
 package serverside;
 
 /**
- *  Class implementing a carbon footprint calculator that takes in consideration
- *  different sides of day-by-day life, like Housing, Transport, Food Consumption and
- *  other Goods/Services.
+ * Class implementing a carbon footprint calculator that takes in consideration
+ * different sides of day-by-day life, like Housing, Transport, Food Consumption and
+ * other Goods/Services.
  */
 public class CarbonCalculator {
 
@@ -26,7 +26,7 @@ public class CarbonCalculator {
     /**
      * Calculates the CO2 emissions based on your electricity consumption per month.
      *
-     * @param amount Cost of the monthly electricity bill
+     * @param amount           Cost of the monthly electricity bill
      * @param electricityPrice Price per kWh
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -50,7 +50,7 @@ public class CarbonCalculator {
     /**
      * Natural gas CO2 emissions.
      *
-     * @param amount Monthly natural gas cost
+     * @param amount          Monthly natural gas cost
      * @param naturalGasPrice Price per thousand cubic feet
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -73,7 +73,8 @@ public class CarbonCalculator {
 
     /**
      * Fuel Oil CO2 emissions.
-     * @param amount Monthly fuel oil cost
+     *
+     * @param amount       Monthly fuel oil cost
      * @param oilFuelPrice Price per gallon
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -98,7 +99,7 @@ public class CarbonCalculator {
     /**
      * Propane CO2 emissions.
      *
-     * @param amount Propane monthly cost
+     * @param amount       Propane monthly cost
      * @param propanePrice Price per gallon
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -121,7 +122,8 @@ public class CarbonCalculator {
 
     /**
      * Personal vehicle CO2 emissions.
-     * @param amount Miles per week
+     *
+     * @param amount         Miles per week
      * @param milesPerGallon Fuel efficiency (miles per gallon)
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -131,7 +133,7 @@ public class CarbonCalculator {
 
 
         double toReturn = ((amount * 52.117) / milesPerGallon)
-                            * vehiclePerGallon * vehicleGreenhouse;
+                * vehiclePerGallon * vehicleGreenhouse;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -142,6 +144,7 @@ public class CarbonCalculator {
 
     /**
      * Public Transport CO2 emissions.
+     *
      * @param amount Miles per year
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -161,6 +164,7 @@ public class CarbonCalculator {
 
     /**
      * Air Travel CO2 emissions.
+     *
      * @param milesPerYear Miles traveled per year
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -171,7 +175,7 @@ public class CarbonCalculator {
 
 
         double toReturn = milesPerYear * (airPerMile * wellToPumpFactor * radiativeForcing)
-                            * gramToPound;
+                * gramToPound;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -182,9 +186,10 @@ public class CarbonCalculator {
 
     /**
      * Food CO2 emissions.
+     *
      * @param amount Monthly cost for the particular type of food
-     * @param type Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
-     *            5 for eating out and 6 for other food)
+     * @param type   Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
+     *               5 for eating out and 6 for other food)
      * @return CO2 emissions per year (in grams or pounds)
      */
     public double food(double amount, int type) {
@@ -196,24 +201,31 @@ public class CarbonCalculator {
 
         switch (type) {
             // meatFactor = 1452
-            case 1: specificFactor = 1452;
-            break;
+            case 1:
+                specificFactor = 1452;
+                break;
             // cerealsFactor = 741
-            case 2: specificFactor = 741;
-            break;
+            case 2:
+                specificFactor = 741;
+                break;
             // dairyFactor = 1911
-            case 3: specificFactor = 1911;
-            break;
+            case 3:
+                specificFactor = 1911;
+                break;
             // fruitFactor = 1176
-            case 4: specificFactor = 1176;
-            break;
+            case 4:
+                specificFactor = 1176;
+                break;
             // eatingOutFactor = 368
-            case 5: specificFactor = 368;
-            break;
+            case 5:
+                specificFactor = 368;
+                break;
             // otherFoodFactor = 467
-            case 6: specificFactor = 467;
-            break;
-            default: break;
+            case 6:
+                specificFactor = 467;
+                break;
+            default:
+                break;
         }
 
         double toReturn = (amount * specificFactor * 12) * gramToPound;
@@ -227,9 +239,10 @@ public class CarbonCalculator {
 
     /**
      * Services and Goods CO2 emissions.
+     *
      * @param amount Monthly cost for the particular type of goods/services
-     * @param type Type of goods/services (1 for clothing, 2 for furniture/appliances,
-     *            3 for other goods and 4 for general services)
+     * @param type   Type of goods/services (1 for clothing, 2 for furniture/appliances,
+     *               3 for other goods and 4 for general services)
      * @return CO2 emissions per year (in grams or pounds)
      */
     public double servicesAndGoods(double amount, int type) {
@@ -241,18 +254,23 @@ public class CarbonCalculator {
 
         switch (type) {
             // clothingFactor = 436
-            case 1: specificFactor = 436;
-            break;
+            case 1:
+                specificFactor = 436;
+                break;
             // furnishHouseholdFactor = 459
-            case 2: specificFactor = 459;
-            break;
+            case 2:
+                specificFactor = 459;
+                break;
             // otherGoodsFactor = 338
-            case 3: specificFactor = 338;
-            break;
+            case 3:
+                specificFactor = 338;
+                break;
             // serviceFactor = 178
-            case 4: specificFactor = 178;
-            break;
-            default: break;
+            case 4:
+                specificFactor = 178;
+                break;
+            default:
+                break;
         }
 
         double toReturn = (amount * specificFactor * 12) * gramToPound;
@@ -266,25 +284,28 @@ public class CarbonCalculator {
 
     /**
      * Pounds to kilograms converter.
+     *
      * @param pounds Quantity in pounds
      * @return Quantity in kilograms
      */
-    public double poundsToKilograms(double pounds) {return pounds * 0.45359237;
+    public double poundsToKilograms(double pounds) {
+        return pounds * 0.45359237;
     }
 
 
     /**
      * Solar panel calculator.
-     * @param Kwh consumption per month
+     *
+     * @param kwh consumption per month
      * @return amount of pounds you use more than average
      */
-    public double SolarPanel_Points_Calculator (double Kwh) {
+    public double solarPanel_Points_Calculator(double kwh) {
 
-        double ElectricityFactor = 1.37;
-        double AVG_Kwh_per_month = 3340;
+        double electricityFactor = 1.37;
+        double avgkwhpermonth = 3340;
 
-        double Delta = AVG_Kwh_per_month - Kwh;
-        double toReturn = Delta * ElectricityFactor;
+        double delta = avgkwhpermonth - kwh;
+        double toReturn = delta * electricityFactor;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -295,17 +316,18 @@ public class CarbonCalculator {
     }
 
     /**
-     * get the CO2 emission of the veganmeal feature
-     * @param amount
-     * @param type of meal
+     * get the CO2 emission of the veganmeal feature.
+     *
+     * @param amount  of meals
+     * @param type   of meal
      * @return 10 times the CO2 emission
      */
-    public double Veganmeal_Calculator(double amount, int type){
+    public double veganmeal_Calculator(double amount, int type) {
         if (type > 4 || type < 1) {
             throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
 
-        int points_converter = 10;
+        int pointsConverter = 10;
         double sort = 0;
 
         switch (type) {
@@ -328,22 +350,23 @@ public class CarbonCalculator {
             default:
                 break;
         }
-        return amount * sort * points_converter;
+        return amount * sort * pointsConverter;
     }
 
 
     /**
-     * get the CO2 emission of the localproduce feature
-     * @param amount
-     * @param type of meal
+     * get the CO2 emission of the localproduce feature.
+     *
+     * @param amount  of meals
+     * @param type   of meal
      * @return 10 times the CO2 emission
      */
-    public double Localproduce_Calculator(double amount, int type){
+    public double localproduce_Calculator(double amount, int type) {
         if (type > 4 || type < 1) {
             throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
 
-        int points_converter = 10;
+        int pointsConverter = 10;
         double sort = 0;
 
         switch (type) {
@@ -366,7 +389,7 @@ public class CarbonCalculator {
             default:
                 break;
         }
-        return amount * sort * points_converter;
+        return amount * sort * pointsConverter;
     }
 
 }

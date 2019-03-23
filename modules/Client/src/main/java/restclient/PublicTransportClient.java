@@ -27,6 +27,7 @@ public class PublicTransportClient {
     /**
      * Asks for information about travelling with public transport
      * and converts this data into JSON format.
+     *
      * @return JSON object with the distance travelled with public transport.
      */
     public static JSONObject notCarButPublicTransport() {
@@ -35,16 +36,17 @@ public class PublicTransportClient {
 
         Scanner scanner = new Scanner(System.in);
 
-//        System.out.println("How many kilometers did you travel?");
+        // System.out.println("How many kilometers did you travel?");
         distanceInKilometer = scanner.nextInt();
 
         JSONObject obj = new JSONObject().put("Distance", distanceInKilometer);
-//        System.out.println(obj);
+        // System.out.println(obj);
         return obj;
     }
 
     /**
      * Acquires JSON file from serverside via get-request.
+     *
      * @param uri to the URI of the resource of the serverside which handles the get-request.
      * @return JSON object with information gotten from get-request to serverside.
      */
@@ -56,25 +58,26 @@ public class PublicTransportClient {
         Response res = builder.get(Response.class);
 
         JSONObject obj = res.readEntity(JSONObject.class);
-//        System.out.println(obj.toString());
+        // System.out.println(obj.toString());
 
         return obj;
     }
 
     /**
      * Post a JSON file to the serverside through a post-request.
+     *
      * @param info JSONObject which has to be send to the serverside
-     * @param uri to the URI of the resource of the serverside which handles the post-request.
+     * @param uri  to the URI of the resource of the serverside which handles the post-request.
      * @return JSONObject send back from the serverside.
      */
     public JSONObject postPublicTransport(JSONObject info, String uri) {
 
         JSONObject j1 = this.client.target(uri)
-                              .request(MediaType.APPLICATION_JSON)
-                              .post(Entity.json(info))
-                              .readEntity(JSONObject.class);
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(info))
+                .readEntity(JSONObject.class);
 
-//        System.out.println(j1.toString());
+        //  System.out.println(j1.toString());
 
         return j1;
     }

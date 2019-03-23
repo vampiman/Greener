@@ -25,6 +25,7 @@ public class HeatConsumptionClient {
 
     /**
      * Acquires JSON file from serverside via get-request.
+     *
      * @return JSON object with information gotten from get-request to serverside.
      */
     public JSONObject getHeatConsumption(String uri) {
@@ -35,15 +36,16 @@ public class HeatConsumptionClient {
         Response res = builder.get(Response.class);
 
         JSONObject obj = res.readEntity(JSONObject.class);
-//        System.out.println(obj.toString());
+        // System.out.println(obj.toString());
 
         return obj;
     }
 
     /**
      * Post a JSON file to the serverside through a post-request.
+     *
      * @param info JSONObject which has to be send to the serverside
-     * @param uri to the URI of the resource of the serverside which handles the post-request.
+     * @param uri  to the URI of the resource of the serverside which handles the post-request.
      * @return JSONObject send back from the serverside.
      */
     public JSONObject postHeatConsumption(JSONObject info, String uri) {
@@ -53,7 +55,7 @@ public class HeatConsumptionClient {
                 .post(Entity.json(info))
                 .readEntity(JSONObject.class);
 
-//        System.out.println(j1.toString());
+        // System.out.println(j1.toString());
 
         return j1;
     }

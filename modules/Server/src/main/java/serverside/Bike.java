@@ -15,7 +15,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
 /**
@@ -48,7 +47,7 @@ public class Bike {
     /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on riding a bike from the client.
-     * */
+     */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -69,10 +68,10 @@ public class Bike {
 
     /**
      * Endpoint /bike/distance that returns the total cycled distance.
+     *
      * @return Total distance of cycled distance
      * @throws ClassNotFoundException Class not found error
-     * @throws SQLException
-     *
+     * @throws SQLException           not a query
      */
     @GET
     @Path("distance")
@@ -98,8 +97,6 @@ public class Bike {
         dbConnection.close();
         return re;
     }
-
-
 
 
     //public Response postData(JSONObject jo) {
