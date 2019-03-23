@@ -331,17 +331,16 @@ public class CarbonCalculator {
      * @return the saved amount of kg of carbon dioxide by using the specified type
      *         of public transport instead of using the specified type of car.
      */
-    public double publicTransportCalculator(String typeCar, String typePublicTransport, int distance) {
+    public double publicTransportCalculator(String typeCar,
+                                            String typePublicTransport, int distance) {
+
         distance = kilometersToMiles(distance);
 
         String vehicle = "";
 
-        Client client = ClientBuilder.newClient();
-        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
-
-        Form form = new Form();
-        form.param("household_size", "4");
-        form.param("home_type", "3");
+        Form formCar = new Form();
+        formCar.param("household_size", "4");
+        formCar.param("home_type", "3");
 
         switch (typeCar) {
             case "Hybrid":
@@ -358,14 +357,9 @@ public class CarbonCalculator {
         }
 
         if (!vehicle.equals("")) {
-            form.param("vehicle_type[]", vehicle);
-            form.param("vehicle_mileage[]", Double.toString(distance*52.177));
+            formCar.param("vehicle_type[]", vehicle);
+            formCar.param("vehicle_mileage[]", Double.toString(distance * 52.177));
         }
-
-        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE), JSONObject.class);
-
-        int carbonCar = resp.getByPath("data.footprint", Integer.class);
 
         Form formPublicTransport = new Form();
         formPublicTransport.param("household_size", "4");
@@ -382,13 +376,23 @@ public class CarbonCalculator {
                 break;
             case "Vanpool": formPublicTransport.param("vanpool", Integer.toString(distance));
                 break;
-         default: throw new IllegalArgumentException("Please insert a valid public transport type!");
+            default: throw new IllegalArgumentException(
+                        "Please insert a valid public transport type!");
         }
 
+        Client client = ClientBuilder.newClient();
+        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
+
+        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(formCar, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+                        JSONObject.class);
+
         JSONObject resp2 = wt.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(formPublicTransport,MediaType.APPLICATION_FORM_URLENCODED_TYPE), JSONObject.class);
+                .post(Entity.entity(formPublicTransport,MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+                        JSONObject.class);
 
         int carbonPublicTransport = resp2.getByPath("data.footprint", Integer.class);
+        int carbonCar = resp.getByPath("data.footprint", Integer.class);
 
         double savedInLbs = (carbonCar - carbonPublicTransport) / 52.177;
 
@@ -397,7 +401,7 @@ public class CarbonCalculator {
     }
 
     public int kilometersToMiles(int kilometers) {
-        return (int) (kilometers*0.621371192);
+        return (int) (kilometers * 0.621371192);
     }
 
     //public static void main(String[] args) {
