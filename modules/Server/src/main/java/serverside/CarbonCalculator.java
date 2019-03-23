@@ -1,5 +1,14 @@
 package serverside;
 
+import cn.hutool.json.JSONObject;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+
 /**
  *  Class implementing a carbon footprint calculator that takes in consideration
  *  different sides of day-by-day life, like Housing, Transport, Food Consumption and
@@ -314,4 +323,84 @@ public class CarbonCalculator {
         double co2 = energyToCarbonNonElectric();
         return energyKiloWattHour * co2;
     }
+
+
+
+    public double publicTransportCalculator(String typeCar, String typePublicTransport, int mileage) {
+        mileage = kilometersToMiles(mileage);
+
+        String vehicle = "";
+
+        String publicTransport = "";
+
+        Client client = ClientBuilder.newClient();
+        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
+
+        Form formCar = new Form();
+        formCar.param("household_size", "4");
+        formCar.param("home_type", "3");
+
+        switch (typeCar) {
+            case "Hybrid":
+                vehicle = "1";
+                break;
+            case "Fossil":
+                vehicle = "5";
+                break;
+            case "Motorcycle":
+                vehicle = "10";
+                break;
+            default:
+                throw new IllegalArgumentException("Please insert a valid car type!");
+        }
+
+        System.out.println(vehicle);
+
+        if (!vehicle.equals("")) {
+            formCar.param("vehicle_type[]", vehicle);
+            formCar.param("vehicle_mileage[]", Integer.toString(mileage));
+        }
+
+        System.out.println(formCar.toString());
+
+        JSONObject resp1 = wt.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(formCar, MediaType.APPLICATION_FORM_URLENCODED_TYPE), JSONObject.class);
+
+        int carbonCar = resp1.getByPath("data.footprint", Integer.class);
+
+        System.out.println(carbonCar);
+
+        Form formPublicTransport = new Form();
+        formPublicTransport.param("household_size", "4");
+        formPublicTransport.param("home_type", "3");
+
+        switch (typePublicTransport) {
+            case "Bus": formPublicTransport.param("bus_city", Integer.toString(mileage));
+                break;
+            case "Subway": formPublicTransport.param("subway", Integer.toString(mileage));
+                break;
+            case "Train": formPublicTransport.param("train", Integer.toString(mileage));
+                break;
+            default: throw new IllegalArgumentException("Please insert a valid public transport type!");
+        }
+
+        JSONObject resp2 = wt.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(formPublicTransport,MediaType.APPLICATION_FORM_URLENCODED_TYPE), JSONObject.class);
+
+        int carbonPublicTransport = resp2.getByPath("data.footprint", Integer.class);
+
+        double savedInLbs = (carbonCar - carbonPublicTransport) / 52.177;
+        double savedInKilogram = savedInLbs * 0.45359237;
+        return savedInKilogram;
+    }
+
+    public int kilometersToMiles(int kilometers) {
+        return (int) (kilometers*0.621371192);
+    }
+
+    public static void main(String[] args) {
+        CarbonCalculator carbon = new CarbonCalculator(1);
+        System.out.print(carbon.publicTransportCalculator("Hybrid", "Bus", 100));
+    }
+
 }
