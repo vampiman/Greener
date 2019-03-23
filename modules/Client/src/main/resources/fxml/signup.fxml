@@ -63,7 +63,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" GridPane.rowIndex="2" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #2E4053;" GridPane.rowIndex="1" />
-            <Button fx:id="sign_up_personal" mnemonicParsing="false" onAction="#handleSignUpPersonalAction" prefHeight="27.0" prefWidth="104.0" text="Next" textFill="#2E4053" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Button fx:id="sign_up_personal" defaultButton="true" mnemonicParsing="false" onAction="#handleSignUpPersonalAction" prefHeight="27.0" prefWidth="104.0" text="Next" textFill="#2E4053" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <GridPane.margin>
                   <Insets right="20.0" />
                </GridPane.margin>

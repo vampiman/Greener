@@ -70,6 +70,9 @@ public class Controller {
     private Text todaysTip;
 
     @FXML
+    private TextField friendCode;
+
+    @FXML
     private void initialize() throws FileNotFoundException {
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -131,6 +134,11 @@ public class Controller {
         if (rePassword.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
                     "Please retype your password");
+            return;
+        }
+        if(!password.getText().equals(rePassword.getText())) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter the same password for password fields");
             return;
         }
         loadPage(event, "fxml/loginPage.fxml");
@@ -340,6 +348,28 @@ public class Controller {
             }
         }
         loadPage(event, "fxml/addActivity.fxml");
+    }
+
+    @FXML
+    private void handleAddFriendButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (friendCode.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the code of yor friend");
+            return;
+        } else {
+            try {
+                int code = Integer.parseInt(friendCode.getText());
+                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a number to indicate your friend's code");
+                return;
+            }
+        }
+        loadPage(event, "fxml/scoreboard.fxml");
     }
 
     @FXML
