@@ -11,10 +11,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Controller {
     @FXML
@@ -58,6 +65,24 @@ public class Controller {
 
     @FXML
     private ChoiceBox publicTransport;
+
+    @FXML
+    private Text todaysTip;
+
+    @FXML
+    private void initialize() throws FileNotFoundException {
+        if (todaysTip != null) {
+            Scanner scanner = new Scanner(new File("tips.txt"));
+            List<String> lines = new ArrayList<String>();
+            while (scanner.hasNextLine()) {
+                lines.add(scanner.nextLine());
+            }
+            Random rn = new Random();
+            int randomNum = (rn.nextInt() & Integer.MAX_VALUE) % lines.size();
+            String text = lines.get(randomNum);
+            todaysTip.setText(text);
+        }
+    }
 
     @FXML
     private void loadMenuPageLogin(ActionEvent event) throws IOException {
