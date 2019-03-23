@@ -7,7 +7,7 @@ public class Resource {
     int percentage;
     int produce;
 
-    public Resource(){
+    public Resource() {
 
     }
 
@@ -35,14 +35,13 @@ public class Resource {
     public void setTotal_Percentage(int percentage) {
         this.percentage = percentage;
     }
-    
-    public int getTotal_Produce(){ 
+
+    public int getTotal_Produce() {
         return produce;
     }
 
-    public void setTotal_Produce(int produce){
+    public void setTotal_Produce(int produce) {
         this.produce = produce;
     }
-
 
 }
