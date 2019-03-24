@@ -311,16 +311,16 @@ public class CarbonCalculator {
      * @param energyKiloWattHour amount of kWh saved by user.
      * @param energyType type of energy to
      *                   power the boiler (electric or non-electric).
-     * @return CO2 saved with the given kWh.
+     * @return CO2 saved with the given kWh in kg.
      */
     public double homeHeatConsumptionSaved(double energyKiloWattHour, String energyType) {
         if (energyType.equalsIgnoreCase("Electric")) {
             double co2 = energyToCarbonElectric();
-            return energyKiloWattHour * co2;
+            return (energyKiloWattHour * co2) / 1000;
         }
 
         double co2 = energyToCarbonNonElectric();
-        return energyKiloWattHour * co2;
+        return (energyKiloWattHour * co2) / 1000;
     }
 
     /** Calculated how many kg of carbon dioxide is saved during travelling
@@ -406,6 +406,8 @@ public class CarbonCalculator {
 
     //public static void main(String[] args) {
     //    CarbonCalculator carbon = new CarbonCalculator(2);
-    //    System.out.print(carbon.publicTransportCalculator("Motorcycle", "CityBus", 200));
+    //    System.out.println(carbon.publicTransportCalculator("Motorcycle", "CityBus", 200));
+
+    //    System.out.println(carbon.homeHeatConsumptionSaved(300, "Electric"));
     //}
 }
