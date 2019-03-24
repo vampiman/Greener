@@ -32,13 +32,13 @@ public class CompactClient {
                 .compact();
     }
 
+
     /**
-     * The method creates a client and a GET request
-     * for retrieval of data on the server in a JSON file.
-     *
-     * @return JSON object contained in the server response.
+     * Method forms the 'Authorization' header content.
+     * @return the 'Authorization' header content
      */
-    public JSONObject getActivityInfo(String uri) {
+    public String formAuthHeader() {
+        //HASH CREDENTIALS
         String auth = "Bearer ";
         if (token == null) {
             auth = auth + credentials;
@@ -49,21 +49,36 @@ public class CompactClient {
 
         System.out.println("Token is " + token);
         System.out.println("Credentials is " + credentials);
+        return auth;
+    }
 
+    /**
+     * Method skims the token of unnecessary characters.
+     * @param jo JSONObject to get the header from
+     */
+    public void adjustToken(JSONObject jo) {
+        if (this.token == null && jo.containsKey("token")) {
+            this.token = jo.get("token").toString();
+            this.token = this.token.replaceAll("\\[", "");
+            this.token = this.token.replaceAll("\\]", "");
+            this.token = this.token.replaceAll("\"", "");
+        }
+    }
+
+    /**
+     * The method creates a client and a GET request
+     * for retrieval of data on the server in a JSON file.
+     *
+     * @return JSON object contained in the server response.
+     */
+    public JSONObject getActivityInfo(String uri) {
         WebTarget webTarget = this.client.target(uri);
-
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
+        invocationBuilder.header("Authorization", formAuthHeader());
         Response response = invocationBuilder.get(Response.class);
-
         JSONObject jo = response.readEntity(JSONObject.class);
 
-        if (token == null && jo.containsKey("token")) {
-            token = jo.get("token").toString();
-            token = token.replaceAll("\\[", "");
-            token = token.replaceAll("\\]", "");
-            token = token.replaceAll("\"", "");
-        }
+        adjustToken(jo);
 
         return jo;
 
@@ -76,25 +91,30 @@ public class CompactClient {
      * @return the JSON object from server response (the one which was posted)
      */
     public JSONObject postActivityInfo(String uri) {
+        String auth = formAuthHeader();
+
         JSONObject j1 = new JSONObject().append("Weight", "100");
         JSONObject j2 = client.target(uri)
                 .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
                 .post(Entity.json(j1))
                 .readEntity(JSONObject.class);
+
+        adjustToken(j2);
+
         return j2;
     }
 
-    //        FOR TESTING ONLY
-    //        /**
-    //         * Main method that simulates the client.
-    //         *
-    //         * @param args Input for main
-    //         */
-    //        public static void main(String[] args) {
-    //            CompactClient cc = new CompactClient(ClientBuilder.newClient());
+    //            FOR TESTING ONLY
+    //            /**
+    //             * Main method that simulates the client.
+    //             *
+    //             * @param args Input for main
+    //             */
+    //            public static void main(String[] args) {
+    //                CompactClient cc = new CompactClient(ClientBuilder.newClient());
     //
-    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //        }
+    //                cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //            }
 
 }
