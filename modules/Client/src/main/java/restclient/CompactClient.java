@@ -17,7 +17,6 @@ public class CompactClient {
     protected String token;
     protected String credentials;
 
-
     /**
      * Constructor for LocalEater.
      * @param client to use as the client for requests to the service
@@ -105,16 +104,17 @@ public class CompactClient {
         return j2;
     }
 
-    //            FOR TESTING ONLY
-    //            /**
-    //             * Main method that simulates the client.
-    //             *
-    //             * @param args Input for main
-    //             */
-    //            public static void main(String[] args) {
-    //                CompactClient cc = new CompactClient(ClientBuilder.newClient());
+    //                //FOR TESTING ONLY
+    //                /**
+    //                 * Main method that simulates the client.
+    //                 *
+    //                 * @param args Input for main
+    //                 */
+    //                public static void main(String[] args) {
+    //                    CompactClient cc = new CompactClient(ClientBuilder.newClient());
     //
-    //                cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //            }
+    //                    cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //                    cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+    //                }
 
 }

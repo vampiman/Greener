@@ -113,8 +113,8 @@ public class LocalProduce {
         System.out.println(lp.getTotal_Produce());
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
-                "UPDATE person SET produce = produce"
-                        + lp.getTotal_Produce() + "WHERE Name = 'Robert'");
+                "UPDATE person SET Local_produce = Local_produce + "
+                        + lp.getTotal_Produce() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
