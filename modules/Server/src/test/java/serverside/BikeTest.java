@@ -60,7 +60,7 @@ public class BikeTest {
 
         Resource re = new Resource();
         re.setTotal_Distance(1);
-        bike.postData(re, "token");
+        bike.postData(re);
     }
 
     /**
@@ -84,29 +84,12 @@ public class BikeTest {
         Mockito.when(rs.getInt("Bike")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
 
-        Resource rs = bike.getAll("token");
+        Resource rs = bike.getAll();
 
         Assert.assertEquals(rs.getTotal_Distance(), 1);
 
         //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }
-
-    @Test
-    public void testPassTokenEqual() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken("token", res);
-        Assert.assertEquals("token", res.getToken());
-    }
-
-    @Test
-    public void testPassTokenNull() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken(null, res);
-        Assert.assertNull(res.getToken());
-    }
-
 }
 
     /*

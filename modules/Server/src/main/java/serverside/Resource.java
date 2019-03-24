@@ -8,19 +8,11 @@ public class Resource {
     int produce;
     int publicTransport;
     int heatConsumption;
-    String token;
 
     public Resource(){
 
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public int getTotal_Meals() {
         return total;

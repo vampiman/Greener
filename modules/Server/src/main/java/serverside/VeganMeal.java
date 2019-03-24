@@ -12,7 +12,6 @@ import javax.inject.Singleton;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -39,16 +38,6 @@ public class VeganMeal {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
-    /**
-     * Method used to pass the generated token as a parameter (if there is one).
-     * @param token sent from the Authentication service
-     * @param res Resource which transports the token
-     */
-    public void passToken(String token, Resource res) {
-        if (token != null) {
-            res.setToken(token);
-        }
-    }
 
     /**
      * Endpoint /veganmeal/post that modifies the number of eaten vegan meals in
@@ -59,11 +48,8 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource re, @HeaderParam("Token") String token)
-            throws ClassNotFoundException, SQLException {
+    public void postIt(Resource re) throws ClassNotFoundException, SQLException {
         getDbConnection();
-
-        passToken(token, re);
 
         System.out.println(re.getTotal_Meals());
         Statement st = dbConnection.createStatement();
@@ -87,9 +73,11 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll(@HeaderParam("Token") String token)
-            throws ClassNotFoundException, SQLException {
+    public Resource getAll() throws ClassNotFoundException, SQLException {
+
+
         getDbConnection();
+
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
@@ -98,7 +86,7 @@ public class VeganMeal {
         int total = rs.getInt("Vegan_meal");
 
         Resource re = new Resource();
-        passToken(token, re);
+
         re.setTotal_Meals(total);
 
         st.close();

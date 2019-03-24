@@ -13,7 +13,6 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.ws.rs.HeaderParam;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -63,7 +62,7 @@ public class LocalProduceTest {
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Resource lp = new Resource();
         lp.setTotal_Produce(1);
-        localProduce.postData(lp, "token");
+        localProduce.postData(lp);
     }
 
     /**
@@ -89,24 +88,8 @@ public class LocalProduceTest {
         Mockito.when(rs.getInt("Local_produce")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
 
-        Resource rs = localProduce.getData("token");
+        Resource rs = localProduce.getData();
 
         Assert.assertEquals(rs.getTotal_Produce(), 1);
-    }
-
-    @Test
-    public void testPassTokenEqual() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken("token", res);
-        Assert.assertEquals("token", res.getToken());
-    }
-
-    @Test
-    public void testPassTokenNull() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken(null, res);
-        Assert.assertNull(res.getToken());
     }
 }

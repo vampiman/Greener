@@ -19,12 +19,15 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 
+import restclient.VeganMeal;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import javax.ws.rs.client.ClientBuilder;
 
 
 
@@ -415,7 +418,7 @@ public class MainPageController {
         } else {
             int portions = Integer.parseInt(mealPortion.getText());
             System.out.println(portions);
-            //new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
 
         }
 
