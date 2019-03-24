@@ -11,7 +11,6 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -45,17 +44,6 @@ public class Bike {
     //        return Response.status(Response.Status.OK).entity(jo).build(); }
 
     /**
-     * Method used to pass the generated token as a parameter (if there is one).
-     * @param token sent from the Authentication service
-     * @param res Resource which transports the token
-     */
-    public void passToken(String token, Resource res) {
-        if (token != null) {
-            res.setToken(token);
-        }
-    }
-
-    /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on riding a bike from the client.
      * */
@@ -63,12 +51,9 @@ public class Bike {
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
 
-    public void postData(Resource re, @HeaderParam("Token") String token)
-            throws ClassNotFoundException, SQLException {
+    public void postData(Resource re) throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
-
-        passToken(token, re);
 
         System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
@@ -90,8 +75,7 @@ public class Bike {
     @GET
     @Path("distance")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll(@HeaderParam("Token") String token)
-            throws ClassNotFoundException, SQLException {
+    public Resource getAll() throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
@@ -102,7 +86,7 @@ public class Bike {
         int distance = rs.getInt("Bike");
 
         Resource re = new Resource();
-        passToken(token, re);
+
         re.setTotal_Distance(distance);
 
         st.close();

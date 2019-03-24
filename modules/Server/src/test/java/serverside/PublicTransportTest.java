@@ -70,7 +70,7 @@ public class PublicTransportTest {
         publicTransport = new PublicTransport();
         Resource resource = new Resource();
         resource.setTotal_publicTransport(100);
-        publicTransport.postData(resource, "token");
+        publicTransport.postData(resource);
     }
 
     /**
@@ -83,24 +83,8 @@ public class PublicTransportTest {
     @Test
     public void getPublicTransport() throws SQLException, ClassNotFoundException {
         publicTransport = new PublicTransport();
-        Resource resource = publicTransport.getData("token");
+        Resource resource = publicTransport.getData();
 
         Assert.assertEquals(resource.getTotal_publicTransport(), 100);
-    }
-
-    @Test
-    public void testPassTokenEqual() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken("token", res);
-        Assert.assertEquals("token", res.getToken());
-    }
-
-    @Test
-    public void testPassTokenNull() {
-        Bike b = new Bike();
-        Resource res = new Resource();
-        b.passToken(null, res);
-        Assert.assertNull(res.getToken());
     }
 }
