@@ -15,10 +15,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import restclient.VeganMeal;
 
 import java.io.IOException;
-import javax.ws.rs.client.ClientBuilder;
 
 
 
@@ -34,8 +32,8 @@ public class AddActivityController {
 
     @FXML
     public void initialize() {
-        activities.setText("You had " + new VeganMeal(ClientBuilder.newClient())
-                .getTotalVeganMeals() + " vegan meals");
+       // activities.setText("You had " + new VeganMeal(ClientBuilder.newClient())
+            //    .getTotalVeganMeals() + " vegan meals");
     }
 
 
