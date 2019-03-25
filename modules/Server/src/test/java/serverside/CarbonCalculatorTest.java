@@ -237,4 +237,113 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
     }
 
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void heatConsumptionElectric() {
+        Assert.assertEquals(250.0, CarbonCalculator.energyToCarbonElectric(), 0.001);
+    }
+
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void heatConsumptionNonElectric() {
+        Assert.assertEquals(221.875, CarbonCalculator.energyToCarbonNonElectric(), 0.001);
+    }
+
+    /**
+     * Test the heat consumption saved for the electric energy source.
+     */
+    @Test
+    public void homeHeatConsumptionSavedElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String type = "Electric";
+        int integer = 2000;
+        Assert.assertEquals(2000 / 1000 * CarbonCalculator.energyToCarbonElectric(),
+                calc.homeHeatConsumptionSaved(integer, type), 0.001);
+    }
+
+    /**
+     * Test the heat consumption saved for the non-electric energy source.
+     */
+    @Test
+    public void homeHeatConsumptionSavedNonElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String type = "non-electric";
+        int integer = 7000;
+        Assert.assertEquals(7000 / 1000 * CarbonCalculator.energyToCarbonNonElectric(),
+                calc.homeHeatConsumptionSaved(integer, type), 0.001);
+    }
+
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the motorcycle option is correct in relation to the website
+     * from which the API is used.
+     */
+    @Test
+    public void publicTransportCalculatorMotorcycle() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "IntercityBus" ;
+        String carType = "Motorcycle";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                1228 / 52.177 * 0.45359237, 0.2);
+    }
+
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the hybrid car option is correct in relation to the website
+     * from which the API is used.
+     */
+    @Test
+    public void publicTransportCalculatorHybrid() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Train" ;
+        String carType = "Hybrid";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                681 / 52.177 * 0.45359237, 0.2);
+    }
+
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the fossil car option is correct in relation to the website
+     * from which the API is used.
+     */
+    @Test
+    public void publicTransportCalculatorFossil() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Vanpool" ;
+        String carType = "Fossil";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                3136 / 52.177 * 0.45359237, 0.2);
+    }
+
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for public transport.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "someString" ;
+        String carType = "Fossil";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
+
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for the type of the car.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Vanpool";
+        String carType = "someString";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
+
 }
