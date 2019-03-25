@@ -261,7 +261,7 @@ public class CarbonCalculatorTest {
         CarbonCalculator calc = new CarbonCalculator(1);
         String type = "Electric";
         int integer = 2000;
-        Assert.assertEquals(2000 * CarbonCalculator.energyToCarbonElectric(),
+        Assert.assertEquals(2000 / 1000 * CarbonCalculator.energyToCarbonElectric(),
                 calc.homeHeatConsumptionSaved(integer, type), 0.001);
     }
 
@@ -273,7 +273,45 @@ public class CarbonCalculatorTest {
         CarbonCalculator calc = new CarbonCalculator(1);
         String type = "non-electric";
         int integer = 7000;
-        Assert.assertEquals(7000 * CarbonCalculator.energyToCarbonNonElectric(),
+        Assert.assertEquals(7000 / 1000 * CarbonCalculator.energyToCarbonNonElectric(),
                 calc.homeHeatConsumptionSaved(integer, type), 0.001);
     }
+
+    /**
+     *
+     */
+    @Test
+    public void publicTransportCalculatorMotorcycle() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "IntercityBus" ;
+        String carType = "Motorcycle";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (1228 / 52.177 * 0.45359237), 0.2);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void publicTransportCalculatorHybrid() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Train" ;
+        String carType = "Hybrid";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (681 / 52.177 * 0.45359237), 0.2);
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void publicTransportCalculatorFossil() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Train" ;
+        String carType = "Fossil";
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (1732 / 52.177 * 0.45359237), 0.2);
+    }
+
+
 }
