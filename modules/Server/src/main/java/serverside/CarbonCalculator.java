@@ -380,16 +380,8 @@ public class CarbonCalculator {
                         "Please insert a valid public transport type!");
         }
 
-        Client client = ClientBuilder.newClient();
-        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
-
-        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(formCar, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
-                        JSONObject.class);
-
-        JSONObject resp2 = wt.request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(formPublicTransport,MediaType.APPLICATION_FORM_URLENCODED_TYPE),
-                        JSONObject.class);
+        JSONObject resp = returnJSONCarbonFootprint(formCar);
+        JSONObject resp2 = returnJSONCarbonFootprint(formPublicTransport);
 
         int carbonPublicTransport = resp2.getByPath("data.footprint", Integer.class);
         int carbonCar = resp.getByPath("data.footprint", Integer.class);
@@ -399,6 +391,19 @@ public class CarbonCalculator {
         double savedInKilogram = savedInLbs * 0.45359237;
         return savedInKilogram;
     }
+
+    public static JSONObject returnJSONCarbonFootprint(Form form) {
+        Client client = ClientBuilder.newClient();
+        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
+
+        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+                        JSONObject.class);
+
+        return resp;
+    }
+
+
 
     public int kilometersToMiles(int kilometers) {
         return (int) (kilometers * 0.621371192);
