@@ -380,11 +380,8 @@ public class CarbonCalculator {
                         "Please insert a valid public transport type!");
         }
 
-        JSONObject resp = returnJSONCarbonFootprint(formCar);
-        JSONObject resp2 = returnJSONCarbonFootprint(formPublicTransport);
-
-        int carbonPublicTransport = resp2.getByPath("data.footprint", Integer.class);
-        int carbonCar = resp.getByPath("data.footprint", Integer.class);
+        int carbonCar = returnJSONCarbonFootprint(formCar);
+        int carbonPublicTransport = returnJSONCarbonFootprint(formPublicTransport);
 
         double savedInLbs = (carbonCar - carbonPublicTransport) / 52.177;
 
@@ -392,7 +389,12 @@ public class CarbonCalculator {
         return savedInKilogram;
     }
 
-    public static JSONObject returnJSONCarbonFootprint(Form form) {
+    /**
+     * Calculates the carbon footprint for the public transport through an web API.
+     * @param form contains fields for the calculation of the carbon footprint.
+     * @return integer with the carbon footprint.
+     */
+    public static int returnJSONCarbonFootprint(Form form) {
         Client client = ClientBuilder.newClient();
         WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
 
@@ -400,11 +402,15 @@ public class CarbonCalculator {
                 .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
                         JSONObject.class);
 
-        return resp;
+        int result = resp.getByPath("data.footprint", Integer.class);
+        return result;
     }
 
-
-
+    /**
+     * Converts kilometers to miles.
+     * @param kilometers to be converted to miles.
+     * @return the corresponding amount of miles.
+     */
     public int kilometersToMiles(int kilometers) {
         return (int) (kilometers * 0.621371192);
     }
