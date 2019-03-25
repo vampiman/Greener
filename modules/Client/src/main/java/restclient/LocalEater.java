@@ -32,7 +32,7 @@ public class LocalEater {
         Response response = invocationBuilder.get(Response.class);
 
         JSONObject jo = response.readEntity(JSONObject.class);
-        //System.out.println(jo.toJSONString(10));
+        System.out.println(jo.toJSONString(10));
         return jo;
 
     }
@@ -49,7 +49,7 @@ public class LocalEater {
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.json(j1))
                 .readEntity(JSONObject.class);
-        //System.out.println(j2.toJSONString(10));
+        System.out.println(j2.toJSONString(10));
         return j2;
     }
 

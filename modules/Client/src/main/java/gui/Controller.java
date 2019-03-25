@@ -6,11 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
@@ -27,11 +23,47 @@ public class Controller {
     private Button loginButton;
 
     @FXML
-    private AnchorPane activitiesAnchorPane;
+    private TextField signupName;
+
+    @FXML
+    private TextField email;
+
+    @FXML
+    private PasswordField password;
+
+    @FXML
+    private PasswordField rePassword;
+
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private TextField mealPortion;
+
+    @FXML
+    private TextField beforeTemperature;
+
+    @FXML
+    private TextField afterTemperature;
+
+    @FXML
+    private TextField electricityPercentage;
+
+    @FXML
+    private TextField kilometers;
+
+    @FXML
+    private ChoiceBox publicTransport;
+
+    @FXML
+    private ChoiceBox productCategory;
+
+    @FXML
+    private TextField productWeight;
 
 
     @FXML
-    protected void handleLoginButtonAction(ActionEvent event) throws IOException {
+    private void loadMenuPageLogin(ActionEvent event) throws IOException {
         Window owner = loginButton.getScene().getWindow();
         if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
@@ -43,13 +75,43 @@ public class Controller {
                     "Please enter a password");
             return;
         }
+        loadPage(event, "menu.fxml");
+    }
 
-        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("dashboard.fxml"));
-        Scene addActivityPageScene = new Scene(addActivityPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(addActivityPageScene);
-        appStage.show();
+    @FXML
+    private void loadMenuPage(ActionEvent event) throws IOException {
+        loadPage(event, "menu.fxml");
+    }
+
+    @FXML
+    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "signup.fxml");
+    }
+
+    @FXML
+    private void handleSignUpPersonalAction(ActionEvent event) throws IOException {
+        Window owner = signupName.getScene().getWindow();
+        if (signupName.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your username");
+            return;
+        }
+        if (email.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your email address");
+            return;
+        }
+        if (password.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your password");
+            return;
+        }
+        if (rePassword.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please retype your password");
+            return;
+        }
+        loadPage(event, "loginPage.fxml");
     }
 
     public static class AlertHelper {
@@ -61,6 +123,7 @@ public class Controller {
          * @param title the title of the alert
          * @param message the message of the alert
          */
+
         public static void showAlert(Alert.AlertType alertType,
                                      Window owner, String title, String message) {
             Alert alert = new Alert(alertType);
@@ -73,83 +136,33 @@ public class Controller {
     }
 
     @FXML
-    protected void handleSignupButtonAction(ActionEvent event) throws IOException {
-        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("signup.fxml"));
-        Scene addActivityPageScene = new Scene(addActivityPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(addActivityPageScene);
-        appStage.show();
-    }
-
-    @FXML
-    protected void handleDashboardButtonAction(ActionEvent event) throws IOException {
-        Parent dashboardPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("dashboard.fxml"));
-        Scene dashboardPageScene = new Scene(dashboardPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(dashboardPageScene);
-        appStage.show();
+    public void handleDashboardButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "dashboard.fxml");
     }
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        Parent groupsPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("activities.fxml"));
-        Scene groupsPageScene = new Scene(groupsPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(groupsPageScene);
-        appStage.show();
-    }
-
-    @FXML
-    protected void handleGroupsButtonAction(ActionEvent event) throws IOException {
-        Parent groupsPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("groups.fxml"));
-        Scene groupsPageScene = new Scene(groupsPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(groupsPageScene);
-        appStage.show();
+        loadPage(event, "activities.fxml");
     }
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        Parent achievementsPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("achievements.fxml"));
-        Scene achievementsPageScene = new Scene(achievementsPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(achievementsPageScene);
-        appStage.show();
+        loadPage(event, "achievements.fxml");
     }
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        Parent scoreboardPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("scoreboard.fxml"));
-        Scene scoreboardPageScene = new Scene(scoreboardPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(scoreboardPageScene);
-        appStage.show();
+        loadPage(event, "scoreboard.fxml");
     }
 
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        Parent youPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("youPage.fxml"));
-        Scene youPageScene = new Scene(youPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(youPageScene);
-        appStage.show();
+        loadPage(event, "you.fxml");
     }
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("addActivity.fxml"));
-        Scene addActivityPageScene = new Scene(addActivityPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(addActivityPageScene);
-        appStage.show();
+        loadPage(event, "addActivity.fxml");
     }
 
     @FXML
@@ -160,13 +173,195 @@ public class Controller {
 
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
-        Parent addActivityPageParent = FXMLLoader.load(getClass().getClassLoader()
-                .getResource("loginPage.fxml"));
-        Scene addActivityPageScene = new Scene(addActivityPageParent);
+        loadPage(event, "loginPage.fxml");
+    }
+
+    @FXML
+    protected void loadPage(ActionEvent event, String fileName) throws IOException {
+        Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
+                .getResource(fileName));
+        Scene addPageScene = new Scene(addPageParent);
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(addActivityPageScene);
+        appStage.setScene(addPageScene);
         appStage.show();
     }
 
+    @FXML
+    private void handleVegetarianMealButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "veganMeal.fxml");
+    }
 
+    @FXML
+    private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "publicTransport.fxml");
+    }
+
+    @FXML
+    private void handleTemperatureButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "temperature.fxml");
+    }
+
+    @FXML
+    private void handleSolarPanelButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "solarPanel.fxml");
+    }
+
+    @FXML
+    private void handleBikeButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "bike.fxml");
+    }
+
+    @FXML
+    private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "localProduct.fxml");
+    }
+
+    @FXML
+    private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (kilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
+        } else if (publicTransport.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the type of public transport");
+            return;
+        } else {
+            try{
+                Double numberOfKilometers = Double.parseDouble(kilometers.getText());
+                String option = publicTransport.getValue().toString();
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate number of kilometers you go");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+    }
+
+    @FXML
+    private void handleAddTemperatureButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (beforeTemperature.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the temperature before decreasing");
+            return;
+        } else if (afterTemperature.getText().isEmpty()) {
+            Controller.AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the temperature after decreasing");
+            return;
+        } else {
+            try{
+                Double before = Double.parseDouble(beforeTemperature.getText());
+                Double after = Double.parseDouble(afterTemperature.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate your home's temperature");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+    }
+
+    @FXML
+    private void handleAddSolarPanelButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (electricityPercentage.getText().isEmpty()) {
+            Controller.AlertHelper.showAlert(
+                    Alert.AlertType.ERROR, owner, "Unfilled field!",
+                    "Please enter the percentage of decrease in your electricity consumption");
+            return;
+        } else {
+            try{
+                Double percentage = Double.parseDouble(electricityPercentage.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate your electricity percentage");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+    }
+
+    @FXML
+    private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (mealPortion.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter how much vegan meal you had");
+            return;
+        } else {
+            try{
+                int portions = Integer.parseInt(mealPortion.getText());
+                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a number to indicate your meal portion");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+    }
+
+    @FXML
+    private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (productCategory.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the local category ");
+            return;
+
+        } else if (productWeight.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the product weight");
+            return;
+
+        }else {
+            try {
+                Double numberOfKilograms = Double.parseDouble(productWeight.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate number of kilometers you go");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+
+    }
+
+    @FXML
+    private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (kilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you biked");
+            return;
+
+        } else {
+            try {
+                Double numberOfKilometers = Double.parseDouble(kilometers.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a double number to indicate number of kilometers you go");
+                return;
+            }
+        }
+        loadPage(event, "addActivity.fxml");
+
+    }
 }

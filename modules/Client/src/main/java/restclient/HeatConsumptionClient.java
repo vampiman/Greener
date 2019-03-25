@@ -4,6 +4,8 @@ import cn.hutool.json.JSONObject;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,30 +25,46 @@ public class HeatConsumptionClient {
 
     /**
      * Acquires JSON file from serverside via get-request.
-     * @return int with information gotten from get-request to serverside.
+     * @return JSON object with information gotten from get-request to serverside.
      */
-    public int getHeatConsumption() {
+    public JSONObject getHeatConsumption(String uri) {
 
-        Response resp = this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/get")
-                .request(MediaType.APPLICATION_JSON)
-                .get(Response.class);
+        WebTarget webTarget = this.client.target(uri);
 
-        JSONObject jo = resp.readEntity(JSONObject.class);
+        Invocation.Builder builder = webTarget.request(MediaType.APPLICATION_JSON);
+        Response res = builder.get(Response.class);
 
-        return jo.getInt("heatConsumption");
+        JSONObject obj = res.readEntity(JSONObject.class);
+        System.out.println(obj.toString());
+
+        return obj;
     }
 
     /**
-     * Post an integer to the serverside through a post-request.
-     * @param temperature is the temperature in the home of the user.
+     * Post a JSON file to the serverside through a post-request.
+     * @param info JSONObject which has to be send to the serverside
+     * @param uri to the URI of the resource of the serverside which handles the post-request.
+     * @return JSONObject send back from the serverside.
      */
-    public void postHeatConsumption(int temperature) {
+    public JSONObject postHeatConsumption(JSONObject info, String uri) {
 
-        Resource hc = new Resource();
-        hc.setTotal_heatConsumption(temperature);
-
-        this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/post")
+        JSONObject j1 = this.client.target(uri)
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.json(hc));
+                .post(Entity.json(info))
+                .readEntity(JSONObject.class);
+
+        System.out.println(j1.toString());
+
+        return j1;
     }
+
+    //main method for testing only
+    //public static void main(String[] args) {
+
+    //    HeatConsumptionClient client = new HeatConsumptionClient(ClientBuilder.newClient());
+    //    JSONObject obj = new JSONObject();
+
+    //    client.postHeatConsumption(obj, "http://localhost:8080/server/webapi/heatconsumption/post");
+    //    client.getHeatConsumption("http://localhost:8080/server/webapi/heatconsumption/get");
+    //}
 }
