@@ -1,8 +1,11 @@
 package restclient;
 
+import com.google.common.hash.Hashing;
+
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Jwts;
 
+import java.nio.charset.StandardCharsets;
 import javax.ws.rs.client.Client;
 //import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,7 +14,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-public class CompactClient {
+public class CompactClient  {
 
     protected Client client;
     protected String token;
@@ -22,11 +25,14 @@ public class CompactClient {
      * @param client to use as the client for requests to the service
      */
     public CompactClient(Client client) {
+        String password = Hashing.sha256()
+                .hashString("password", StandardCharsets.UTF_8)
+                .toString();
         this.client = client;
         this.token = null;
         this.credentials = Jwts.builder()
                 .claim("email", "nstruharova@tudelft.nl")
-                .claim("password", "123" )
+                .claim("password", password )
                 .signWith(KeyGenClient.KEY)
                 .compact();
     }
@@ -104,17 +110,18 @@ public class CompactClient {
         return j2;
     }
 
-    //                //FOR TESTING ONLY
-    //                /**
-    //                 * Main method that simulates the client.
-    //                 *
-    //                 * @param args Input for main
-    //                 */
-    //                public static void main(String[] args) {
-    //                    CompactClient cc = new CompactClient(ClientBuilder.newClient());
+    //        //FOR TESTING ONLY
+    //        /**
+    //         * Main method that simulates the client.
+    //         *
+    //         * @param args Input for main
+    //         */
+    //        public static void main(String[] args) {
+    //            CompactClient cc = new CompactClient(ClientBuilder.newClient());
     //
-    //                    cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //                    cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
-    //                }
+    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //
+    //        }
 
 }

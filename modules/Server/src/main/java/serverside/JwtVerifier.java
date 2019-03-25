@@ -1,6 +1,9 @@
 package serverside;
 
+import com.google.common.hash.Hashing;
+
 import cn.hutool.json.JSONObject;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.IncorrectClaimException;
@@ -9,6 +12,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -77,9 +81,12 @@ public class JwtVerifier implements ContainerRequestFilter {
      */
     public static String issueJwt(String credentials) {
         try {
+            String password = Hashing.sha256()
+                    .hashString("password", StandardCharsets.UTF_8)
+                    .toString();
             Jws<Claims> claims = Jwts.parser()
                     .require("email", "nstruharova@tudelft.nl")
-                    .require("password", "123")
+                    .require("password", password)
                     .setSigningKey(KeyGen.KEY)
                     .parseClaimsJws(credentials);
         } catch (SignatureException | ExpiredJwtException
