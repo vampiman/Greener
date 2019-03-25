@@ -7,13 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.inject.Singleton;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -42,6 +41,17 @@ public class PublicTransport {
 
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Endpoint /publictransport/get that returns the
      * amount of kilometers travelled with public
      * transport.
@@ -52,7 +62,8 @@ public class PublicTransport {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getData() throws SQLException, ClassNotFoundException {
+    public Resource getData(@HeaderParam("Token") String token)
+            throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -63,6 +74,7 @@ public class PublicTransport {
         int total = rs.getInt("Public_transport");
 
         Resource re = new Resource();
+        passToken(token, re);
         re.setTotal_publicTransport(total);
 
         st.close();
@@ -81,9 +93,12 @@ public class PublicTransport {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource re) throws SQLException, ClassNotFoundException {
-
+    public void postData(Resource re, @HeaderParam("Token") String token)
+            throws SQLException, ClassNotFoundException {
         getDbConnection();
+
+        passToken(token, re);
+
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
                 + re.getTotal_publicTransport() + " WHERE Name = 'Robert'");
