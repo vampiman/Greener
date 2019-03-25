@@ -3,6 +3,7 @@ package serverside;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.SignatureException;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,10 +39,11 @@ public class JwtVerifierTest {
 
     @Before
     public void setup() {
+        String password = DigestUtils.sha256Hex("password");
         correctCredentials = Jwts.builder()
                 .signWith(KeyGen.KEY)
                 .claim("email", "nstruharova@tudelft.nl")
-                .claim("password", "123")
+                .claim("password", password)
                 .compact();
 
         incorrectCredentials = Jwts.builder()
