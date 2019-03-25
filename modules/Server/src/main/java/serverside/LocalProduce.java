@@ -90,7 +90,9 @@ public class LocalProduce {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource lp) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource lp, @HeaderParam("Token") String token)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
 
         System.out.println(lp.getTotal_Produce());
@@ -101,6 +103,8 @@ public class LocalProduce {
 
         st.close();
         dbConnection.close();
+
+        return lp;
     }
 
     //    public Response postData(JSONObject jo) {
