@@ -307,11 +307,26 @@ public class CarbonCalculatorTest {
     @Test
     public void publicTransportCalculatorFossil() {
         CarbonCalculator calc = new CarbonCalculator(1);
-        String pt = "Train" ;
+        String pt = "Vanpool" ;
         String carType = "Fossil";
         //value for comparison are calculated wth help from from the website of the API used.
-        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (1732 / 52.177 * 0.45359237), 0.2);
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (3136 / 52.177 * 0.45359237), 0.2);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "someString" ;
+        String carType = "Fossil";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Vanpool" ;
+        String carType = "someString";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
 
 }
