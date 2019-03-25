@@ -95,29 +95,29 @@ public class CompactClient  {
         String auth = formAuthHeader();
 
         JSONObject j1 = new JSONObject().append("Weight", "100");
-        JSONObject j2 = client.target(uri)
+        Response res = client.target(uri)
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
-                .post(Entity.json(j1))
-                .readEntity(JSONObject.class);
+                .post(Entity.json(j1));
 
-        adjustToken(j2);
+        JSONObject jo = res.readEntity(JSONObject.class);
 
-        return j2;
+        adjustToken(jo);
+
+        return jo;
     }
 
-    //    //FOR TESTING ONLY
-    //    /**
-    //     * Main method that simulates the client.
-    //     *
-    //     * @param args Input for main
-    //     */
-    //    public static void main(String[] args) {
-    //        CompactClient cc = new CompactClient(ClientBuilder.newClient());
+    //FOR TESTING ONLY
+    /**
+     * Main method that simulates the client.
+     *
+     * @param args Input for main
+     */
+    //        public static void main(String[] args) {
+    //            CompactClient cc = new CompactClient(ClientBuilder.newClient());
     //
-    //        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //
-    //    }
+    //                    cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //                    cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+    //                }
 
 }
