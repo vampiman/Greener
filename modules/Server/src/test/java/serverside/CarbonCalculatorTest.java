@@ -278,7 +278,9 @@ public class CarbonCalculatorTest {
     }
 
     /**
-     *
+     * Tests if the calculations of the saved carbon dioxide of
+     * the motorcycle option is correct in relation to the website
+     * from which the API is used.
      */
     @Test
     public void publicTransportCalculatorMotorcycle() {
@@ -286,11 +288,14 @@ public class CarbonCalculatorTest {
         String pt = "IntercityBus" ;
         String carType = "Motorcycle";
         //value for comparison are calculated wth help from from the website of the API used.
-        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (1228 / 52.177 * 0.45359237), 0.2);
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                1228 / 52.177 * 0.45359237, 0.2);
     }
 
     /**
-     *
+     * Tests if the calculations of the saved carbon dioxide of
+     * the hybrid car option is correct in relation to the website
+     * from which the API is used.
      */
     @Test
     public void publicTransportCalculatorHybrid() {
@@ -298,11 +303,14 @@ public class CarbonCalculatorTest {
         String pt = "Train" ;
         String carType = "Hybrid";
         //value for comparison are calculated wth help from from the website of the API used.
-        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (681 / 52.177 * 0.45359237), 0.2);
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                681 / 52.177 * 0.45359237, 0.2);
     }
 
     /**
-     *
+     * Tests if the calculations of the saved carbon dioxide of
+     * the fossil car option is correct in relation to the website
+     * from which the API is used.
      */
     @Test
     public void publicTransportCalculatorFossil() {
@@ -310,9 +318,14 @@ public class CarbonCalculatorTest {
         String pt = "Vanpool" ;
         String carType = "Fossil";
         //value for comparison are calculated wth help from from the website of the API used.
-        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161), (3136 / 52.177 * 0.45359237), 0.2);
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                3136 / 52.177 * 0.45359237, 0.2);
     }
 
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for public transport.
+     */
     @Test(expected = IllegalArgumentException.class)
     public void publicTransportCalculatorException1() {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -321,10 +334,14 @@ public class CarbonCalculatorTest {
         calc.publicTransportCalculator(carType, pt, 161);
     }
 
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for the type of the car.
+     */
     @Test(expected = IllegalArgumentException.class)
     public void publicTransportCalculatorException2() {
         CarbonCalculator calc = new CarbonCalculator(1);
-        String pt = "Vanpool" ;
+        String pt = "Vanpool";
         String carType = "someString";
         calc.publicTransportCalculator(carType, pt, 161);
     }

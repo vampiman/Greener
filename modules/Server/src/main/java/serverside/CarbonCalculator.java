@@ -380,8 +380,8 @@ public class CarbonCalculator {
                         "Please insert a valid public transport type!");
         }
 
-        int carbonCar = returnJSONCarbonFootprint(formCar);
-        int carbonPublicTransport = returnJSONCarbonFootprint(formPublicTransport);
+        int carbonCar = carbonFootprintApi(formCar);
+        int carbonPublicTransport = carbonFootprintApi(formPublicTransport);
 
         double savedInLbs = (carbonCar - carbonPublicTransport) / 52.177;
 
@@ -394,7 +394,7 @@ public class CarbonCalculator {
      * @param form contains fields for the calculation of the carbon footprint.
      * @return integer with the carbon footprint.
      */
-    public static int returnJSONCarbonFootprint(Form form) {
+    public static int carbonFootprintApi(Form form) {
         Client client = ClientBuilder.newClient();
         WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
 
