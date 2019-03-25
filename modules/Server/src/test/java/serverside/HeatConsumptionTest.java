@@ -72,7 +72,7 @@ public class HeatConsumptionTest {
         heatConsumption = new HeatConsumption();
         Resource resource = new Resource();
         resource.setTotal_heatConsumption(100);
-        heatConsumption.postData(resource);
+        heatConsumption.postData(resource, "token");
     }
 
     /**
@@ -85,9 +85,25 @@ public class HeatConsumptionTest {
     @Test
     public void getHeatConsumption() throws SQLException, ClassNotFoundException {
         heatConsumption = new HeatConsumption();
-        Resource resource = heatConsumption.getData();
+        Resource resource = heatConsumption.getData("token");
 
         Assert.assertEquals(resource.getTotal_heatConsumption(), 100);
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }
 
