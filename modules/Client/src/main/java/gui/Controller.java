@@ -12,13 +12,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import restclient.User;
@@ -182,6 +179,10 @@ public class Controller {
                     "Please enter the same password for password fields");
             return;
         }
+
+        User user = new User(email.getText(), password.getText());
+        user.register(signupName.getText(), email.getText(), password.getText());
+
         loadPage(event, "fxml/loginPage.fxml");
     }
 
