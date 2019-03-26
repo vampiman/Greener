@@ -63,21 +63,21 @@ public class HeatConsumption {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getData(@HeaderParam("Token") String token)
+    public Resource getData(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery("SELECT Lowering_home_temperature "
-                + "FROM person WHERE Name = 'Robert'");
+                + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
         int total = rs.getInt("Lowering_home_temperature");
 
         Resource re = new Resource();
+        re.setSavedHeatConsumption(total);
         passToken(token, re);
-        //re.setTotal_heatConsumption(total);
 
         st.close();
         dbConnection.close();

@@ -6,10 +6,13 @@ public class Resource {
     int distance;
     int percentage;
     int produce;
-    int publicTransport;
+    String publicTransportType;
+    String carType;
     int averageHeatConsumption;
     int currentHeatConsumption;
+    int savedHeatConsumption;
     String energyType;
+    String token;
 
     public Resource(){
 
@@ -47,12 +50,20 @@ public class Resource {
         this.produce = produce;
     }
 
-    public int getTotal_publicTransport() {
-        return publicTransport;
+    public String getPublicTransportType() {
+        return publicTransportType;
     }
 
-    public void setTotal_publicTransport(int publicTransport) {
-        this.publicTransport = publicTransport;
+    public void setPublicTransportType(String publicTransportType) {
+        this.publicTransportType = publicTransportType;
+    }
+
+    public String getCarType() {
+        return carType;
+    }
+
+    public void setCarType(String carType) {
+        this.carType = carType;
     }
 
     public int getAverageHeatConsumption() { return averageHeatConsumption; }
@@ -76,4 +87,22 @@ public class Resource {
     public void setEnergyType(String energyType) {
         this.energyType = energyType;
     }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public int getSavedHeatConsumption() {
+        return savedHeatConsumption;
+    }
+
+    public void setSavedHeatConsumption(int savedHeatConsumption) {
+        this.savedHeatConsumption = savedHeatConsumption;
+    }
+
 }
+

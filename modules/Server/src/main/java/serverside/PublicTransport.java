@@ -75,7 +75,7 @@ public class PublicTransport {
 
         Resource re = new Resource();
         passToken(token, re);
-        re.setTotal_publicTransport(total);
+        //re.setTotal_publicTransport(total);
 
         st.close();
         dbConnection.close();
@@ -93,17 +93,25 @@ public class PublicTransport {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource re, @HeaderParam("Token") String token)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource re, @HeaderParam("Token") String token,
+                         @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
         getDbConnection();
+
+        System.out.println(re.getPublicTransportType() + " transport");
 
         passToken(token, re);
 
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
-                + re.getTotal_publicTransport() + " WHERE Name = 'Robert'");
+                + new CarbonCalculator(2).publicTransportCalculator(re.getCarType(), re.getPublicTransportType(),
+        re.getTotal_Distance())
+                + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
+
+        return re;
     }
 }
