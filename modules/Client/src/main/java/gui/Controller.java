@@ -8,21 +8,31 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import restclient.CompactClient;
 import restclient.User;
-import restclient.CompactClient;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -101,12 +111,12 @@ public class Controller {
         }
 
         if (activities != null) {
-            String text = "You had 0 vegan meals"+"\n" +
-                    "You biked 0 kilometers\n" +
-                    "You decreased 0% of your electricity consumption\n" +
-                    "You bought 0 local product\n" +
-                    "You travelled 0 kilometers by public transport\n" +
-                    "You decreased your home's temperature 0 °C";
+            String text = "You had 0 vegan meals" + "\n"
+                    + "You biked 0 kilometers\n"
+                    + "You decreased 0% of your electricity consumption\n"
+                    + "You bought 0 local product\n"
+                    + "You travelled 0 kilometers by public transport\n"
+                    + "You decreased your home's temperature 0 °C";
             activities.setText(text);
         }
     }
@@ -486,16 +496,14 @@ public class Controller {
         } else {
             loadPage(event, "fxml/scoreboard.fxml");
         }
-//        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
-//        loadFriends(friends);
+        //String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+        //loadFriends(friends);
 
     }
 
     @FXML
     private void loadFriends(String[][] friends) {
-        Stage stage = new Stage();
         GridPane root = new GridPane();
-        ScrollPane scrollPane = new ScrollPane();
         root.setGridLinesVisible(true);
         final int numCols = 2 ;
         final int numRows = friends.length ;
@@ -522,7 +530,10 @@ public class Controller {
             root.setValignment(image, VPos.CENTER);
 
         }
+
+        ScrollPane scrollPane = new ScrollPane();
         scrollPane.setContent(root);
+        Stage stage = new Stage();
         stage.setScene(new Scene(scrollPane, 600, 500));
         stage.show();
     }

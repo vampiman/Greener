@@ -55,7 +55,9 @@ public class Resource {
         this.publicTransport = publicTransport;
     }
 
-    public int getAverageHeatConsumption() { return averageHeatConsumption; }
+    public int getAverageHeatConsumption() {
+        return averageHeatConsumption;
+    }
 
     public void setAverageHeatConsumption(int averageHeatConsumption) {
         this.averageHeatConsumption = averageHeatConsumption;

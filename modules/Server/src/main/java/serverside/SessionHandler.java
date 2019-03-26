@@ -20,18 +20,21 @@ public class SessionHandler {
     private Connection dbConnection;
 
     /**
+     * Method generating a random lower-case String of 15 characters
+     * that will act as an invite code for the user, the chance of guessing it is
+     * approximately 1 in 1 sextillion(21 zeros) cases.
      * 1 to 1 sextillion
-     * @return
+     * @return The String code
      */
     public String inviteGenerator() {
         Random random = new Random();
-        String inviteCode = "";
-        for(int i = 0; i < 15; i++) {
-            char a = (char)(random.nextInt(25) + 97);
-            inviteCode += a;
+        StringBuilder inviteCode = new StringBuilder("");
+        for (int i = 0; i < 15; i++) {
+            char nextChar = (char)(random.nextInt(25) + 97);
+            inviteCode.append(nextChar);
         }
 
-        return inviteCode;
+        return inviteCode.toString();
     }
 
     /**
@@ -96,7 +99,7 @@ public class SessionHandler {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(new SessionHandler().inviteGenerator());
-    }
+    //    public static void main(String[] args) {
+    //        System.out.println(new SessionHandler().inviteGenerator());
+    //    }
 }
