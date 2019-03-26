@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Random;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,6 +18,21 @@ import javax.ws.rs.core.MediaType;
 public class SessionHandler {
 
     private Connection dbConnection;
+
+    /**
+     * 1 to 1 sextillion
+     * @return
+     */
+    public String inviteGenerator() {
+        Random random = new Random();
+        String inviteCode = "";
+        for(int i = 0; i < 15; i++) {
+            char a = (char)(random.nextInt(25) + 97);
+            inviteCode += a;
+        }
+
+        return inviteCode;
+    }
 
     /**
      * Method for initializing the connection with the database server through jdbc.
@@ -57,7 +73,7 @@ public class SessionHandler {
                 + "Lowering_home_temperature, Public_transport) \n"
                 + "VALUES (\"" + sr.getEmail() + "\", \"" + sr.getPassword()
                 + "\", \"" + sr.getName()
-                + "\", \"0\", \"291329\", \"0\", \"0\", \"0\", \"0\",\n"
+                + "\", \"0\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
                 + "\"0\", \"0\", \"0\");");
 
         st.close();
@@ -79,4 +95,8 @@ public class SessionHandler {
         return sr;
     }
 
+
+    public static void main(String[] args) {
+        System.out.println(new SessionHandler().inviteGenerator());
+    }
 }
