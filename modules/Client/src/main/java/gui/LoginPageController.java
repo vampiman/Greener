@@ -16,17 +16,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import restclient.User;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class LoginPageController {
 
+    String token;
+
     @FXML
     private TextField nameField;
-
     @FXML
     private PasswordField passwordField;
-
     @FXML
     private Button loginButton;
     @FXML
@@ -34,11 +39,10 @@ public class LoginPageController {
     @FXML
     private GridPane parentContainer;
 
-
-
     @FXML
     private void loadSecond(ActionEvent event) throws IOException {
         Window owner = loginButton.getScene().getWindow();
+
         if (nameField.getText().isEmpty()) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
                     "Please enter your username");
@@ -50,20 +54,32 @@ public class LoginPageController {
             return;
         }
 
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
-        Scene scene = loginButton.getScene();
-        root.translateYProperty().set(scene.getHeight());
+        User user = new User(nameField.getText(), passwordField.getText());
+        boolean authenticated = false;
+        authenticated = user.login(null);
+        token = user.getToken();
 
-        parentContainer.getChildren().add(root);
+        if (authenticated) {
+            PrintWriter pw = new PrintWriter("test.txt", "UTF-8");
+            pw.println(token);
+            pw.close();
 
-        Timeline timeline = new Timeline();
-        KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
-        timeline.getKeyFrames().add(kf);
-        timeline.setOnFinished(t -> {
-            parentContainer.getChildren().remove(anchorRoot);
-        });
-        timeline.play();
+            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("dashboard.fxml"));
+            Scene scene = loginButton.getScene();
+            root.translateYProperty().set(scene.getHeight());
+
+            parentContainer.getChildren().add(root);
+
+            Timeline timeline = new Timeline();
+            KeyValue kv = new KeyValue(root.translateYProperty(), 0, Interpolator.EASE_IN);
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv);
+            timeline.getKeyFrames().add(kf);
+            timeline.setOnFinished(t -> {
+                parentContainer.getChildren().remove(anchorRoot);
+            });
+            timeline.play();
+        }
+
     }
 
     public static class AlertHelper {

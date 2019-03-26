@@ -5,7 +5,7 @@ import io.jsonwebtoken.Jwts;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.ws.rs.client.Client;
-//import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
@@ -113,12 +113,13 @@ public class CompactClient  {
      *
      * @param args Input for main
      */
-    //        public static void main(String[] args) {
-    //            CompactClient cc = new CompactClient(ClientBuilder.newClient());
-    //
-    //            cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //            cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
-    //
-    //        }
+    public static void main(String[] args) {
+        CompactClient cc = new CompactClient(ClientBuilder.newClient());
+
+        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+
+    }
 
 }

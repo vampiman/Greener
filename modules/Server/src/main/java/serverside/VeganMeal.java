@@ -18,7 +18,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-
 @Path("veganmeal")
 @Singleton
 public class VeganMeal {
@@ -59,7 +58,7 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource re, @HeaderParam("Token") String token)
+    public void postIt(Resource re, @HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
@@ -87,7 +86,7 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll(@HeaderParam("Token") String token)
+    public Resource getAll(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
