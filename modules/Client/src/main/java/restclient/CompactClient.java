@@ -1,9 +1,11 @@
 package restclient;
 
 import cn.hutool.json.JSONObject;
-import io.jsonwebtoken.Jwts;
-import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -11,7 +13,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.*;
+
 
 public class CompactClient  {
 
@@ -26,15 +28,16 @@ public class CompactClient  {
     public CompactClient() throws IOException {
         this.client = ClientBuilder.newClient();
         String token = "";
-        File f = new File("test.txt");
-        boolean fileExists = f.exists();
+        File file = new File("test.txt");
+        boolean fileExists = file.exists();
 
         if (fileExists) {
-            BufferedReader br = new BufferedReader(new FileReader(f));
+            BufferedReader br = new BufferedReader(new FileReader(file));
 
             String st;
-            while ((st = br.readLine()) != null)
+            while ((st = br.readLine()) != null) {
                 token = st;
+            }
         }
         this.token = token;
     }
@@ -113,6 +116,14 @@ public class CompactClient  {
         return jo;
     }
 
+    /**
+     * Method for sending a post request for the calculation of the carbon
+     * footprint with regard to the heat consumption.
+     * @param averageConsumption Average consumption before savings
+     * @param currentConsumption Consumption after starting to lower temperature
+     * @param energyType Type of energy used to generate the heat
+     * @return JSON Response as a String
+     */
     public String postHeatConsumption(int averageConsumption, int currentConsumption,
                                           String energyType) {
         String auth = formAuthHeader();
@@ -129,6 +140,12 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+
+    /**
+     * Method telling if the token is stored on disk.
+     * @return Whether it is stored or not as a boolean
+     * @throws IOException Error can occur while reading the file
+     */
     public JSONObject getHeatConsumption() {
         String auth = formAuthHeader();
 
@@ -162,15 +179,16 @@ public class CompactClient  {
 
     public boolean checkToken() throws IOException {
         String token = "";
-        File f = new File("test.txt");
-        boolean fileExists = f.exists();
+        File file = new File("test.txt");
+        boolean fileExists = file.exists();
 
         if (fileExists) {
-            BufferedReader br = new BufferedReader(new FileReader(f));
+            BufferedReader br = new BufferedReader(new FileReader(file));
 
             String st;
-            while ((st = br.readLine()) != null)
+            while ((st = br.readLine()) != null) {
                 token = st;
+            }
         }
 
         User user = new User("", "");

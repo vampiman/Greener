@@ -124,10 +124,10 @@ public class User {
         }
     }
 
-    public static void main(String[] args) {
-
-        User user = new User("irem@yahoo.com", "1234");
-        System.out.println(user.register("Irem", "irem@yahoo.com", "1234"));
-        //user.login();
-    }
+    //    public static void main(String[] args) {
+    //
+    //        User user = new User("irem@yahoo.com", "1234");
+    //        System.out.println(user.register("Irem", "irem@yahoo.com", "1234"));
+    //        //user.login();
+    //    }
 }

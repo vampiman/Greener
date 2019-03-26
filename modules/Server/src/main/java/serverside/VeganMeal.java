@@ -58,7 +58,8 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource re, @HeaderParam("Token") String token, @HeaderParam("Email") String email)
+    public void postIt(Resource re, @HeaderParam("Token") String token,
+                       @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 

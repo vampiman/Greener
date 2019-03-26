@@ -66,7 +66,9 @@ public class Resource {
         this.carType = carType;
     }
 
-    public int getAverageHeatConsumption() { return averageHeatConsumption; }
+    public int getAverageHeatConsumption() {
+        return averageHeatConsumption;
+    }
 
     public void setAverageHeatConsumption(int averageHeatConsumption) {
         this.averageHeatConsumption = averageHeatConsumption;

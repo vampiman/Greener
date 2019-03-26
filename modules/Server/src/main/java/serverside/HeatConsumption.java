@@ -108,7 +108,8 @@ public class HeatConsumption {
 
         st.executeUpdate("UPDATE person SET Lowering_home_temperature "
                 + "= Lowering_home_temperature + "
-                + cc.homeHeatConsumptionSaved(re.getAverageHeatConsumption(),re.getCurrentHeatConsumption(), re.getEnergyType())
+                + cc.homeHeatConsumptionSaved(re.getAverageHeatConsumption(),
+                re.getCurrentHeatConsumption(), re.getEnergyType())
                 + " WHERE Email = '" + email + "'");
 
         st.close();
