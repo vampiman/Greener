@@ -42,7 +42,6 @@ public class CompactClient  {
         this.token = token;
     }
 
-
     /**
      * Method forms the 'Authorization' header content.
      * @return the 'Authorization' header content
@@ -161,6 +160,13 @@ public class CompactClient  {
 
     }
 
+    /**
+     * Method that posts data about public transport.
+     * @param typeCar Type of car user did not use
+     * @param typePublicTransport Type of public transport use
+     * @param distance Distance taken by a bus
+     * @return JSON object
+     */
     public String postPublicTransport(String typeCar,
                                       String typePublicTransport, int distance) {
         String auth = formAuthHeader();
@@ -177,6 +183,11 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    /**
+     * Method that verifies the token stored in a file.
+     * @return true when authentication succeeded, false when failed
+     * @throws IOException in case the file is not found/unable to be opened or read.
+     */
     public boolean checkToken() throws IOException {
         String token = "";
         File file = new File("test.txt");
