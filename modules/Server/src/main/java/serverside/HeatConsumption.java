@@ -77,7 +77,7 @@ public class HeatConsumption {
 
         Resource re = new Resource();
         passToken(token, re);
-        re.setTotal_heatConsumption(total);
+        //re.setTotal_heatConsumption(total);
 
         st.close();
         dbConnection.close();
@@ -94,18 +94,26 @@ public class HeatConsumption {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource re, @HeaderParam("Token") String token)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource re, @HeaderParam("Token") String token,
+                             @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
         getDbConnection();
 
         passToken(token, re);
 
+        CarbonCalculator cc = new CarbonCalculator(2);
+
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Lowering_heat_temperature "
-                + "= Lowering_heat_temperature + "
-                + re.getTotal_heatConsumption() + " WHERE Name = 'Robert'");
+
+        st.executeUpdate("UPDATE person SET Lowering_home_temperature "
+                + "= Lowering_home_temperature + "
+                + cc.homeHeatConsumptionSaved(re.getAverageHeatConsumption(),re.getCurrentHeatConsumption(), re.getEnergyType())
+                + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
+
+        return re;
     }
 }

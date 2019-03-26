@@ -11,26 +11,32 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.io.*;
 
 public class CompactClient  {
 
-    protected Client client;
-    protected String token;
-    protected String credentials;
+    private Client client;
+    private String credentials;
+    private String token;
+
 
     /**
-     * Constructor for LocalEater.
-     * @param client to use as the client for requests to the service
+     * Constructor for user.
      */
-    public CompactClient(Client client) {
-        String password = DigestUtils.sha256Hex("password");
-        this.client = client;
-        this.token = null;
-        this.credentials = Jwts.builder()
-                .claim("email", "nstruharova@tudelft.nl")
-                .claim("password", password )
-                .signWith(KeyGenClient.KEY)
-                .compact();
+    public CompactClient() throws IOException {
+        this.client = ClientBuilder.newClient();
+        String token = "";
+        File f = new File("test.txt");
+        boolean fileExists = f.exists();
+
+        if (fileExists) {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+
+            String st;
+            while ((st = br.readLine()) != null)
+                token = st;
+        }
+        this.token = token;
     }
 
 
@@ -107,6 +113,42 @@ public class CompactClient  {
         return jo;
     }
 
+    public String postHeatConsumption(int averageConsumption, int currentConsumption,
+                                          String energyType) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setAverageHeatConsumption(averageConsumption);
+        re.setCurrentHeatConsumption(currentConsumption);
+        re.setEnergyType(energyType);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/heatconsumption/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class).toJSONString(10);
+    }
+
+    public boolean checkToken() throws IOException {
+        String token = "";
+        File f = new File("test.txt");
+        boolean fileExists = f.exists();
+
+        if (fileExists) {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+
+            String st;
+            while ((st = br.readLine()) != null)
+                token = st;
+        }
+
+        User user = new User("", "");
+        if (user.login(token)) {
+            return true;
+        }
+        return false;
+    }
+
     //FOR TESTING ONLY
     /**
      * Main method that simulates the client.
@@ -114,10 +156,9 @@ public class CompactClient  {
      * @param args Input for main
      */
     public static void main(String[] args) {
-        CompactClient cc = new CompactClient(ClientBuilder.newClient());
+        //CompactClient cc = new CompactClient(ClientBuilder.newClient());
 
-        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-        cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 
     }

@@ -308,19 +308,23 @@ public class CarbonCalculator {
 
     /**
      * Calculated the grams of CO2 equal to the given kWh.
-     * @param energyKiloWattHour amount of kWh saved by user.
+     * @param energyKiloWattHourAverage amount of kWh consumed by user originally.
+     * @param energyKiloWattHourCurrent amount of kWh consumed by user now.
      * @param energyType type of energy to
      *                   power the boiler (electric or non-electric).
      * @return CO2 saved with the given kWh in kg.
      */
-    public double homeHeatConsumptionSaved(double energyKiloWattHour, String energyType) {
+    public int homeHeatConsumptionSaved(double energyKiloWattHourAverage,
+                                           double energyKiloWattHourCurrent, String energyType) {
+        double energyKiloWattHour = energyKiloWattHourAverage - energyKiloWattHourCurrent;
+
         if (energyType.equalsIgnoreCase("Electric")) {
             double co2 = energyToCarbonElectric();
-            return (energyKiloWattHour * co2) / 1000;
+            return (int)(energyKiloWattHour * co2) / 1000;
         }
 
         double co2 = energyToCarbonNonElectric();
-        return (energyKiloWattHour * co2) / 1000;
+        return (int)(energyKiloWattHour * co2) / 1000;
     }
 
     /** Calculated how many kg of carbon dioxide is saved during travelling

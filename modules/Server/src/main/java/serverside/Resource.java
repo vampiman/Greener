@@ -7,19 +7,13 @@ public class Resource {
     int percentage;
     int produce;
     int publicTransport;
-    int heatConsumption;
+    int averageHeatConsumption;
+    int currentHeatConsumption;
+    String energyType;
     String token;
 
     public Resource(){
 
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public int getTotal_Meals() {
@@ -62,13 +56,34 @@ public class Resource {
         this.publicTransport = publicTransport;
     }
 
-    public int getTotal_heatConsumption() {
-        return heatConsumption;
+    public int getAverageHeatConsumption() { return averageHeatConsumption; }
+
+    public void setAverageHeatConsumption(int averageHeatConsumption) {
+        this.averageHeatConsumption = averageHeatConsumption;
     }
 
-    public void setTotal_heatConsumption(int heatConsumption) {
-        this.heatConsumption = heatConsumption;
+    public int getCurrentHeatConsumption() {
+        return currentHeatConsumption;
     }
 
+    public void setCurrentHeatConsumption(int heatConsumption) {
+        this.currentHeatConsumption = heatConsumption;
+    }
+
+    public String getEnergyType() {
+        return energyType;
+    }
+
+    public void setEnergyType(String energyType) {
+        this.energyType = energyType;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 }

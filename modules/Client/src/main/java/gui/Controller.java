@@ -18,7 +18,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import restclient.CompactClient;
 import restclient.User;
+import restclient.CompactClient;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -59,6 +61,9 @@ public class Controller {
 
     @FXML
     private TextField afterTemperature;
+
+    @FXML
+    private ChoiceBox energyType;
 
     @FXML
     private TextField electricityPercentage;
@@ -139,7 +144,8 @@ public class Controller {
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/menu.fxml");
@@ -188,7 +194,8 @@ public class Controller {
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/activities.fxml");
@@ -197,7 +204,8 @@ public class Controller {
 
     @FXML
     protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addFriends.fxml");
@@ -206,7 +214,8 @@ public class Controller {
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements.fxml");
@@ -215,7 +224,8 @@ public class Controller {
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/scoreboard.fxml");
@@ -224,7 +234,8 @@ public class Controller {
 
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/you.fxml");
@@ -233,7 +244,8 @@ public class Controller {
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -263,7 +275,8 @@ public class Controller {
 
     @FXML
     private void handleVegetarianMealButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/veganMeal.fxml");
@@ -272,7 +285,8 @@ public class Controller {
 
     @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/publicTransport.fxml");
@@ -281,7 +295,8 @@ public class Controller {
 
     @FXML
     private void handleTemperatureButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/temperature.fxml");
@@ -290,7 +305,8 @@ public class Controller {
 
     @FXML
     private void handleSolarPanelButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/solarPanel.fxml");
@@ -299,7 +315,8 @@ public class Controller {
 
     @FXML
     private void handleBikeButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/bike.fxml");
@@ -308,7 +325,8 @@ public class Controller {
 
     @FXML
     private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/localProduct.fxml");
@@ -340,7 +358,8 @@ public class Controller {
                 return;
             }
         }
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -360,10 +379,19 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
             return;
+        } else if (energyType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter your energy type");
+            return;
         } else {
             try {
-                Double before = Double.parseDouble(beforeTemperature.getText());
-                Double after = Double.parseDouble(afterTemperature.getText());
+                int before = Integer.parseInt(beforeTemperature.getText());
+                int after = Integer.parseInt(afterTemperature.getText());
+                String typeOfEnergy = (String) energyType.getValue();
+
+                CompactClient cc = new CompactClient();
+                cc.postHeatConsumption(before, after, typeOfEnergy);
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -371,7 +399,8 @@ public class Controller {
                 return;
             }
         }
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -397,7 +426,8 @@ public class Controller {
                 return;
             }
         }
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -423,7 +453,8 @@ public class Controller {
                 return;
             }
         }
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -449,7 +480,8 @@ public class Controller {
                 return;
             }
         }
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/scoreboard.fxml");
@@ -497,7 +529,8 @@ public class Controller {
 
     @FXML
     private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
-        if (!checkToken()) {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -523,26 +556,6 @@ public class Controller {
             alert.initOwner(owner);
             alert.show();
         }
-    }
-
-    private boolean checkToken() throws IOException {
-        String token = "";
-        File f = new File("test.txt");
-        boolean fileExists = f.exists();
-
-        if (fileExists) {
-            BufferedReader br = new BufferedReader(new FileReader(f));
-
-            String st;
-            while ((st = br.readLine()) != null)
-                token = st;
-        }
-
-        User user = new User("", "");
-        if (user.login(token)) {
-            return true;
-        }
-        return false;
     }
 
 }
