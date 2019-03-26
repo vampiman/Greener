@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.StackPane?>
+
+<?import javafx.scene.control.Label?>
+<StackPane fx:id="parentContainer" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainPageController">
+    <children>
+        <AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" >
+           <children>
+               <SplitPane fx:id="splitPane" dividerPositions="0.2157190635451505" prefHeight="400.0" prefWidth="600.0">
+                   <items>
+                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #000000;">
+                           <children>
+                               <Label alignment="CENTER" layoutX="8.0" layoutY="13.0" prefHeight="38.0" prefWidth="111.0" style="-fx-background-color: #000000; -fx-text-fill: #00ffbc" text="GREENER">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="18.0" />
+                                   </font>
+                               </Label>
+                               <Button fx:id="dashboardButton" alignment="CENTER" layoutX="13.0" layoutY="72.0" mnemonicParsing="false" onAction="#handleDashboardButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Dashboard" textFill="#ffffff" textOverrun="CLIP">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="activitiesButton" layoutX="13.0" layoutY="102.0" mnemonicParsing="false" onAction="#handleActivitiesButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Activities" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="groupsButton" layoutX="13.0" layoutY="132.0" mnemonicParsing="false" onAction="#handleGroupsButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Groups" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="achievementsButton" layoutX="13.0" layoutY="162.0" mnemonicParsing="false" onAction="#handleAchievementsButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Achievements" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="scoreboardButton" layoutX="13.0" layoutY="192.0" mnemonicParsing="false" onAction="#handleScoreboardButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="Scoreboard" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="youButton" layoutX="13.0" layoutY="222.0" mnemonicParsing="false" onAction="#handleYouButtonAction" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #000000;" text="You" textAlignment="LEFT" textFill="#ffffff">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="exitButton" layoutX="24.0" layoutY="353.0" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="30.0" prefWidth="78.0" style="-fx-background-color: #000000;" text="EXIT" textFill="#00ffbc">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                               <Button fx:id="logoutButton" layoutX="29.0" layoutY="327.0" mnemonicParsing="false" style="-fx-background-color: #000000;" text="LOG OUT" textFill="#00ffbc" onAction="#handleLogoutButtonAction">
+                                   <font>
+                                       <Font name="Comic Sans MS Bold" size="12.0" />
+                                   </font>
+                               </Button>
+                           </children>
+                       </AnchorPane>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #00ffbc;">
+                       <children>
+                          <ImageView fitHeight="52.0" fitWidth="58.0" layoutX="21.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true">
+                             <image>
+                                <Image url="@userImage.jpg" />
+                             </image>
+                          </ImageView>
+                          <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="21.0" layoutY="128.0" pickOnBounds="true" preserveRatio="true">
+                             <image>
+                                <Image url="@userImage.jpg" />
+                             </image>
+                          </ImageView>
+                          <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="21.0" layoutY="216.0" pickOnBounds="true" preserveRatio="true">
+                             <image>
+                                <Image url="@userImage.jpg" />
+                             </image>
+                          </ImageView>
+                          <ImageView fitHeight="52.0" fitWidth="54.0" layoutX="21.0" layoutY="300.0" pickOnBounds="true" preserveRatio="true">
+                             <image>
+                                <Image url="@userImage.jpg" />
+                             </image>
+                          </ImageView>
+                          <TextField layoutX="85.0" layoutY="42.0" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #00ffbc;" text="Name:">
+                             <font>
+                                <Font name="Comic Sans MS" size="14.0" />
+                             </font>
+                          </TextField>
+                          <TextField layoutX="85.0" layoutY="300.0" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #00ffbc;" text="Name:">
+                             <font>
+                                <Font name="Comic Sans MS" size="14.0" />
+                             </font>
+                          </TextField>
+                          <TextField layoutX="85.0" layoutY="216.0" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #00ffbc;" text="Name:">
+                             <font>
+                                <Font name="Comic Sans MS" size="14.0" />
+                             </font>
+                          </TextField>
+                          <TextField layoutX="85.0" layoutY="128.0" prefHeight="31.0" prefWidth="61.0" style="-fx-background-color: #00ffbc;" text="Name:">
+                             <font>
+                                <Font name="Comic Sans MS" size="14.0" />
+                             </font>
+                          </TextField>
+                       </children></AnchorPane>
+                </items>
+              </SplitPane>
+           </children>
+        </AnchorPane>
+    </children>
+</StackPane>

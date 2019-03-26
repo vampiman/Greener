@@ -85,6 +85,9 @@ public class Controller {
     private ChoiceBox publicTransport;
 
     @FXML
+    private ChoiceBox carType;
+
+    @FXML
     private Text todaysTip;
 
     @FXML
@@ -346,20 +349,29 @@ public class Controller {
     @FXML
     private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (kilometers.getText().isEmpty()) {
+        if (carType.getValue() == null) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter the number of kilometers which you travelled");
+                            "Please enter type of your car");
             return;
         } else if (publicTransport.getValue() == null) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the type of public transport");
             return;
+        } else if (kilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
         } else {
             try {
-                Double numberOfKilometers = Double.parseDouble(kilometers.getText());
-                String option = publicTransport.getValue().toString();
+                int numberOfKilometers = Integer.parseInt(kilometers.getText());
+                String typeOfCar = carType.getValue().toString();
+                String publictransportType = publicTransport.getValue().toString();
+
+                CompactClient cc = new CompactClient();
+                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -367,12 +379,13 @@ public class Controller {
                                         + "double number to indicate number of kilometers you go");
                 return;
             }
-        }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
-            loadPage(event, "fxml/loginPage.fxml");
-        } else {
-            loadPage(event, "fxml/addActivity.fxml");
+
+            CompactClient cc = new CompactClient();
+            if (!cc.checkToken()) {
+                loadPage(event, "fxml/loginPage.fxml");
+            } else {
+                loadPage(event, "fxml/addActivity.fxml");
+            }
         }
     }
 

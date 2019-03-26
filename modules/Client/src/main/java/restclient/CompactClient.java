@@ -140,11 +140,43 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+
     /**
      * Method telling if the token is stored on disk.
      * @return Whether it is stored or not as a boolean
      * @throws IOException Error can occur while reading the file
      */
+    public JSONObject getHeatConsumption() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/get");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+
+    }
+
+    public String postPublicTransport(String typeCar,
+                                      String typePublicTransport, int distance) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setCarType(typeCar);
+        re.setPublicTransportType(typePublicTransport);
+        re.setTotal_Distance(distance);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/publictransport/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class).toJSONString(10);
+    }
+
     public boolean checkToken() throws IOException {
         String token = "";
         File file = new File("test.txt");
@@ -173,8 +205,6 @@ public class CompactClient  {
      * @param args Input for main
      */
     public static void main(String[] args) {
-        //CompactClient cc = new CompactClient(ClientBuilder.newClient());
-
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 
