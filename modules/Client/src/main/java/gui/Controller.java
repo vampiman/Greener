@@ -10,19 +10,24 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -107,12 +112,12 @@ public class Controller {
         }
 
         if (activities != null) {
-            String text = "You had 0 vegan meals"+"\n" +
-                    "You biked 0 kilometers\n" +
-                    "You decreased 0% of your electricity consumption\n" +
-                    "You bought 0 local product\n" +
-                    "You travelled 0 kilometers by public transport\n" +
-                    "You decreased your home's temperature 0 °C";
+            String text = "You had 0 vegan meals" + "\n"
+                    + "You biked 0 kilometers\n"
+                    + "You decreased 0% of your electricity consumption\n"
+                    + "You bought 0 local product\n"
+                    + "You travelled 0 kilometers by public transport\n"
+                    + "You decreased your home's temperature 0 °C";
             activities.setText(text);
         }
     }
@@ -196,7 +201,9 @@ public class Controller {
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"},
+                              {"Mayasa", "2500"}, {"Irem", "1500"},
+                              {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
         loadFriends(event, friends);
     }
 
@@ -269,7 +276,7 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter type of your car");
             return;
-        }else if (publicTransport.getValue() == null) {
+        } else if (publicTransport.getValue() == null) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the type of public transport");
@@ -391,7 +398,9 @@ public class Controller {
                 return;
             }
         }
-        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"},
+                              {"Mayasa", "2500"}, {"Irem", "1500"},
+                              {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
         loadFriends(event, friends);
     }
 
@@ -402,25 +411,25 @@ public class Controller {
         ScrollPane scrollPane = new ScrollPane();
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         final int numCols = 2 ;
-        final int numRows = friends.length+1 ;
+        final int numRows = friends.length + 1 ;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setHgrow(Priority.NEVER);
-            if(i==0) {
+            if (i == 0) {
                 colConst.setPrefWidth(200);
             } else {
-                colConst.setPrefWidth(screenBounds.getWidth()-200);
+                colConst.setPrefWidth(screenBounds.getWidth() - 200);
             }
             root.getColumnConstraints().add(colConst);
         }
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setVgrow(Priority.NEVER);
-            if(i>=1) {
+            if (i >= 1) {
                 rowConst.setPrefHeight(143);
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
-                text.setText("Name: " + friends[i-1][0] + "\n" + "Score: " + friends[i-1][1]);
+                text.setText("Name: " + friends[i - 1][0] + "\n" + "Score: " + friends[i - 1][1]);
                 text.setFont(Font.font("Comic Sans MS"));
                 ImageView image = new ImageView("images/userImage.jpg");
                 image.setFitWidth(117);
@@ -441,8 +450,10 @@ public class Controller {
                 Button button = new Button();
                 button.setText("BACK");
                 button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;");
-                button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
-                button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;"));
+                button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
+                        + "linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
+                button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
+                        + "-fx-text-fill: #00ffbc;"));
                 button.setOnAction(value ->  {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
