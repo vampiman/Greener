@@ -8,6 +8,7 @@ public class Resource {
     int produce;
     String publicTransportType;
     String carType;
+    int savedPublicTransport;
     int averageHeatConsumption;
     int currentHeatConsumption;
     int savedHeatConsumption;
@@ -66,6 +67,14 @@ public class Resource {
         this.carType = carType;
     }
 
+    public int getSavedPublicTransport() {
+        return savedPublicTransport;
+    }
+
+    public void setSavedPublicTransport(int savedPublicTransport) {
+        this.savedPublicTransport = savedPublicTransport;
+    }
+
     public int getAverageHeatConsumption() {
         return averageHeatConsumption;
     }
@@ -107,4 +116,5 @@ public class Resource {
     }
 
 }
+
 

@@ -62,20 +62,21 @@ public class PublicTransport {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getData(@HeaderParam("Token") String token)
+    public Resource getData(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Public_transport FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery("SELECT Public_transport "
+                + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
         int total = rs.getInt("Public_transport");
 
         Resource re = new Resource();
+        re.setSavedPublicTransport(total);
         passToken(token, re);
-        //re.setTotal_publicTransport(total);
 
         st.close();
         dbConnection.close();

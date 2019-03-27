@@ -21,7 +21,6 @@ public class CompactClient  {
     private String credentials;
     private String token;
 
-
     /**
      * Constructor for user.
      */
@@ -184,6 +183,26 @@ public class CompactClient  {
     }
 
     /**
+     * Method telling if the token is stored on disk.
+     * @return Whether it is stored or not as a boolean
+     * @throws IOException Error can occur while reading the file
+     */
+    public JSONObject getPublicTransport() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/publictransport/get");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+
+    }
+
+    /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
      * @throws IOException in case the file is not found/unable to be opened or read.
@@ -215,7 +234,10 @@ public class CompactClient  {
      *
      * @param args Input for main
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        CompactClient cc = new CompactClient();
+        System.out.println(cc.getPublicTransport());
+
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 
