@@ -64,7 +64,7 @@
             <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />
          </GridPane.margin>
       </AnchorPane>
-      <AnchorPane fx:id="scorePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="189.0" style="-fx-background-color: #ebf8ee;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="189.0" style="-fx-background-color: #ebf8ee;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <children>
             <Label alignment="CENTER" prefHeight="46.0" prefWidth="239.0" style="-fx-background-color: #ebf8ee;" text="YOUR SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>

@@ -29,7 +29,7 @@
    <children>
       <ImageView fitHeight="391.0" fitWidth="600.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <image>
-            <Image url="@../images/800px_COLOURBOX3127965.jpg" />
+            <Image url="@../images/friend_page_background.jpg" />
          </image>
          <cursor>
             <Cursor fx:constant="SE_RESIZE" />

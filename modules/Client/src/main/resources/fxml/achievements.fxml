@@ -31,7 +31,7 @@
                   <Font name="Comic Sans MS Bold" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="activities" alignment="CENTER" layoutX="43.0" layoutY="38.0" prefHeight="116.0" prefWidth="434.0" style="-fx-background-color: #ebf8ee;" text="You decreased your carbon footprint by x%">
+            <Label alignment="CENTER" layoutX="43.0" layoutY="38.0" prefHeight="116.0" prefWidth="434.0" style="-fx-background-color: #ebf8ee;" text="You decreased your carbon footprint by x%">
                <font>
                   <Font name="Comic Sans MS Italic" size="18.0" />
                </font>

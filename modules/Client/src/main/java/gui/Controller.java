@@ -3,18 +3,26 @@ package gui;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -67,10 +75,22 @@ public class Controller {
     private ChoiceBox publicTransport;
 
     @FXML
+    private ChoiceBox carType;
+
+    @FXML
     private Text todaysTip;
 
     @FXML
     private TextField friendCode;
+
+    @FXML
+    private TextArea activities;
+
+    @FXML
+    private GridPane scorePane;
+
+    @FXML
+    private ChoiceBox energyType;
 
     @FXML
     private void initialize() throws FileNotFoundException {
@@ -84,6 +104,16 @@ public class Controller {
             int randomNum = (rn.nextInt() & Integer.MAX_VALUE) % lines.size();
             String text = lines.get(randomNum);
             todaysTip.setText(text);
+        }
+
+        if (activities != null) {
+            String text = "You had 0 vegan meals"+"\n" +
+                    "You biked 0 kilometers\n" +
+                    "You decreased 0% of your electricity consumption\n" +
+                    "You bought 0 local product\n" +
+                    "You travelled 0 kilometers by public transport\n" +
+                    "You decreased your home's temperature 0 °C";
+            activities.setText(text);
         }
     }
 
@@ -136,33 +166,12 @@ public class Controller {
                     "Please retype your password");
             return;
         }
-        if(!password.getText().equals(rePassword.getText())) {
+        if (!password.getText().equals(rePassword.getText())) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
                     "Please enter the same password for password fields");
             return;
         }
         loadPage(event, "fxml/loginPage.fxml");
-    }
-
-    public static class AlertHelper {
-
-        /**
-         * The method which gives alert with a specific message.
-         * @param alertType the type of the alert
-         * @param owner the owner of the alert
-         * @param title the title of the alert
-         * @param message the message of the alert
-         */
-
-        public static void showAlert(Alert.AlertType alertType,
-                                     Window owner, String title, String message) {
-            Alert alert = new Alert(alertType);
-            alert.setTitle(title);
-            alert.setHeaderText(null);
-            alert.setContentText(message);
-            alert.initOwner(owner);
-            alert.show();
-        }
     }
 
     @FXML
@@ -187,7 +196,8 @@ public class Controller {
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/scoreboard.fxml");
+        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+        loadFriends(event, friends);
     }
 
     @FXML
@@ -254,20 +264,26 @@ public class Controller {
     @FXML
     private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (kilometers.getText().isEmpty()) {
+        if (carType.getValue() == null) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter the number of kilometers which you travelled");
+                            "Please enter type of your car");
             return;
-        } else if (publicTransport.getValue() == null) {
+        }else if (publicTransport.getValue() == null) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the type of public transport");
             return;
+        } else if (kilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
         } else {
             try {
                 Double numberOfKilometers = Double.parseDouble(kilometers.getText());
-                String option = publicTransport.getValue().toString();
+                String typeOfCar = carType.getValue().toString();
+                String publictransportType = publicTransport.getValue().toString();
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -292,10 +308,16 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
             return;
+        } else if (energyType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter your energy type");
+            return;
         } else {
             try {
                 Double before = Double.parseDouble(beforeTemperature.getText());
                 Double after = Double.parseDouble(afterTemperature.getText());
+                String typeOfEnergy = (String) energyType.getValue();
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -369,12 +391,104 @@ public class Controller {
                 return;
             }
         }
-        loadPage(event, "fxml/scoreboard.fxml");
+        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+        loadFriends(event, friends);
+    }
+
+    @FXML
+    private void loadFriends(ActionEvent event, String[][] friends) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        GridPane root = new GridPane();
+        ScrollPane scrollPane = new ScrollPane();
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        final int numCols = 2 ;
+        final int numRows = friends.length+1 ;
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHgrow(Priority.NEVER);
+            if(i==0) {
+                colConst.setPrefWidth(200);
+            } else {
+                colConst.setPrefWidth(screenBounds.getWidth()-200);
+            }
+            root.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setVgrow(Priority.NEVER);
+            if(i>=1) {
+                rowConst.setPrefHeight(143);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("Name: " + friends[i-1][0] + "\n" + "Score: " + friends[i-1][1]);
+                text.setFont(Font.font("Comic Sans MS"));
+                ImageView image = new ImageView("images/userImage.jpg");
+                image.setFitWidth(117);
+                image.setFitHeight(108);
+                root.add(image, 0, i);
+                root.add(text, 1, i);
+                root.setHalignment(image, HPos.RIGHT);
+                root.setValignment(image, VPos.CENTER);
+                root.setStyle("-fx-background-color: #00ffbc;");
+                root.setHgap(40); //horizontal gap in pixels
+            } else {
+                rowConst.setPrefHeight(71);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("SCOREBOARD");
+                text.setFont(Font.font("Comic Sans MS", 30));
+                root.add(text, 1, i);
+                Button button = new Button();
+                button.setText("BACK");
+                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;");
+                button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
+                button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;"));
+                button.setOnAction(value ->  {
+                    try {
+                        Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
+                                .getResource("fxml/menu.fxml"));
+                        Scene addPageScene = new Scene(addPageParent);
+                        stage.setScene(addPageScene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                button.setLayoutX(250);
+                button.setLayoutY(220);
+                root.add(button, 0, i);
+                root.setMargin(button, new Insets(5, 0, 0, 20));
+            }
+        }
+        scrollPane.setContent(root);
+        stage.setScene(new Scene(scrollPane, 600, 500));
+        stage.show();
     }
 
     @FXML
     private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
         loadPage(event, "fxml/addActivity.fxml");
+    }
+
+    public static class AlertHelper {
+
+        /**
+         * The method which gives alert with a specific message.
+         * @param alertType the type of the alert
+         * @param owner the owner of the alert
+         * @param title the title of the alert
+         * @param message the message of the alert
+         */
+
+        public static void showAlert(Alert.AlertType alertType,
+                                     Window owner, String title, String message) {
+            Alert alert = new Alert(alertType);
+            alert.setTitle(title);
+            alert.setHeaderText(null);
+            alert.setContentText(message);
+            alert.initOwner(owner);
+            alert.show();
+        }
     }
 
 }
