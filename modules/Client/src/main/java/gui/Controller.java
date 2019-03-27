@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -98,6 +101,13 @@ public class Controller {
     private ChoiceBox energyType;
 
     @FXML
+    private GridPane achievementsGrid;
+
+    @FXML
+    private PieChart pieChart;
+
+
+    @FXML
     private void initialize() throws FileNotFoundException {
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -119,6 +129,20 @@ public class Controller {
                     + "You travelled 0 kilometers by public transport\n"
                     + "You decreased your home's temperature 0 °C";
             activities.setText(text);
+        }
+        if (achievementsGrid != null) {
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Vegan Meal", 100),
+                            new PieChart.Data("Public Transport", 200),
+                            new PieChart.Data("Home Temperature", 50),
+                            new PieChart.Data("Bike", 75),
+                            new PieChart.Data("Local Product", 110),
+                            new PieChart.Data("Solar Panel", 300)
+                            );
+            pieChart.setTitle("SCORE DISTRIBUTION");
+            pieChart.setMaxSize(1000, 1000);
+            pieChart.setData(pieChartData);
         }
     }
 
@@ -388,15 +412,7 @@ public class Controller {
                             "Please enter the code of yor friend");
             return;
         } else {
-            try {
-                int code = Integer.parseInt(friendCode.getText());
-                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate your friend's code");
-                return;
-            }
+            String code = friendCode.getText();
         }
         String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"},
                               {"Mayasa", "2500"}, {"Irem", "1500"},
