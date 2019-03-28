@@ -63,7 +63,7 @@ public class VeganMealTest {
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Resource re = new Resource();
         re.setTotal_Meals(1);
-        veganMeal.postIt(re);
+        veganMeal.postIt(re,"token", null);
 
     }
 
@@ -85,9 +85,25 @@ public class VeganMealTest {
                 "SELECT Vegan_meal FROM person WHERE Name = 'Robert'")).thenReturn(rs);
         Mockito.when(rs.getInt("Vegan_meal")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Resource resource = veganMeal.getAll();
+        Resource resource = veganMeal.getAll("token", null);
 
 
         Assert.assertEquals(resource.getTotal_Meals(), 1);
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }

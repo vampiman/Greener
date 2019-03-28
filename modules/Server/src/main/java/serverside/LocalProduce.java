@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -40,6 +41,17 @@ public class LocalProduce {
     }
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "JSON" media type.
      *
@@ -51,7 +63,8 @@ public class LocalProduce {
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
 
-    public Resource getData() throws ClassNotFoundException, SQLException {
+    public Resource getData(@HeaderParam("Token") String token)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
@@ -62,6 +75,7 @@ public class LocalProduce {
         int produce = rs.getInt("Local_produce");
 
         Resource lp = new Resource();
+        passToken(token, lp);
         lp.setTotal_Produce(produce);
 
         st.close();
@@ -90,18 +104,23 @@ public class LocalProduce {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource lp) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource lp, @HeaderParam("Token") String token)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
+
+        passToken(token, lp);
 
         System.out.println(lp.getTotal_Produce());
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
-                "UPDATE person SET produce = produce" 
-                + lp.getTotal_Produce() 
-                + "WHERE Name = 'Robert'");
+                "UPDATE person SET Local_produce = Local_produce + "
+                        + lp.getTotal_Produce() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
+
+        return lp;
     }
 
     //    public Response postData(JSONObject jo) {

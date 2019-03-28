@@ -1,9 +1,18 @@
 package serverside;
 
+import cn.hutool.json.JSONObject;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+
 /**
- * Class implementing a carbon footprint calculator that takes in consideration
- * different sides of day-by-day life, like Housing, Transport, Food Consumption and
- * other Goods/Services.
+ *  Class implementing a carbon footprint calculator that takes in consideration
+ *  different sides of day-by-day life, like Housing, Transport, Food Consumption and
+ *  other Goods/Services.
  */
 public class CarbonCalculator {
 
@@ -26,7 +35,7 @@ public class CarbonCalculator {
     /**
      * Calculates the CO2 emissions based on your electricity consumption per month.
      *
-     * @param amount           Cost of the monthly electricity bill
+     * @param amount Cost of the monthly electricity bill
      * @param electricityPrice Price per kWh
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -50,7 +59,7 @@ public class CarbonCalculator {
     /**
      * Natural gas CO2 emissions.
      *
-     * @param amount          Monthly natural gas cost
+     * @param amount Monthly natural gas cost
      * @param naturalGasPrice Price per thousand cubic feet
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -73,8 +82,7 @@ public class CarbonCalculator {
 
     /**
      * Fuel Oil CO2 emissions.
-     *
-     * @param amount       Monthly fuel oil cost
+     * @param amount Monthly fuel oil cost
      * @param oilFuelPrice Price per gallon
      * @return CO2 emissions per year (in pounds or grams)
      */
@@ -99,7 +107,7 @@ public class CarbonCalculator {
     /**
      * Propane CO2 emissions.
      *
-     * @param amount       Propane monthly cost
+     * @param amount Propane monthly cost
      * @param propanePrice Price per gallon
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -122,8 +130,7 @@ public class CarbonCalculator {
 
     /**
      * Personal vehicle CO2 emissions.
-     *
-     * @param amount         Miles per week
+     * @param amount Miles per week
      * @param milesPerGallon Fuel efficiency (miles per gallon)
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -133,7 +140,7 @@ public class CarbonCalculator {
 
 
         double toReturn = ((amount * 52.117) / milesPerGallon)
-                * vehiclePerGallon * vehicleGreenhouse;
+                            * vehiclePerGallon * vehicleGreenhouse;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -144,7 +151,6 @@ public class CarbonCalculator {
 
     /**
      * Public Transport CO2 emissions.
-     *
      * @param amount Miles per year
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -164,7 +170,6 @@ public class CarbonCalculator {
 
     /**
      * Air Travel CO2 emissions.
-     *
      * @param milesPerYear Miles traveled per year
      * @return CO2 emissions per year (in grams or pounds)
      */
@@ -175,7 +180,7 @@ public class CarbonCalculator {
 
 
         double toReturn = milesPerYear * (airPerMile * wellToPumpFactor * radiativeForcing)
-                * gramToPound;
+                            * gramToPound;
 
         if (metrics == 2) {
             return poundsToKilograms(toReturn);
@@ -186,10 +191,9 @@ public class CarbonCalculator {
 
     /**
      * Food CO2 emissions.
-     *
      * @param amount Monthly cost for the particular type of food
-     * @param type   Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
-     *               5 for eating out and 6 for other food)
+     * @param type Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
+     *            5 for eating out and 6 for other food)
      * @return CO2 emissions per year (in grams or pounds)
      */
     public double food(double amount, int type) {
@@ -201,31 +205,24 @@ public class CarbonCalculator {
 
         switch (type) {
             // meatFactor = 1452
-            case 1:
-                specificFactor = 1452;
-                break;
+            case 1: specificFactor = 1452;
+            break;
             // cerealsFactor = 741
-            case 2:
-                specificFactor = 741;
-                break;
+            case 2: specificFactor = 741;
+            break;
             // dairyFactor = 1911
-            case 3:
-                specificFactor = 1911;
-                break;
+            case 3: specificFactor = 1911;
+            break;
             // fruitFactor = 1176
-            case 4:
-                specificFactor = 1176;
-                break;
+            case 4: specificFactor = 1176;
+            break;
             // eatingOutFactor = 368
-            case 5:
-                specificFactor = 368;
-                break;
+            case 5: specificFactor = 368;
+            break;
             // otherFoodFactor = 467
-            case 6:
-                specificFactor = 467;
-                break;
-            default:
-                break;
+            case 6: specificFactor = 467;
+            break;
+            default: break;
         }
 
         double toReturn = (amount * specificFactor * 12) * gramToPound;
@@ -239,10 +236,9 @@ public class CarbonCalculator {
 
     /**
      * Services and Goods CO2 emissions.
-     *
      * @param amount Monthly cost for the particular type of goods/services
-     * @param type   Type of goods/services (1 for clothing, 2 for furniture/appliances,
-     *               3 for other goods and 4 for general services)
+     * @param type Type of goods/services (1 for clothing, 2 for furniture/appliances,
+     *            3 for other goods and 4 for general services)
      * @return CO2 emissions per year (in grams or pounds)
      */
     public double servicesAndGoods(double amount, int type) {
@@ -254,23 +250,18 @@ public class CarbonCalculator {
 
         switch (type) {
             // clothingFactor = 436
-            case 1:
-                specificFactor = 436;
-                break;
+            case 1: specificFactor = 436;
+            break;
             // furnishHouseholdFactor = 459
-            case 2:
-                specificFactor = 459;
-                break;
+            case 2: specificFactor = 459;
+            break;
             // otherGoodsFactor = 338
-            case 3:
-                specificFactor = 338;
-                break;
+            case 3: specificFactor = 338;
+            break;
             // serviceFactor = 178
-            case 4:
-                specificFactor = 178;
-                break;
-            default:
-                break;
+            case 4: specificFactor = 178;
+            break;
+            default: break;
         }
 
         double toReturn = (amount * specificFactor * 12) * gramToPound;
@@ -284,7 +275,6 @@ public class CarbonCalculator {
 
     /**
      * Pounds to kilograms converter.
-     *
      * @param pounds Quantity in pounds
      * @return Quantity in kilograms
      */
@@ -293,26 +283,181 @@ public class CarbonCalculator {
     }
 
 
+    public double solarPanel(double kwhSaved) {
+
+        //Europe' average kgs per kwh of electricity
+        double electricityFactor = 0.51;
+
+        return 0.51 * kwhSaved;
+
+    }
+
     /**
-     * Solar panel calculator.
-     *
-     * @param kwh consumption per month
-     * @return amount of pounds you use more than average
+     *  Converter for the home heat consumption. Coverts the kWh
+     *  into CO2 for electric boilers.
+     * @return grams of CO2 per kWh for electric based boiler.
      */
-    public double solarPanel_Points_Calculator(double kwh) {
+    public static double energyToCarbonElectric() {
+        //expected value in 2020
+        return 250.0;
+    }
 
-        double electricityFactor = 1.37;
-        double avgkwhpermonth = 3340;
+    /**
+     *  Converter for the home heat consumption. Coverts the kWh
+     *  into CO2 for non-electric boilers.
+     * @return grams of CO2 per kWh for non-electric based boiler.
+     */
+    public static double energyToCarbonNonElectric() {
+        //Oil boilers: 430.0
+        //Gas boilers: 295.0
+        //Bio-sourced gases: 60.0
+        //Biomass boilers: 102.5
+        //average:
+        return 221.875;
+    }
 
-        double delta = avgkwhpermonth - kwh;
-        double toReturn = delta * electricityFactor;
+    /**
+     * Calculated the grams of CO2 equal to the given kWh.
+     * @param energyKiloWattHourAverage amount of kWh consumed by user originally.
+     * @param energyKiloWattHourCurrent amount of kWh consumed by user now.
+     * @param energyType type of energy to
+     *                   power the boiler (electric or non-electric).
+     * @return CO2 saved with the given kWh in kg.
+     */
+    public int homeHeatConsumptionSaved(double energyKiloWattHourAverage,
+                                           double energyKiloWattHourCurrent, String energyType) {
+        double energyKiloWattHour = energyKiloWattHourAverage - energyKiloWattHourCurrent;
 
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
+        if (energyType.equalsIgnoreCase("Electric")) {
+            double co2 = energyToCarbonElectric();
+            return (int)(energyKiloWattHour * co2) / 1000;
         }
 
-        return toReturn;
+        double co2 = energyToCarbonNonElectric();
+        return (int)(energyKiloWattHour * co2) / 1000;
+    }
 
+    /** Calculated how many kg of carbon dioxide is saved during travelling
+     * a certain distance by using public transport instead of the car.
+     * @param typeCar the type of the car of the user.
+     * @param typePublicTransport the type of public transport the user has used.
+     * @param distance the distance the user has travelled.
+     * @return the saved amount of kg of carbon dioxide by using the specified type
+     *         of public transport instead of using the specified type of car.
+     */
+    public double publicTransportCalculator(String typeCar,
+                                            String typePublicTransport, int distance) {
+
+        distance = kilometersToMiles(distance);
+
+        String vehicle = "";
+
+        Form formCar = new Form();
+        formCar.param("household_size", "4");
+        formCar.param("home_type", "3");
+
+        switch (typeCar) {
+            case "Fossil":
+                vehicle = "5";
+                break;
+            default:
+                throw new IllegalArgumentException("Please insert a valid car type!");
+        }
+
+        if (!vehicle.equals("")) {
+            formCar.param("vehicle_type[]", vehicle);
+            formCar.param("vehicle_mileage[]", Double.toString(distance));
+        }
+
+        Form formPublicTransport = new Form();
+        formPublicTransport.param("household_size", "4");
+        formPublicTransport.param("home_type", "3");
+
+        switch (typePublicTransport) {
+            case "CityBus": formPublicTransport.param("bus_city", Integer.toString(distance));
+                break;
+            case "IntercityBus": formPublicTransport.param("bus_inter", Integer.toString(distance));
+                break;
+            case "Subway": formPublicTransport.param("subway", Integer.toString(distance));
+                break;
+            case "Train": formPublicTransport.param("train", Integer.toString(distance));
+                break;
+            default: throw new IllegalArgumentException(
+                    "Please insert a valid public transport type!");
+        }
+
+        int carbonCar = carbonFootprintApi(formCar);
+        int carbonPublicTransport = (int)(carbonFootprintApi(formPublicTransport) / 52.177);
+
+        double savedInLbs = carbonCar - carbonPublicTransport;
+
+        double savedInKilogram = savedInLbs * 0.45359237;
+        return savedInKilogram;
+    }
+
+    public int bike(String type, int mileage) {
+        mileage = kilometersToMiles(mileage);
+
+        String vehicle = "";
+
+        String transport = "";
+
+        Form form = new Form();
+        form.param("household_size", "4");
+        form.param("home_type", "3");
+
+        switch (type) {
+            case "Hybrid": vehicle = "1";
+                break;
+            case "Fossil": vehicle = "5";
+                break;
+            case "Electric": vehicle = "3";
+                break;
+            case "Motorcycle": vehicle = "10";
+                break;
+            case "Bus": form.param("bus_city", Integer.toString(mileage));
+                break;
+            case "Subway": form.param("subway", Integer.toString(mileage));
+                break;
+            case "Train": form.param("train", Integer.toString(mileage));
+                break;
+            default: throw new IllegalArgumentException("Please insert a valid type!");
+        }
+
+        if (!vehicle.equals("")) {
+            form.param("vehicle_type[]", vehicle);
+            form.param("vehicle_mileage[]", Integer.toString(mileage));
+        }
+
+
+        return (int)(carbonFootprintApi(form) * 0.45359237);
+    }
+
+
+    /**
+     * Calculates the carbon footprint for the public transport through an web API.
+     * @param form contains fields for the calculation of the carbon footprint.
+     * @return integer with the carbon footprint.
+     */
+    public int carbonFootprintApi(Form form) {
+        Client client = ClientBuilder.newClient();
+        WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
+
+        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
+                        JSONObject.class);
+
+        int result = resp.getByPath("data.footprint", Integer.class);
+        return result;
+    }
+
+    /**
+     * Converts kilometers to miles.
+     * @param kilometers to be converted to miles.
+     * @return the corresponding amount of miles.
+     */
+    public int kilometersToMiles(int kilometers) {
+        return (int) (kilometers * 0.621371192);
     }
 
     /**
@@ -391,5 +536,9 @@ public class CarbonCalculator {
         }
         return amount * sort * pointsConverter;
     }
+//    public static void main(String[] args) {
+//        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
+//        System.out.println(new CarbonCalculator(2).publicTransportCalculator("Fossil","Subway",2));
+//    }
 
 }
