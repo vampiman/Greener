@@ -332,7 +332,7 @@ public class CompactClient  {
         CompactClient cc = new CompactClient();
 //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.getAllFriends()[1][0]);
+        System.out.println(cc.postSolar(100));
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

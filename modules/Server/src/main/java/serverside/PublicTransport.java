@@ -108,7 +108,7 @@ public class PublicTransport {
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
                 + new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
                 re.getPublicTransportType(),
-                re.getTotal_Distance())
+                re.getTotal_Distance()) * 10
                 + " WHERE Email = '" + email + "'");
 
         st.close();
