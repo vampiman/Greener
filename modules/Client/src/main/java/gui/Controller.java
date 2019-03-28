@@ -1,5 +1,6 @@
 package gui;
 
+import cn.hutool.json.JSONObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -614,22 +615,30 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the code of yor friend");
             return;
-        } else {
-            try {
-                int code = Integer.parseInt(friendCode.getText());
-                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate your friend's code");
-                return;
-            }
         }
+//         else {
+//            try {
+//                int code = Integer.parseInt(friendCode.getText());
+//                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+//            } catch (NumberFormatException e) {
+//                AlertHelper
+//                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+//                                "Please enter a number to indicate your friend's code");
+//                return;
+//            }
+//        }
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/scoreboard.fxml");
+            JSONObject jo = cc.followUser(friendCode.getText());
+            if (jo.get("status").toString().equals("Success")) {
+               AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
+                       "You are now following this person!");
+            } else {
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
+                        jo.get("status").toString());
+            }
         }
         //String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
         //loadFriends(friends);

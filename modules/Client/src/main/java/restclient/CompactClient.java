@@ -1,5 +1,6 @@
 package restclient;
 
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -257,7 +258,7 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
-    public String followUser(String email) {
+    public JSONObject followUser(String email) {
         String auth = formAuthHeader();
         Resource re = new Resource();
 
@@ -266,10 +267,10 @@ public class CompactClient  {
                 .header("Authorization", auth)
                 .post(Entity.json(re));
 
-        return res.readEntity(JSONObject.class).toJSONString(10);
+        return res.readEntity(JSONObject.class);
     }
 
-    public String getAllFriends() {
+    public String[][] getAllFriends() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/friends/list");
@@ -280,7 +281,19 @@ public class CompactClient  {
 
         adjustToken(jo);
 
-        return jo.toJSONString(10);
+        JSONArray j1 = jo.getJSONArray("friends");
+
+        String[][] result = new String[j1.size()][2];
+
+        int i = 0;
+        while(i != j1.size()) {
+            JSONArray arr = j1.getJSONArray(i);
+            result[i][0] = (String)arr.get(0);
+            result[i][1] = (String)arr.get(1);
+            i++;
+        }
+
+        return result;
     }
 
     /**
@@ -317,9 +330,9 @@ public class CompactClient  {
      */
     public static void main(String[] args) throws IOException {
         CompactClient cc = new CompactClient();
-        System.out.println(cc.getPublicTransport());
+//        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.getAllFriends());
+        System.out.println(cc.getAllFriends()[1][0]);
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 
