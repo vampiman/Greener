@@ -257,6 +257,18 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    public String followUser(String email) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/friends/follow?user=" + email)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class).toJSONString(10);
+    }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -293,7 +305,7 @@ public class CompactClient  {
         CompactClient cc = new CompactClient();
 //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.postSolar(10));
+        System.out.println(cc.followUser("lee@yahoo.com"));
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

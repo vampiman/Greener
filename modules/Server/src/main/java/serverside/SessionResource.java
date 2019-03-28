@@ -6,9 +6,18 @@ public class SessionResource {
     String token;
     String email;
     String password;
+    String status;
 
     public SessionResource() {
 
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getEmail() {
