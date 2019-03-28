@@ -42,6 +42,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
+
+    @FXML
+    private ChoiceBox transportType;
+
     @FXML
     private TextField nameField;
 
@@ -106,10 +110,42 @@ public class Controller {
     private GridPane solarPanelGrid;
 
     @FXML
+    private TextField bikeKilometers;
+
+    @FXML
+    private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (transportType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter type of your transportation");
+            return;
+        }  else if (bikeKilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
+        } else {
+            try {
+                Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
+                String typeOfTransport = transportType.getValue().toString();
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a "
+                                        + "double number to indicate number of kilometers you go");
+                return;
+            }
+        }
+        loadPage(event, "fxml/addActivity.fxml");
+    }
+
+    @FXML
     private void loadFriends(ActionEvent event, String[][] friends) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GridPane root = new GridPane();
         ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         final int numCols = 2 ;
         final int numRows = friends.length + 1 ;
@@ -326,7 +362,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "Natalia"}};
+            String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
             loadFriends(event, friends);
         }
     }

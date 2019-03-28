@@ -269,6 +269,20 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    public String getAllFriends() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/friends/list");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo.toJSONString(10);
+    }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -303,9 +317,9 @@ public class CompactClient  {
      */
     public static void main(String[] args) throws IOException {
         CompactClient cc = new CompactClient();
-//        System.out.println(cc.getPublicTransport());
+        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.followUser("lee@yahoo.com"));
+        System.out.println(cc.getAllFriends());
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

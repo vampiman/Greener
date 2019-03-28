@@ -7,9 +7,19 @@ public class SessionResource {
     String email;
     String password;
     String status;
+    String[][] friends;
+
 
     public SessionResource() {
 
+    }
+
+    public String[][] getFriends() {
+        return friends;
+    }
+
+    public void setFriends(String[][] friends) {
+        this.friends = friends;
     }
 
     public String getStatus() {

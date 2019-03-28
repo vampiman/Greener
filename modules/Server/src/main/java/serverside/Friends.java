@@ -1,5 +1,8 @@
 package serverside;
 
+import cn.hutool.db.Session;
+
+import javax.print.attribute.standard.Media;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
@@ -55,9 +58,8 @@ public class Friends {
             return sr;
         }
 
-
-
-        rs = st.executeQuery("SELECT COUNT(User_email) FROM friends WHERE User_email = '" + email + "'" +
+        rs = st.executeQuery("SELECT COUNT(User_email) FROM friends " +
+                "WHERE User_email = '" + email + "'" +
                 " AND Friend_email = '"+ toSearch +"'");
 
         rs.next();
@@ -68,7 +70,8 @@ public class Friends {
         }
 
 
-        st.executeUpdate("INSERT INTO friends(ID, User_email, Friend_email) VALUES ('" + yourId + "', " +
+        st.executeUpdate("INSERT INTO friends(ID, User_email," +
+                " Friend_email) VALUES ('" + yourId + "', " +
                 "'" + email +"', '" + friend + "')");
 
 
@@ -80,5 +83,46 @@ public class Friends {
         return sr;
     }
 
+    @GET
+    @Path("list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public SessionResource getAllFriends(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
+        SessionResource sr = new SessionResource();
+
+        getDbConnection();
+
+        Statement st =  dbConnection.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) FROM friends WHERE User_email = '" + email + "'");
+        rs.next();
+
+
+        String[][] friends = new String[rs.getInt("COUNT(Friend_email)")][2];
+
+        rs = st.executeQuery("SELECT Friend_email FROM friends WHERE User_email = '" + email + "'");
+
+        Statement st2 = dbConnection.createStatement();
+
+        int i = 0;
+        while (rs.next()) {
+            ResultSet rs1 = st2.executeQuery("SELECT Score, Name FROM person " +
+                    "WHERE Email = '" + rs.getString("Friend_email") + "'");
+
+            rs1.next();
+
+            friends[i][0] = rs1.getString("Name");
+            friends[i][1] = rs1.getString("Score");
+
+            i++;
+        }
+
+        sr.setFriends(friends);
+
+        st.close();
+        rs.close();
+
+        return sr;
+    }
 
 }
