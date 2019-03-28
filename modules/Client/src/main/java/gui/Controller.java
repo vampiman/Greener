@@ -363,7 +363,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
+            String[][] friends = cc.getAllFriends();
             loadFriends(event, friends);
         }
     }
