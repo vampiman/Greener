@@ -277,6 +277,11 @@ public class CarbonCalculatorTest {
                 calc.homeHeatConsumptionSaved(integer, type), 0.001);
     }
 
+
+
+
+
+
     /**
      * Tests if the calculations of the saved carbon dioxide of
      * the motorcycle option is correct in relation to the website
@@ -285,11 +290,11 @@ public class CarbonCalculatorTest {
     @Test
     public void publicTransportCalculatorMotorcycle() {
         CarbonCalculator calc = new CarbonCalculator(1);
-        String pt = "IntercityBus" ;
+        String pt = "Subway" ;
         String carType = "Motorcycle";
         //value for comparison are calculated wth help from from the website of the API used.
         Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
-                1228 / 52.177 * 0.45359237, 0.2);
+                255 / 52.177 * 0.45359237, 0.2);
     }
 
     /**
@@ -315,11 +320,11 @@ public class CarbonCalculatorTest {
     @Test
     public void publicTransportCalculatorFossil() {
         CarbonCalculator calc = new CarbonCalculator(1);
-        String pt = "Vanpool" ;
+        String pt = "CityBus" ;
         String carType = "Fossil";
         //value for comparison are calculated wth help from from the website of the API used.
         Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
-                3136 / 52.177 * 0.45359237, 0.2);
+                484 / 52.177 * 0.45359237, 0.2);
     }
 
     /**
@@ -341,7 +346,7 @@ public class CarbonCalculatorTest {
     @Test(expected = IllegalArgumentException.class)
     public void publicTransportCalculatorException2() {
         CarbonCalculator calc = new CarbonCalculator(1);
-        String pt = "Vanpool";
+        String pt = "CityBus";
         String carType = "someString";
         calc.publicTransportCalculator(carType, pt, 161);
     }

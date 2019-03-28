@@ -356,10 +356,8 @@ public class CarbonCalculator {
                 throw new IllegalArgumentException("Please insert a valid car type!");
         }
 
-        if (!vehicle.equals("")) {
-            formCar.param("vehicle_type[]", vehicle);
-            formCar.param("vehicle_mileage[]", Double.toString(distance * 52.177));
-        }
+        formCar.param("vehicle_type[]", vehicle);
+        formCar.param("vehicle_mileage[]", Double.toString(distance * 52.177));
 
         Form formPublicTransport = new Form();
         formPublicTransport.param("household_size", "4");
@@ -368,13 +366,9 @@ public class CarbonCalculator {
         switch (typePublicTransport) {
             case "CityBus": formPublicTransport.param("bus_city", Integer.toString(distance));
                 break;
-            case "IntercityBus": formPublicTransport.param("bus_inter", Integer.toString(distance));
-                break;
             case "Subway": formPublicTransport.param("subway", Integer.toString(distance));
                 break;
             case "Train": formPublicTransport.param("train", Integer.toString(distance));
-                break;
-            case "Vanpool": formPublicTransport.param("vanpool", Integer.toString(distance));
                 break;
             default: throw new IllegalArgumentException(
                         "Please insert a valid public transport type!");
