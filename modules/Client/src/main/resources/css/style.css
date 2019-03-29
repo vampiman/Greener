@@ -1,0 +1,109 @@
+#loginButton{
+	-fx-background-color: #00ffbc;
+}
+
+#loginButton:hover{
+	-fx-background-color: linear-gradient(#00ffbc, #ffffff);
+}
+
+#sign_up_personal{
+	-fx-background-color: #00ffbc;
+}
+
+#sign_up_personal:hover{
+	-fx-background-color: linear-gradient(#00ffbc, grey);
+}
+
+#addActivityButton{
+	-fx-background-color: #000000;
+}
+
+#addActivityButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#signUpButton{
+	-fx-background-color: #000000;
+}
+
+#signUpButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#backButton{
+	-fx-background-color: #000000;
+}
+
+#backButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#addButton{
+	-fx-background-color: #000000;
+}
+
+#addButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#addVeganMealButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addVeganMealButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addSolarPanelButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addSolarPanelButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addPublicTransportButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addPublicTransportButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addBikeButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addBikeButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addLocalProductButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addLocalProductButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addTemperatureButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addTemperatureButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+
