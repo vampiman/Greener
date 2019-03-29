@@ -296,6 +296,61 @@ public class CompactClient  {
         return result;
     }
 
+    public JSONObject getMealPoints() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+    }
+
+    public JSONObject postMeal(int amountOfMeals, String type) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setTotal_Meals(amountOfMeals);
+        re.setMealType(type);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class);
+    }
+
+    public JSONObject getLocalProduce() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/localproduce/get");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+    }
+
+    public JSONObject postLocalProduce(int servings, String type) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setTotal_Produce(servings);
+        re.setMealType(type);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/localproduce/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class);
+    }
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -330,9 +385,9 @@ public class CompactClient  {
      */
     public static void main(String[] args) throws IOException {
         CompactClient cc = new CompactClient();
-//        System.out.println(cc.getPublicTransport());
+        //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.postSolar(100));
+        System.out.println(cc.postLocalProduce(2, "Meat"));
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

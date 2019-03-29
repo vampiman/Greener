@@ -1,9 +1,6 @@
 package serverside;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -70,11 +67,17 @@ public class SessionHandler {
 
         getDbConnection();
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("INSERT INTO person(Email, Password, "
+        Statement st2 = dbConnection.createStatement();
+
+        ResultSet rs2 = st2.executeQuery("SELECT MAX(ID) FROM person");
+        rs2.next();
+        int id = rs2.getInt("MAX(ID)");
+
+        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
                 + "Name, Score, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
                 + "Bike, Solar_panels, Local_produce, "
                 + "Lowering_home_temperature, Public_transport) \n"
-                + "VALUES (\"" + sr.getEmail() + "\", \"" + sr.getPassword()
+                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \"" + sr.getPassword()
                 + "\", \"" + sr.getName()
                 + "\", \"0\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
                 + "\"0\", \"0\", \"0\");");

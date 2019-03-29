@@ -695,6 +695,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
+            System.out.print("That's the one!");
             loadPage(event, "fxml/addActivity.fxml");
         }
     }

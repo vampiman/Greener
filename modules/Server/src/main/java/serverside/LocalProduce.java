@@ -62,14 +62,13 @@ public class LocalProduce {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-
-    public Resource getData(@HeaderParam("Token") String token)
+    public Resource getData(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '"+ email + "'");
 
         rs.next();
         int produce = rs.getInt("Local_produce");
@@ -105,17 +104,17 @@ public class LocalProduce {
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource postData(Resource lp, @HeaderParam("Token") String token)
+    public Resource postData(Resource lp, @HeaderParam("Token") String token,
+                             @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
         passToken(token, lp);
 
-        System.out.println(lp.getTotal_Produce());
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
                 "UPDATE person SET Local_produce = Local_produce + "
-                        + lp.getTotal_Produce() + " WHERE Name = 'Robert'");
+                        + new CarbonCalculator(2).localproduce_Calculator(lp.getTotal_Produce(),lp.getMealType()) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();

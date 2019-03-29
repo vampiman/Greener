@@ -244,7 +244,7 @@ public class CarbonCalculatorTest {
     public void Veganmeal_CalculatorTest1() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(42, (int) calc.veganmeal_Calculator(10, 1));
+        Assert.assertEquals(4, (int) calc.veganmeal_Calculator(10, "Fruit"));
     }
 
     /**
@@ -254,7 +254,7 @@ public class CarbonCalculatorTest {
     public void Veganmeal_CalculatorTest2() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(77, (int) calc.veganmeal_Calculator(1, 2));
+        Assert.assertEquals(7, (int) calc.veganmeal_Calculator(1, "Dairy"));
     }
 
     /**
@@ -264,7 +264,7 @@ public class CarbonCalculatorTest {
     public void Veganmeal_CalculatorTest3() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(20, (int) calc.veganmeal_Calculator(1, 3));
+        Assert.assertEquals(2, (int) calc.veganmeal_Calculator(1, "Vegetables"));
     }
 
     /**
@@ -274,7 +274,7 @@ public class CarbonCalculatorTest {
     public void Veganmeal_CalculatorTest4() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(213, (int) calc.veganmeal_Calculator(1, 4));
+        Assert.assertEquals(21, (int) calc.veganmeal_Calculator(1, "Meat"));
     }
 
     /**
@@ -282,7 +282,7 @@ public class CarbonCalculatorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void Veganmeal_wrongType() {
-        new CarbonCalculator(1).veganmeal_Calculator(100, 0);
+        new CarbonCalculator(1).veganmeal_Calculator(100, "Something else");
     }
 
 
@@ -293,7 +293,7 @@ public class CarbonCalculatorTest {
     public void Localproduce_CalculatorTest1() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(39, (int) calc.localproduce_Calculator(10, 1));
+        Assert.assertEquals(3, (int) calc.localproduce_Calculator(10, "Fruit"));
     }
 
     /**
@@ -303,7 +303,7 @@ public class CarbonCalculatorTest {
     public void Localproduce_CalculatorTest2() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(71, (int) calc.localproduce_Calculator(1, 2));
+        Assert.assertEquals(7, (int) calc.localproduce_Calculator(1, "Dairy"));
     }
 
     /**
@@ -313,7 +313,7 @@ public class CarbonCalculatorTest {
     public void Localproduce_CalculatorTest3() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(18, (int) calc.localproduce_Calculator(1, 3));
+        Assert.assertEquals(1, (int) calc.localproduce_Calculator(1, "Vegetables"));
     }
 
     /**
@@ -323,7 +323,7 @@ public class CarbonCalculatorTest {
     public void Localproduce_CalculatorTest4() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(198, (int) calc.localproduce_Calculator(1, 4));
+        Assert.assertEquals(19, (int) calc.localproduce_Calculator(1, "Meat"));
     }
 
     /**
@@ -331,6 +331,6 @@ public class CarbonCalculatorTest {
      */
     @Test(expected = IllegalArgumentException.class)
     public void Localproduce_wrongType() {
-        new CarbonCalculator(1).localproduce_Calculator(100, 0);
+        new CarbonCalculator(1).localproduce_Calculator(100, "Something else");
     }
 }

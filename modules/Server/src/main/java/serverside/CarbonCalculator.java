@@ -461,80 +461,72 @@ public class CarbonCalculator {
     }
 
     /**
-     * get the CO2 emission of the veganmeal feature.
+     * Get the CO2 emission of the veganmeal feature.
      *
      * @param amount  of meals
      * @param type   of meal
      * @return 10 times the CO2 emission
      */
-    public double veganmeal_Calculator(double amount, int type) {
-        if (type > 4 || type < 1) {
-            throw new IllegalArgumentException("Please insert a valid type of Food!");
-        }
+    public double veganmeal_Calculator(double amount, String type) {
 
-        int pointsConverter = 10;
         double sort = 0;
 
         switch (type) {
-            case 1:
+            case "Fruit":
                 //fruit
                 sort = 0.42;
                 break;
-            case 2:
+            case "Dairy":
                 //dairy
                 sort = 7.7;
                 break;
-            case 3:
+            case "Vegetables":
                 //vegetables
                 sort = 2.0;
                 break;
-            case 4:
+            case "Meat":
                 //meat
                 sort = 21.3;
                 break;
             default:
-                break;
+                throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
-        return amount * sort * pointsConverter;
+        return amount * sort;
     }
 
 
     /**
-     * get the CO2 emission of the localproduce feature.
+     * Get the CO2 emission of the localproduce feature.
      *
      * @param amount  of meals
      * @param type   of meal
      * @return 10 times the CO2 emission
      */
-    public double localproduce_Calculator(double amount, int type) {
-        if (type > 4 || type < 1) {
-            throw new IllegalArgumentException("Please insert a valid type of Food!");
-        }
+    public double localproduce_Calculator(double amount, String type) {
 
-        int pointsConverter = 10;
         double sort = 0;
 
         switch (type) {
-            case 1:
+            case "Fruit":
                 //fruit
                 sort = 0.42 * 0.93;
                 break;
-            case 2:
+            case "Dairy":
                 //dairy
                 sort = 7.7 * 0.93;
                 break;
-            case 3:
+            case "Vegetables":
                 //vegetables
                 sort = 2.0 * 0.93;
                 break;
-            case 4:
+            case "Meat":
                 //meat
                 sort = 21.3 * 0.93;
                 break;
             default:
-                break;
+                throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
-        return amount * sort * pointsConverter;
+        return amount * sort;
     }
 //    public static void main(String[] args) {
 //        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));

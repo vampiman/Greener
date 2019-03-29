@@ -14,11 +14,20 @@ public class Resource {
     int averageHeatConsumption;
     int currentHeatConsumption;
     int savedHeatConsumption;
+    String mealType;
     String energyType;
     String token;
 
     public Resource(){
 
+    }
+
+    public String getMealType() {
+        return mealType;
+    }
+
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
     }
 
     public int getTotal_Meals() {
