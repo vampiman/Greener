@@ -1,0 +1,30 @@
+.imageView {
+    
+}
+
+.imageView:hover {
+    -fx-pref-height: 120;
+    -fx-pref-width: 120;
+    -fx-background-size: 120;
+}
+
+.button {
+    -fx-pref-height: 100;
+    -fx-pref-width: 100;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-background-color: #508991;
+    -fx-border-color:  black;
+}
+
+.label {
+    visibility: false;
+}
+
+.button:hover {
+    -fx-pref-height: 120;
+    -fx-pref-width: 120;
+    -fx-border-radius: 120;
+    -fx-background-radius: 120;
+    -fx-background-size: 120;
+}

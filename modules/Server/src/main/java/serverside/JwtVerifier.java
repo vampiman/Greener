@@ -8,8 +8,10 @@ import io.jsonwebtoken.IncorrectClaimException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MissingClaimException;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -25,13 +27,19 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class JwtVerifier implements ContainerRequestFilter {
 
+    static final Key KEY = Keys.hmacShaKeyFor(
+            "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
+                    .getBytes());
+
+    static final Key KEY_VALIDATE = Keys.hmacShaKeyFor(
+            "THISISEVENHARDERTHISISTHEKEYTHATONLYSERVERUSESITSSUCHAGREATSECRETITWILLBLOWYOURMIND"
+                    .getBytes());
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
     private Connection dbConnection;
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        System.out.println(requestContext.getUriInfo().getPath());
         if (requestContext.getUriInfo().getPath().contains("/")) {
             List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
             if (authHeader != null && authHeader.size() > 0) {
@@ -39,25 +47,17 @@ public class JwtVerifier implements ContainerRequestFilter {
                 authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
                 String email = verifyJwt(authToken);
                 if (email.equals("ERROR")) {
-                    try {
-                        authToken = issueJwt(authToken);
-                        if (authToken.equals("ERROR")) {
-                            JSONObject jo = new JSONObject();
-                            jo.append("Error", "Access Denied");
-                            Response res = Response.status(Response.Status.UNAUTHORIZED)
-                                    .entity(jo).build();
-                            requestContext.abortWith(res);
-                        } else {
-                            System.out.println(authToken + " just the token");
-                            requestContext.getHeaders().add("token", authToken);
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                    authToken = issueJwt(authToken);
+                    if (authToken.equals("ERROR")) {
+                        JSONObject jo = new JSONObject();
+                        jo.append("Error", "Access Denied");
+                        Response res = Response.status(Response.Status.UNAUTHORIZED)
+                                .entity(jo).build();
+                        requestContext.abortWith(res);
+                    } else {
+                        System.out.println(authToken + " just the token");
+                        requestContext.getHeaders().add("token", authToken);
                     }
-                } else {
-                    System.out.println(authToken + email + " token and email");
-                    requestContext.getHeaders().add("token", authToken);
-                    requestContext.getHeaders().add("email", email);
                 }
             }
         }
@@ -71,16 +71,12 @@ public class JwtVerifier implements ContainerRequestFilter {
     public String verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY_VALIDATE)
+                    .setSigningKey(KEY_VALIDATE)
                     .parseClaimsJws(token);
-
-            System.out.println(claims.getBody().getExpiration() + " expiration");
-            System.out.println(Calendar.getInstance() + " calendar");
 
             return claims.getBody().getSubject();
         } catch (SignatureException | IncorrectClaimException
                 | ExpiredJwtException | MissingClaimException se) {
-            System.out.println(se.getClass());
             return "ERROR";
         }
 
@@ -91,47 +87,36 @@ public class JwtVerifier implements ContainerRequestFilter {
      * @param credentials received from the Authorization header
      * @return Object: JWT as an encoded String if credentials are verified, Exception if not
      */
-    public String issueJwt(String credentials) throws SQLException {
+    public String issueJwt(String credentials) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY)
+                    .setSigningKey(KEY)
                     .parseClaimsJws(credentials);
             getDbConnection();
 
             String email = claims.getBody().get("Email").toString();
-            String password = claims.getBody().get("Password").toString();
-
-            System.out.print(email);
-            System.out.println(" here is the email");
-
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery("SELECT Password FROM person WHERE Email = \""
                     + email + "\"");
-
             rs.next();
             String passToCheck = rs.getString("Password");
-            System.out.println(passToCheck + " password");
 
             Jws<Claims> claims2 = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY)
+                    .setSigningKey(KEY)
                     .require("Password", passToCheck)
                     .parseClaimsJws(credentials);
 
-            System.out.println(claims2.toString() + " claims");
-
-
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);
-            System.out.println(today.getTime() + "today");
 
             return Jwts.builder()
                     .setSubject(email)
                     .setExpiration(today.getTime())
-                    .signWith(KeyGen.KEY_VALIDATE)
+                    .signWith(KEY_VALIDATE)
                     .compact();
 
-        } catch (SignatureException | ExpiredJwtException
-                | MissingClaimException | IncorrectClaimException se) {
+        } catch (SignatureException | ExpiredJwtException | MissingClaimException
+                | IncorrectClaimException | SQLException se) {
             return "ERROR";
         }
     }

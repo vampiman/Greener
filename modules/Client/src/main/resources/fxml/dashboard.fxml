@@ -1,101 +1,133 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-   <columnConstraints>
-      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
-   </rowConstraints>
+<GridPane id="dashboardGridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: B4E33D;" stylesheets="@../css/dashboard.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="10.0" prefWidth="301.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="342.0" minWidth="10.0" prefWidth="301.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="299.0" minWidth="10.0" prefWidth="299.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="147.0" minHeight="10.0" prefHeight="147.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="231.0" minHeight="10.0" prefHeight="185.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="201.0" minHeight="10.0" prefHeight="168.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <AnchorPane fx:id="tipsPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="190.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <children>
-            <Label alignment="CENTER" layoutX="125.0" layoutY="3.0" prefHeight="38.0" prefWidth="166.0" style="-fx-background-color: #ebf8ee;" text="TODAY'S TIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font name="Comic Sans MS Bold" size="15.0" />
-               </font>
-            </Label>
-         </children>
+      <Line endX="100.0" startX="-100.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <Line endX="100.0" startX="-100.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <Line endX="-99.20710754394531" endY="167.2928924560547" startX="-100.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <Line endX="98.79289245605469" endY="-168.7965545654297" startX="-100.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <Line endX="105.79851531982422" endY="-162.16734313964844" rotate="-101.3" startX="-100.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+      <Button id="statsDashButton" fx:id="statsDashButton" mnemonicParsing="false" prefHeight="27.0" prefWidth="85.0" stylesheets="@../css/dashboard.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="66.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/stats.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="achievementsDashButton" fx:id="achievementsDashButton" mnemonicParsing="false" stylesheets="@../css/dashboard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="69.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/achievement.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="addActDashButton" fx:id="addActDashButton" mnemonicParsing="false" stylesheets="@../css/dashboard.css" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="70.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/addActivity.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="youDashButton" fx:id="youDashButton" mnemonicParsing="false" stylesheets="@../css/dashboard.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="63.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/human.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="friendsDashButton" fx:id="friendsDashButton" mnemonicParsing="false" stylesheets="@../css/dashboard.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="66.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/group.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button id="addFriendDashButton" fx:id="addFriendDashButton" mnemonicParsing="false" stylesheets="@../css/dashboard.css" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <graphic>
+            <ImageView fitHeight="74.0" fitWidth="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/addFriend.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BASELINE" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/sunny.gif" />
+         </image>
+      </ImageView>
+      <Label id="friendDashLabel" fx:id="friendDashLabel" stylesheets="@../css/dashboard.css" text="Friends" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
-            <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />
+            <Insets top="20.0" />
          </GridPane.margin>
-      </AnchorPane>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00FFBC;" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.rowIndex="1" />
-      <BarChart maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="173.0" prefWidth="229.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <xAxis>
-            <CategoryAxis label="Weeks" side="BOTTOM" />
-         </xAxis>
-         <yAxis>
-            <NumberAxis label="C02 Footprint" side="LEFT" />
-         </yAxis>
-         <GridPane.margin>
-            <Insets bottom="50.0" left="70.0" right="30.0" top="30.0" />
-         </GridPane.margin>
-      </BarChart>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="190.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <children>
-            <Label alignment="CENTER" prefHeight="54.0" prefWidth="239.0" style="-fx-background-color: #ebf8ee;" text="LATEST ACTIVITY" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font name="Comic Sans MS Bold" size="15.0" />
-               </font>
-            </Label>
-         </children>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />
-         </GridPane.margin>
-      </AnchorPane>
-      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="189.0" style="-fx-background-color: #ebf8ee;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <children>
-            <Label alignment="CENTER" prefHeight="46.0" prefWidth="239.0" style="-fx-background-color: #ebf8ee;" text="YOUR SCORE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <font>
-                  <Font name="Comic Sans MS Bold" size="15.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutY="55.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="239.0" style="-fx-background-color: #ebf8ee;" text="2000" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <font>
-                  <Font name="Comic Sans MS Bold Italic" size="24.0" />
-               </font>
-            </Label>
-         </children>
-         <GridPane.margin>
-            <Insets bottom="30.0" left="70.0" right="30.0" top="50.0" />
-         </GridPane.margin>
-      </AnchorPane>
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#loadMenuPage" prefHeight="20.0" prefWidth="62.0" text="BACK" textFill="#00ffbc" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Bold" size="12.0" />
+            <Font name="Futura Medium" size="13.0" />
          </font>
+      </Label>
+      <Label id="youDashLabel" fx:id="youDashLabel" stylesheets="@../css/dashboard.css" text="You" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
-            <Insets left="5.0" top="5.0" />
+            <Insets top="20.0" />
          </GridPane.margin>
-      </Button>
-      <Text fx:id="todaysTip" strokeLineJoin="BEVEL" strokeType="INSIDE" strokeWidth="0.0" text="Switch to renewables" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Italic" size="14.0" />
+            <Font name="Futura Medium" size="13.0" />
          </font>
-      </Text>
+      </Label>
+      <Label fx:id="addActDashLabel" stylesheets="@../css/dashboard.css" text="Add Activity" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Futura Medium" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/dashboard.css" text="Achievements" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Futura Medium" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="statsLabel" stylesheets="@../css/dashboard.css" text="Statistics" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets top="20.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Futura Medium" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="addFriendLabel" stylesheets="@../css/dashboard.css" text="Add Friend" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets bottom="10.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Futura Medium" size="13.0" />
+         </font>
+      </Label>
    </children>
-   <stylesheets>
-      <URL value="@../css/style.css" />
-   </stylesheets>
 </GridPane>
