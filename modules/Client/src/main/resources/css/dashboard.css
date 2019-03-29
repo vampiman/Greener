@@ -22,9 +22,6 @@
 }
 
 .button:hover {
-    -fx-pref-height: 120;
-    -fx-pref-width: 120;
-    -fx-border-radius: 120;
-    -fx-background-radius: 120;
-    -fx-background-size: 120;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
 }

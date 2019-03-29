@@ -152,7 +152,7 @@ public class JwtVerifierTest {
 
     @Test
     public void issueJwtTestSQLException() {
-        Assert.assertEquals("ERROR", jv.issueJwt(incorrectCredentials));
+        Assert.assertEquals("ERROR", jv.issueJwt(incorrectCredentials2));
     }
 
     @Test
