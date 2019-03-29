@@ -10,6 +10,18 @@
     -fx-background-size: 120;
 }
 
+#logoutButton, #exitButton {
+    -fx-pref-height: 40;
+    -fx-pref-width: 80;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+}
+
+#nameLabel {
+    -fx-font-size: 20;
+    visibility: visible;
+}
+
 #greenerLabel {
     -fx-font-size: 45;
     visibility: visible;

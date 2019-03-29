@@ -13,7 +13,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -133,6 +140,9 @@ public class Controller {
     @FXML
     private Label activitiesLabel;
 
+    @FXML
+    private Button logoutButton;
+
 
     @FXML
     private void initialize() throws FileNotFoundException {
@@ -186,12 +196,12 @@ public class Controller {
                     "Please enter a password");
             return;
         }
-        loadPage(event, "fxml/dashboard.fxml");
+        loadPage(event, "fxml/menu.fxml");
     }
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/dashboard.fxml");
+        loadPage(event, "fxml/menu.fxml");
     }
 
     @FXML
@@ -230,10 +240,10 @@ public class Controller {
         loadPage(event, "fxml/loginPage.fxml");
     }
 
-    @FXML
-    public void handleDashboardButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/dashboard.fxml");
-    }
+    //    @FXML
+    //    public void handleDashboardButtonAction(ActionEvent event) throws IOException {
+    //        loadPage(event, "fxml/menu.fxml");
+    //    }
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
@@ -241,21 +251,18 @@ public class Controller {
     }
 
     @FXML
-    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
+    protected void handleAddFriendsButtonAction(ActionEvent event) throws IOException {
         loadPage(event, "fxml/addFriends.fxml");
+    }
+
+    @FXML
+    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
+        loadPage(event, "fxml/scoreboard.fxml");
     }
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
         loadPage(event, "fxml/achievements.fxml");
-    }
-
-    @FXML
-    protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-        String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"},
-                              {"Mayasa", "2500"}, {"Irem", "1500"},
-                              {"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
-        loadFriends(event, friends);
     }
 
     @FXML
@@ -500,7 +507,7 @@ public class Controller {
                 button.setOnAction(value ->  {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
-                                .getResource("fxml/dashboard.fxml"));
+                                .getResource("fxml/menu.fxml"));
                         Scene addPageScene = new Scene(addPageParent);
                         stage.setScene(addPageScene);
                         stage.show();
