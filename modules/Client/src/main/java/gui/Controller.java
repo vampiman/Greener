@@ -68,7 +68,7 @@ public class Controller {
     private Button addButton;
 
     @FXML
-    private TextField mealPortion;
+    private ChoiceBox mealTypes;
 
     @FXML
     private TextField beforeTemperature;
@@ -123,6 +123,9 @@ public class Controller {
 
     @FXML
     private Label message;
+
+    @FXML
+    private TextField amountVegetarianMeal;
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -716,15 +719,15 @@ public class Controller {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (mealPortion.getText().isEmpty()) {
+        if (mealTypes.getValue().toString().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter how much vegan meal you had");
             return;
         } else {
             try {
-                int portions = Integer.parseInt(mealPortion.getText());
-                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+                String type = mealTypes.getValue().toString();
+                double portions = Double.parseDouble(amountVegetarianMeal.getText());
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",

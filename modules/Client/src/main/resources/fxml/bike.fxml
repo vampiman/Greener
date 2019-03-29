@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
@@ -46,11 +46,7 @@
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="1">
                <children>
-                  <Text layoutX="-144.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subway and tram are considered the same !!" wrappingWidth="288.0000002682209">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Text>
+                  <Label layoutX="14.0" layoutY="107.0" text="(Subway = Tram)" />
                </children></Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.rowIndex="1" />
@@ -70,15 +66,15 @@
                   <Insets bottom="30.0" right="30.0" />
                </GridPane.margin>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Which type of transportation do you use?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Which type of transportation did you substitute?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Comic Sans MS" size="14.0" />
                </font>
                <GridPane.margin>
                   <Insets left="70.0" />
                </GridPane.margin>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How many kms you go by bike?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How many kilometers did you go by bike?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
                   <Font name="Comic Sans MS" size="14.0" />
                </font>
