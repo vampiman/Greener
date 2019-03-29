@@ -74,12 +74,12 @@ public class SessionHandler {
         int id = rs2.getInt("MAX(ID)");
 
         st.executeUpdate("INSERT INTO person(ID, Email, Password, "
-                + "Name, Score, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
+                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
                 + "Bike, Solar_panels, Local_produce, "
                 + "Lowering_home_temperature, Public_transport) \n"
                 + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \"" + sr.getPassword()
                 + "\", \"" + sr.getName()
-                + "\", \"0\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
+                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
                 + "\"0\", \"0\", \"0\");");
 
         st.close();

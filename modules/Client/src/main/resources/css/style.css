@@ -1,17 +1,17 @@
 #loginButton{
-	-fx-background-color: #00ffbc;
+	-fx-background-color: #91cb3e;
 }
 
 #loginButton:hover{
-	-fx-background-color: linear-gradient(#00ffbc, #ffffff);
+	-fx-background-color: linear-gradient( #91cb3e, #ffffff);
 }
 
 #sign_up_personal{
-	-fx-background-color: #00ffbc;
+	-fx-background-color:  #91cb3e;
 }
 
 #sign_up_personal:hover{
-	-fx-background-color: linear-gradient(#00ffbc, grey);
+	-fx-background-color: linear-gradient( #91cb3e, grey);
 }
 
 #addActivityButton{
@@ -104,6 +104,30 @@
 #addTemperatureButton:hover{
 	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
 	-fx-background-radius: 30px;
+}
+
+#signupName {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#email {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#rePassword {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#password {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
 }
 
 

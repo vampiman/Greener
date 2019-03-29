@@ -1,6 +1,11 @@
 package gui;
 
 import cn.hutool.json.JSONObject;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,25 +17,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 
 import javafx.scene.image.ImageView;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import restclient.CompactClient;
 import restclient.User;
 
@@ -43,9 +42,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
-
-    @FXML
-    private ChoiceBox transportType;
 
     @FXML
     private TextField nameField;
@@ -81,9 +77,6 @@ public class Controller {
     private TextField afterTemperature;
 
     @FXML
-    private ChoiceBox energyType;
-
-    @FXML
     private TextField electricityAmount;
 
     @FXML
@@ -102,16 +95,34 @@ public class Controller {
     private TextField friendCode;
 
     @FXML
-    private TextArea activities;
+    private ChoiceBox energyType;
 
     @FXML
-    private GridPane scorePane;
+    private GridPane achievementsGrid;
 
     @FXML
-    private GridPane solarPanelGrid;
+    private PieChart pieChart;
 
     @FXML
     private TextField bikeKilometers;
+
+    @FXML
+    private ChoiceBox transportType;
+
+    @FXML
+    private VBox vbox;
+
+    @FXML
+    private Parent fxml;
+
+    @FXML
+    private AnchorPane root;
+
+    @FXML
+    private Button signupButton;
+
+    @FXML
+    private Label message;
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -223,9 +234,6 @@ public class Controller {
 
     @FXML
     private void initialize() throws IOException {
-        if(solarPanelGrid!=null) {
-            electricityAmount.setFocusTraversable(false);
-        }
 
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -239,15 +247,130 @@ public class Controller {
             todaysTip.setText(text);
         }
 
-        if (activities != null) {
-            String text = "You had 0 vegan meals" + "\n"
-                    + "You biked 0 kilometers\n"
-                    + "You decreased 0% of your electricity consumption\n"
-                    + "You bought 0 local product\n"
-                    + "You travelled 0 kilometers by public transport\n"
-                    + "You decreased your home's temperature 0 °C";
-            activities.setText(text);
+        if (achievementsGrid != null) {
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Vegan Meal", 100),
+                            new PieChart.Data("Public Transport", 200),
+                            new PieChart.Data("Home Temperature", 50),
+                            new PieChart.Data("Bike", 75),
+                            new PieChart.Data("Local Product", 110),
+                            new PieChart.Data("Solar Panel", 300)
+                    );
+            pieChart.setTitle("SCORE DISTRIBUTION");
+            pieChart.setMaxSize(1000, 1000);
+            pieChart.setData(pieChartData);
         }
+    }
+
+//    @FXML
+//    private void loadMenuPageLogin(ActionEvent event) throws IOException {
+//        Window owner = loginButton.getScene().getWindow();
+//        if (nameField.getText().isEmpty()) {
+//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+//                    "Please enter your username");
+//            return;
+//        }
+//        if (passwordField.getText().isEmpty()) {
+//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+//                    "Please enter a password");
+//            return;
+//        }
+//
+//        User user = new User(nameField.getText(), passwordField.getText());
+//        boolean authenticated = false;
+//        authenticated = user.login(null);
+//        String token = user.getToken();
+//
+//        if (authenticated) {
+//            PrintWriter pw = new PrintWriter("test.txt", "UTF-8");
+//            pw.println(token);
+//            pw.close();
+//
+//            loadPage(event, "fxml/menu.fxml");
+//        } else {
+//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
+//                    "Please enter credentials again.");
+//        }
+//    }
+
+    @FXML
+    private void loadMenuPage(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/menu.fxml");
+        }
+    }
+
+    @FXML
+    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
+        Window owner = signupName.getScene().getWindow();
+        if (signupName.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your username");
+            return;
+        }
+        if (email.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your email address");
+            return;
+        }
+        if (password.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your password");
+            return;
+        }
+        if (rePassword.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please retype your password");
+            return;
+        }
+        if (!password.getText().equals(rePassword.getText())) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter the same password for password fields");
+            return;
+        }
+
+        User user = new User(email.getText(), password.getText());
+        try {
+            user.register(signupName.getText(), email.getText(), password.getText());
+        } catch (IllegalArgumentException e) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    e.getMessage());
+            return;
+        }
+
+        handleLogoutButtonAction(event);
+    }
+
+    @FXML
+    private void loadSigninPage(ActionEvent event) throws IOException {
+        fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/signin.fxml"));
+        vbox.getChildren().removeAll();
+        vbox.getChildren().setAll(fxml);
+
+        final Timeline timeline = new Timeline();
+        timeline.setAutoReverse(true);
+        final KeyValue kv = new KeyValue(vbox.translateXProperty(), 0);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
+
+    @FXML
+    private void loadSignupPage(ActionEvent event) throws IOException {
+        fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/signup.fxml"));
+        vbox.getChildren().removeAll();
+        vbox.getChildren().setAll(fxml);
+
+        final Timeline timeline = new Timeline();
+        timeline.setAutoReverse(true);
+        final KeyValue kv = new KeyValue(vbox.translateXProperty(), -520);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
 
     @FXML
@@ -279,21 +402,7 @@ public class Controller {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
                     "Please enter credentials again.");
         }
-    }
 
-    @FXML
-    private void loadMenuPage(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
-            loadPage(event, "fxml/loginPage.fxml");
-        } else {
-            loadPage(event, "fxml/menu.fxml");
-        }
-    }
-
-    @FXML
-    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/signup.fxml");
     }
 
     @FXML
@@ -408,7 +517,15 @@ public class Controller {
 
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/loginPage.fxml");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/mainLogin.fxml"));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
     @FXML
@@ -419,6 +536,9 @@ public class Controller {
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appStage.setScene(addPageScene);
         appStage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        appStage.setX((primScreenBounds.getWidth() - appStage.getWidth()) / 2);
+        appStage.setY((primScreenBounds.getHeight() - appStage.getHeight()) / 2);
     }
 
     @FXML

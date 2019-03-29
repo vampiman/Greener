@@ -28,6 +28,24 @@ public class Friends {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+    @GET
+    @Path("co2")
+    public Resource totalSaved(@HeaderParam("Email") String email) throws SQLException, ClassNotFoundException {
+        Resource re = new Resource();
+
+        getDbConnection();
+
+        Statement st = dbConnection.createStatement();
+
+        ResultSet rs = st.executeQuery("SELECT CO_2_saved FROM person WHERE Email = '" + email + "'");
+        rs.next();
+        Double saved = rs.getDouble("CO_2_saved");
+
+        re.setCo2Saved(saved.intValue());
+
+        return re;
+    }
+
     @POST
     @Path("follow")
     @Produces(MediaType.APPLICATION_JSON)
@@ -106,13 +124,13 @@ public class Friends {
 
         int i = 0;
         while (rs.next()) {
-            ResultSet rs1 = st2.executeQuery("SELECT Score, Name FROM person " +
+            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person " +
                     "WHERE Email = '" + rs.getString("Friend_email") + "'");
 
             rs1.next();
 
             friends[i][0] = rs1.getString("Name");
-            friends[i][1] = rs1.getString("Score");
+            friends[i][1] = rs1.getString("CO_2_saved");
 
             i++;
         }

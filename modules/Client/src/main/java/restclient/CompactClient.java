@@ -352,6 +352,7 @@ public class CompactClient  {
 
         return res.readEntity(JSONObject.class);
     }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed

@@ -25,7 +25,7 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
    </rowConstraints>
    <children>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <AnchorPane fx:id="tipsPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="155.0" prefWidth="190.0" style="-fx-background-color: #ebf8ee;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <children>
             <Label alignment="CENTER" layoutX="125.0" layoutY="3.0" prefHeight="38.0" prefWidth="166.0" style="-fx-background-color: #ebf8ee;" text="TODAY'S TIP" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -38,9 +38,9 @@
             <Insets bottom="30.0" left="50.0" right="50.0" top="50.0" />
          </GridPane.margin>
       </AnchorPane>
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00FFBC;" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.columnIndex="1" />
-      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #00ffbc;" GridPane.rowIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="1" />
+      <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.rowIndex="1" />
       <BarChart maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="173.0" prefWidth="229.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <xAxis>
             <CategoryAxis label="Weeks" side="BOTTOM" />

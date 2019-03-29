@@ -5,6 +5,7 @@ public class Resource {
     Double total;
     int distance;
     int percentage;
+    int co2Saved;
     Double produce;
     int kwh;
     int savedSolar;
@@ -21,6 +22,14 @@ public class Resource {
 
     public Resource(){
 
+    }
+
+    public int getCo2Saved() {
+        return co2Saved;
+    }
+
+    public void setCo2Saved(int co2Saved) {
+        this.co2Saved = co2Saved;
     }
 
     public String getMealType() {
