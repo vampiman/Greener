@@ -136,7 +136,7 @@ public class CompactClient  {
                 .header("Authorization", auth)
                 .post(Entity.json(re));
 
-        return res.readEntity(JSONObject.class).toJSONString(10);
+        return res.readEntity(JSONObject.class).toString();
     }
 
 
@@ -145,7 +145,7 @@ public class CompactClient  {
      * @return Whether it is stored or not as a boolean
      * @throws IOException Error can occur while reading the file
      */
-    public JSONObject getHeatConsumption() {
+    public int getHeatConsumption() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/get");
@@ -156,7 +156,7 @@ public class CompactClient  {
 
         adjustToken(jo);
 
-        return jo;
+        return (int)jo.get("savedHeatConsumption");
 
     }
 
@@ -231,7 +231,7 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
-    public String getSolar() {
+    public int getSolar() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/solarpanels/percentage");
@@ -242,7 +242,7 @@ public class CompactClient  {
 
         adjustToken(jo);
 
-        return jo.toJSONString(10);
+        return (int)jo.get("savedSolar");
     }
 
     public String postSolar(int kwhProduced) {
@@ -296,6 +296,62 @@ public class CompactClient  {
         return result;
     }
 
+    public Double getMealCarbon() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return (Double)jo.get("total_Meals");
+    }
+
+    public JSONObject postMeal(Double amountOfMeals, String insteadOf, String iHad) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setTotal_Meals(amountOfMeals);
+        re.setMealType(insteadOf);
+        re.setMealType2(iHad);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class);
+    }
+
+    public Double getLocalProduce() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/localproduce/get");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return (Double)jo.getDouble("total_Produce");
+    }
+
+    public JSONObject postLocalProduce(Double kilograms, String type) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setTotal_Produce(kilograms);
+        re.setMealType(type);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/localproduce/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class);
+    }
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -330,9 +386,9 @@ public class CompactClient  {
      */
     public static void main(String[] args) throws IOException {
         CompactClient cc = new CompactClient();
-//        System.out.println(cc.getPublicTransport());
+        //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.postSolar(100));
+        System.out.println(cc.getHeatConsumption());
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

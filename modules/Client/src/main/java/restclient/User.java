@@ -11,6 +11,8 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class User {
 
@@ -77,11 +79,22 @@ public class User {
      * @param password password (not hashed yet)
      * @return valid token
      */
-    public String register(String name, String email, String password) {
+    public String register(String name, String email, String password) throws IllegalArgumentException {
         String hashedPassword = DigestUtils.sha256Hex(password);
 
         SessionResource resource = new SessionResource();
         resource.setName(name);
+
+        //EMAIL VALIDATION
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(email);
+
+        if(!matcher.matches()) {
+            throw new IllegalArgumentException("Please insert a proper email adress!");
+        }
+
         resource.setEmail(email);
         resource.setPassword(hashedPassword);
 
@@ -124,10 +137,10 @@ public class User {
         }
     }
 
-    //    public static void main(String[] args) {
+    //        public static void main(String[] args) {
     //
-    //        User user = new User("irem@yahoo.com", "1234");
-    //        System.out.println(user.register("Irem", "irem@yahoo.com", "1234"));
-    //        //user.login();
-    //    }
+    //            User user = new User("irem@yahoo.com", "1234");
+    //            System.out.println(user.register("Irem", "irem@sass.com", "1234"));
+    //            //user.login();
+    //        }
 }

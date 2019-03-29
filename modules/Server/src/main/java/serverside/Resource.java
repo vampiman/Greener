@@ -2,10 +2,10 @@ package serverside;
 
 public class Resource {
 
-    int total;
+    Double total;
     int distance;
     int percentage;
-    int produce;
+    Double produce;
     int kwh;
     int savedSolar;
     String publicTransportType;
@@ -14,6 +14,8 @@ public class Resource {
     int averageHeatConsumption;
     int currentHeatConsumption;
     int savedHeatConsumption;
+    String mealType;
+    String mealType2;
     String energyType;
     String token;
 
@@ -21,11 +23,19 @@ public class Resource {
 
     }
 
-    public int getTotal_Meals() {
+    public String getMealType() {
+        return mealType;
+    }
+
+    public void setMealType(String mealType) {
+        this.mealType = mealType;
+    }
+
+    public Double getTotal_Meals() {
         return total;
     }
 
-    public void setTotal_Meals(int total) {
+    public void setTotal_Meals(Double total) {
         this.total = total;
     }
 
@@ -45,11 +55,11 @@ public class Resource {
         this.percentage = percentage;
     }
 
-    public int getTotal_Produce() {
+    public Double getTotal_Produce() {
         return produce;
     }
 
-    public void setTotal_Produce(int produce) {
+    public void setTotal_Produce(Double produce) {
         this.produce = produce;
     }
 
@@ -132,6 +142,15 @@ public class Resource {
 
     public void setSavedSolar(int savedSolar) {
         this.savedSolar = savedSolar;
+    }
+
+
+    public String getMealType2() {
+        return mealType2;
+    }
+
+    public void setMealType2(String mealType2) {
+        this.mealType2 = mealType2;
     }
 
 }

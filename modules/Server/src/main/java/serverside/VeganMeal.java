@@ -58,22 +58,30 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource re, @HeaderParam("Token") String token,
-                       @HeaderParam("Email") String email)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postIt(Resource re, @HeaderParam("Token") String token,
+                           @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
         passToken(token, re);
 
+        CarbonCalculator cc = new CarbonCalculator(2);
+
+        Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
+
+        Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+
+
         System.out.println(re.getTotal_Meals());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + re.getTotal_Meals() + " WHERE Name = 'Robert'");
+                + (insteadOf - iHad) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
 
-
+        return re;
     }
 
 
@@ -92,10 +100,10 @@ public class VeganMeal {
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Email = '" + email +"'");
 
         rs.next();
-        int total = rs.getInt("Vegan_meal");
+        Double total = rs.getDouble("Vegan_meal");
 
         Resource re = new Resource();
         passToken(token, re);

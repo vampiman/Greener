@@ -73,7 +73,7 @@ public class Bike {
         System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Bike = Bike + "
-                + (int)(new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance()) * 10) + " WHERE Email = '" + email + "'");
+                + (int)(new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance())) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();

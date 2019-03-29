@@ -55,10 +55,10 @@
             <ChoiceBox fx:id="productCatagory" prefHeight="26.0" prefWidth="126.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <items>
                   <FXCollections fx:factory="observableArrayList">
-                     <String fx:value="Bus" />
-                     <String fx:value="Tram" />
-                     <String fx:value="Train" />
-                     <String fx:value="Subway" />
+                     <String fx:value="Meat" />
+                     <String fx:value="Dairy" />
+                     <String fx:value="Fruit" />
+                     <String fx:value="Vegetables" />
                   </FXCollections>
                </items>
                <GridPane.margin>

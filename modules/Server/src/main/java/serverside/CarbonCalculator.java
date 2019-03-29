@@ -460,6 +460,80 @@ public class CarbonCalculator {
         return (int) (kilometers * 0.621371192);
     }
 
+    /**
+     * Get the CO2 emission of the veganmeal feature.
+     *
+     * @param amount Kilograms of meal type
+     * @param type Meal type
+     * @return 10 times the CO2 emission
+     */
+    public double veganmeal_Calculator(double amount, String type) {
+
+        double sort = 0;
+
+        switch (type) {
+            case "Fruit":
+                //fruit
+                sort = 1.1;
+                break;
+            case "Dairy":
+                //dairy
+                sort = 7.7;
+                break;
+            case "Vegetables":
+                //vegetables
+                sort = 2.0;
+                break;
+            case "Meat":
+                //meat
+                sort = 21.3;
+                break;
+            case "Eggs":
+                sort = 4.8;
+                break;
+            default:
+                throw new IllegalArgumentException("Please insert a valid type of Food!");
+        }
+        return amount * sort;
+    }
+
+
+    /**
+     * Get the CO2 emission of the localproduce feature.
+     *
+     * @param amount  of meals
+     * @param type   of meal
+     * @return 10 times the CO2 emission
+     */
+    public double localproduce_Calculator(double amount, String type) {
+
+        double sort = 0;
+
+        switch (type) {
+            case "Fruit":
+                //fruit
+                sort = 1.1 * 0.07;
+                break;
+            case "Dairy":
+                //dairy
+                sort = 7.7 * 0.07;
+                break;
+            case "Vegetables":
+                //vegetables
+                sort = 2.0 * 0.07;
+                break;
+            case "Meat":
+                //meat
+                sort = 21.3 * 0.07;
+                break;
+            case "Eggs":
+                sort = 4.8 * 0.07;
+                break;
+            default:
+                throw new IllegalArgumentException("Please insert a valid type of Food!");
+        }
+        return amount * sort;
+    }
 //    public static void main(String[] args) {
 //        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
 //        System.out.println(new CarbonCalculator(2).publicTransportCalculator("Fossil","Subway",2));
