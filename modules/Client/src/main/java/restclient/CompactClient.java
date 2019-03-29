@@ -168,7 +168,7 @@ public class CompactClient  {
      * @return JSON object
      */
     public String postPublicTransport(String typeCar,
-                                      String typePublicTransport, int distance) {
+                                      String typePublicTransport, double distance) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setCarType(typeCar);
@@ -217,7 +217,7 @@ public class CompactClient  {
         return jo.toJSONString(10);
     }
 
-    public String postBiker(String vehicleType, int distance) {
+    public String postBiker(String vehicleType, double distance) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setCarType(vehicleType);

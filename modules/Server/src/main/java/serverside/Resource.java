@@ -3,7 +3,7 @@ package serverside;
 public class Resource {
 
     Double total;
-    int distance;
+    Double distance;
     int percentage;
     int co2Saved;
     Double produce;
@@ -11,6 +11,8 @@ public class Resource {
     int savedSolar;
     String publicTransportType;
     String carType;
+    int bikeSaved;
+    int localSaved;
     int savedPublicTransport;
     int averageHeatConsumption;
     int currentHeatConsumption;
@@ -22,6 +24,23 @@ public class Resource {
 
     public Resource(){
 
+    }
+
+
+    public int getLocalSaved() {
+        return localSaved;
+    }
+
+    public void setLocalSaved(int localSaved) {
+        this.localSaved = localSaved;
+    }
+
+    public int getBikeSaved() {
+        return bikeSaved;
+    }
+
+    public void setBikeSaved(int bikeSaved) {
+        this.bikeSaved = bikeSaved;
     }
 
     public int getCo2Saved() {
@@ -48,11 +67,11 @@ public class Resource {
         this.total = total;
     }
 
-    public int getTotal_Distance() {
+    public Double getTotal_Distance() {
         return distance;
     }
 
-    public void setTotal_Distance(int distance) {
+    public void setTotal_Distance(Double distance) {
         this.distance = distance;
     }
 

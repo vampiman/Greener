@@ -346,7 +346,7 @@ public class CarbonCalculator {
      *         of public transport instead of using the specified type of car.
      */
     public double publicTransportCalculator(String typeCar,
-                                            String typePublicTransport, int distance) {
+                                            String typePublicTransport, double distance) {
 
         distance = kilometersToMiles(distance);
 
@@ -374,13 +374,13 @@ public class CarbonCalculator {
         formPublicTransport.param("home_type", "3");
 
         switch (typePublicTransport) {
-            case "CityBus": formPublicTransport.param("bus_city", Integer.toString(distance));
+            case "CityBus": formPublicTransport.param("bus_city", Double.toString(distance));
                 break;
-            case "IntercityBus": formPublicTransport.param("bus_inter", Integer.toString(distance));
+            case "IntercityBus": formPublicTransport.param("bus_inter", Double.toString(distance));
                 break;
-            case "Subway": formPublicTransport.param("subway", Integer.toString(distance));
+            case "Subway": formPublicTransport.param("subway", Double.toString(distance));
                 break;
-            case "Train": formPublicTransport.param("train", Integer.toString(distance));
+            case "Train": formPublicTransport.param("train", Double.toString(distance));
                 break;
             default: throw new IllegalArgumentException(
                     "Please insert a valid public transport type!");
@@ -395,7 +395,7 @@ public class CarbonCalculator {
         return savedInKilogram;
     }
 
-    public int bike(String type, int mileage) {
+    public double bike(String type, double mileage) {
         mileage = kilometersToMiles(mileage);
 
         String vehicle = "";
@@ -415,22 +415,23 @@ public class CarbonCalculator {
                 break;
             case "Motorcycle": vehicle = "10";
                 break;
-            case "Bus": form.param("bus_city", Integer.toString(mileage));
+            case "Bus": form.param("bus_city", Double.toString(mileage));
                 break;
-            case "Subway": form.param("subway", Integer.toString(mileage));
+            case "Subway": form.param("subway", Double.toString(mileage));
                 break;
-            case "Train": form.param("train", Integer.toString(mileage));
+            case "Train": form.param("train", Double.toString(mileage));
                 break;
             default: throw new IllegalArgumentException("Please insert a valid type!");
         }
 
         if (!vehicle.equals("")) {
             form.param("vehicle_type[]", vehicle);
-            form.param("vehicle_mileage[]", Integer.toString(mileage));
+            form.param("vehicle_mileage[]", Double.toString(mileage));
+            return carbonFootprintApi(form) * 0.45359237;
         }
 
+        return ((carbonFootprintApi(form)/52) * 0.45359237);
 
-        return (int)(carbonFootprintApi(form) * 0.45359237);
     }
 
 
@@ -456,8 +457,8 @@ public class CarbonCalculator {
      * @param kilometers to be converted to miles.
      * @return the corresponding amount of miles.
      */
-    public int kilometersToMiles(int kilometers) {
-        return (int) (kilometers * 0.621371192);
+    public double kilometersToMiles(double kilometers) {
+        return  (kilometers * 0.621371192);
     }
 
     /**

@@ -28,23 +28,7 @@ public class Friends {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
-    @GET
-    @Path("co2")
-    public Resource totalSaved(@HeaderParam("Email") String email) throws SQLException, ClassNotFoundException {
-        Resource re = new Resource();
 
-        getDbConnection();
-
-        Statement st = dbConnection.createStatement();
-
-        ResultSet rs = st.executeQuery("SELECT CO_2_saved FROM person WHERE Email = '" + email + "'");
-        rs.next();
-        Double saved = rs.getDouble("CO_2_saved");
-
-        re.setCo2Saved(saved.intValue());
-
-        return re;
-    }
 
     @POST
     @Path("follow")
