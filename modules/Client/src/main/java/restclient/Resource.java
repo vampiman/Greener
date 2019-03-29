@@ -6,6 +6,8 @@ public class Resource {
     int distance;
     int percentage;
     int produce;
+    int kwh;
+    int savedSolar;
     String publicTransportType;
     String carType;
     int savedPublicTransport;
@@ -115,6 +117,22 @@ public class Resource {
         this.savedHeatConsumption = savedHeatConsumption;
     }
 
-}
 
+    public int getKwh() {
+        return kwh;
+    }
+
+    public void setKwh(int kwh) {
+        this.kwh = kwh;
+    }
+
+    public int getSavedSolar() {
+        return savedSolar;
+    }
+
+    public void setSavedSolar(int savedSolar) {
+        this.savedSolar = savedSolar;
+    }
+
+}
 

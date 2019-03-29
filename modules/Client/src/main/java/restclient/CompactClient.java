@@ -1,5 +1,6 @@
 package restclient;
 
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -43,7 +44,7 @@ public class CompactClient  {
 
     /**
      * Method forms the 'Authorization' header content.
-     * @return the 'Authorization' header content
+     * @return The 'Authorization' header content
      */
     public String formAuthHeader() {
         //HASH CREDENTIALS
@@ -96,7 +97,7 @@ public class CompactClient  {
      * The method creates a client and a POST request
      * for upload of the entered data to the server as JSON.
      *
-     * @return the JSON object from server response (the one which was posted)
+     * @return JSON object from server response (the one which was posted)
      */
     public JSONObject postActivityInfo(String uri) {
         String auth = formAuthHeader();
@@ -202,6 +203,99 @@ public class CompactClient  {
 
     }
 
+    public String getBiker() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/bike/distance");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo.toJSONString(10);
+    }
+
+    public String postBiker(String vehicleType, int distance) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setCarType(vehicleType);
+        re.setTotal_Distance(distance);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/bike/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class).toJSONString(10);
+    }
+
+    public String getSolar() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/solarpanels/percentage");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo.toJSONString(10);
+    }
+
+    public String postSolar(int kwhProduced) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+        re.setKwh(kwhProduced);
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/solarpanels/post")
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class).toJSONString(10);
+    }
+
+    public JSONObject followUser(String email) {
+        String auth = formAuthHeader();
+        Resource re = new Resource();
+
+        Response res = client.target("http://localhost:8080/serverside/webapi/friends/follow?user=" + email)
+                .request(MediaType.APPLICATION_JSON)
+                .header("Authorization", auth)
+                .post(Entity.json(re));
+
+        return res.readEntity(JSONObject.class);
+    }
+
+    public String[][] getAllFriends() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/friends/list");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        JSONArray j1 = jo.getJSONArray("friends");
+
+        String[][] result = new String[j1.size()][2];
+
+        int i = 0;
+        while(i != j1.size()) {
+            JSONArray arr = j1.getJSONArray(i);
+            result[i][0] = (String)arr.get(0);
+            result[i][1] = (String)arr.get(1);
+            i++;
+        }
+
+        return result;
+    }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -236,8 +330,9 @@ public class CompactClient  {
      */
     public static void main(String[] args) throws IOException {
         CompactClient cc = new CompactClient();
-        System.out.println(cc.getPublicTransport());
+//        System.out.println(cc.getPublicTransport());
 
+        System.out.println(cc.postSolar(100));
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

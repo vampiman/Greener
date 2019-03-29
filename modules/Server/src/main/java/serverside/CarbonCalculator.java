@@ -282,6 +282,16 @@ public class CarbonCalculator {
         return pounds * 0.45359237;
     }
 
+
+    public double solarPanel(double kwhSaved) {
+
+        //Europe' average kgs per kwh of electricity
+        double electricityFactor = 0.51;
+
+        return 0.51 * kwhSaved;
+
+    }
+
     /**
      *  Converter for the home heat consumption. Coverts the kWh
      *  into CO2 for electric boilers.
@@ -347,14 +357,8 @@ public class CarbonCalculator {
         formCar.param("home_type", "3");
 
         switch (typeCar) {
-            case "Hybrid":
-                vehicle = "1";
-                break;
             case "Fossil":
                 vehicle = "5";
-                break;
-            case "Motorcycle":
-                vehicle = "10";
                 break;
             default:
                 throw new IllegalArgumentException("Please insert a valid car type!");
@@ -362,7 +366,7 @@ public class CarbonCalculator {
 
         if (!vehicle.equals("")) {
             formCar.param("vehicle_type[]", vehicle);
-            formCar.param("vehicle_mileage[]", Double.toString(distance * 52.177));
+            formCar.param("vehicle_mileage[]", Double.toString(distance));
         }
 
         Form formPublicTransport = new Form();
@@ -378,27 +382,64 @@ public class CarbonCalculator {
                 break;
             case "Train": formPublicTransport.param("train", Integer.toString(distance));
                 break;
-            case "Vanpool": formPublicTransport.param("vanpool", Integer.toString(distance));
-                break;
             default: throw new IllegalArgumentException(
                     "Please insert a valid public transport type!");
         }
 
         int carbonCar = carbonFootprintApi(formCar);
-        int carbonPublicTransport = carbonFootprintApi(formPublicTransport);
+        int carbonPublicTransport = (int)(carbonFootprintApi(formPublicTransport) / 52.177);
 
-        double savedInLbs = (carbonCar - carbonPublicTransport) / 52.177;
+        double savedInLbs = carbonCar - carbonPublicTransport;
 
         double savedInKilogram = savedInLbs * 0.45359237;
         return savedInKilogram;
     }
+
+    public int bike(String type, int mileage) {
+        mileage = kilometersToMiles(mileage);
+
+        String vehicle = "";
+
+        String transport = "";
+
+        Form form = new Form();
+        form.param("household_size", "4");
+        form.param("home_type", "3");
+
+        switch (type) {
+            case "Hybrid": vehicle = "1";
+                break;
+            case "Fossil": vehicle = "5";
+                break;
+            case "Electric": vehicle = "3";
+                break;
+            case "Motorcycle": vehicle = "10";
+                break;
+            case "Bus": form.param("bus_city", Integer.toString(mileage));
+                break;
+            case "Subway": form.param("subway", Integer.toString(mileage));
+                break;
+            case "Train": form.param("train", Integer.toString(mileage));
+                break;
+            default: throw new IllegalArgumentException("Please insert a valid type!");
+        }
+
+        if (!vehicle.equals("")) {
+            form.param("vehicle_type[]", vehicle);
+            form.param("vehicle_mileage[]", Integer.toString(mileage));
+        }
+
+
+        return (int)(carbonFootprintApi(form) * 0.45359237);
+    }
+
 
     /**
      * Calculates the carbon footprint for the public transport through an web API.
      * @param form contains fields for the calculation of the carbon footprint.
      * @return integer with the carbon footprint.
      */
-    public static int carbonFootprintApi(Form form) {
+    public int carbonFootprintApi(Form form) {
         Client client = ClientBuilder.newClient();
         WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
 
@@ -419,5 +460,9 @@ public class CarbonCalculator {
         return (int) (kilometers * 0.621371192);
     }
 
+//    public static void main(String[] args) {
+//        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
+//        System.out.println(new CarbonCalculator(2).publicTransportCalculator("Fossil","Subway",2));
+//    }
 
 }

@@ -1,9 +1,12 @@
 package gui;
 
+import cn.hutool.json.JSONObject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,6 +28,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import restclient.CompactClient;
@@ -39,6 +43,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
+
+    @FXML
+    private ChoiceBox transportType;
+
     @FXML
     private TextField nameField;
 
@@ -76,7 +84,7 @@ public class Controller {
     private ChoiceBox energyType;
 
     @FXML
-    private TextField electricityPercentage;
+    private TextField electricityAmount;
 
     @FXML
     private TextField kilometers;
@@ -100,7 +108,125 @@ public class Controller {
     private GridPane scorePane;
 
     @FXML
+    private GridPane solarPanelGrid;
+
+    @FXML
+    private TextField bikeKilometers;
+
+    @FXML
+    private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (transportType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter type of your transportation");
+            return;
+        }  else if (bikeKilometers.getText().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter the number of kilometers which you travelled");
+            return;
+        } else {
+            try {
+                Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
+                String typeOfTransport = transportType.getValue().toString();
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a "
+                                        + "double number to indicate number of kilometers you go");
+                return;
+            }
+        }
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            cc.postBiker(transportType.getValue().toString(), (int)Double.parseDouble(bikeKilometers.getText()));
+            loadPage(event, "fxml/addActivity.fxml");
+        }
+    }
+
+    @FXML
+    private void loadFriends(ActionEvent event, String[][] friends) {
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        GridPane root = new GridPane();
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        final int numCols = 2 ;
+        final int numRows = friends.length + 1 ;
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHgrow(Priority.NEVER);
+            if (i == 0) {
+                colConst.setPrefWidth(200);
+            } else {
+                colConst.setPrefWidth(screenBounds.getWidth() - 200);
+            }
+            root.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setVgrow(Priority.NEVER);
+            if (i >= 1) {
+                rowConst.setPrefHeight(143);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
+                        + friends[i - 1][1]);
+                text.setFont(Font.font("Comic Sans MS"));
+                ImageView image = new ImageView("images/userImage.jpg");
+                image.setFitWidth(117);
+                image.setFitHeight(108);
+                root.add(image, 0, i);
+                root.add(text, 1, i);
+                root.setHalignment(image, HPos.RIGHT);
+                root.setValignment(image, VPos.CENTER);
+                root.setStyle("-fx-background-color: #00ffbc;");
+                root.setHgap(40); //horizontal gap in pixels
+            } else {
+                rowConst.setPrefHeight(71);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("SCOREBOARD");
+                text.setFont(Font.font("Comic Sans MS", 30));
+                root.add(text, 1, i);
+                Button button = new Button();
+                button.setText("BACK");
+                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;");
+                button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
+                        + "linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
+                button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
+                        + "-fx-text-fill: #00ffbc;"));
+                button.setOnAction(value ->  {
+                    try {
+                        Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
+                                .getResource("fxml/menu.fxml"));
+                        Scene addPageScene = new Scene(addPageParent);
+                        stage.setScene(addPageScene);
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                button.setLayoutX(250);
+                button.setLayoutY(220);
+                root.add(button, 0, i);
+                root.setMargin(button, new Insets(5, 0, 0, 20));
+            }
+        }
+        scrollPane.setContent(root);
+        stage.setScene(new Scene(scrollPane, 600, 500));
+        stage.show();
+    }
+
+    @FXML
     private void initialize() throws IOException {
+        if(solarPanelGrid!=null) {
+            electricityAmount.setFocusTraversable(false);
+        }
+
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
             List<String> lines = new ArrayList<String>();
@@ -237,11 +363,14 @@ public class Controller {
 
     @FXML
     protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
+
+
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/scoreboard.fxml");
+            String[][] friends = cc.getAllFriends();
+            loadFriends(event, friends);
         }
     }
 
@@ -433,14 +562,14 @@ public class Controller {
     @FXML
     private void handleAddSolarPanelButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (electricityPercentage.getText().isEmpty()) {
+        if (electricityAmount.getText().isEmpty()) {
             Controller.AlertHelper.showAlert(
                     Alert.AlertType.ERROR, owner, "Unfilled field!",
-                    "Please enter the percentage of decrease in your electricity consumption");
+                    "Please enter the total kWh generated by your solar panels!");
             return;
         } else {
             try {
-                Double percentage = Double.parseDouble(electricityPercentage.getText());
+                Double percentage = Double.parseDouble(electricityAmount.getText());
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -453,6 +582,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
+            cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -492,22 +622,30 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the code of yor friend");
             return;
-        } else {
-            try {
-                int code = Integer.parseInt(friendCode.getText());
-                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate your friend's code");
-                return;
-            }
         }
+//         else {
+//            try {
+//                int code = Integer.parseInt(friendCode.getText());
+//                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+//            } catch (NumberFormatException e) {
+//                AlertHelper
+//                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+//                                "Please enter a number to indicate your friend's code");
+//                return;
+//            }
+//        }
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/scoreboard.fxml");
+            JSONObject jo = cc.followUser(friendCode.getText());
+            if (jo.get("status").toString().equals("Success")) {
+               AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
+                       "You are now following this person!");
+            } else {
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
+                        jo.get("status").toString());
+            }
         }
         //String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
         //loadFriends(friends);
