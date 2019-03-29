@@ -128,6 +128,48 @@ public class Controller {
     private TextField amountVegetarianMeal;
 
     @FXML
+    private Button youButton;
+
+    @FXML
+    private Label youLabel;
+
+    @FXML
+    private Button addActivityButton;
+
+    @FXML
+    private Label addActivityLabel;
+
+    @FXML
+    private Button friendsButton;
+
+    @FXML
+    private Label friendsLabel;
+
+    @FXML
+    private Button addFriendButton;
+
+    @FXML
+    private Label addFriendLabel;
+
+    @FXML
+    private Button achievementsButton;
+
+    @FXML
+    private Label achievementsLabel;
+
+    @FXML
+    private Button activitiesButton;
+
+    @FXML
+    private Label activitiesLabel;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
         if (transportType.getValue() == null) {
@@ -460,7 +502,7 @@ public class Controller {
     }
 
     @FXML
-    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
+    protected void handleAddFriendsButtonAction(ActionEvent event) throws IOException {
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
@@ -480,7 +522,7 @@ public class Controller {
     }
 
     @FXML
-    protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
+    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
 
 
         CompactClient cc = new CompactClient();

@@ -1,0 +1,51 @@
+{
+    -fx-background-color: #FFFFFF
+;
+    -fx-font-family: Futura;
+}
+
+.imageView:hover {
+    -fx-pref-height: 120;
+    -fx-pref-width: 120;
+    -fx-background-size: 120;
+}
+
+#logoutButton, #exitButton {
+    -fx-pref-height: 40;
+    -fx-pref-width: 80;
+    -fx-border-radius: 50;
+    -fx-background-radius: 50;
+}
+
+#nameLabel {
+    -fx-font-size: 20;
+    visibility: visible;
+}
+
+#greenerLabel {
+    -fx-font-size: 45;
+    visibility: visible;
+}
+
+.label {
+    visibility: hidden;
+}
+
+.button {
+    -fx-pref-height: 100;
+    -fx-pref-width: 100;
+    -fx-border-radius: 100;
+    -fx-background-radius: 100;
+    -fx-background-color: #91CB3E;
+    -fx-border-color:  #124A11;
+}
+
+.button:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+#youButton:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
