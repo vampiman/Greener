@@ -1,5 +1,7 @@
-.imageView {
-    
+{
+    -fx-background-color: #FFFFFF
+;
+    -fx-font-family: Futura;
 }
 
 .imageView:hover {
@@ -8,20 +10,30 @@
     -fx-background-size: 120;
 }
 
+#greenerLabel {
+    -fx-font-size: 45;
+    visibility: visible;
+}
+
+.label {
+    visibility: hidden;
+}
+
 .button {
     -fx-pref-height: 100;
     -fx-pref-width: 100;
     -fx-border-radius: 100;
     -fx-background-radius: 100;
-    -fx-background-color: #508991;
-    -fx-border-color:  black;
-}
-
-.label {
-    visibility: false;
+    -fx-background-color: #91CB3E;
+    -fx-border-color:  #124A11;
 }
 
 .button:hover {
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+#youButton:hover {
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }
