@@ -71,7 +71,7 @@ public class LocalProduce {
         ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '"+ email + "'");
 
         rs.next();
-        int produce = rs.getInt("Local_produce");
+        Double produce = rs.getDouble("Local_produce");
 
         Resource lp = new Resource();
         passToken(token, lp);

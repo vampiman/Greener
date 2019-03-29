@@ -463,8 +463,8 @@ public class CarbonCalculator {
     /**
      * Get the CO2 emission of the veganmeal feature.
      *
-     * @param amount  of meals
-     * @param type   of meal
+     * @param amount Kilograms of meal type
+     * @param type Meal type
      * @return 10 times the CO2 emission
      */
     public double veganmeal_Calculator(double amount, String type) {
@@ -474,7 +474,7 @@ public class CarbonCalculator {
         switch (type) {
             case "Fruit":
                 //fruit
-                sort = 0.42;
+                sort = 1.1;
                 break;
             case "Dairy":
                 //dairy
@@ -487,6 +487,9 @@ public class CarbonCalculator {
             case "Meat":
                 //meat
                 sort = 21.3;
+                break;
+            case "Eggs":
+                sort = 4.8;
                 break;
             default:
                 throw new IllegalArgumentException("Please insert a valid type of Food!");
@@ -509,19 +512,22 @@ public class CarbonCalculator {
         switch (type) {
             case "Fruit":
                 //fruit
-                sort = 0.42 * 0.93;
+                sort = 1.1 * 0.07;
                 break;
             case "Dairy":
                 //dairy
-                sort = 7.7 * 0.93;
+                sort = 7.7 * 0.07;
                 break;
             case "Vegetables":
                 //vegetables
-                sort = 2.0 * 0.93;
+                sort = 2.0 * 0.07;
                 break;
             case "Meat":
                 //meat
-                sort = 21.3 * 0.93;
+                sort = 21.3 * 0.07;
+                break;
+            case "Eggs":
+                sort = 4.8 * 0.07;
                 break;
             default:
                 throw new IllegalArgumentException("Please insert a valid type of Food!");

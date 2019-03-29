@@ -66,10 +66,17 @@ public class VeganMeal {
 
         passToken(token, re);
 
+        CarbonCalculator cc = new CarbonCalculator(2);
+
+        Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
+
+        Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+
+
         System.out.println(re.getTotal_Meals());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + new CarbonCalculator(2).veganmeal_Calculator(re.getTotal_Meals(),re.getMealType()) * 10 + " WHERE Email = '" + email + "'");
+                + (insteadOf - iHad) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
@@ -96,7 +103,7 @@ public class VeganMeal {
         ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Email = '" + email +"'");
 
         rs.next();
-        int total = rs.getInt("Vegan_meal");
+        Double total = rs.getDouble("Vegan_meal");
 
         Resource re = new Resource();
         passToken(token, re);

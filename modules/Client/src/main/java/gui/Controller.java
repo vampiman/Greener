@@ -326,7 +326,13 @@ public class Controller {
         }
 
         User user = new User(email.getText(), password.getText());
-        user.register(signupName.getText(), email.getText(), password.getText());
+        try {
+            user.register(signupName.getText(), email.getText(), password.getText());
+        } catch (IllegalArgumentException e) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    e.getMessage());
+            return;
+        }
 
         loadPage(event, "fxml/loginPage.fxml");
     }

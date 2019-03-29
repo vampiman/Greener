@@ -70,7 +70,7 @@ public class SolarPanels {
         System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
-                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh()) * 10) + " WHERE Email = '" + email + "'");
+                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh())) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
