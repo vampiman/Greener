@@ -12,11 +12,11 @@ import javax.inject.Singleton;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 
 @Path("veganmeal")
 @Singleton
@@ -38,6 +38,16 @@ public class VeganMeal {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+    /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
 
     /**
      * Endpoint /veganmeal/post that modifies the number of eaten vegan meals in
@@ -48,13 +58,17 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(VeganMealResource vm) throws ClassNotFoundException, SQLException {
+    public void postIt(Resource re, @HeaderParam("Token") String token,
+                       @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        System.out.println(vm.getTotal());
+        passToken(token, re);
+
+        System.out.println(re.getTotal_Meals());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + vm.getTotal() + " WHERE Name = 'Robert'");
+                + re.getTotal_Meals() + " WHERE Name = 'Robert'");
 
         st.close();
         dbConnection.close();
@@ -73,11 +87,9 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public VeganMealResource getAll() throws ClassNotFoundException, SQLException {
-
-
+    public Resource getAll(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
-
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
@@ -85,9 +97,9 @@ public class VeganMeal {
         rs.next();
         int total = rs.getInt("Vegan_meal");
 
-        VeganMealResource vm = new VeganMealResource();
-
-        vm.setTotal(total);
+        Resource re = new Resource();
+        passToken(token, re);
+        re.setTotal_Meals(total);
 
         st.close();
         dbConnection.close();
@@ -95,7 +107,7 @@ public class VeganMeal {
         jo.put("total", total);
         st.close();
         dbConnection.close();
-        return vm;
+        return re;
 
 
     }

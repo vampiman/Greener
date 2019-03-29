@@ -10,11 +10,11 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 
 @Path("solarpanels")
@@ -39,6 +39,17 @@ public class SolarPanels {
     }
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Endpoint /solarpanels/post that modifies the number of solarpanels in the database.
      *
      * @throws ClassNotFoundException Class not found error
@@ -47,43 +58,60 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount() throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postAmount(Resource re, @HeaderParam("Token") String token,
+                           @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
+
         getDbConnection();
+
+        passToken(token, re);
+
+        System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + 1 WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
+                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh()) * 10) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
 
+
+        return re;
     }
 
     /**
-     * Endpoint /solarpanels/totalSolar that returns the total number of solar panels installed.
+     * Endpoint /solarpanels/totalSolar that returns the total percentage electricity safed.
      *
-     * @return Total number of vegan meals consumed
+     * @return Total percentage of electricity safed
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException           SQL-related error
+     *
      */
     @GET
-    @Path("totalSolar")
+    @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAmount() throws ClassNotFoundException, SQLException {
+    public Resource getAmount(@HeaderParam("Token") String token,
+                              @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Solar_panels FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery(
+                "SELECT Solar_panels FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int total = rs.getInt("Solar_panels");
+        int points = rs.getInt("Solar_panels");
+
+        Resource re = new Resource();
+        passToken(token, re);
+        re.setSavedSolar(points);
 
         st.close();
         dbConnection.close();
-        JSONObject jo = new JSONObject();
-        jo.put("total", total);
         st.close();
         dbConnection.close();
-        return Response.status(Response.Status.OK).entity(jo).build();
+        return re;
 
     }
 }

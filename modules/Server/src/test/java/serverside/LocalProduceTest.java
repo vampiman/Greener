@@ -1,5 +1,7 @@
 package serverside;
 
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,11 +13,12 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.ws.rs.core.Response;
-import java.sql.*;
-
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-
+import javax.ws.rs.HeaderParam;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(LocalProduce.class)
@@ -58,7 +61,9 @@ public class LocalProduceTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-        localProduce.postData();
+        Resource lp = new Resource();
+        lp.setTotal_Produce(1);
+        localProduce.postData(lp, "token");
     }
 
     /**
@@ -68,7 +73,7 @@ public class LocalProduceTest {
      * @throws ClassNotFoundException Class not found error
      */
     @Test
-    public void getAll() throws SQLException, ClassNotFoundException {
+    public void getData() throws SQLException, ClassNotFoundException {
         localProduce = new LocalProduce();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
@@ -83,10 +88,25 @@ public class LocalProduceTest {
 
         Mockito.when(rs.getInt("Local_produce")).thenReturn(1);
         Mockito.when(rs.next()).thenReturn(true);
-        Response value = localProduce.getData();
 
+        Resource rs = localProduce.getData("token");
 
-        System.out.println(value.getEntity());
-        Assert.assertEquals(value.getEntity().toString(), "{\"total\":1}");
-     }
+        Assert.assertEquals(rs.getTotal_Produce(), 1);
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
+    }
 }
