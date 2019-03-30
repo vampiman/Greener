@@ -80,7 +80,13 @@ public class VeganMeal {
         preparedStatement.setString(2, email);
         preparedStatement.executeUpdate();
 
-        new Statistics().increaseScore(insteadOf - iHad, email);
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(insteadOf - iHad, email);
+        statistics.updateLevel(co2, email);
+
+
 
         preparedStatement.close();
         dbConnection.close();

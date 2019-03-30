@@ -17,6 +17,8 @@ public class Resource {
     int averageHeatConsumption;
     int currentHeatConsumption;
     int friendsNo;
+    int level;
+    String achievements;
     Double savedHeatConsumption;
     String mealType;
     String mealType2;
@@ -210,6 +212,24 @@ public class Resource {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(String achievements) {
+        this.achievements = achievements;
+    }
+
 
 }
 
