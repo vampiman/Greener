@@ -80,6 +80,14 @@ public class VeganMeal {
         preparedStatement.setString(2, email);
         preparedStatement.executeUpdate();
 
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(insteadOf - iHad, email);
+        statistics.updateLevel(co2, email);
+
+
+
         preparedStatement.close();
         dbConnection.close();
 
@@ -101,8 +109,13 @@ public class VeganMeal {
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Email = '" + email +"'");
+        String sql = "SELECT Vegan_meal FROM person WHERE Email = ?";
+
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+
+        preparedStatement.setString(1, email);
+
+        ResultSet rs = preparedStatement.executeQuery();
 
         rs.next();
         Double total = rs.getDouble("Vegan_meal");
@@ -111,11 +124,11 @@ public class VeganMeal {
         passToken(token, re);
         re.setTotal_Meals(total);
 
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
         jo.put("total", total);
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         return re;
 

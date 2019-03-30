@@ -37,7 +37,7 @@
       </Label>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How many kilowatts do your solar panels generate monthly? " wrappingWidth="265.61956787109375" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS" size="14.0" />
+            <Font name="System" size="14.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="50.0" right="140.0" />
@@ -48,17 +48,17 @@
             <Insets bottom="50.0" left="230.0" />
          </GridPane.margin>
       </TextField>
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" text="BACK" textFill="#00ffbc" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+      <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" text="BACK" textFill="#91cb3e" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="30.0" left="30.0" />
          </GridPane.margin>
       </Button>
-      <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddSolarPanelButtonAction" text="ADD" textFill="#00ffbc" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+      <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddSolarPanelButtonAction" text="ADD" textFill="#91cb3e" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
          <GridPane.margin>
             <Insets bottom="30.0" right="30.0" />

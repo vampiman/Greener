@@ -34,7 +34,7 @@ public class SolarPanels {
         String user = "sammy";
         String pass = "temporary";
 
-        //Class.forName("com.mysql.jdbc.Driver");
+//        Class.forName("com.mysql.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -65,12 +65,17 @@ public class SolarPanels {
 
         getDbConnection();
 
+        int toAdd= (int)(new CarbonCalculator(2).solarPanel(re.getKwh()));
+
         passToken(token, re);
 
         System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
-                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh())) + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
+
+
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();
@@ -95,6 +100,8 @@ public class SolarPanels {
             throws ClassNotFoundException, SQLException {
 
         getDbConnection();
+
+        System.out.println(email);
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(

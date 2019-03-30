@@ -176,6 +176,28 @@ public class Controller {
     private TextField amountLocalProduct;
 
     @FXML
+    private Label nameLabel;
+
+    @FXML
+    private GridPane menuPane;
+
+    @FXML
+    private Text usernameField;
+
+    @FXML
+    private Text noOfFriendsField;
+
+    @FXML
+    private Text emailField;
+
+    @FXML
+    private Text co2Field;
+
+    @FXML
+    private GridPane youPagePane;
+
+
+    @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
         if (transportType.getValue() == null) {
@@ -237,30 +259,30 @@ public class Controller {
                 Text text = new Text();
                 text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
                         + friends[i - 1][1]);
-                text.setFont(Font.font("Comic Sans MS"));
-                ImageView image = new ImageView("images/userImage.jpg");
+                ImageView image = new ImageView("images/human.png");
+                image.setPreserveRatio(true);
                 image.setFitWidth(117);
                 image.setFitHeight(108);
                 root.add(image, 0, i);
                 root.add(text, 1, i);
                 root.setHalignment(image, HPos.RIGHT);
                 root.setValignment(image, VPos.CENTER);
-                root.setStyle("-fx-background-color: #00ffbc;");
+                root.setStyle("-fx-background-color: #91cb3e;");
                 root.setHgap(40); //horizontal gap in pixels
             } else {
                 rowConst.setPrefHeight(71);
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
                 text.setText("SCOREBOARD");
-                text.setFont(Font.font("Comic Sans MS", 30));
+                text.setFont(Font.font("System Bold", 30));
                 root.add(text, 1, i);
                 Button button = new Button();
                 button.setText("BACK");
-                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;");
+                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #91cb3e;");
                 button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
-                        + "linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
+                        + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
                 button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
-                        + "-fx-text-fill: #00ffbc;"));
+                        + "-fx-text-fill: #91cb3e;"));
                 button.setOnAction(value ->  {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
@@ -285,6 +307,7 @@ public class Controller {
 
     @FXML
     private void initialize() throws IOException {
+        CompactClient cc = new CompactClient();
 
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -298,11 +321,23 @@ public class Controller {
             todaysTip.setText(text);
         }
 
+        JSONObject details = cc.getPersonalInfo();
+
+        if(menuPane!=null) {
+            nameLabel.setText("Hello " + details.get("userName").toString());
+        }
+
+
+        if(youPagePane!=null) {
+            usernameField.setText("Username: " + details.get("userName").toString());
+            noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
+            emailField.setText("Email: " + details.get("email").toString());
+            co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
+        }
 
         if (achievementsGrid != null) {
-            CompactClient cc = new CompactClient();
             JSONObject info = cc.getStats();
-            System.out.println(info.toJSONString(10));
+//            System.out.println(info.toJSONString(10));
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
                             new PieChart.Data("Vegan Meal", Double.parseDouble(info.get("total_Meals").toString())),

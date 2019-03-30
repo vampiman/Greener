@@ -36,14 +36,14 @@
          <children>
             <Text layoutX="42.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose an activity">
                <font>
-                  <Font name="Comic Sans MS" size="24.0" />
+                  <Font name="System" size="24.0" />
                </font>
             </Text>
          </children>
       </Pane>
       <Button fx:id="backButton" maxWidth="-Infinity" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textFill="#ebf8ee" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Bold" size="15.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
          <GridPane.margin>
             <Insets right="20.0" />

@@ -16,10 +16,15 @@ public class Resource {
     Double savedPublicTransport;
     int averageHeatConsumption;
     int currentHeatConsumption;
+    int friendsNo;
+    int level;
+    String achievements;
     Double savedHeatConsumption;
     String mealType;
     String mealType2;
     String energyType;
+    String userName;
+    String email;
     String token;
 
     public Resource(){
@@ -180,6 +185,51 @@ public class Resource {
     public void setMealType2(String mealType2) {
         this.mealType2 = mealType2;
     }
+
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+
+    public int getFriendsNo() {
+        return friendsNo;
+    }
+
+    public void setFriendsNo(int friendsNo) {
+        this.friendsNo = friendsNo;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getAchievements() {
+        return achievements;
+    }
+
+    public void setAchievements(String achievements) {
+        this.achievements = achievements;
+    }
+
 
 }
 
