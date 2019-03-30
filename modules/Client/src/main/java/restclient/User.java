@@ -45,7 +45,6 @@ public class User {
         this.token = token;
     }
 
-
     /**
      * Method carries out the get request to
      * SessionHandler and returns a token

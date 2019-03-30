@@ -524,7 +524,6 @@ public class Controller {
     @FXML
     protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
 
-
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
@@ -538,7 +537,7 @@ public class Controller {
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
-            loadPage(event, "fxml/loginPage.fxml");
+            loadPage(event, "fxml/mainLogin.fxml");
         } else {
             loadPage(event, "fxml/you.fxml");
         }
