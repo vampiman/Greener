@@ -101,7 +101,7 @@ public class SolarPanels {
                 "SELECT Solar_panels FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int points = rs.getInt("Solar_panels");
+        Double points = rs.getDouble("Solar_panels");
 
         Resource re = new Resource();
         passToken(token, re);

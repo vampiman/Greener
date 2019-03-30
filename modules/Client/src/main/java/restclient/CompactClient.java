@@ -353,6 +353,20 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    public JSONObject getStats() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/allstats");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+    }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -389,7 +403,7 @@ public class CompactClient  {
         CompactClient cc = new CompactClient();
         //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.getHeatConsumption());
+        System.out.println(cc.getStats());
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 

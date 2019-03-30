@@ -73,7 +73,7 @@ public class HeatConsumption {
                 + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int total = rs.getInt("Lowering_home_temperature");
+        Double total = rs.getDouble("Lowering_home_temperature");
 
         Resource re = new Resource();
         re.setSavedHeatConsumption(total);

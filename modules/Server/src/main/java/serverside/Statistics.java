@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.sql.*;
 
-@Path("Statistics")
+@Path("statistics")
 public class Statistics {
 
     private Connection dbConnection;
@@ -40,7 +40,7 @@ public class Statistics {
         rs.next();
         Double saved = rs.getDouble("CO_2_saved");
 
-        re.setCo2Saved(saved.intValue());
+        re.setCo2Saved(saved);
 
         return re;
     }
@@ -60,16 +60,16 @@ public class Statistics {
                 " FROM person WHERE Email = '" + email + "'");
         rs.next();
         Double veganSaved = rs.getDouble("Vegan_meal");
-        int bikeSaved = rs.getInt("Bike");
-        int solarSaved = rs.getInt("Solar_panels");
-        double localSaved = rs.getDouble("Local_produce");
-        int loweringSaved = rs.getInt("Lowering_home_temperature");
-        int publicSaved = rs.getInt("Public_transport");
+        Double bikeSaved = rs.getDouble("Bike");
+        Double solarSaved = rs.getDouble("Solar_panels");
+        Double localSaved = rs.getDouble("Local_produce");
+        Double loweringSaved = rs.getDouble("Lowering_home_temperature");
+        Double publicSaved = rs.getDouble("Public_transport");
 
         re.setTotal_Meals(veganSaved);
         re.setBikeSaved(bikeSaved);
         re.setSavedSolar(solarSaved);
-        re.setLocalSaved((int) localSaved);
+        re.setLocalSaved(localSaved);
         re.setSavedHeatConsumption(loweringSaved);
         re.setSavedPublicTransport(publicSaved);
 

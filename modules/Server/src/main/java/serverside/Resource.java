@@ -5,18 +5,18 @@ public class Resource {
     Double total;
     Double distance;
     int percentage;
-    int co2Saved;
+    Double co2Saved;
     Double produce;
     int kwh;
-    int savedSolar;
+    Double savedSolar;
     String publicTransportType;
     String carType;
-    int bikeSaved;
-    int localSaved;
-    int savedPublicTransport;
+    Double bikeSaved;
+    Double localSaved;
+    Double savedPublicTransport;
     int averageHeatConsumption;
     int currentHeatConsumption;
-    int savedHeatConsumption;
+    Double savedHeatConsumption;
     String mealType;
     String mealType2;
     String energyType;
@@ -27,27 +27,27 @@ public class Resource {
     }
 
 
-    public int getLocalSaved() {
+    public Double getLocalSaved() {
         return localSaved;
     }
 
-    public void setLocalSaved(int localSaved) {
+    public void setLocalSaved(Double localSaved) {
         this.localSaved = localSaved;
     }
 
-    public int getBikeSaved() {
+    public Double getBikeSaved() {
         return bikeSaved;
     }
 
-    public void setBikeSaved(int bikeSaved) {
+    public void setBikeSaved(Double bikeSaved) {
         this.bikeSaved = bikeSaved;
     }
 
-    public int getCo2Saved() {
+    public Double getCo2Saved() {
         return co2Saved;
     }
 
-    public void setCo2Saved(int co2Saved) {
+    public void setCo2Saved(Double co2Saved) {
         this.co2Saved = co2Saved;
     }
 
@@ -107,11 +107,11 @@ public class Resource {
         this.carType = carType;
     }
 
-    public int getSavedPublicTransport() {
+    public Double getSavedPublicTransport() {
         return savedPublicTransport;
     }
 
-    public void setSavedPublicTransport(int savedPublicTransport) {
+    public void setSavedPublicTransport(Double savedPublicTransport) {
         this.savedPublicTransport = savedPublicTransport;
     }
 
@@ -147,11 +147,11 @@ public class Resource {
         this.token = token;
     }
 
-    public int getSavedHeatConsumption() {
+    public Double getSavedHeatConsumption() {
         return savedHeatConsumption;
     }
 
-    public void setSavedHeatConsumption(int savedHeatConsumption) {
+    public void setSavedHeatConsumption(Double savedHeatConsumption) {
         this.savedHeatConsumption = savedHeatConsumption;
     }
 
@@ -164,11 +164,11 @@ public class Resource {
         this.kwh = kwh;
     }
 
-    public int getSavedSolar() {
+    public Double getSavedSolar() {
         return savedSolar;
     }
 
-    public void setSavedSolar(int savedSolar) {
+    public void setSavedSolar(Double savedSolar) {
         this.savedSolar = savedSolar;
     }
 
