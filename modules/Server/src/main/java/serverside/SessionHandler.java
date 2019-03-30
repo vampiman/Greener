@@ -66,23 +66,46 @@ public class SessionHandler {
         sr.setToken(token);
 
         getDbConnection();
+
+        String sql = "INSERT INTO person(ID, Email, Password, "
+                + "Name, Friend_code, CO_2_saved, " + "Vegan_meal, "
+                + "Bike, Solar_panels, Local_produce, "
+                + "Lowering_home_temperature, Public_transport) "
+                + "VALUES (?, ?, ?, ?, ?, \"0\", \"0\", \"0\", \"0\","
+                + " \"0\", \"0\", \"0\")";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+
+
         Statement st = dbConnection.createStatement();
+
         Statement st2 = dbConnection.createStatement();
 
         ResultSet rs2 = st2.executeQuery("SELECT MAX(ID) FROM person");
         rs2.next();
         int id = rs2.getInt("MAX(ID)");
 
-        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
-                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
-                + "Bike, Solar_panels, Local_produce, "
-                + "Lowering_home_temperature, Public_transport) \n"
-                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \"" + sr.getPassword()
-                + "\", \"" + sr.getName()
-                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
-                + "\"0\", \"0\", \"0\");");
+        ps.setInt(1, id + 1);
+        ps.setString(2, sr.getEmail());
+        ps.setString(3, sr.getPassword());
+        ps.setString(4, sr.getName());
+        ps.setString(5, inviteGenerator());
+
+        ps.executeUpdate();
+
+//        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
+//                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
+//                + "Bike, Solar_panels, Local_produce, "
+//                + "Lowering_home_temperature, Public_transport) \n"
+//                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \"" + sr.getPassword()
+//                + "\", \"" + sr.getName()
+//                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
+//                + "\"0\", \"0\", \"0\");");
 
         st.close();
+        ps.close();
+        rs2.close();
         dbConnection.close();
         return sr;
     }

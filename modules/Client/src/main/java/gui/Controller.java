@@ -337,7 +337,7 @@ public class Controller {
 
         if (achievementsGrid != null) {
             JSONObject info = cc.getStats();
-            System.out.println(info.toJSONString(10));
+//            System.out.println(info.toJSONString(10));
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
                             new PieChart.Data("Vegan Meal", Double.parseDouble(info.get("total_Meals").toString())),
