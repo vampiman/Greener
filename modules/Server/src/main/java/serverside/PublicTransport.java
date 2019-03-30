@@ -72,7 +72,7 @@ public class PublicTransport {
                 + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int total = rs.getInt("Public_transport");
+        Double total = rs.getDouble("Public_transport");
 
         Resource re = new Resource();
         re.setSavedPublicTransport(total);

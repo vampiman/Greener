@@ -298,15 +298,19 @@ public class Controller {
             todaysTip.setText(text);
         }
 
+
         if (achievementsGrid != null) {
+            CompactClient cc = new CompactClient();
+            JSONObject info = cc.getStats();
+            System.out.println(info.toJSONString(10));
             ObservableList<PieChart.Data> pieChartData =
                     FXCollections.observableArrayList(
-                            new PieChart.Data("Vegan Meal", 100),
-                            new PieChart.Data("Public Transport", 200),
-                            new PieChart.Data("Home Temperature", 50),
-                            new PieChart.Data("Bike", 75),
-                            new PieChart.Data("Local Product", 110),
-                            new PieChart.Data("Solar Panel", 300)
+                            new PieChart.Data("Vegan Meal", Double.parseDouble(info.get("total_Meals").toString())),
+                            new PieChart.Data("Public Transport", Double.parseDouble(info.get("savedPublicTransport").toString())),
+                            new PieChart.Data("Home Temperature", Double.parseDouble(info.get("savedHeatConsumption").toString())),
+                            new PieChart.Data("Bike", Double.parseDouble(info.get("bikeSaved").toString())),
+                            new PieChart.Data("Local Product", Double.parseDouble(info.get("localSaved").toString())),
+                            new PieChart.Data("Solar Panel", Double.parseDouble(info.get("savedSolar").toString()))
                     );
             pieChart.setTitle("SCORE DISTRIBUTION");
             pieChart.setMaxSize(1000, 1000);
