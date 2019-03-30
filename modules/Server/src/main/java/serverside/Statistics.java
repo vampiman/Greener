@@ -77,4 +77,46 @@ public class Statistics {
         return re;
     }
 
+    @GET
+    @Path("personalinfo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource getPersonalInfo(@HeaderParam("Email") String email) throws SQLException {
+        Resource re = new Resource();
+
+        getDbConnection();
+
+        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement1 = null;
+
+        String sql = "SELECT Name, CO_2_saved FROM person WHERE Email = '" + email + "'";
+        String sql1 = "SELECT COUNT(User_email) FROM friends WHERE User_email = '" + email + "'";
+
+
+        preparedStatement = dbConnection.prepareStatement(sql);
+        preparedStatement1 = dbConnection.prepareStatement(sql1);
+
+        ResultSet rs = preparedStatement.executeQuery();
+        ResultSet rs1 = preparedStatement1.executeQuery();
+        rs.next();
+        rs1.next();
+
+        String username = rs.getString("Name");
+        Double co2Saved = rs.getDouble("CO_2_saved");
+        int friends = rs1.getInt("COUNT(User_email)");
+
+
+        re.setUserName(username);
+        re.setCo2Saved(co2Saved);
+        re.setFriendsNo(friends);
+        re.setEmail(email);
+
+        preparedStatement.close();
+        preparedStatement1.close();
+        dbConnection.close();
+        rs1.close();
+        rs.close();
+
+        return re;
+    }
+
 }

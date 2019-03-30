@@ -50,17 +50,17 @@
                </children></Pane>
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;" GridPane.rowIndex="1" />
-            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" text="BACK" textFill="#00ffbc" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Button fx:id="backButton" mnemonicParsing="false" onAction="#handleAddActivityButtonAction" text="BACK" textFill="#91cb3e" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font name="Comic Sans MS Bold" size="12.0" />
+                  <Font name="System MS Bold" size="12.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="30.0" left="30.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddBikeButtonAction" text="ADD" textFill="#00ffbc" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+            <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddBikeButtonAction" text="ADD" textFill="#91cb3e" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font name="Comic Sans MS Bold" size="12.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="30.0" right="30.0" />
@@ -68,7 +68,7 @@
             </Button>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Which type of transportation did you substitute?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font name="Comic Sans MS" size="14.0" />
+                  <Font name="System" size="14.0" />
                </font>
                <GridPane.margin>
                   <Insets left="70.0" />
@@ -76,7 +76,7 @@
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="How many kilometers did you go by bike?" wrappingWidth="206.45819306373596" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
                <font>
-                  <Font name="Comic Sans MS" size="14.0" />
+                  <Font name="System" size="14.0" />
                </font>
                <GridPane.margin>
                   <Insets bottom="5.0" left="70.0" />

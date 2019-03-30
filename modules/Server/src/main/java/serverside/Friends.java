@@ -41,16 +41,33 @@ public class Friends {
 
         SessionResource sr = new SessionResource();
 
-        Statement st = dbConnection.createStatement();
+        PreparedStatement ps = null;
 
-        ResultSet rs = st.executeQuery("SELECT ID, Email FROM person WHERE Email = '" + toSearch + "'");
+        String sql = "SELECT ID, Email FROM person WHERE Email = ?";
 
-        rs.next();
+        ps = dbConnection.prepareStatement(sql);
+
+        ps.setString(1, toSearch);
+
+
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+           sr.setStatus("Peson not found!");
+           return sr;
+        }
+
 
         int friendId = rs.getInt("ID");
         String friend = rs.getString("Email");
 
-        rs = st.executeQuery("SELECT ID FROM person WHERE Email = '" + email + "'");
+        sql = "SELECT ID FROM person WHERE Email = ?";
+
+        ps = dbConnection.prepareStatement(sql);
+
+        ps.setString(1, email);
+
+        rs = ps.executeQuery();
         rs.next();
 
         int yourId = rs.getInt("ID");
@@ -60,9 +77,13 @@ public class Friends {
             return sr;
         }
 
-        rs = st.executeQuery("SELECT COUNT(User_email) FROM friends " +
-                "WHERE User_email = '" + email + "'" +
-                " AND Friend_email = '"+ toSearch +"'");
+        sql = "SELECT COUNT(User_email) FROM friends WHERE User_email = ? AND Friend_email = ?";
+
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setString(2, toSearch);
+
+        rs = ps.executeQuery();
 
         rs.next();
 
@@ -71,15 +92,24 @@ public class Friends {
             return sr;
         }
 
+        sql = "INSERT INTO friends(ID, User_email," +
+                " Friend_email) VALUES (?, " +
+                "?, ?)";
 
-        st.executeUpdate("INSERT INTO friends(ID, User_email," +
+        ps = dbConnection.prepareStatement(sql);
+        ps.setInt(1, yourId);
+        ps.setString(2, email);
+        ps.setString(3, friend);
+
+        ps.executeUpdate("INSERT INTO friends(ID, User_email," +
                 " Friend_email) VALUES ('" + yourId + "', " +
                 "'" + email +"', '" + friend + "')");
 
 
         sr.setStatus("Success");
 
-        st.close();
+        dbConnection.close();
+        ps.close();
         rs.close();
 
         return sr;
