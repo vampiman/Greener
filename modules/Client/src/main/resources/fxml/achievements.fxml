@@ -1,35 +1,158 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.chart.PieChart?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="achievementsGrid" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-   <columnConstraints>
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" stylesheets="@../css/achievements.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="196.0" minWidth="10.0" prefWidth="181.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="219.0" minWidth="10.0" prefWidth="219.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints maxHeight="196.00000228881837" minHeight="10.0" percentHeight="100.0" prefHeight="182.3999755859375" vgrow="SOMETIMES" />
-   </rowConstraints>
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="435.0" minHeight="10.0" prefHeight="106.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="323.0" minHeight="10.0" prefHeight="127.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="323.0" minHeight="0.0" prefHeight="132.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="323.0" minHeight="10.0" prefHeight="135.0" vgrow="SOMETIMES" />
+  </rowConstraints>
    <children>
-      <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="600.0" style="-fx-background-color: #91cb3e;" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-      <PieChart fx:id="pieChart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" title="FOOTPRINT " GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
-      <Button fx:id="backButton" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textFill="#00ffbc" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+      <Label stylesheets="@../css/achievements.css" text="Networking" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <font>
-            <Font name="Comic Sans MS Bold" size="15.0" />
+            <Font size="24.0" />
          </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Competing" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Total score" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="87.0" fitWidth="123.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+         <image>
+            <Image url="@../images/achievements.png" />
+         </image>
+      </ImageView>
+      <Label stylesheets="@../css/achievements.css" text="Baby recruiter" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
          <GridPane.margin>
-            <Insets left="20.0" top="20.0" />
+            <Insets top="5.0" />
          </GridPane.margin>
-      </Button>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Rising networker" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="World-class influencer" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
+      <Label stylesheets="@../css/achievements.css" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.valignment="TOP">
+         <GridPane.margin>
+            <Insets top="5.0" />
+         </GridPane.margin>
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font>
+      </Label>
    </children>
-   <stylesheets>
-      <URL value="@../css/style.css" />
-   </stylesheets>
 </GridPane>
