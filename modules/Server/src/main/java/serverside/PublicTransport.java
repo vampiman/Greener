@@ -100,16 +100,19 @@ public class PublicTransport {
             throws SQLException, ClassNotFoundException {
         getDbConnection();
 
+        double toAdd = new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
+                re.getPublicTransportType(),
+                re.getTotal_Distance());
+
         System.out.println(re.getPublicTransportType() + " transport");
 
         passToken(token, re);
 
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
-                + new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
-                re.getPublicTransportType(),
-                re.getTotal_Distance())
-                + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
+
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

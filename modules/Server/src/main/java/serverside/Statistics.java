@@ -119,4 +119,22 @@ public class Statistics {
         return re;
     }
 
+    public void increaseScore(double co2saved, String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "UPDATE person SET CO_2_saved = CO_2_saved + ? WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+
+        ps.setDouble(1, co2saved);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        ps.close();
+        dbConnection.close();
+
+    }
+
 }

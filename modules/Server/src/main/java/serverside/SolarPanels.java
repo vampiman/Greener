@@ -65,14 +65,17 @@ public class SolarPanels {
 
         getDbConnection();
 
-
+        int toAdd= (int)(new CarbonCalculator(2).solarPanel(re.getKwh()));
 
         passToken(token, re);
 
         System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
-                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh())) + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
+
+
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

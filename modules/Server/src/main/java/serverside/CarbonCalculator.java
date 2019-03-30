@@ -537,7 +537,7 @@ public class CarbonCalculator {
     }
     public static void main(String[] args) {
 //        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
-        System.out.println(new CarbonCalculator(2).publicTransportCalculator("Fossil","Train",10));
+        System.out.println(new CarbonCalculator(2).veganmeal_Calculator(0.5, "Meat"));
     }
 
 }
