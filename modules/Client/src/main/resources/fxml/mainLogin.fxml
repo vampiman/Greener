@@ -33,7 +33,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="759.0" layoutY="135.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="Lorem ipsum is a placeholder in the websites" textFill="WHITE" wrapText="true">
+            <Label layoutX="759.0" layoutY="135.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="You can log in here!" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>

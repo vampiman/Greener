@@ -2,11 +2,7 @@ package serverside;
 
 import cn.hutool.json.JSONObject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 import javax.inject.Singleton;
 
@@ -64,6 +60,12 @@ public class VeganMeal {
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
+        PreparedStatement preparedStatement = null;
+
+        String sql = "UPDATE person SET Vegan_meal = Vegan_meal + ? WHERE Email = ?";
+
+        preparedStatement = dbConnection.prepareStatement(sql);
+
         passToken(token, re);
 
         CarbonCalculator cc = new CarbonCalculator(2);
@@ -74,11 +76,11 @@ public class VeganMeal {
 
 
         System.out.println(re.getTotal_Meals());
-        Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + (insteadOf - iHad) + " WHERE Email = '" + email + "'");
+        preparedStatement.setDouble(1, insteadOf - iHad);
+        preparedStatement.setString(2, email);
+        preparedStatement.executeUpdate();
 
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
 
         return re;

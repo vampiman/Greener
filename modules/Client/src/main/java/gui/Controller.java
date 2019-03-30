@@ -170,6 +170,12 @@ public class Controller {
     private Button exitButton;
 
     @FXML
+    private ChoiceBox productCategory;
+
+    @FXML
+    private TextField amountLocalProduct;
+
+    @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
         if (transportType.getValue() == null) {
@@ -647,6 +653,9 @@ public class Controller {
 
     @FXML
     private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
+        Double numberOfKilometers = null;
+        String typeOfCar = null;
+        String publictransportType = null;
         Window owner = addButton.getScene().getWindow();
         if (carType.getValue() == null) {
             AlertHelper
@@ -665,12 +674,11 @@ public class Controller {
             return;
         } else {
             try {
-                int numberOfKilometers = Integer.parseInt(kilometers.getText());
-                String typeOfCar = carType.getValue().toString();
-                String publictransportType = publicTransport.getValue().toString();
+                numberOfKilometers = Double.parseDouble(kilometers.getText());
+                typeOfCar = carType.getValue().toString();
+                publictransportType = publicTransport.getValue().toString();
 
-                CompactClient cc = new CompactClient();
-                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
+
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -683,6 +691,7 @@ public class Controller {
             if (!cc.checkToken()) {
                 loadPage(event, "fxml/loginPage.fxml");
             } else {
+                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
                 loadPage(event, "fxml/addActivity.fxml");
             }
         }
@@ -760,7 +769,7 @@ public class Controller {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (mealTypes.getValue().toString().isEmpty()) {
+        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter how much vegan meal you had");
@@ -780,6 +789,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
+            cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()), "Meat", mealTypes.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -861,11 +871,29 @@ public class Controller {
 
     @FXML
     private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (productCategory.getValue() == null || productCategory.getValue().toString().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please choose a product type");
+            return;
+        } else {
+            try {
+                String type = productCategory.getValue().toString();
+                double portions = Double.parseDouble(amountLocalProduct.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a number to indicate the amount in kilograms");
+                return;
+            }
+        }
+
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            System.out.print("That's the one!");
+            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()), productCategory.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }

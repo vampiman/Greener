@@ -389,7 +389,7 @@ public class CompactClient  {
         CompactClient cc = new CompactClient();
         //        System.out.println(cc.getPublicTransport());
 
-        System.out.println(cc.getHeatConsumption());
+        System.out.println();
         //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
         //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
 
