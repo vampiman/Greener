@@ -75,7 +75,7 @@ public class LocalProduce {
 
         Resource lp = new Resource();
         passToken(token, lp);
-        lp.setLocalSaved(produce);
+        lp.setTotal_Produce(produce);
 
         st.close();
         dbConnection.close();
@@ -119,11 +119,7 @@ public class LocalProduce {
                 "UPDATE person SET Local_produce = Local_produce + "
                         + toAdd + " WHERE Email = '" + email + "'");
 
-
-        Statistics statistics = new Statistics();
-
-        int co2 = statistics.increaseScore(toAdd, email);
-        statistics.updateLevel(co2, email);
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

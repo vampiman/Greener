@@ -113,11 +113,7 @@ public class HeatConsumption {
                 + "= Lowering_home_temperature + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
-
-        Statistics statistics = new Statistics();
-
-        int co2 = statistics.increaseScore(toAdd, email);
-        statistics.updateLevel(co2, email);
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

@@ -72,16 +72,12 @@ public class Bike {
 
         passToken(token, re);
 
+        System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Bike = Bike + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
-        Statistics statistics = new Statistics();
-
-        int co2 = statistics.increaseScore(toAdd, email);
-        statistics.updateLevel(co2, email);
-
-        statistics.increaseScore(toAdd, email);
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

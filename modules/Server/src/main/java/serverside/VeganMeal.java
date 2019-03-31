@@ -75,6 +75,7 @@ public class VeganMeal {
         Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
 
 
+        System.out.println(re.getTotal_Meals());
         preparedStatement.setDouble(1, insteadOf - iHad);
         preparedStatement.setString(2, email);
         preparedStatement.executeUpdate();

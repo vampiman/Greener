@@ -69,15 +69,13 @@ public class SolarPanels {
 
         passToken(token, re);
 
+        System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
 
-        Statistics statistics = new Statistics();
-
-        int co2 = statistics.increaseScore(toAdd, email);
-        statistics.updateLevel(co2, email);
+        new Statistics().increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();
@@ -103,6 +101,7 @@ public class SolarPanels {
 
         getDbConnection();
 
+        System.out.println(email);
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(
