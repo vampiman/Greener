@@ -2,7 +2,11 @@ package serverside;
 
 import cn.hutool.json.JSONObject;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.inject.Singleton;
 
@@ -72,17 +76,17 @@ public class VeganMeal {
 
         Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
 
-        Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+        Double ihad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
 
 
-        preparedStatement.setDouble(1, insteadOf - iHad);
+        preparedStatement.setDouble(1, insteadOf - ihad);
         preparedStatement.setString(2, email);
         preparedStatement.executeUpdate();
 
 
         Statistics statistics = new Statistics();
 
-        int co2 = statistics.increaseScore(insteadOf - iHad, email);
+        int co2 = statistics.increaseScore(insteadOf - ihad, email);
         statistics.updateLevel(co2, email);
 
 

@@ -43,7 +43,12 @@ public class CompactClient  {
     }
 
 
-
+    /**
+     * General get method for most GET requests.
+     * @param webTarget the target which returns a response to GET
+     * @param auth the authentication (token or credentials)
+     * @return custom JSONObject based on request
+     */
     public JSONObject generalGet(WebTarget webTarget, String auth) {
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         invocationBuilder.header("Authorization", auth);
@@ -69,8 +74,6 @@ public class CompactClient  {
             auth = auth + token;
         }
 
-//        System.out.println("Token is " + token);
-//        System.out.println("Credentials is " + credentials);
         return auth;
     }
 
@@ -206,6 +209,10 @@ public class CompactClient  {
 
     }
 
+    /**
+     * Returns the total CO2 saved by biking.
+     * @return total CO2 saved by biking
+     */
     public double getBiker() {
         String auth = formAuthHeader();
 
@@ -215,6 +222,12 @@ public class CompactClient  {
         return (double)jo.get("bikeSaved");
     }
 
+    /**
+     * Posts new bike activity information.
+     * @param vehicleType type of vehicle
+     * @param distance distance traveled
+     * @return the response with the originally sent resource
+     */
     public String postBiker(String vehicleType, double distance) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -229,6 +242,10 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    /**
+     * Returns the total CO2 saved by using solar panels.
+     * @return total CO2 saved with solar panels
+     */
     public int getSolar() {
         String auth = formAuthHeader();
 
@@ -240,6 +257,11 @@ public class CompactClient  {
         return savedSolar.intValue();
     }
 
+    /**
+     * Posts latest solar panel activity information.
+     * @param kwhProduced kilowatts-hour produces by solar panels
+     * @return JSON string of the resource containing the input information.
+     */
     public String postSolar(int kwhProduced) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -253,6 +275,11 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    /**
+     * Method executes request to follow another user.
+     * @param email friend's email
+     * @return JSONString of resource originally posted
+     */
     public JSONObject followUser(String email) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -265,6 +292,10 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that fetches all user's friends.
+     * @return 2D String array with friends and their scores
+     */
     public String[][] getAllFriends() {
         String auth = formAuthHeader();
 
@@ -280,17 +311,21 @@ public class CompactClient  {
 
         String[][] result = new String[j1.size()][2];
 
-        int i = 0;
-        while(i != j1.size()) {
-            JSONArray arr = j1.getJSONArray(i);
-            result[i][0] = (String)arr.get(0);
-            result[i][1] = (String)arr.get(1);
-            i++;
+        int counter = 0;
+        while (counter != j1.size()) {
+            JSONArray arr = j1.getJSONArray(counter);
+            result[counter][0] = (String)arr.get(0);
+            result[counter][1] = (String)arr.get(1);
+            counter++;
         }
 
         return result;
     }
 
+    /**
+     * Get total CO2 saved by vegan/vegetarian meals.
+     * @return total CO2 saved by eating vegan/vegetarian meals
+     */
     public Double getMealCarbon() {
         String auth = formAuthHeader();
 
@@ -300,12 +335,19 @@ public class CompactClient  {
         return (Double)jo.get("total_Meals");
     }
 
-    public JSONObject postMeal(Double amountOfMeals, String insteadOf, String iHad) {
+    /**
+     * Post data of latest vegan/vegetarian meal activity.
+     * @param amountOfMeals amount of meals eaten
+     * @param insteadOf food which was substituted
+     * @param ihad the food which was eaten instead of the substituted one
+     * @return the posted JSONObject with activity info
+     */
+    public JSONObject postMeal(Double amountOfMeals, String insteadOf, String ihad) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setTotal_Meals(amountOfMeals);
         re.setMealType(insteadOf);
-        re.setMealType2(iHad);
+        re.setMealType2(ihad);
 
         Response res = client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
@@ -315,6 +357,10 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    /**
+     * Get total CO2 saved by buying local produce.
+     * @return total CO2 saved by buying local produce
+     */
     public Double getLocalProduce() {
         String auth = formAuthHeader();
 
@@ -324,6 +370,12 @@ public class CompactClient  {
         return (Double)jo.getDouble("localSaved");
     }
 
+    /**
+     * Posts the latest buying local produce activity information.
+     * @param kilograms of local produce bought
+     * @param type type of food
+     * @return JSONObject Resource originally posted
+     */
     public JSONObject postLocalProduce(Double kilograms, String type) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -338,6 +390,10 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    /**
+     * Returns user statistics (of all activities).
+     * @return JSONObject with user statistics
+     */
     public JSONObject getStats() {
         String auth = formAuthHeader();
 
@@ -347,6 +403,11 @@ public class CompactClient  {
         return jo;
     }
 
+
+    /**
+     * Returns user personal information.
+     * @return JSONObject with user personal information
+     */
     public JSONObject getPersonalInfo() {
         String auth = formAuthHeader();
 
@@ -361,6 +422,10 @@ public class CompactClient  {
         return jo;
     }
 
+    /**
+     * Returns user's achievements status.
+     * @return user's achievements status
+     */
     public String getAchievements() {
         String auth = formAuthHeader();
 
@@ -370,6 +435,10 @@ public class CompactClient  {
         return jo.get("achievements").toString();
     }
 
+    /**
+     * Returns user's current level.
+     * @return user's current level
+     */
     public int getLevel() {
         String auth = formAuthHeader();
 
@@ -406,19 +475,19 @@ public class CompactClient  {
     }
 
     //FOR TESTING ONLY
-//    /**
-//     * Main method that simulates the client.
-//     *
-//     * @param args Input for main
-//     */
-//    public static void main(String[] args) throws IOException {
-//        CompactClient cc = new CompactClient();
-//        //        System.out.println(cc.getPublicTransport());
-//
-//        System.out.println(cc.getHeatConsumption());
-//        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-//        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
-//
-//    }
+    //    /**
+    //     * Main method that simulates the client.
+    //     *
+    //     * @param args Input for main
+    //     */
+    //    public static void main(String[] args) throws IOException {
+    //        CompactClient cc = new CompactClient();
+    //        //        System.out.println(cc.getPublicTransport());
+    //
+    //        System.out.println(cc.getHeatConsumption());
+    //        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+    //
+    //    }
 
 }

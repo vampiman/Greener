@@ -1,7 +1,5 @@
 package serverside;
 
-import cn.hutool.json.JSONObject;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,7 +32,7 @@ public class SolarPanels {
         String user = "sammy";
         String pass = "temporary";
 
-//        Class.forName("com.mysql.jdbc.Driver");
+        //        Class.forName("com.mysql.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -65,7 +63,7 @@ public class SolarPanels {
 
         getDbConnection();
 
-        int toAdd= (int)(new CarbonCalculator(2).solarPanel(re.getKwh()));
+        int toAdd = (int)(new CarbonCalculator(2).solarPanel(re.getKwh()));
 
         passToken(token, re);
 

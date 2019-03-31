@@ -18,11 +18,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import javafx.scene.chart.PieChart;
-import javafx.scene.control.*;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -36,7 +48,10 @@ import restclient.User;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class Controller {
 
@@ -286,7 +301,8 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postBiker(transportType.getValue().toString(), (int)Double.parseDouble(bikeKilometers.getText()));
+            cc.postBiker(transportType.getValue().toString(),
+                    (int)Double.parseDouble(bikeKilometers.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -366,6 +382,43 @@ public class Controller {
     }
 
     @FXML
+    private void loadFriends(String[][] friends) {
+        GridPane root = new GridPane();
+        root.setGridLinesVisible(true);
+        final int numCols = 2 ;
+        final int numRows = friends.length ;
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHgrow(Priority.NEVER);
+            colConst.setPercentWidth(100.0 / numCols);
+            root.getColumnConstraints().add(colConst);
+        }
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            Text text = new Text();
+            text.setText("Name: " + friends[i][0] + "\n" + "Score: " + friends[i][1]);
+            text.setFont(Font.font("Comic Sans MS"));
+            rowConst.setVgrow(Priority.NEVER);
+            rowConst.setPercentHeight(25);
+            root.getRowConstraints().add(rowConst);
+            ImageView image = new ImageView("images/userImage.jpg");
+            image.setFitWidth(117);
+            image.setFitHeight(108);
+            root.add(image, 0, i);
+            root.add(text, 1, i);
+            root.setHalignment(image, HPos.RIGHT);
+            root.setValignment(image, VPos.CENTER);
+
+        }
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(root);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(scrollPane, 600, 500));
+        stage.show();
+    }
+
+    @FXML
     private void initialize() throws IOException {
         CompactClient cc = new CompactClient();
 
@@ -383,13 +436,13 @@ public class Controller {
 
 
 
-        if(menuPane!=null) {
+        if (menuPane != null) {
             JSONObject details = cc.getPersonalInfo();
             nameLabel.setText("Hello " + details.get("userName").toString());
         }
 
 
-        if(youPagePane!=null) {
+        if (youPagePane != null) {
             JSONObject details = cc.getPersonalInfo();
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
@@ -399,52 +452,58 @@ public class Controller {
 
         if (achievementsGrid != null) {
             JSONObject info = cc.getStats();
-//            System.out.println(info.toJSONString(10));
+            //            System.out.println(info.toJSONString(10));
             ObservableList<PieChart.Data> pieChartData =
-                    FXCollections.observableArrayList(
-                            new PieChart.Data("Vegan Meal", Double.parseDouble(info.get("total_Meals").toString())),
-                            new PieChart.Data("Public Transport", Double.parseDouble(info.get("savedPublicTransport").toString())),
-                            new PieChart.Data("Home Temperature", Double.parseDouble(info.get("savedHeatConsumption").toString())),
-                            new PieChart.Data("Bike", Double.parseDouble(info.get("bikeSaved").toString())),
-                            new PieChart.Data("Local Product", Double.parseDouble(info.get("localSaved").toString())),
-                            new PieChart.Data("Solar Panel", Double.parseDouble(info.get("savedSolar").toString()))
-                    );
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Vegan Meal",
+                                Double.parseDouble(info.get("total_Meals").toString())),
+                        new PieChart.Data("Public Transport",
+                                Double.parseDouble(info.get("savedPublicTransport").toString())),
+                        new PieChart.Data("Home Temperature",
+                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
+                        new PieChart.Data("Bike",
+                                Double.parseDouble(info.get("bikeSaved").toString())),
+                        new PieChart.Data("Local Product",
+                                Double.parseDouble(info.get("localSaved").toString())),
+                        new PieChart.Data("Solar Panel",
+                                Double.parseDouble(info.get("savedSolar").toString()))
+                );
             pieChart.setTitle("SCORE DISTRIBUTION");
             pieChart.setMaxSize(1000, 1000);
             pieChart.setData(pieChartData);
         }
     }
 
-//    @FXML
-//    private void loadMenuPageLogin(ActionEvent event) throws IOException {
-//        Window owner = loginButton.getScene().getWindow();
-//        if (nameField.getText().isEmpty()) {
-//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
-//                    "Please enter your username");
-//            return;
-//        }
-//        if (passwordField.getText().isEmpty()) {
-//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
-//                    "Please enter a password");
-//            return;
-//        }
-//
-//        User user = new User(nameField.getText(), passwordField.getText());
-//        boolean authenticated = false;
-//        authenticated = user.login(null);
-//        String token = user.getToken();
-//
-//        if (authenticated) {
-//            PrintWriter pw = new PrintWriter("test.txt", "UTF-8");
-//            pw.println(token);
-//            pw.close();
-//
-//            loadPage(event, "fxml/menu.fxml");
-//        } else {
-//            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
-//                    "Please enter credentials again.");
-//        }
-//    }
+    //    @FXML
+    //    private void loadMenuPageLogin(ActionEvent event) throws IOException {
+    //        Window owner = loginButton.getScene().getWindow();
+    //        if (nameField.getText().isEmpty()) {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+    //                    "Please enter your username");
+    //            return;
+    //        }
+    //        if (passwordField.getText().isEmpty()) {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+    //                    "Please enter a password");
+    //            return;
+    //        }
+    //
+    //        User user = new User(nameField.getText(), passwordField.getText());
+    //        boolean authenticated = false;
+    //        authenticated = user.login(null);
+    //        String token = user.getToken();
+    //
+    //        if (authenticated) {
+    //            PrintWriter pw = new PrintWriter("test.txt", "UTF-8");
+    //            pw.println(token);
+    //            pw.close();
+    //
+    //            loadPage(event, "fxml/menu.fxml");
+    //        } else {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
+    //                    "Please enter credentials again.");
+    //        }
+    //    }
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
@@ -598,7 +657,8 @@ public class Controller {
     }
 
     private void loadAchievements(int page, Stage appStage) {
-        int start = 0, end = 0;
+        int start = 0;
+        int end = 0;
         switch (page) {
             case 1:
                 start = 0;
@@ -612,18 +672,22 @@ public class Controller {
                 start = 18;
                 end = 26;
                 break;
+            default:
+                start = 0;
+                end = 0;
+                break;
         }
 
         Scene scene = appStage.getScene();
 
         String bits = "000000000000000000000000000";
         for (int i = start; i <= end; i++) {
-            char c = bits.charAt(i);
-            boolean cond = c == '0';
+            char charc = bits.charAt(i);
+            boolean cond = charc == '0';
             if (cond) {
-                String b = "ach" + i;
+                String str = "ach" + i;
 
-                Pane pane = (Pane) scene.lookup("#" + b);
+                Pane pane = (Pane) scene.lookup("#" + str);
                 pane.setOpacity(0.2);
             }
         }
@@ -741,7 +805,8 @@ public class Controller {
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/mainLogin.fxml"));
+        Parent root = FXMLLoader
+                .load(getClass().getClassLoader().getResource("fxml/mainLogin.fxml"));
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
@@ -763,11 +828,11 @@ public class Controller {
         appStage.setX((primScreenBounds.getWidth() - appStage.getWidth()) / 2);
         appStage.setY((primScreenBounds.getHeight() - appStage.getHeight()) / 2);
 
-        if (fileName.equals("fxml/achievements1.fxml"))
+        if (fileName.equals("fxml/achievements1.fxml")) {
             loadAchievements(1, appStage);
-        else if (fileName.equals("fxml/achievements2.fxml"))
+        } else if (fileName.equals("fxml/achievements2.fxml")) {
             loadAchievements(2, appStage);
-        else if (fileName.equals("fxml/achievements3.fxml")) {
+        } else if (fileName.equals("fxml/achievements3.fxml")) {
             loadAchievements(3, appStage);
         }
     }
@@ -970,7 +1035,8 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()), "Meat", mealTypes.getValue().toString());
+            cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()),
+                    "Meat", mealTypes.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -984,24 +1050,24 @@ public class Controller {
                             "Please enter the code of yor friend");
             return;
         }
-//         else {
-//            try {
-//                int code = Integer.parseInt(friendCode.getText());
-//                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-//            } catch (NumberFormatException e) {
-//                AlertHelper
-//                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-//                                "Please enter a number to indicate your friend's code");
-//                return;
-//            }
-//        }
+        //         else {
+        //            try {
+        //                int code = Integer.parseInt(friendCode.getText());
+        //                //new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+        //            } catch (NumberFormatException e) {
+        //                AlertHelper
+        //                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+        //                                "Please enter a number to indicate your friend's code");
+        //                return;
+        //            }
+        //        }
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             JSONObject jo = cc.followUser(friendCode.getText());
             if (jo.get("status").toString().equals("Success")) {
-               AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
+                AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
                        "You are now following this person!");
             } else {
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
@@ -1011,43 +1077,6 @@ public class Controller {
         //String[][] friends = {{"Mayasa", "2500"}, {"Irem", "1500"}, {"Natalia", "1000"}};
         //loadFriends(friends);
 
-    }
-
-    @FXML
-    private void loadFriends(String[][] friends) {
-        GridPane root = new GridPane();
-        root.setGridLinesVisible(true);
-        final int numCols = 2 ;
-        final int numRows = friends.length ;
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setHgrow(Priority.NEVER);
-            colConst.setPercentWidth(100.0 / numCols);
-            root.getColumnConstraints().add(colConst);
-        }
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            Text text = new Text();
-            text.setText("Name: " + friends[i][0] + "\n" + "Score: " + friends[i][1]);
-            text.setFont(Font.font("Comic Sans MS"));
-            rowConst.setVgrow(Priority.NEVER);
-            rowConst.setPercentHeight(25);
-            root.getRowConstraints().add(rowConst);
-            ImageView image = new ImageView("images/userImage.jpg");
-            image.setFitWidth(117);
-            image.setFitHeight(108);
-            root.add(image, 0, i);
-            root.add(text, 1, i);
-            root.setHalignment(image, HPos.RIGHT);
-            root.setValignment(image, VPos.CENTER);
-
-        }
-
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(root);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scrollPane, 600, 500));
-        stage.show();
     }
 
     @FXML
@@ -1074,7 +1103,8 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()), productCategory.getValue().toString());
+            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),
+                    productCategory.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }

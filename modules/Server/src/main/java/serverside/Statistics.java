@@ -1,11 +1,16 @@
 package serverside;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.sql.*;
 
 @Path("statistics")
 public class Statistics {
@@ -26,17 +31,26 @@ public class Statistics {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+    /**
+     * Returns total CO2 saved by the user.
+     * @param email user's email
+     * @return resource (JSON) with total CO2 saved
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     * @throws ClassNotFoundException in case of class not found
+     */
     @GET
     @Path("co2")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource totalSaved(@HeaderParam("Email") String email) throws SQLException, ClassNotFoundException {
+    public Resource totalSaved(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
         Resource re = new Resource();
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT CO_2_saved FROM person WHERE Email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT CO_2_saved "
+                + "FROM person WHERE Email = '" + email + "'");
         rs.next();
         Double saved = rs.getDouble("CO_2_saved");
 
@@ -45,6 +59,12 @@ public class Statistics {
         return re;
     }
 
+    /**
+     * Returns statistics of CO2 saved by all activities.
+     * @param email user's email
+     * @return JSON with CO2 saved by individual activities
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     @GET
     @Path("allstats")
     @Produces(MediaType.APPLICATION_JSON)
@@ -55,9 +75,9 @@ public class Statistics {
 
         Statement st = dbConnection.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT Vegan_meal, Bike," +
-                " Solar_panels, Local_produce, Lowering_home_temperature, Public_transport" +
-                " FROM person WHERE Email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT Vegan_meal, Bike,"
+                + " Solar_panels, Local_produce, Lowering_home_temperature, Public_transport"
+                + " FROM person WHERE Email = '" + email + "'");
         rs.next();
         Double veganSaved = rs.getDouble("Vegan_meal");
         Double bikeSaved = rs.getDouble("Bike");
@@ -73,16 +93,19 @@ public class Statistics {
         re.setSavedHeatConsumption(loweringSaved);
         re.setSavedPublicTransport(publicSaved);
 
-
         return re;
     }
 
+    /**
+     * Returns user's personal information.
+     * @param email user's email
+     * @return JSONObject with personal information
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     @GET
     @Path("personalinfo")
     @Produces(MediaType.APPLICATION_JSON)
     public Resource getPersonalInfo(@HeaderParam("Email") String email) throws SQLException {
-        Resource re = new Resource();
-
         getDbConnection();
 
         PreparedStatement preparedStatement = null;
@@ -104,7 +127,7 @@ public class Statistics {
         Double co2Saved = rs.getDouble("CO_2_saved");
         int friends = rs1.getInt("COUNT(User_email)");
 
-
+        Resource re = new Resource();
         re.setUserName(username);
         re.setCo2Saved(co2Saved);
         re.setFriendsNo(friends);
@@ -119,12 +142,16 @@ public class Statistics {
         return re;
     }
 
+    /**
+     * Returns user's achievements status.
+     * @param email user's email
+     * @return JSONObject with achievements (string of bits)
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     @GET
     @Path("achievements")
     @Produces(MediaType.APPLICATION_JSON)
     public Resource getAchievements(@HeaderParam("Email") String email) throws SQLException {
-        Resource re = new Resource();
-
         getDbConnection();
 
         String sql = "SELECT Achievements FROM person WHERE Email = ?";
@@ -137,6 +164,7 @@ public class Statistics {
 
         String achievements = rs.getString("Achievements");
 
+        Resource re = new Resource();
         re.setAchievements(achievements);
 
         dbConnection.close();
@@ -146,12 +174,16 @@ public class Statistics {
         return re;
     }
 
+    /**
+     * Returns user's current level.
+     * @param email user's email
+     * @return Resource with user's current level
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     @GET
     @Path("level")
     @Produces(MediaType.APPLICATION_JSON)
     public Resource getLevel(@HeaderParam("Email") String email) throws SQLException {
-        Resource re = new Resource();
-
         getDbConnection();
 
         String sql = "SELECT Level FROM person WHERE Email = ?";
@@ -164,6 +196,7 @@ public class Statistics {
 
         int level = rs.getInt("Level");
 
+        Resource re = new Resource();
         re.setLevel(level);
 
         dbConnection.close();
@@ -174,6 +207,13 @@ public class Statistics {
     }
 
 
+    /**
+     * Adds latest quantity of CO2 saved to produce current total.
+     * @param co2saved CO2 in kg saved by latest activity
+     * @param email user's email
+     * @return new amount of CO2 saved
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     public int increaseScore(double co2saved, String email) throws SQLException {
 
         getDbConnection();
@@ -195,14 +235,19 @@ public class Statistics {
         rs.next();
 
         int result = rs.getInt("CO_2_saved");
-
         ps.close();
         rs.close();
         dbConnection.close();
-
         return result;
     }
 
+    /**
+     * Returns true if current level does not have to be changed, false otherwise.
+     * @param co2saved latest CO2 saving
+     * @param email user's email
+     * @return true if level was correct, false otherwise
+     * @throws SQLException in case of e.g. wrong SQL syntax
+     */
     public boolean updateLevel(double co2saved, String email) throws SQLException {
 
         getDbConnection();
@@ -217,7 +262,7 @@ public class Statistics {
 
         int currentLevel = rs.getInt("Level");
 
-        if(co2saved / 150 == currentLevel) {
+        if (co2saved / 150 == currentLevel) {
             return true;
         }
 
