@@ -203,10 +203,6 @@ public class Statistics {
         return result;
     }
 
-
-
-
-
     public boolean updateLevel(double co2saved, String email) throws SQLException {
 
         getDbConnection();

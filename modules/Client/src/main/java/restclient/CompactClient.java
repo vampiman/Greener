@@ -339,7 +339,7 @@ public class CompactClient  {
     }
 
     /**
-     * 
+     *
      * @param amountOfMeals
      * @param insteadOf
      * @param had

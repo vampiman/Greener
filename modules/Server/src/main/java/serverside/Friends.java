@@ -15,8 +15,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-
-
 @Path("friends")
 public class Friends {
 
@@ -58,13 +56,13 @@ public class Friends {
 
         ps.setString(1, toSearch);
 
-
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
             sr.setStatus("Peson not found!");
             return sr;
         }
+
 
         sql = "SELECT ID FROM person WHERE Email = ?";
 
@@ -133,7 +131,8 @@ public class Friends {
 
         Statement st =  dbConnection.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) FROM friends WHERE User_email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) "
+                + "FROM friends WHERE User_email = '" + email + "'");
         rs.next();
 
 
