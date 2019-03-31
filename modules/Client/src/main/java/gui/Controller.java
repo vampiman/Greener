@@ -30,16 +30,9 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 import restclient.CompactClient;
 import restclient.User;
 
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -388,14 +381,16 @@ public class Controller {
             todaysTip.setText(text);
         }
 
-        JSONObject details = cc.getPersonalInfo();
+
 
         if(menuPane!=null) {
+            JSONObject details = cc.getPersonalInfo();
             nameLabel.setText("Hello " + details.get("userName").toString());
         }
 
 
         if(youPagePane!=null) {
+            JSONObject details = cc.getPersonalInfo();
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
             emailField.setText("Email: " + details.get("email").toString());

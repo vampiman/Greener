@@ -18,9 +18,9 @@ import javax.ws.rs.core.Response;
 
 public class CompactClient  {
 
-    private Client client;
-    private String credentials;
-    private String token;
+    Client client;
+    String credentials;
+    String token;
 
     /**
      * Constructor for user.
@@ -41,6 +41,8 @@ public class CompactClient  {
         }
         this.token = token;
     }
+
+
 
     public JSONObject generalGet(WebTarget webTarget, String auth) {
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
@@ -147,7 +149,7 @@ public class CompactClient  {
                 .header("Authorization", auth)
                 .post(Entity.json(re));
 
-        return res.readEntity(JSONObject.class).toString();
+        return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
 
@@ -194,23 +196,23 @@ public class CompactClient  {
      * @return Whether it is stored or not as a boolean
      * @throws IOException Error can occur while reading the file
      */
-    public JSONObject getPublicTransport() {
+    public double getPublicTransport() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/publictransport/get");
         JSONObject jo = generalGet(webTarget, auth);
 
-        return jo;
+        return (double)jo.get("savedPublicTransport");
 
     }
 
-    public String getBiker() {
+    public double getBiker() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/bike/distance");
         JSONObject jo = generalGet(webTarget, auth);
 
-        return jo.toJSONString(10);
+        return (double)jo.get("bikeSaved");
     }
 
     public String postBiker(String vehicleType, double distance) {
@@ -233,7 +235,9 @@ public class CompactClient  {
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/solarpanels/percentage");
         JSONObject jo = generalGet(webTarget, auth);
 
-        return (int)jo.get("savedSolar");
+        Double savedSolar = (Double)jo.get("savedSolar");
+
+        return savedSolar.intValue();
     }
 
     public String postSolar(int kwhProduced) {
@@ -317,7 +321,7 @@ public class CompactClient  {
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/localproduce/get");
         JSONObject jo = generalGet(webTarget, auth);
 
-        return (Double)jo.getDouble("total_Produce");
+        return (Double)jo.getDouble("localSaved");
     }
 
     public JSONObject postLocalProduce(Double kilograms, String type) {
@@ -347,7 +351,12 @@ public class CompactClient  {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/personalinfo");
-        JSONObject jo = generalGet(webTarget, auth);
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
 
         return jo;
     }
@@ -397,19 +406,19 @@ public class CompactClient  {
     }
 
     //FOR TESTING ONLY
-    /**
-     * Main method that simulates the client.
-     *
-     * @param args Input for main
-     */
-    public static void main(String[] args) throws IOException {
-        CompactClient cc = new CompactClient();
-        //        System.out.println(cc.getPublicTransport());
-
-        System.out.println(cc.getHeatConsumption());
-        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
-
-    }
+//    /**
+//     * Main method that simulates the client.
+//     *
+//     * @param args Input for main
+//     */
+//    public static void main(String[] args) throws IOException {
+//        CompactClient cc = new CompactClient();
+//        //        System.out.println(cc.getPublicTransport());
+//
+//        System.out.println(cc.getHeatConsumption());
+//        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+//        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+//
+//    }
 
 }
