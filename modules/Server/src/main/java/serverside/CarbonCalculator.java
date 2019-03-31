@@ -536,8 +536,9 @@ public class CarbonCalculator {
         return amount * sort;
     }
     public static void main(String[] args) {
+        CarbonCalculator cc = new CarbonCalculator(2);
 //        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
-        System.out.println(160/150);
+        System.out.println(cc.bike("Hybrid", 1));
     }
 
 }

@@ -104,7 +104,7 @@ public class PublicTransport {
                 re.getPublicTransportType(),
                 re.getTotal_Distance());
 
-        System.out.println(re.getPublicTransportType() + " transport");
+
 
         passToken(token, re);
 
@@ -112,10 +112,16 @@ public class PublicTransport {
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
-        new Statistics().increaseScore(toAdd, email);
 
-        st.close();
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
+
+
         dbConnection.close();
+        st.close();
+
 
         return re;
     }
