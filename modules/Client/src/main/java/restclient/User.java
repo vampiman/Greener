@@ -123,8 +123,8 @@ public class User {
             auth = token;
         }
 
-        System.out.println("Token is " + token);
-        System.out.println("Credentials is " + credentials);
+//        System.out.println("Token is " + token);
+//        System.out.println("Credentials is " + credentials);
         return auth;
     }
 
