@@ -72,7 +72,7 @@ public class PublicTransport {
                 + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int total = rs.getInt("Public_transport");
+        Double total = rs.getDouble("Public_transport");
 
         Resource re = new Resource();
         re.setSavedPublicTransport(total);
@@ -100,19 +100,28 @@ public class PublicTransport {
             throws SQLException, ClassNotFoundException {
         getDbConnection();
 
-        System.out.println(re.getPublicTransportType() + " transport");
+        double toAdd = new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
+                re.getPublicTransportType(),
+                re.getTotal_Distance());
+
+
 
         passToken(token, re);
 
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
-                + new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
-                re.getPublicTransportType(),
-                re.getTotal_Distance())
-                + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
 
-        st.close();
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
+
+
         dbConnection.close();
+        st.close();
+
 
         return re;
     }

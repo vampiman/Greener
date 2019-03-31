@@ -73,7 +73,7 @@ public class HeatConsumption {
                 + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int total = rs.getInt("Lowering_home_temperature");
+        Double total = rs.getDouble("Lowering_home_temperature");
 
         Resource re = new Resource();
         re.setSavedHeatConsumption(total);
@@ -104,13 +104,20 @@ public class HeatConsumption {
 
         CarbonCalculator cc = new CarbonCalculator(2);
 
+        double toAdd = cc.homeHeatConsumptionSaved(re.getAverageHeatConsumption(),
+                re.getCurrentHeatConsumption(), re.getEnergyType());
+
         Statement st = dbConnection.createStatement();
 
         st.executeUpdate("UPDATE person SET Lowering_home_temperature "
                 + "= Lowering_home_temperature + "
-                + cc.homeHeatConsumptionSaved(re.getAverageHeatConsumption(),
-                re.getCurrentHeatConsumption(), re.getEnergyType())
-                + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
+
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
 
         st.close();
         dbConnection.close();

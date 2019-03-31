@@ -1,12 +1,19 @@
 package serverside;
 
-import cn.hutool.db.Session;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import javax.print.attribute.standard.Media;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import java.sql.*;
 
 @Path("friends")
 public class Friends {
@@ -28,6 +35,15 @@ public class Friends {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+
+    /**
+     * Method executes request to follow another person, if possible.
+     * @param email user's email
+     * @param toSearch friend's email
+     * @return Resource with follow request status
+     * @throws SQLException in case of for example SQL Syntax error
+     * @throws ClassNotFoundException in case of class not found
+     */
     @POST
     @Path("follow")
     @Produces(MediaType.APPLICATION_JSON)
@@ -39,62 +55,94 @@ public class Friends {
 
         SessionResource sr = new SessionResource();
 
-        Statement st = dbConnection.createStatement();
+        PreparedStatement ps = null;
 
-        ResultSet rs = st.executeQuery("SELECT ID, Email FROM person WHERE Email = '" + toSearch + "'");
+        String sql = "SELECT ID, Email FROM person WHERE Email = ?";
 
-        rs.next();
+        ps = dbConnection.prepareStatement(sql);
+
+        ps.setString(1, toSearch);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (!rs.next()) {
+            sr.setStatus("Person not found!");
+            return sr;
+        }
 
         int friendId = rs.getInt("ID");
         String friend = rs.getString("Email");
 
-        rs = st.executeQuery("SELECT ID FROM person WHERE Email = '" + email + "'");
+        sql = "SELECT ID FROM person WHERE Email = ?";
+
+        ps = dbConnection.prepareStatement(sql);
+
+        ps.setString(1, email);
+
+        rs = ps.executeQuery();
         rs.next();
 
         int yourId = rs.getInt("ID");
 
-        if(friendId == yourId) {
+        if (friendId == yourId) {
             sr.setStatus("You can't follow yourself!");
             return sr;
         }
 
-        rs = st.executeQuery("SELECT COUNT(User_email) FROM friends " +
-                "WHERE User_email = '" + email + "'" +
-                " AND Friend_email = '"+ toSearch +"'");
+        sql = "SELECT COUNT(User_email) FROM friends WHERE User_email = ? AND Friend_email = ?";
+
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+        ps.setString(2, toSearch);
+
+        rs = ps.executeQuery();
 
         rs.next();
 
-        if(rs.getInt("COUNT(User_email)") > 0) {
+        if (rs.getInt("COUNT(User_email)") > 0) {
             sr.setStatus("Already following this person!");
             return sr;
         }
 
+        sql = "INSERT INTO friends(ID, User_email,"
+                + " Friend_email) VALUES (?, ?, ?)";
 
-        st.executeUpdate("INSERT INTO friends(ID, User_email," +
-                " Friend_email) VALUES ('" + yourId + "', " +
-                "'" + email +"', '" + friend + "')");
+        ps = dbConnection.prepareStatement(sql);
+        ps.setInt(1, yourId);
+        ps.setString(2, email);
+        ps.setString(3, friend);
 
+        ps.executeUpdate("INSERT INTO friends(ID, User_email,"
+                + " Friend_email) VALUES ('" + yourId + "', "
+                + "'" + email + "', '" + friend + "')");
 
         sr.setStatus("Success");
 
-        st.close();
+        dbConnection.close();
+        ps.close();
         rs.close();
 
         return sr;
     }
 
+    /**
+     * Returns all user's friends.
+     * @param email user's email
+     * @return Resource containing all friends
+     * @throws SQLException in case of for example SQL syntax error
+     * @throws ClassNotFoundException in case class is not found
+     */
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public SessionResource getAllFriends(@HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
-        SessionResource sr = new SessionResource();
-
         getDbConnection();
 
         Statement st =  dbConnection.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) FROM friends WHERE User_email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) "
+                + "FROM friends WHERE User_email = '" + email + "'");
         rs.next();
 
 
@@ -104,19 +152,20 @@ public class Friends {
 
         Statement st2 = dbConnection.createStatement();
 
-        int i = 0;
+        int counter = 0;
         while (rs.next()) {
-            ResultSet rs1 = st2.executeQuery("SELECT Score, Name FROM person " +
-                    "WHERE Email = '" + rs.getString("Friend_email") + "'");
+            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person "
+                    + "WHERE Email = '" + rs.getString("Friend_email") + "'");
 
             rs1.next();
 
-            friends[i][0] = rs1.getString("Name");
-            friends[i][1] = rs1.getString("Score");
+            friends[counter][0] = rs1.getString("Name");
+            friends[counter][1] = rs1.getString("CO_2_saved");
 
-            i++;
+            counter++;
         }
 
+        SessionResource sr = new SessionResource();
         sr.setFriends(friends);
 
         st.close();

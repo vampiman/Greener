@@ -68,14 +68,15 @@ public class LocalProduce {
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '"+ email + "'");
+        ResultSet rs = st.executeQuery("SELECT Local_produce "
+                + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
         Double produce = rs.getDouble("Local_produce");
 
         Resource lp = new Resource();
         passToken(token, lp);
-        lp.setTotal_Produce(produce);
+        lp.setLocalSaved(produce);
 
         st.close();
         dbConnection.close();
@@ -109,12 +110,21 @@ public class LocalProduce {
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
+        double toAdd = new CarbonCalculator(2).localproduce_Calculator(lp.getTotal_Produce(),
+                                                                                lp.getMealType());
+
         passToken(token, lp);
 
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
                 "UPDATE person SET Local_produce = Local_produce + "
-                        + new CarbonCalculator(2).localproduce_Calculator(lp.getTotal_Produce(),lp.getMealType()) + " WHERE Email = '" + email + "'");
+                        + toAdd + " WHERE Email = '" + email + "'");
+
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
 
         st.close();
         dbConnection.close();

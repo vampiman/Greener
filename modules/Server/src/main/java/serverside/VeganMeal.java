@@ -4,9 +4,9 @@ import cn.hutool.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.inject.Singleton;
 
@@ -64,21 +64,34 @@ public class VeganMeal {
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
+        PreparedStatement preparedStatement = null;
+
+        String sql = "UPDATE person SET Vegan_meal = Vegan_meal + ? WHERE Email = ?";
+
+        preparedStatement = dbConnection.prepareStatement(sql);
+
         passToken(token, re);
 
         CarbonCalculator cc = new CarbonCalculator(2);
 
         Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
 
-        Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+        Double ihad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
 
 
-        System.out.println(re.getTotal_Meals());
-        Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + (insteadOf - iHad) + " WHERE Email = '" + email + "'");
+        preparedStatement.setDouble(1, insteadOf - ihad);
+        preparedStatement.setString(2, email);
+        preparedStatement.executeUpdate();
 
-        st.close();
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(insteadOf - ihad, email);
+        statistics.updateLevel(co2, email);
+
+
+
+        preparedStatement.close();
         dbConnection.close();
 
         return re;
@@ -99,8 +112,13 @@ public class VeganMeal {
             throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Email = '" + email +"'");
+        String sql = "SELECT Vegan_meal FROM person WHERE Email = ?";
+
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+
+        preparedStatement.setString(1, email);
+
+        ResultSet rs = preparedStatement.executeQuery();
 
         rs.next();
         Double total = rs.getDouble("Vegan_meal");
@@ -109,11 +127,11 @@ public class VeganMeal {
         passToken(token, re);
         re.setTotal_Meals(total);
 
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
         jo.put("total", total);
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         return re;
 
