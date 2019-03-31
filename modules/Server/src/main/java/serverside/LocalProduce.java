@@ -119,7 +119,11 @@ public class LocalProduce {
                 "UPDATE person SET Local_produce = Local_produce + "
                         + toAdd + " WHERE Email = '" + email + "'");
 
-        new Statistics().increaseScore(toAdd, email);
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
 
         st.close();
         dbConnection.close();
