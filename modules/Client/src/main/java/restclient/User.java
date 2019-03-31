@@ -2,6 +2,7 @@ package restclient;
 
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import org.apache.commons.codec.digest.DigestUtils;
 
 import javax.ws.rs.client.Client;
@@ -11,6 +12,7 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.Key;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +21,9 @@ public class User {
     private Client client;
     private String credentials;
     private String token;
+    public static final Key KEY = Keys.hmacShaKeyFor(
+            "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
+                    .getBytes());
 
 
     /**
@@ -33,7 +38,7 @@ public class User {
         this.credentials = Jwts.builder()
                 .claim("Email", email)
                 .claim("Password", hashedPassword)
-                .signWith(KeyGenClient.KEY)
+                .signWith(KEY)
                 .compact();
     }
 

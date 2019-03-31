@@ -8,8 +8,10 @@ import io.jsonwebtoken.IncorrectClaimException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MissingClaimException;
+import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,6 +30,13 @@ public class JwtVerifier implements ContainerRequestFilter {
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
     private Connection dbConnection;
+    static final Key KEY = Keys.hmacShaKeyFor(
+            "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
+                    .getBytes());
+
+    static final Key KEY_VALIDATE = Keys.hmacShaKeyFor(
+            "THISISEVENHARDERTHISISTHEKEYTHATONLYSERVERUSESITSSUCHAGREATSECRETITWILLBLOWYOURMIND"
+                    .getBytes());
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
@@ -71,7 +80,7 @@ public class JwtVerifier implements ContainerRequestFilter {
     public String verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY_VALIDATE)
+                    .setSigningKey(KEY_VALIDATE)
                     .parseClaimsJws(token);
 
             System.out.println(claims.getBody().getExpiration() + " expiration");
@@ -94,7 +103,7 @@ public class JwtVerifier implements ContainerRequestFilter {
     public String issueJwt(String credentials) throws SQLException {
         try {
             Jws<Claims> claims = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY)
+                    .setSigningKey(KEY)
                     .parseClaimsJws(credentials);
             getDbConnection();
 
@@ -113,7 +122,7 @@ public class JwtVerifier implements ContainerRequestFilter {
             System.out.println(passToCheck + " password");
 
             Jws<Claims> claims2 = Jwts.parser()
-                    .setSigningKey(KeyGen.KEY)
+                    .setSigningKey(KEY)
                     .require("Password", passToCheck)
                     .parseClaimsJws(credentials);
 
@@ -127,7 +136,7 @@ public class JwtVerifier implements ContainerRequestFilter {
             return Jwts.builder()
                     .setSubject(email)
                     .setExpiration(today.getTime())
-                    .signWith(KeyGen.KEY_VALIDATE)
+                    .signWith(KEY_VALIDATE)
                     .compact();
 
         } catch (SignatureException | ExpiredJwtException
