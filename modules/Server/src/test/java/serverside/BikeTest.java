@@ -26,10 +26,9 @@ import java.sql.Statement;
 @PrepareForTest(Bike.class)
 public class BikeTest {
 
-    public Statistics makeStatistics() {
-        return new Statistics();
-    }
 
+    @Mock
+    private CarbonCalculator ccMock;
     @Mock
     private Connection mockConnection;
     @Mock
@@ -51,6 +50,7 @@ public class BikeTest {
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
         mockStatistics = Mockito.mock(Statistics.class);
+        ccMock = Mockito.mock(CarbonCalculator.class);
     }
 
     /**
@@ -67,6 +67,8 @@ public class BikeTest {
                 "sammy",
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
+        Mockito.when(ccMock.bike(anyString(), anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(0.0, "email")).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);

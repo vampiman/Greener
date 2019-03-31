@@ -104,7 +104,7 @@ public class PublicTransport {
                 re.getPublicTransportType(),
                 re.getTotal_Distance());
 
-        System.out.println(re.getPublicTransportType() + " transport");
+
 
         passToken(token, re);
 

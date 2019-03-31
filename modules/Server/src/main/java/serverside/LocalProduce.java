@@ -75,7 +75,7 @@ public class LocalProduce {
 
         Resource lp = new Resource();
         passToken(token, lp);
-        lp.setTotal_Produce(produce);
+        lp.setLocalSaved(produce);
 
         st.close();
         dbConnection.close();
