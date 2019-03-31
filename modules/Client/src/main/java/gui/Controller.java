@@ -30,16 +30,20 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import restclient.CompactClient;
 import restclient.User;
 
+import javax.swing.text.Document;
+import javax.swing.text.Element;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Controller {
 
@@ -195,6 +199,69 @@ public class Controller {
 
     @FXML
     private GridPane youPagePane;
+
+    @FXML
+    private Pane ach0;
+    @FXML
+    private Pane ach1;
+    @FXML
+    private Pane ach2;
+
+    @FXML
+    private Pane ach3;
+    @FXML
+    private Pane ach4;
+    @FXML
+    private Pane ach5;
+
+    @FXML
+    private Pane ach6;
+    @FXML
+    private Pane ach7;
+    @FXML
+    private Pane ach8;
+
+    @FXML
+    private Pane ach9;
+    @FXML
+    private Pane ach10;
+    @FXML
+    private Pane ach11;
+
+    @FXML
+    private Pane ach12;
+    @FXML
+    private Pane ach13;
+    @FXML
+    private Pane ach14;
+
+    @FXML
+    private Pane ach15;
+    @FXML
+    private Pane ach16;
+    @FXML
+    private Pane ach17;
+
+    @FXML
+    private Pane ach18;
+    @FXML
+    private Pane ach19;
+    @FXML
+    private Pane ach20;
+
+    @FXML
+    private Pane ach21;
+    @FXML
+    private Pane ach22;
+    @FXML
+    private Pane ach23;
+
+    @FXML
+    private Pane ach24;
+    @FXML
+    private Pane ach25;
+    @FXML
+    private Pane ach26;
 
 
     @FXML
@@ -496,6 +563,78 @@ public class Controller {
     }
 
     @FXML
+    private void handleBackToMenuAction(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/menu.fxml");
+        }
+    }
+
+    @FXML
+    private void handleAch1Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements1.fxml");
+        }
+    }
+
+    @FXML
+    private void handleAch2Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements2.fxml");
+        }
+    }
+
+    @FXML
+    private void handleAch3Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements3.fxml");
+        }
+    }
+
+    private void loadAchievements(int page, Stage appStage) {
+        int start = 0, end = 0;
+        switch (page) {
+            case 1:
+                start = 0;
+                end = 8;
+                break;
+            case 2:
+                start = 9;
+                end = 17;
+                break;
+            case 3:
+                start = 18;
+                end = 26;
+                break;
+        }
+
+        Scene scene = appStage.getScene();
+
+        String bits = "000000000000000000000000000";
+        for (int i = start; i <= end; i++) {
+            char c = bits.charAt(i);
+            boolean cond = c == '0';
+            if (cond) {
+                String b = "ach" + i;
+
+                Pane pane = (Pane) scene.lookup("#" + b);
+                pane.setOpacity(0.2);
+            }
+        }
+    }
+
+    @FXML
     private void handleSignUpPersonalAction(ActionEvent event) throws IOException {
         Window owner = signupName.getScene().getWindow();
         if (signupName.getText().isEmpty()) {
@@ -562,7 +701,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/achievements.fxml");
+            loadPage(event, "fxml/achievements1.fxml");
         }
     }
 
@@ -628,6 +767,14 @@ public class Controller {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         appStage.setX((primScreenBounds.getWidth() - appStage.getWidth()) / 2);
         appStage.setY((primScreenBounds.getHeight() - appStage.getHeight()) / 2);
+
+        if (fileName.equals("fxml/achievements1.fxml"))
+            loadAchievements(1, appStage);
+        else if (fileName.equals("fxml/achievements2.fxml"))
+            loadAchievements(2, appStage);
+        else if (fileName.equals("fxml/achievements3.fxml")) {
+            loadAchievements(3, appStage);
+        }
     }
 
     @FXML
