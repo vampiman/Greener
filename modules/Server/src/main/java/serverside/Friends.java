@@ -1,12 +1,21 @@
 package serverside;
 
-import cn.hutool.db.Session;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import javax.print.attribute.standard.Media;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import java.sql.*;
+
 
 @Path("friends")
 public class Friends {
@@ -53,13 +62,9 @@ public class Friends {
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
-           sr.setStatus("Peson not found!");
-           return sr;
+            sr.setStatus("Peson not found!");
+            return sr;
         }
-
-
-        int friendId = rs.getInt("ID");
-        String friend = rs.getString("Email");
 
         sql = "SELECT ID FROM person WHERE Email = ?";
 
@@ -67,12 +72,15 @@ public class Friends {
 
         ps.setString(1, email);
 
+        int friendId = rs.getInt("ID");
+        String friend = rs.getString("Email");
+
         rs = ps.executeQuery();
         rs.next();
 
         int yourId = rs.getInt("ID");
 
-        if(friendId == yourId) {
+        if (friendId == yourId) {
             sr.setStatus("You can't follow yourself!");
             return sr;
         }
@@ -87,23 +95,23 @@ public class Friends {
 
         rs.next();
 
-        if(rs.getInt("COUNT(User_email)") > 0) {
+        if (rs.getInt("COUNT(User_email)") > 0) {
             sr.setStatus("Already following this person!");
             return sr;
         }
 
-        sql = "INSERT INTO friends(ID, User_email," +
-                " Friend_email) VALUES (?, " +
-                "?, ?)";
+        sql = "INSERT INTO friends(ID, User_email,"
+                + " Friend_email) VALUES (?, "
+                + "?, ?)";
 
         ps = dbConnection.prepareStatement(sql);
         ps.setInt(1, yourId);
         ps.setString(2, email);
         ps.setString(3, friend);
 
-        ps.executeUpdate("INSERT INTO friends(ID, User_email," +
-                " Friend_email) VALUES ('" + yourId + "', " +
-                "'" + email +"', '" + friend + "')");
+        ps.executeUpdate("INSERT INTO friends(ID, User_email,"
+                + " Friend_email) VALUES ('" + yourId + "', "
+                + "'" + email + "', '" + friend + "')");
 
 
         sr.setStatus("Success");
@@ -120,7 +128,6 @@ public class Friends {
     @Produces(MediaType.APPLICATION_JSON)
     public SessionResource getAllFriends(@HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
-        SessionResource sr = new SessionResource();
 
         getDbConnection();
 
@@ -136,18 +143,20 @@ public class Friends {
 
         Statement st2 = dbConnection.createStatement();
 
-        int i = 0;
+        int io = 0;
         while (rs.next()) {
-            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person " +
-                    "WHERE Email = '" + rs.getString("Friend_email") + "'");
+            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person "
+                    + "WHERE Email = '" + rs.getString("Friend_email") + "'");
 
             rs1.next();
 
-            friends[i][0] = rs1.getString("Name");
-            friends[i][1] = rs1.getString("CO_2_saved");
+            friends[io][0] = rs1.getString("Name");
+            friends[io][1] = rs1.getString("CO_2_saved");
 
-            i++;
+            io++;
         }
+
+        SessionResource sr = new SessionResource();
 
         sr.setFriends(friends);
 

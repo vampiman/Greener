@@ -2,7 +2,7 @@ package serverside;
 
 import cn.hutool.json.JSONObject;
 
-import java.sql.*;
+
 
 import javax.inject.Singleton;
 
@@ -13,6 +13,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Path("veganmeal")
 @Singleton
@@ -72,17 +77,17 @@ public class VeganMeal {
 
         Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
 
-        Double iHad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+        Double had = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
 
 
-        preparedStatement.setDouble(1, insteadOf - iHad);
+        preparedStatement.setDouble(1, insteadOf - had);
         preparedStatement.setString(2, email);
         preparedStatement.executeUpdate();
 
 
         Statistics statistics = new Statistics();
 
-        int co2 = statistics.increaseScore(insteadOf - iHad, email);
+        int co2 = statistics.increaseScore(insteadOf - had, email);
         statistics.updateLevel(co2, email);
 
 

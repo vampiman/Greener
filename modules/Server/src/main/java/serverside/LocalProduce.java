@@ -68,7 +68,9 @@ public class LocalProduce {
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '"+ email + "'");
+        ResultSet rs = st.executeQuery(
+                "SELECT Local_produce FROM person WHERE Email = '"
+                        + email + "'");
 
         rs.next();
         Double produce = rs.getDouble("Local_produce");
