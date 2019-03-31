@@ -22,7 +22,6 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("bike")
 @Singleton
-@javax.annotation.Resource
 public class Bike {
 
     private Connection dbConnection;
@@ -62,8 +61,9 @@ public class Bike {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-
-    public void postData(Resource re, @HeaderParam("Token") String token)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource re, @HeaderParam("Token") String token,
+                         @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
@@ -72,11 +72,13 @@ public class Bike {
 
         System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Distance = Distance + "
-                + re.getTotal_Distance() + " WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Bike = Bike + "
+                + (int)(new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance())) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
+
+        return re;
     }
 
 
@@ -90,14 +92,14 @@ public class Bike {
     @GET
     @Path("distance")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll(@HeaderParam("Token") String token)
+    public Resource getAll(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(
-                "SELECT Bike FROM person WHERE Name = 'Robert'");
+                "SELECT Bike FROM person WHERE Email = '" + email + "'");
         rs.next();
         int distance = rs.getInt("Bike");
 

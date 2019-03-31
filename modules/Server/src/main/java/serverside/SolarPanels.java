@@ -58,7 +58,9 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount(Resource re, @HeaderParam("Token") String token)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postAmount(Resource re, @HeaderParam("Token") String token,
+                           @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConnection();
@@ -67,12 +69,14 @@ public class SolarPanels {
 
         System.out.println(re.getTotal_Percentage());
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Percentage = Percentage + "
-                + re.getTotal_Percentage() + " WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
+                + (int)(new CarbonCalculator(2).solarPanel(re.getKwh())) + " WHERE Email = '" + email + "'");
 
         st.close();
         dbConnection.close();
 
+
+        return re;
     }
 
     /**
@@ -86,25 +90,25 @@ public class SolarPanels {
     @GET
     @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAmount(@HeaderParam("Token") String token)
+    public Resource getAmount(@HeaderParam("Token") String token,
+                              @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(
-                "SELECT Solar_panels FROM person WHERE Name = 'Robert'");
+                "SELECT Solar_panels FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int percentage = rs.getInt("Solar_panels");
+        int points = rs.getInt("Solar_panels");
 
         Resource re = new Resource();
         passToken(token, re);
-        re.setTotal_Percentage(percentage);
+        re.setSavedSolar(points);
 
         st.close();
         dbConnection.close();
-        JSONObject jo = new JSONObject();
         st.close();
         dbConnection.close();
         return re;

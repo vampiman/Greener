@@ -9,8 +9,12 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.security.SignatureException;
-import org.apache.commons.codec.digest.DigestUtils;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.List;
 import javax.ws.rs.container.ContainerRequestContext;
@@ -23,51 +27,61 @@ public class JwtVerifier implements ContainerRequestFilter {
 
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
+    private Connection dbConnection;
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        if (requestContext.getUriInfo().getPath().contains("localproduce")) {
+        System.out.println(requestContext.getUriInfo().getPath());
+        if (requestContext.getUriInfo().getPath().contains("/")) {
             List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
             if (authHeader != null && authHeader.size() > 0) {
                 String authToken = authHeader.get(0);
                 authToken = authToken.replaceFirst(AUTHORIZATION_HEADER_PREFIX, "");
-                if (!verifyJwt(authToken).equals("OK")) {
-                    String token = issueJwt(authToken);
-                    if (token.equals("NO")) {
-                        JSONObject jo = new JSONObject();
-                        jo.append("Error", "Can't get in");
-                        Response res = Response.status(Response.Status.UNAUTHORIZED)
-                                .entity(jo).build();
-                        requestContext.abortWith(res);
-                    } else {
-                        requestContext.getHeaders().add("Token", token);
+                String email = verifyJwt(authToken);
+                if (email.equals("ERROR")) {
+                    try {
+                        authToken = issueJwt(authToken);
+                        if (authToken.equals("ERROR")) {
+                            JSONObject jo = new JSONObject();
+                            jo.append("Error", "Access Denied");
+                            Response res = Response.status(Response.Status.UNAUTHORIZED)
+                                    .entity(jo).build();
+                            requestContext.abortWith(res);
+                        } else {
+                            System.out.println(authToken + " just the token");
+                            requestContext.getHeaders().add("token", authToken);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
+                } else {
+                    System.out.println(authToken + email + " token and email");
+                    requestContext.getHeaders().add("token", authToken);
+                    requestContext.getHeaders().add("email", email);
                 }
             }
         }
     }
 
-
     /**
-     * Method verifies whether the token is valid (and was issued by the server).
+     * Method verifies whether the token is valid (= was issued by the server).
      * @param token obtained from Authorization header (either token or credentials)
      * @return "OK" if token is validated, Exception if it's not
      */
-    public static Object verifyJwt(String token) {
+    public String verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(KeyGen.KEY_VALIDATE)
                     .parseClaimsJws(token);
 
-            String username = claims.getBody().getSubject();
-            if (username.equals("username")) {
-                return "OK";
-            } else {
-                return "NOT OK";
-            }
+            System.out.println(claims.getBody().getExpiration() + " expiration");
+            System.out.println(Calendar.getInstance() + " calendar");
+
+            return claims.getBody().getSubject();
         } catch (SignatureException | IncorrectClaimException
                 | ExpiredJwtException | MissingClaimException se) {
-            return se;
+            System.out.println(se.getClass());
+            return "ERROR";
         }
 
     }
@@ -77,26 +91,62 @@ public class JwtVerifier implements ContainerRequestFilter {
      * @param credentials received from the Authorization header
      * @return Object: JWT as an encoded String if credentials are verified, Exception if not
      */
-    public static String issueJwt(String credentials) {
+    public String issueJwt(String credentials) throws SQLException {
         try {
-            String password = DigestUtils.sha256Hex("password");
             Jws<Claims> claims = Jwts.parser()
-                    .require("email", "nstruharova@tudelft.nl")
-                    .require("password", password)
                     .setSigningKey(KeyGen.KEY)
                     .parseClaimsJws(credentials);
+            getDbConnection();
+
+            String email = claims.getBody().get("Email").toString();
+            String password = claims.getBody().get("Password").toString();
+
+            System.out.print(email);
+            System.out.println(" here is the email");
+
+            Statement st = dbConnection.createStatement();
+            ResultSet rs = st.executeQuery("SELECT Password FROM person WHERE Email = \""
+                    + email + "\"");
+
+            rs.next();
+            String passToCheck = rs.getString("Password");
+            System.out.println(passToCheck + " password");
+
+            Jws<Claims> claims2 = Jwts.parser()
+                    .setSigningKey(KeyGen.KEY)
+                    .require("Password", passToCheck)
+                    .parseClaimsJws(credentials);
+
+            System.out.println(claims2.toString() + " claims");
+
+
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);
+            System.out.println(today.getTime() + "today");
+
+            return Jwts.builder()
+                    .setSubject(email)
+                    .setExpiration(today.getTime())
+                    .signWith(KeyGen.KEY_VALIDATE)
+                    .compact();
+
         } catch (SignatureException | ExpiredJwtException
                 | MissingClaimException | IncorrectClaimException se) {
-            return "NO";
+            return "ERROR";
         }
+    }
 
-        Calendar today = Calendar.getInstance();
-        today.set(Calendar.DAY_OF_MONTH, today.get(Calendar.DAY_OF_MONTH) + 1);
+    /**
+     * Method for initializing the connection with the database server through jdbc.
+     * @throws ClassNotFoundException Class not found error
+     * @throws SQLException SQL-related error
+     */
+    public void getDbConnection() throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
+        String user = "sammy";
+        String pass = "temporary";
 
-        return Jwts.builder()
-                .setSubject("username")
-                .setExpiration(today.getTime())
-                .signWith(KeyGen.KEY_VALIDATE)
-                .compact();
+        //        Class.forName("com.mysql.jdbc.Driver");
+        dbConnection = DriverManager.getConnection(url, user, pass);
     }
 }
