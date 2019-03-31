@@ -98,23 +98,24 @@ public class User {
      * @param password password (not hashed yet)
      * @return valid token
      */
-    public String register(String name, String email, String password) throws IllegalArgumentException {
-        String hashedPassword = DigestUtils.sha256Hex(password);
-
+    public String register(String name, String email, String password)
+            throws IllegalArgumentException {
         SessionResource resource = new SessionResource();
         resource.setName(name);
 
         //EMAIL VALIDATION
-        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)"
+                + "*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
 
-        if(!matcher.matches()) {
+        if (!matcher.matches()) {
             throw new IllegalArgumentException("Please insert a proper email adress!");
         }
 
         resource.setEmail(email);
+        String hashedPassword = DigestUtils.sha256Hex(password);
         resource.setPassword(hashedPassword);
 
         Response res = client.target("http://localhost:8080/serverside/webapi/session/register")
@@ -123,8 +124,8 @@ public class User {
                 .post(Entity.json(resource));
 
         JSONObject jo = res.readEntity(JSONObject.class);
-        String s = jo.toJSONString(10);
-        return s;
+        String joString = jo.toJSONString(10);
+        return joString;
     }
 
     /**

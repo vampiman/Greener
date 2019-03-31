@@ -1,6 +1,11 @@
 package serverside;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
@@ -91,14 +96,15 @@ public class SessionHandler {
 
         ps.executeUpdate();
 
-//        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
-//                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
-//                + "Bike, Solar_panels, Local_produce, "
-//                + "Lowering_home_temperature, Public_transport) \n"
-//                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \"" + sr.getPassword()
-//                + "\", \"" + sr.getName()
-//                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
-//                + "\"0\", \"0\", \"0\");");
+        //        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
+        //                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
+        //                + "Bike, Solar_panels, Local_produce, "
+        //                + "Lowering_home_temperature, Public_transport) \n"
+        //                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \""
+        //                + sr.getPassword()
+        //                + "\", \"" + sr.getName()
+        //                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
+        //                + "\"0\", \"0\", \"0\");");
 
         st.close();
         ps.close();
