@@ -11,6 +11,7 @@ import io.jsonwebtoken.MissingClaimException;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,13 +28,13 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class JwtVerifier implements ContainerRequestFilter {
 
-    static final Key KEY = Keys.hmacShaKeyFor(
+    static Key KEY = Keys.hmacShaKeyFor(
             "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
-                    .getBytes());
+                    .getBytes(StandardCharsets.UTF_8));
 
-    static final Key KEY_VALIDATE = Keys.hmacShaKeyFor(
+    static Key KEY_VALIDATE = Keys.hmacShaKeyFor(
             "THISISEVENHARDERTHISISTHEKEYTHATONLYSERVERUSESITSSUCHAGREATSECRETITWILLBLOWYOURMIND"
-                    .getBytes());
+                    .getBytes(StandardCharsets.UTF_8));
 
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
@@ -41,7 +42,6 @@ public class JwtVerifier implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        System.out.println(requestContext.getUriInfo().getPath());
         if (requestContext.getUriInfo().getPath().contains("/")) {
             List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
             if (authHeader != null && authHeader.size() > 0) {
@@ -76,16 +76,13 @@ public class JwtVerifier implements ContainerRequestFilter {
     /**
      * Method verifies whether the token is valid (= was issued by the server).
      * @param token obtained from Authorization header (either token or credentials)
-     * @return "OK" if token is validated, Exception if it's not
+     * @return name if token is validated, "ERROR" if it's not
      */
     public String verifyJwt(String token) {
         try {
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(KEY_VALIDATE)
                     .parseClaimsJws(token);
-
-            System.out.println(claims.getBody().getExpiration() + " expiration");
-            System.out.println(Calendar.getInstance() + " calendar");
 
             return claims.getBody().getSubject();
         } catch (SignatureException | IncorrectClaimException
@@ -111,24 +108,17 @@ public class JwtVerifier implements ContainerRequestFilter {
             String email = claims.getBody().get("Email").toString();
             String password = claims.getBody().get("Password").toString();
 
-            System.out.print(email);
-            System.out.println(" here is the email");
-
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery("SELECT Password FROM person WHERE Email = \""
                     + email + "\"");
 
             rs.next();
             String passToCheck = rs.getString("Password");
-            System.out.println(passToCheck + " password");
 
             Jws<Claims> claims2 = Jwts.parser()
                     .setSigningKey(KEY)
                     .require("Password", passToCheck)
                     .parseClaimsJws(credentials);
-
-            System.out.println(claims2.toString() + " claims");
-
 
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);

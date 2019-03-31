@@ -1,12 +1,19 @@
 package serverside;
 
-import cn.hutool.db.Session;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import javax.print.attribute.standard.Media;
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
-
-import java.sql.*;
 
 @Path("friends")
 public class Friends {
@@ -49,14 +56,12 @@ public class Friends {
 
         ps.setString(1, toSearch);
 
-
         ResultSet rs = ps.executeQuery();
 
         if (!rs.next()) {
-           sr.setStatus("Peson not found!");
-           return sr;
+            sr.setStatus("Peson not found!");
+            return sr;
         }
-
 
         int friendId = rs.getInt("ID");
         String friend = rs.getString("Email");
@@ -126,7 +131,8 @@ public class Friends {
 
         Statement st =  dbConnection.createStatement();
 
-        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) FROM friends WHERE User_email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT COUNT(Friend_email) "
+                + "FROM friends WHERE User_email = '" + email + "'");
         rs.next();
 
 
@@ -138,8 +144,8 @@ public class Friends {
 
         int i = 0;
         while (rs.next()) {
-            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person " +
-                    "WHERE Email = '" + rs.getString("Friend_email") + "'");
+            ResultSet rs1 = st2.executeQuery("SELECT Name, CO_2_saved FROM person "
+                    + "WHERE Email = '" + rs.getString("Friend_email") + "'");
 
             rs1.next();
 

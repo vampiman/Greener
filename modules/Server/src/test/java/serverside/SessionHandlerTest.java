@@ -19,10 +19,6 @@ import static org.mockito.Mockito.when;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SessionHandler.class)
 public class SessionHandlerTest {
-
-    @Mock
-    DriverManager mockDm;
-
     @Mock
     Connection mockConnection;
 
