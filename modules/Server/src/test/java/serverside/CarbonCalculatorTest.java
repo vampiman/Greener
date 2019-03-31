@@ -1,15 +1,36 @@
-//package serverside;
-//
-//import org.junit.Assert;
-//import org.junit.Test;
-//
-//
-//
-//public class CarbonCalculatorTest {
-//
-//    /**
-//     *  Test for the electricity consumption.
-//     */
+package serverside;
+
+import cn.hutool.json.JSONObject;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
+import javax.ws.rs.client.*;
+import javax.ws.rs.core.Form;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.sql.Connection;
+import java.sql.Statement;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
+
+public class CarbonCalculatorTest {
+
+
+    /**
+     *  Test for the electricity consumption.
+     */
 //    @Test
 //    public void electricityTestDefault() {
 //        CarbonCalculator calc = new CarbonCalculator(1);
@@ -54,283 +75,328 @@
 //        Assert.assertEquals(5291, (int)calc.propane(100,0));
 //        Assert.assertEquals(2400, (int)calckg.propane(100, 0));
 //    }
-//
-//    /**
-//     *  Test for personal vehicle CO2 emissions.
-//     */
-//    @Test
-//    public void vehicle() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(5321, (int)calc.vehicle(100,20));
-//        Assert.assertEquals(2413, (int)calckg.vehicle(100, 20));
-//    }
-//
-//    /**
-//     *  Test for public transport CO2 emissions.
-//     */
-//    @Test
-//    public void publicTransport() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(1785, (int)calc.publicTransport(5000));
-//        Assert.assertEquals(809, (int)calckg.publicTransport(5000));
-//    }
-//
-//    /**
-//     *  Test for air-based travel CO2 emissions.
-//     */
-//    @Test
-//    public void airTravel() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(5592, (int)calc.airTravel(5000));
-//        Assert.assertEquals(2536, (int)calckg.airTravel(5000));
-//    }
-//
-//    /**
-//     *  Test for wrong input type when calculating food CO2 emissions.
-//     */
-//    @Test(expected = IllegalArgumentException.class)
-//    public void foodWrongType() {
-//        new CarbonCalculator(1).food(100, 0);
-//    }
-//
-//    /**
-//     * Test for food CO2 emissions type 1(meat).
-//     */
-//    @Test
-//    public void foodMeatTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(3833, (int)calc.food(100,1));
-//        Assert.assertEquals(1738, (int)calckg.food(100, 1));
-//    }
-//
-//    /**
-//     *  Test for food CO2 emissions type 2(cereals).
-//     */
-//    @Test
-//    public void foodCerealTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(1956, (int)calc.food(100,2));
-//        Assert.assertEquals(887, (int)calckg.food(100, 2));
-//    }
-//
-//    /**
-//     *  Test for food CO2 emissions type 3(dairy).
-//     */
-//    @Test
-//    public void foodDairyTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(5045, (int)calc.food(100,3));
-//        Assert.assertEquals(2288, (int)calckg.food(100, 3));
-//    }
-//
-//    /**
-//     *  Test for food CO2 emissions type 4(fruits and vegetables).
-//     */
-//    @Test
-//    public void foodFruitsVegetablesTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(3104, (int)calc.food(100,4));
-//        Assert.assertEquals(1408, (int)calckg.food(100, 4));
-//    }
-//
-//    /**
-//     *  Test for food CO2 emissions type 5(Dining Out).
-//     */
-//    @Test
-//    public void foodDiningOutTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(971, (int)calc.food(100,5));
-//        Assert.assertEquals(440, (int)calckg.food(100, 5));
-//    }
-//
-//    /**
-//     *  Test for food CO2 emissions type 6(other food).
-//     */
-//    @Test
-//    public void foodOtherTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(1232, (int)calc.food(100,6));
-//        Assert.assertEquals(559, (int)calckg.food(100, 6));
-//    }
-//
-//    /**
-//     *  Test for goods and services CO2 emissions, case when the type is illegal.
-//     */
-//    @Test(expected = IllegalArgumentException.class)
-//    public void serviceWrongType() {
-//        new CarbonCalculator(1).servicesAndGoods(100, 5);
-//    }
-//
-//    /**
-//     *  Test for goods and services CO2 emissions type 1(clothing).
-//     */
-//    @Test
-//    public void clothingTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(1151, (int)calc.servicesAndGoods(100,1));
-//        Assert.assertEquals(522, (int)calckg.servicesAndGoods(100, 1));
-//    }
-//
-//    /**
-//     *  Test for goods and services CO2 emissions type 2(appliances and furniture).
-//     */
-//    @Test
-//    public void appliancesTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(1211, (int)calc.servicesAndGoods(100,2));
-//        Assert.assertEquals(549, (int)calckg.servicesAndGoods(100, 2));
-//    }
-//
-//    /**
-//     *  Test for goods and services CO2 emissions type 3(other goods).
-//     */
-//    @Test
-//    public void otherGoodsTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(892, (int)calc.servicesAndGoods(100,3));
-//        Assert.assertEquals(404, (int)calckg.servicesAndGoods(100, 3));
-//    }
-//
-//    /**
-//     *  Test for goods and services CO2 emissions type 4(services).
-//     */
-//    @Test
-//    public void servicesTest() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(469, (int)calc.servicesAndGoods(100,4));
-//        Assert.assertEquals(213, (int)calckg.servicesAndGoods(100, 4));
-//    }
-//
-//    /**
-//     *  Test for the conversion from pounds to kilograms.
-//     */
-//    @Test
-//    public void poundsToKilograms() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
-//    }
-//
-//    /**
-//     * Test for veganmeal CO2 emissions type 1 (fruit).
-//     */
-//    @Test
-//    public void Veganmeal_CalculatorTest1() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(4, (int) calc.veganmeal_Calculator(10, "Fruit"));
-//    }
-//
-//    /**
-//     * Test for veganmeal CO2 emissions type 2 (dairy).
-//     */
-//    @Test
-//    public void Veganmeal_CalculatorTest2() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(7, (int) calc.veganmeal_Calculator(1, "Dairy"));
-//    }
-//
-//    /**
-//     * Test for veganmeal CO2 emissions type 3 (vegetables).
-//     */
-//    @Test
-//    public void Veganmeal_CalculatorTest3() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(2, (int) calc.veganmeal_Calculator(1, "Vegetables"));
-//    }
-//
-//    /**
-//     * Test for veganmeal CO2 emissions type 4 (meat).
-//     */
-//    @Test
-//    public void Veganmeal_CalculatorTest4() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(21, (int) calc.veganmeal_Calculator(1, "Meat"));
-//    }
-//
-//    /**
-//     * Test for veganmeal CO2 emissions, case when the type is illegal.
-//     */
-//    @Test(expected = IllegalArgumentException.class)
-//    public void Veganmeal_wrongType() {
-//        new CarbonCalculator(1).veganmeal_Calculator(100, "Something else");
-//    }
-//
-//
-//    /**
-//     * Test for localproduce CO2 emissions type 1 (fruit).
-//     */
-//    @Test
-//    public void Localproduce_CalculatorTest1() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(3, (int) calc.localproduce_Calculator(10, "Fruit"));
-//    }
-//
-//    /**
-//     * Test for localproduce CO2 emissions type 2 (dairy).
-//     */
-//    @Test
-//    public void Localproduce_CalculatorTest2() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(7, (int) calc.localproduce_Calculator(1, "Dairy"));
-//    }
-//
-//    /**
-//     * Test for localproduce CO2 emissions type 3 (vegetables).
-//     */
-//    @Test
-//    public void Localproduce_CalculatorTest3() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(1, (int) calc.localproduce_Calculator(1, "Vegetables"));
-//    }
-//
-//    /**
-//     * Test for localproduce CO2 emissions type 4 (meat).
-//     */
-//    @Test
-//    public void Localproduce_CalculatorTest4() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//
-//        Assert.assertEquals(19, (int) calc.localproduce_Calculator(1, "Meat"));
-//    }
-//
-//    /**
-//     * Test for localproduce CO2 emissions, case when the type is illegal.
-//     */
-//    @Test(expected = IllegalArgumentException.class)
-//    public void Localproduce_wrongType() {
-//        new CarbonCalculator(1).localproduce_Calculator(100, "Something else");
-//    }
-//}
+
+    /**
+     *  Test for personal vehicle CO2 emissions.
+     */
+    @Test
+    public void vehicle() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        CarbonCalculator calckg = new CarbonCalculator(2);
+
+        Assert.assertEquals(5321, (int)calc.vehicle(100,20));
+        Assert.assertEquals(2413, (int)calckg.vehicle(100, 20));
+    }
+
+    /**
+     *  Test for public transport CO2 emissions.
+     */
+    @Test
+    public void publicTransport() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        CarbonCalculator calckg = new CarbonCalculator(2);
+
+        Assert.assertEquals(1785, (int)calc.publicTransport(5000));
+        Assert.assertEquals(809, (int)calckg.publicTransport(5000));
+    }
+
+    /**
+     *  Test for air-based travel CO2 emissions.
+     */
+    @Test
+    public void airTravel() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        CarbonCalculator calckg = new CarbonCalculator(2);
+
+        Assert.assertEquals(5592, (int)calc.airTravel(5000));
+        Assert.assertEquals(2536, (int)calckg.airTravel(5000));
+    }
+
+
+    /**
+     * Test for veganmeal CO2 emissions type 1 (fruit).
+     */
+    @Test
+    public void Veganmeal_CalculatorTest1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(11, (int) calc.veganmeal_Calculator(10, "Fruit"));
+    }
+
+    /**
+     * Test for veganmeal CO2 emissions type 2 (dairy).
+     */
+    @Test
+    public void Veganmeal_CalculatorTest2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(7, (int) calc.veganmeal_Calculator(1, "Dairy"));
+    }
+
+    /**
+     * Test for veganmeal CO2 emissions type 3 (vegetables).
+     */
+    @Test
+    public void Veganmeal_CalculatorTest3() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(2, (int) calc.veganmeal_Calculator(1, "Vegetables"));
+    }
+
+    /**
+     * Test for veganmeal CO2 emissions type 4 (meat).
+     */
+    @Test
+    public void Veganmeal_CalculatorTest4() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(21, (int) calc.veganmeal_Calculator(1, "Meat"));
+    }
+
+    @Test
+    public void Veganmeal_CalculatorEggsTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(48, (int) (calc.veganmeal_Calculator(1, "Eggs")*10));
+    }
+
+    /**
+     * Test for veganmeal CO2 emissions, case when the type is illegal.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void Veganmeal_wrongType() {
+        new CarbonCalculator(1).veganmeal_Calculator(100, "Something else");
+    }
+
+
+    /**
+     * Test for localproduce CO2 emissions type 1 (fruit).
+     */
+    @Test
+    public void Localproduce_CalculatorTest1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(77, (int) (calc.localproduce_Calculator(10, "Fruit")*100));
+    }
+
+    /**
+     * Test for localproduce CO2 emissions type 2 (dairy).
+     */
+    @Test
+    public void Localproduce_CalculatorTest2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(5, (int) calc.localproduce_Calculator(10, "Dairy"));
+    }
+
+    /**
+     * Test for localproduce CO2 emissions type 3 (vegetables).
+     */
+    @Test
+    public void Localproduce_CalculatorTest3() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(14, (int) (calc.localproduce_Calculator(10, "Vegetables")*10));
+    }
+
+    /**
+     * Test for localproduce CO2 emissions type 4 (meat).
+     */
+    @Test
+    public void Localproduce_CalculatorTest4() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(14, (int) calc.localproduce_Calculator(10, "Meat"));
+    }
+
+    @Test
+    public void Localproduce_CalculatorEggs() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(33, (int) calc.localproduce_Calculator(100, "Eggs"));
+    }
+
+    /**
+     * Test for localproduce CO2 emissions, case when the type is illegal.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void Localproduce_wrongType() {
+        new CarbonCalculator(1).localproduce_Calculator(100, "Something else");
+    }
+
+    /**
+     *  Test for the conversion from pounds to kilograms.
+     */
+    @Test
+    public void poundsToKilograms() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(45, (int)calc.poundsToKilograms(100));
+    }
+
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void heatConsumptionElectric() {
+        Assert.assertEquals(250.0, CarbonCalculator.energyToCarbonElectric(), 0.001);
+    }
+
+    /**
+     * Test if the right integer is returned by the method.
+     */
+    @Test
+    public void heatConsumptionNonElectric() {
+        Assert.assertEquals(221.875, CarbonCalculator.energyToCarbonNonElectric(), 0.001);
+    }
+
+    /**
+     * Test the heat consumption saved for the electric energy source.
+     */
+    @Test
+    public void homeHeatConsumptionSavedNonElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(44, calc.homeHeatConsumptionSaved(1000.0,
+                800.0, "Non-Electric"));
+    }
+
+    /**
+     * Test the heat consumption saved for the non-electric energy source.
+     */
+    @Test
+    public void homeHeatConsumptionSavedElectric() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+
+        Assert.assertEquals(50, calc.homeHeatConsumptionSaved(1000.0,
+                800.0, "Electric"));
+    }
+
+
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the fossil car option is correct in relation to the website
+     * from which the API is used.
+     */
+    @Test
+    public void publicTransportCalculatorFossilTest() throws Exception {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "CityBus" ;
+        String carType = "Fossil";
+
+        //value for comparison are calculated wth help from from the website of the API used.
+        Assert.assertEquals(calc.publicTransportCalculator(carType, pt, 161),
+                484 / 52.177 * 0.45359237, 0.2);
+    }
+
+    @Test
+    public void publicTransportCalculatorFossilIntercityBusTest() throws Exception {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "IntercityBus" ;
+        String carType = "Fossil";
+
+        //value for comparison are calculated with help from from the website of the API used.
+        Assert.assertEquals(16, (int)calc.publicTransportCalculator(carType, pt, 100));
+    }
+
+    @Test
+    public void publicTransportCalculatorFossilSubwayTest() throws Exception {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Subway" ;
+        String carType = "Fossil";
+
+        //value for comparison are calculated with help from from the website of the API used.
+        Assert.assertEquals(11, (int)calc.publicTransportCalculator(carType, pt, 100));
+    }
+
+    @Test
+    public void publicTransportCalculatorFossilTrainTest() throws Exception {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "Train" ;
+        String carType = "Fossil";
+
+        //value for comparison are calculated with help from from the website of the API used.
+        Assert.assertEquals(9, (int)calc.publicTransportCalculator(carType, pt, 100));
+    }
+
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for public transport.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException1() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "someString" ;
+        String carType = "Fossil";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
+
+
+    /**
+     * Tests if an IllegalArgumentException is created when an
+     * incorrect string is used for the type of the car.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void publicTransportCalculatorException2() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        String pt = "CityBus";
+        String carType = "someString";
+        calc.publicTransportCalculator(carType, pt, 161);
+    }
+
+
+    @Test
+    public void bikeHybridTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(15, (int)calc.bike("Hybrid", 100));
+    }
+
+    @Test
+    public void bikeElectricTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(11, (int)calc.bike("Electric", 100));
+    }
+
+    @Test
+    public void bikeFossilTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(21, (int)calc.bike("Fossil", 100));
+    }
+
+    @Test
+    public void bikeMotorcycleTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(11, (int)calc.bike("Motorcycle", 100));
+    }
+
+    @Test
+    public void bikeBusTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(18, (int)calc.bike("Bus", 100));
+    }
+
+    @Test
+    public void bikeSubwayTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(10, (int)calc.bike("Subway", 100));
+    }
+
+    @Test
+    public void bikeTrainTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(11, (int)calc.bike("Train", 100));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void bikeException() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        calc.bike("Alternative", 100);
+    }
+
+    @Test
+    public void solarPanelsTest() {
+        CarbonCalculator calc = new CarbonCalculator(1);
+        Assert.assertEquals(255, (int)calc.solarPanel(500));
+    }
+}
+

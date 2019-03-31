@@ -1,0 +1,13 @@
+{
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: Futura;
+}
+
+.button {
+    -fx-background-color: #C1DFF0;
+    -fx-opacity: 40%;
+}
+
+.button:hover {
+    -fx-opacity: 80%;
+}

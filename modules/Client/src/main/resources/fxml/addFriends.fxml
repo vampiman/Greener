@@ -42,27 +42,27 @@
       </ImageView>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Connect with friends!" GridPane.columnIndex="2">
          <font>
-            <Font name="Comic Sans MS Bold" size="36.0" />
+            <Font name="System Bold" size="36.0" />
          </font>
          <fill>
             <LinearGradient endX="1.0" endY="1.0">
                <stops>
                   <Stop color="BLACK" />
-                  <Stop color="#00ffbc" offset="0.007434944237918215" />
+                  <Stop color="#91cb3e" offset="0.007434944237918215" />
                   <Stop color="#363535" offset="1.0" />
                </stops>
             </LinearGradient>
          </fill>
       </Text>
       <TextField fx:id="friendCode" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-      <Button fx:id="backButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textAlignment="CENTER" textFill="#00ffbc" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+      <Button fx:id="backButton" alignment="BOTTOM_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loadMenuPage" text="BACK" textAlignment="CENTER" textFill="#91cb3e" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
          <font>
-            <Font name="Comic Sans MS Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddFriendButtonAction" text="ADD" textFill="#00ffbc" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <Button fx:id="addButton" defaultButton="true" mnemonicParsing="false" onAction="#handleAddFriendButtonAction" text="ADD" textFill="#91cb3e" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2">
          <font>
-            <Font name="Comic Sans MS Bold" size="12.0" />
+            <Font name="System Bold" size="12.0" />
          </font>
       </Button>
    </children>

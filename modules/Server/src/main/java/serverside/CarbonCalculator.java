@@ -22,6 +22,8 @@ public class CarbonCalculator {
     // 1 for pounds, 2 for grams
     private int metrics;
 
+
+
     /**
      * Constructor for tha CarbonCalculator class that must be used to select the desired
      * metric system.
@@ -32,101 +34,101 @@ public class CarbonCalculator {
         this.metrics = metrics;
     }
 
-    /**
-     * Calculates the CO2 emissions based on your electricity consumption per month.
-     *
-     * @param amount Cost of the monthly electricity bill
-     * @param electricityPrice Price per kWh
-     * @return CO2 emissions per year (in pounds or grams)
-     */
-    public double electricity(double amount, double electricityPrice) {
-        double electricityFactor = 1.37;
-        double averageElectricityPrice = 0.2;
-
-        if (electricityPrice == 0) {
-            electricityPrice = averageElectricityPrice;
-        }
-        double toReturn = (amount / electricityPrice) * electricityFactor * 12;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-
-    }
-
-    /**
-     * Natural gas CO2 emissions.
-     *
-     * @param amount Monthly natural gas cost
-     * @param naturalGasPrice Price per thousand cubic feet
-     * @return CO2 emissions per year (in pounds or grams)
-     */
-    public double naturalGas(double amount, double naturalGasPrice) {
-        double naturalGasFactor = 120.61;
-        double averageNaturalGasPrice = 14.14;
-
-        if (naturalGasPrice == 0) {
-            naturalGasPrice = averageNaturalGasPrice;
-        }
-
-        double toReturn = (amount / naturalGasPrice) * naturalGasFactor * 12;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-    }
-
-    /**
-     * Fuel Oil CO2 emissions.
-     * @param amount Monthly fuel oil cost
-     * @param oilFuelPrice Price per gallon
-     * @return CO2 emissions per year (in pounds or grams)
-     */
-
-    public double fuelOil(double amount, double oilFuelPrice) {
-        double oilFuelFactor = 22.37;
-        double averageOilFuelPrice = 2.88;
-
-        if (oilFuelPrice == 0) {
-            oilFuelPrice = averageOilFuelPrice;
-        }
-
-        double toReturn = (amount / oilFuelPrice) * oilFuelFactor * 12;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-    }
-
-    /**
-     * Propane CO2 emissions.
-     *
-     * @param amount Propane monthly cost
-     * @param propanePrice Price per gallon
-     * @return CO2 emissions per year (in grams or pounds)
-     */
-    public double propane(double amount, double propanePrice) {
-        double propaneFactor = 12.17;
-        double averagePropanePrice = 2.76;
-
-        if (propanePrice == 0) {
-            propanePrice = averagePropanePrice;
-        }
-
-        double toReturn = (amount / propanePrice) * propaneFactor * 12;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-    }
+    //    /**
+    //     * Calculates the CO2 emissions based on your electricity consumption per month.
+    //     *
+    //     * @param amount Cost of the monthly electricity bill
+    //     * @param electricityPrice Price per kWh
+    //     * @return CO2 emissions per year (in pounds or grams)
+    //     */
+    //    public double electricity(double amount, double electricityPrice) {
+    //        double electricityFactor = 1.37;
+    //        double averageElectricityPrice = 0.2;
+    //
+    //        if (electricityPrice == 0) {
+    //            electricityPrice = averageElectricityPrice;
+    //        }
+    //        double toReturn = (amount / electricityPrice) * electricityFactor * 12;
+    //
+    //        if (metrics == 2) {
+    //            return poundsToKilograms(toReturn);
+    //        }
+    //
+    //        return toReturn;
+    //
+    //    }
+    //
+    //    /**
+    //     * Natural gas CO2 emissions.
+    //     *
+    //     * @param amount Monthly natural gas cost
+    //     * @param naturalGasPrice Price per thousand cubic feet
+    //     * @return CO2 emissions per year (in pounds or grams)
+    //     */
+    //    public double naturalGas(double amount, double naturalGasPrice) {
+    //        double naturalGasFactor = 120.61;
+    //        double averageNaturalGasPrice = 14.14;
+    //
+    //        if (naturalGasPrice == 0) {
+    //            naturalGasPrice = averageNaturalGasPrice;
+    //        }
+    //
+    //        double toReturn = (amount / naturalGasPrice) * naturalGasFactor * 12;
+    //
+    //        if (metrics == 2) {
+    //            return poundsToKilograms(toReturn);
+    //        }
+    //
+    //        return toReturn;
+    //    }
+    //
+    //    /**
+    //     * Fuel Oil CO2 emissions.
+    //     * @param amount Monthly fuel oil cost
+    //     * @param oilFuelPrice Price per gallon
+    //     * @return CO2 emissions per year (in pounds or grams)
+    //     */
+    //
+    //    public double fuelOil(double amount, double oilFuelPrice) {
+    //        double oilFuelFactor = 22.37;
+    //        double averageOilFuelPrice = 2.88;
+    //
+    //        if (oilFuelPrice == 0) {
+    //            oilFuelPrice = averageOilFuelPrice;
+    //        }
+    //
+    //        double toReturn = (amount / oilFuelPrice) * oilFuelFactor * 12;
+    //
+    //        if (metrics == 2) {
+    //            return poundsToKilograms(toReturn);
+    //        }
+    //
+    //        return toReturn;
+    //    }
+    //
+    //    /**
+    //     * Propane CO2 emissions.
+    //     *
+    //     * @param amount Propane monthly cost
+    //     * @param propanePrice Price per gallon
+    //     * @return CO2 emissions per year (in grams or pounds)
+    //     */
+    //    public double propane(double amount, double propanePrice) {
+    //        double propaneFactor = 12.17;
+    //        double averagePropanePrice = 2.76;
+    //
+    //        if (propanePrice == 0) {
+    //            propanePrice = averagePropanePrice;
+    //        }
+    //
+    //        double toReturn = (amount / propanePrice) * propaneFactor * 12;
+    //
+    //        if (metrics == 2) {
+    //            return poundsToKilograms(toReturn);
+    //        }
+    //
+    //        return toReturn;
+    //    }
 
     /**
      * Personal vehicle CO2 emissions.
@@ -189,89 +191,6 @@ public class CarbonCalculator {
         return toReturn;
     }
 
-    /**
-     * Food CO2 emissions.
-     * @param amount Monthly cost for the particular type of food
-     * @param type Food type (1 for meat, 2 for cereals, 3 for dairy, 4 for fruit.
-     *            5 for eating out and 6 for other food)
-     * @return CO2 emissions per year (in grams or pounds)
-     */
-    public double food(double amount, int type) {
-        if (type > 6 || type < 1) {
-            throw new IllegalArgumentException("Please insert a valid type of Food!");
-        }
-
-        double specificFactor = 0;
-
-        switch (type) {
-            // meatFactor = 1452
-            case 1: specificFactor = 1452;
-            break;
-            // cerealsFactor = 741
-            case 2: specificFactor = 741;
-            break;
-            // dairyFactor = 1911
-            case 3: specificFactor = 1911;
-            break;
-            // fruitFactor = 1176
-            case 4: specificFactor = 1176;
-            break;
-            // eatingOutFactor = 368
-            case 5: specificFactor = 368;
-            break;
-            // otherFoodFactor = 467
-            case 6: specificFactor = 467;
-            break;
-            default: break;
-        }
-
-        double toReturn = (amount * specificFactor * 12) * gramToPound;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-    }
-
-    /**
-     * Services and Goods CO2 emissions.
-     * @param amount Monthly cost for the particular type of goods/services
-     * @param type Type of goods/services (1 for clothing, 2 for furniture/appliances,
-     *            3 for other goods and 4 for general services)
-     * @return CO2 emissions per year (in grams or pounds)
-     */
-    public double servicesAndGoods(double amount, int type) {
-        if (type > 4 || type < 1) {
-            throw new IllegalArgumentException("Please insert a valid type of Service/Goods!");
-        }
-
-        double specificFactor = 0;
-
-        switch (type) {
-            // clothingFactor = 436
-            case 1: specificFactor = 436;
-            break;
-            // furnishHouseholdFactor = 459
-            case 2: specificFactor = 459;
-            break;
-            // otherGoodsFactor = 338
-            case 3: specificFactor = 338;
-            break;
-            // serviceFactor = 178
-            case 4: specificFactor = 178;
-            break;
-            default: break;
-        }
-
-        double toReturn = (amount * specificFactor * 12) * gramToPound;
-
-        if (metrics == 2) {
-            return poundsToKilograms(toReturn);
-        }
-
-        return toReturn;
-    }
 
     /**
      * Pounds to kilograms converter.
@@ -283,6 +202,11 @@ public class CarbonCalculator {
     }
 
 
+    /**
+     * Method calculates the CO2 saved from using solar panels.
+     * @param kwhSaved Kilowatts-hour saved
+     * @return Quantity of CO2 saved in kilograms
+     */
     public double solarPanel(double kwhSaved) {
 
         //Europe' average kgs per kwh of electricity
@@ -346,7 +270,7 @@ public class CarbonCalculator {
      *         of public transport instead of using the specified type of car.
      */
     public double publicTransportCalculator(String typeCar,
-                                            String typePublicTransport, int distance) {
+                                            String typePublicTransport, double distance) {
 
         distance = kilometersToMiles(distance);
 
@@ -356,38 +280,36 @@ public class CarbonCalculator {
         formCar.param("household_size", "4");
         formCar.param("home_type", "3");
 
-        switch (typeCar) {
-            case "Fossil":
-                vehicle = "5";
-                break;
-            default:
-                throw new IllegalArgumentException("Please insert a valid car type!");
+        if (typeCar.equals("Fossil")) {
+            vehicle = "5";
+        } else {
+            throw new IllegalArgumentException("Please insert a valid car type!");
         }
 
-        if (!vehicle.equals("")) {
-            formCar.param("vehicle_type[]", vehicle);
-            formCar.param("vehicle_mileage[]", Double.toString(distance));
-        }
+        formCar.param("vehicle_type[]", vehicle);
+        formCar.param("vehicle_mileage[]", Double.toString(distance));
+
 
         Form formPublicTransport = new Form();
         formPublicTransport.param("household_size", "4");
         formPublicTransport.param("home_type", "3");
 
-        switch (typePublicTransport) {
-            case "CityBus": formPublicTransport.param("bus_city", Integer.toString(distance));
-                break;
-            case "IntercityBus": formPublicTransport.param("bus_inter", Integer.toString(distance));
-                break;
-            case "Subway": formPublicTransport.param("subway", Integer.toString(distance));
-                break;
-            case "Train": formPublicTransport.param("train", Integer.toString(distance));
-                break;
-            default: throw new IllegalArgumentException(
+        if (typePublicTransport.equals("CityBus")) {
+            formPublicTransport.param("bus_city", Double.toString(distance));
+        } else if (typePublicTransport.equals("IntercityBus")) {
+            formPublicTransport.param("bus_inter", Double.toString(distance));
+        } else if (typePublicTransport.equals("Subway")) {
+            formPublicTransport.param("subway", Double.toString(distance));
+        } else if (typePublicTransport.equals("Train")) {
+            formPublicTransport.param("train", Double.toString(distance));
+        } else {
+            throw new IllegalArgumentException(
                     "Please insert a valid public transport type!");
         }
 
-        int carbonCar = carbonFootprintApi(formCar);
-        int carbonPublicTransport = (int)(carbonFootprintApi(formPublicTransport) / 52.177);
+
+        double carbonCar = carbonFootprintApi(formCar);
+        double carbonPublicTransport = carbonFootprintApi(formPublicTransport) / 52.177;
 
         double savedInLbs = carbonCar - carbonPublicTransport;
 
@@ -395,42 +317,134 @@ public class CarbonCalculator {
         return savedInKilogram;
     }
 
-    public int bike(String type, int mileage) {
+    //    /** Calculated how many kg of carbon dioxide is saved during travelling
+    //     * a certain distance by using public transport instead of the car.
+    //     * @param typeCar the type of the car of the user.
+    //     * @param typePublicTransport the type of public transport the user has used.
+    //     * @param distance the distance the user has travelled.
+    //     * @return the saved amount of kg of carbon dioxide by using the specified type
+    //     *         of public transport instead of using the specified type of car.
+    //     */
+    //    public double publicTransportCalculator(String typeCar,
+    //                                            String typePublicTransport, double distance) {
+    //
+    //        distance = kilometersToMiles(distance);
+    //
+    //        String vehicle = "";
+    //
+    //        Form formCar = new Form();
+    //        formCar.param("household_size", "4");
+    //        formCar.param("home_type", "3");
+    //
+    //        switch (typeCar) {
+    //            case "Fossil":
+    //                vehicle = "5";
+    //                break;
+    //            default:
+    //                throw new IllegalArgumentException("Please insert a valid car type!");
+    //        }
+    //
+    //
+    //        formCar.param("vehicle_type[]", vehicle);
+    //        formCar.param("vehicle_mileage[]", Double.toString(distance));
+    //
+    //
+    //        Form formPublicTransport = new Form();
+    //        formPublicTransport.param("household_size", "4");
+    //        formPublicTransport.param("home_type", "3");
+    //
+    //        switch (typePublicTransport) {
+    //            case "CityBus": formPublicTransport
+    //              .param("bus_city", Double.toString(distance));
+    //                break;
+    //            case "IntercityBus": formPublicTransport
+    //              .param("bus_inter", Double.toString(distance));
+    //                break;
+    //            case "Subway": formPublicTransport
+    //              .param("subway", Double.toString(distance));
+    //                break;
+    //            case "Train": formPublicTransport
+    //              .param("train", Double.toString(distance));
+    //                break;
+    //            default: throw new IllegalArgumentException(
+    //                    "Please insert a valid public transport type!");
+    //        }
+    //
+    //        double carbonCar = carbonFootprintApi(formCar);
+    //        double carbonPublicTransport = (carbonFootprintApi(formPublicTransport) / 52.177);
+    //
+    //        double savedInLbs = carbonCar - carbonPublicTransport;
+    //
+    //        double savedInKilogram = savedInLbs * 0.45359237;
+    //        return savedInKilogram;
+    //    }
+
+    /**
+     * Calculates the CO2 saved by biking.
+     * @param type the type of car user is substituting
+     * @param mileage the distance traveled by bike
+     * @return CO2 saved by biking
+     */
+    public double bike(String type, double mileage) {
         mileage = kilometersToMiles(mileage);
+
+        boolean error = false;
 
         String vehicle = "";
 
         String transport = "";
 
-        Form form = new Form();
+        Form form = null;
+
+        if (type.equals("Hybrid")) {
+            vehicle = "1";
+        }
+
+        if (type.equals("Fossil")) {
+            vehicle = "5";
+        }
+
+        if (type.equals("Electric")) {
+            vehicle = "3";
+        }
+
+        if (type.equals("Motorcycle")) {
+            vehicle = "10";
+        }
+
+        if (type.equals("Bus")) {
+            form = new Form();
+            form.param("bus_city", Double.toString(mileage));
+        }
+
+        if (type.equals("Subway")) {
+            form = new Form();
+            form.param("subway", Double.toString(mileage));
+        }
+
+        if (type.equals("Train")) {
+            form = new Form();
+            form.param("train", Double.toString(mileage));
+        }
+
+        if (vehicle.equals("") && form == null) {
+            throw new IllegalArgumentException("Please insert a valid type of transport!");
+        }
+
+        if (form == null) {
+            form = new Form();
+        }
         form.param("household_size", "4");
         form.param("home_type", "3");
 
-        switch (type) {
-            case "Hybrid": vehicle = "1";
-                break;
-            case "Fossil": vehicle = "5";
-                break;
-            case "Electric": vehicle = "3";
-                break;
-            case "Motorcycle": vehicle = "10";
-                break;
-            case "Bus": form.param("bus_city", Integer.toString(mileage));
-                break;
-            case "Subway": form.param("subway", Integer.toString(mileage));
-                break;
-            case "Train": form.param("train", Integer.toString(mileage));
-                break;
-            default: throw new IllegalArgumentException("Please insert a valid type!");
-        }
-
         if (!vehicle.equals("")) {
             form.param("vehicle_type[]", vehicle);
-            form.param("vehicle_mileage[]", Integer.toString(mileage));
+            form.param("vehicle_mileage[]", Double.toString(mileage));
+            return carbonFootprintApi(form) * 0.45359237;
         }
 
+        return (carbonFootprintApi(form) / 52) * 0.45359237;
 
-        return (int)(carbonFootprintApi(form) * 0.45359237);
     }
 
 
@@ -439,7 +453,7 @@ public class CarbonCalculator {
      * @param form contains fields for the calculation of the carbon footprint.
      * @return integer with the carbon footprint.
      */
-    public int carbonFootprintApi(Form form) {
+    public double carbonFootprintApi(Form form) {
         Client client = ClientBuilder.newClient();
         WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
 
@@ -447,7 +461,7 @@ public class CarbonCalculator {
                 .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
                         JSONObject.class);
 
-        int result = resp.getByPath("data.footprint", Integer.class);
+        double result = resp.getByPath("data.footprint", Double.class);
         return result;
     }
 
@@ -456,8 +470,8 @@ public class CarbonCalculator {
      * @param kilometers to be converted to miles.
      * @return the corresponding amount of miles.
      */
-    public int kilometersToMiles(int kilometers) {
-        return (int) (kilometers * 0.621371192);
+    public double kilometersToMiles(double kilometers) {
+        return  kilometers * 0.621371192;
     }
 
     /**
@@ -534,9 +548,10 @@ public class CarbonCalculator {
         }
         return amount * sort;
     }
-//    public static void main(String[] args) {
-//        System.out.println(new CarbonCalculator(2).bike("Hybrid",100));
-//        System.out.println(new CarbonCalculator(2).publicTransportCalculator("Fossil","Subway",2));
-//    }
+
+    public static void main(String[] args) {
+        CarbonCalculator cc = new CarbonCalculator(2);
+        System.out.println(cc.bike("Hybrid", 1));
+    }
 
 }

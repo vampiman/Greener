@@ -1,6 +1,11 @@
 package gui;
 
 import cn.hutool.json.JSONObject;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,25 +17,31 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
+import javafx.scene.chart.PieChart;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-
 import javafx.scene.image.ImageView;
 
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import restclient.CompactClient;
 import restclient.User;
 
@@ -43,9 +54,6 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
-
-    @FXML
-    private ChoiceBox transportType;
 
     @FXML
     private TextField nameField;
@@ -72,16 +80,13 @@ public class Controller {
     private Button addButton;
 
     @FXML
-    private TextField mealPortion;
+    private ChoiceBox mealTypes;
 
     @FXML
     private TextField beforeTemperature;
 
     @FXML
     private TextField afterTemperature;
-
-    @FXML
-    private ChoiceBox energyType;
 
     @FXML
     private TextField electricityAmount;
@@ -102,16 +107,170 @@ public class Controller {
     private TextField friendCode;
 
     @FXML
-    private TextArea activities;
+    private ChoiceBox energyType;
 
     @FXML
-    private GridPane scorePane;
+    private GridPane achievementsGrid;
 
     @FXML
-    private GridPane solarPanelGrid;
+    private PieChart pieChart;
 
     @FXML
     private TextField bikeKilometers;
+
+    @FXML
+    private ChoiceBox transportType;
+
+    @FXML
+    private VBox vbox;
+
+    @FXML
+    private Parent fxml;
+
+    @FXML
+    private AnchorPane root;
+
+    @FXML
+    private Button signupButton;
+
+    @FXML
+    private Label message;
+
+    @FXML
+    private TextField amountVegetarianMeal;
+
+    @FXML
+    private Button youButton;
+
+    @FXML
+    private Label youLabel;
+
+    @FXML
+    private Button addActivityButton;
+
+    @FXML
+    private Label addActivityLabel;
+
+    @FXML
+    private Button friendsButton;
+
+    @FXML
+    private Label friendsLabel;
+
+    @FXML
+    private Button addFriendButton;
+
+    @FXML
+    private Label addFriendLabel;
+
+    @FXML
+    private Button achievementsButton;
+
+    @FXML
+    private Label achievementsLabel;
+
+    @FXML
+    private Button activitiesButton;
+
+    @FXML
+    private Label activitiesLabel;
+
+    @FXML
+    private Button logoutButton;
+
+    @FXML
+    private Button exitButton;
+
+    @FXML
+    private ChoiceBox productCategory;
+
+    @FXML
+    private TextField amountLocalProduct;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private GridPane menuPane;
+
+    @FXML
+    private Text usernameField;
+
+    @FXML
+    private Text noOfFriendsField;
+
+    @FXML
+    private Text emailField;
+
+    @FXML
+    private Text co2Field;
+
+    @FXML
+    private GridPane youPagePane;
+
+    @FXML
+    private Pane ach0;
+    @FXML
+    private Pane ach1;
+    @FXML
+    private Pane ach2;
+
+    @FXML
+    private Pane ach3;
+    @FXML
+    private Pane ach4;
+    @FXML
+    private Pane ach5;
+
+    @FXML
+    private Pane ach6;
+    @FXML
+    private Pane ach7;
+    @FXML
+    private Pane ach8;
+
+    @FXML
+    private Pane ach9;
+    @FXML
+    private Pane ach10;
+    @FXML
+    private Pane ach11;
+
+    @FXML
+    private Pane ach12;
+    @FXML
+    private Pane ach13;
+    @FXML
+    private Pane ach14;
+
+    @FXML
+    private Pane ach15;
+    @FXML
+    private Pane ach16;
+    @FXML
+    private Pane ach17;
+
+    @FXML
+    private Pane ach18;
+    @FXML
+    private Pane ach19;
+    @FXML
+    private Pane ach20;
+
+    @FXML
+    private Pane ach21;
+    @FXML
+    private Pane ach22;
+    @FXML
+    private Pane ach23;
+
+    @FXML
+    private Pane ach24;
+    @FXML
+    private Pane ach25;
+    @FXML
+    private Pane ach26;
+
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -142,7 +301,8 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postBiker(transportType.getValue().toString(), (int)Double.parseDouble(bikeKilometers.getText()));
+            cc.postBiker(transportType.getValue().toString(),
+                    (int)Double.parseDouble(bikeKilometers.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -175,30 +335,30 @@ public class Controller {
                 Text text = new Text();
                 text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
                         + friends[i - 1][1]);
-                text.setFont(Font.font("Comic Sans MS"));
-                ImageView image = new ImageView("images/userImage.jpg");
+                ImageView image = new ImageView("images/human.png");
+                image.setPreserveRatio(true);
                 image.setFitWidth(117);
                 image.setFitHeight(108);
                 root.add(image, 0, i);
                 root.add(text, 1, i);
                 root.setHalignment(image, HPos.RIGHT);
                 root.setValignment(image, VPos.CENTER);
-                root.setStyle("-fx-background-color: #00ffbc;");
+                root.setStyle("-fx-background-color: #91cb3e;");
                 root.setHgap(40); //horizontal gap in pixels
             } else {
                 rowConst.setPrefHeight(71);
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
                 text.setText("SCOREBOARD");
-                text.setFont(Font.font("Comic Sans MS", 30));
+                text.setFont(Font.font("System Bold", 30));
                 root.add(text, 1, i);
                 Button button = new Button();
                 button.setText("BACK");
-                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #00ffbc;");
+                button.setStyle("-fx-background-color: #000000; -fx-text-fill: #91cb3e;");
                 button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
-                        + "linear-gradient(#000000, grey); -fx-text-fill: #00ffbc"));
+                        + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
                 button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
-                        + "-fx-text-fill: #00ffbc;"));
+                        + "-fx-text-fill: #91cb3e;"));
                 button.setOnAction(value ->  {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
@@ -222,10 +382,45 @@ public class Controller {
     }
 
     @FXML
-    private void initialize() throws IOException {
-        if(solarPanelGrid!=null) {
-            electricityAmount.setFocusTraversable(false);
+    private void loadFriends(String[][] friends) {
+        GridPane root = new GridPane();
+        root.setGridLinesVisible(true);
+        final int numCols = 2 ;
+        final int numRows = friends.length ;
+        for (int i = 0; i < numCols; i++) {
+            ColumnConstraints colConst = new ColumnConstraints();
+            colConst.setHgrow(Priority.NEVER);
+            colConst.setPercentWidth(100.0 / numCols);
+            root.getColumnConstraints().add(colConst);
         }
+        for (int i = 0; i < numRows; i++) {
+            RowConstraints rowConst = new RowConstraints();
+            Text text = new Text();
+            text.setText("Name: " + friends[i][0] + "\n" + "Score: " + friends[i][1]);
+            text.setFont(Font.font("Comic Sans MS"));
+            rowConst.setVgrow(Priority.NEVER);
+            rowConst.setPercentHeight(25);
+            root.getRowConstraints().add(rowConst);
+            ImageView image = new ImageView("images/userImage.jpg");
+            image.setFitWidth(117);
+            image.setFitHeight(108);
+            root.add(image, 0, i);
+            root.add(text, 1, i);
+            root.setHalignment(image, HPos.RIGHT);
+            root.setValignment(image, VPos.CENTER);
+
+        }
+
+        ScrollPane scrollPane = new ScrollPane();
+        scrollPane.setContent(root);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(scrollPane, 600, 500));
+        stage.show();
+    }
+
+    @FXML
+    private void initialize() throws IOException {
+        CompactClient cc = new CompactClient();
 
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -239,15 +434,154 @@ public class Controller {
             todaysTip.setText(text);
         }
 
-        if (activities != null) {
-            String text = "You had 0 vegan meals" + "\n"
-                    + "You biked 0 kilometers\n"
-                    + "You decreased 0% of your electricity consumption\n"
-                    + "You bought 0 local product\n"
-                    + "You travelled 0 kilometers by public transport\n"
-                    + "You decreased your home's temperature 0 °C";
-            activities.setText(text);
+
+
+        if (menuPane != null) {
+            JSONObject details = cc.getPersonalInfo();
+            nameLabel.setText("Hello " + details.get("userName").toString());
         }
+
+
+        if (youPagePane != null) {
+            JSONObject details = cc.getPersonalInfo();
+            usernameField.setText("Username: " + details.get("userName").toString());
+            noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
+            emailField.setText("Email: " + details.get("email").toString());
+            co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
+        }
+
+        if (achievementsGrid != null) {
+            JSONObject info = cc.getStats();
+            //            System.out.println(info.toJSONString(10));
+            ObservableList<PieChart.Data> pieChartData =
+                FXCollections.observableArrayList(
+                        new PieChart.Data("Vegan Meal",
+                                Double.parseDouble(info.get("total_Meals").toString())),
+                        new PieChart.Data("Public Transport",
+                                Double.parseDouble(info.get("savedPublicTransport").toString())),
+                        new PieChart.Data("Home Temperature",
+                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
+                        new PieChart.Data("Bike",
+                                Double.parseDouble(info.get("bikeSaved").toString())),
+                        new PieChart.Data("Local Product",
+                                Double.parseDouble(info.get("localSaved").toString())),
+                        new PieChart.Data("Solar Panel",
+                                Double.parseDouble(info.get("savedSolar").toString()))
+                );
+            pieChart.setTitle("SCORE DISTRIBUTION");
+            pieChart.setMaxSize(1000, 1000);
+            pieChart.setData(pieChartData);
+        }
+    }
+
+    //    @FXML
+    //    private void loadMenuPageLogin(ActionEvent event) throws IOException {
+    //        Window owner = loginButton.getScene().getWindow();
+    //        if (nameField.getText().isEmpty()) {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+    //                    "Please enter your username");
+    //            return;
+    //        }
+    //        if (passwordField.getText().isEmpty()) {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Log-in Error!",
+    //                    "Please enter a password");
+    //            return;
+    //        }
+    //
+    //        User user = new User(nameField.getText(), passwordField.getText());
+    //        boolean authenticated = false;
+    //        authenticated = user.login(null);
+    //        String token = user.getToken();
+    //
+    //        if (authenticated) {
+    //            PrintWriter pw = new PrintWriter("test.txt", "UTF-8");
+    //            pw.println(token);
+    //            pw.close();
+    //
+    //            loadPage(event, "fxml/menu.fxml");
+    //        } else {
+    //            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
+    //                    "Please enter credentials again.");
+    //        }
+    //    }
+
+    @FXML
+    private void loadMenuPage(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/menu.fxml");
+        }
+    }
+
+    @FXML
+    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
+        Window owner = signupName.getScene().getWindow();
+        if (signupName.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your username");
+            return;
+        }
+        if (email.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your email address");
+            return;
+        }
+        if (password.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter your password");
+            return;
+        }
+        if (rePassword.getText().isEmpty()) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please retype your password");
+            return;
+        }
+        if (!password.getText().equals(rePassword.getText())) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    "Please enter the same password for password fields");
+            return;
+        }
+
+        User user = new User(email.getText(), password.getText());
+        try {
+            user.register(signupName.getText(), email.getText(), password.getText());
+        } catch (IllegalArgumentException e) {
+            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
+                    e.getMessage());
+            return;
+        }
+
+        handleLogoutButtonAction(event);
+    }
+
+    @FXML
+    private void loadSigninPage(ActionEvent event) throws IOException {
+        fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/signin.fxml"));
+        vbox.getChildren().removeAll();
+        vbox.getChildren().setAll(fxml);
+
+        final Timeline timeline = new Timeline();
+        timeline.setAutoReverse(true);
+        final KeyValue kv = new KeyValue(vbox.translateXProperty(), 0);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+    }
+
+    @FXML
+    private void loadSignupPage(ActionEvent event) throws IOException {
+        fxml = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/signup.fxml"));
+        vbox.getChildren().removeAll();
+        vbox.getChildren().setAll(fxml);
+
+        final Timeline timeline = new Timeline();
+        timeline.setAutoReverse(true);
+        final KeyValue kv = new KeyValue(vbox.translateXProperty(), -520);
+        final KeyFrame kf = new KeyFrame(Duration.millis(500), kv);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
 
     @FXML
@@ -279,10 +613,11 @@ public class Controller {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Authentication failed!",
                     "Please enter credentials again.");
         }
+
     }
 
     @FXML
-    private void loadMenuPage(ActionEvent event) throws IOException {
+    private void handleBackToMenuAction(ActionEvent event) throws IOException {
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
@@ -292,8 +627,70 @@ public class Controller {
     }
 
     @FXML
-    private void handleSignUpButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/signup.fxml");
+    private void handleAch1Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements1.fxml");
+        }
+    }
+
+    @FXML
+    private void handleAch2Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements2.fxml");
+        }
+    }
+
+    @FXML
+    private void handleAch3Action(ActionEvent event) throws IOException {
+        CompactClient cc = new CompactClient();
+        if (!cc.checkToken()) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            loadPage(event, "fxml/achievements3.fxml");
+        }
+    }
+
+    private void loadAchievements(int page, Stage appStage) {
+        int start = 0;
+        int end = 0;
+        switch (page) {
+            case 1:
+                start = 0;
+                end = 8;
+                break;
+            case 2:
+                start = 9;
+                end = 17;
+                break;
+            case 3:
+                start = 18;
+                end = 26;
+                break;
+            default:
+                start = 0;
+                end = 0;
+                break;
+        }
+
+        Scene scene = appStage.getScene();
+
+        String bits = "000000000000000000000000000";
+        for (int i = start; i <= end; i++) {
+            char charc = bits.charAt(i);
+            boolean cond = charc == '0';
+            if (cond) {
+                String str = "ach" + i;
+
+                Pane pane = (Pane) scene.lookup("#" + str);
+                pane.setOpacity(0.2);
+            }
+        }
     }
 
     @FXML
@@ -348,7 +745,7 @@ public class Controller {
     }
 
     @FXML
-    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
+    protected void handleAddFriendsButtonAction(ActionEvent event) throws IOException {
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
@@ -363,13 +760,12 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/achievements.fxml");
+            loadPage(event, "fxml/achievements1.fxml");
         }
     }
 
     @FXML
-    protected void handleScoreboardButtonAction(ActionEvent event) throws IOException {
-
+    protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
 
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
@@ -384,7 +780,7 @@ public class Controller {
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
-            loadPage(event, "fxml/loginPage.fxml");
+            loadPage(event, "fxml/mainLogin.fxml");
         } else {
             loadPage(event, "fxml/you.fxml");
         }
@@ -408,7 +804,16 @@ public class Controller {
 
     @FXML
     protected void handleLogoutButtonAction(ActionEvent event) throws IOException {
-        loadPage(event, "fxml/loginPage.fxml");
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader
+                .load(getClass().getClassLoader().getResource("fxml/mainLogin.fxml"));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
+        stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
     }
 
     @FXML
@@ -419,6 +824,17 @@ public class Controller {
         Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         appStage.setScene(addPageScene);
         appStage.show();
+        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+        appStage.setX((primScreenBounds.getWidth() - appStage.getWidth()) / 2);
+        appStage.setY((primScreenBounds.getHeight() - appStage.getHeight()) / 2);
+
+        if (fileName.equals("fxml/achievements1.fxml")) {
+            loadAchievements(1, appStage);
+        } else if (fileName.equals("fxml/achievements2.fxml")) {
+            loadAchievements(2, appStage);
+        } else if (fileName.equals("fxml/achievements3.fxml")) {
+            loadAchievements(3, appStage);
+        }
     }
 
     @FXML
@@ -483,6 +899,9 @@ public class Controller {
 
     @FXML
     private void handleAddPublicTransportButtonAction(ActionEvent event) throws IOException {
+        Double numberOfKilometers = null;
+        String typeOfCar = null;
+        String publictransportType = null;
         Window owner = addButton.getScene().getWindow();
         if (carType.getValue() == null) {
             AlertHelper
@@ -501,12 +920,11 @@ public class Controller {
             return;
         } else {
             try {
-                int numberOfKilometers = Integer.parseInt(kilometers.getText());
-                String typeOfCar = carType.getValue().toString();
-                String publictransportType = publicTransport.getValue().toString();
+                numberOfKilometers = Double.parseDouble(kilometers.getText());
+                typeOfCar = carType.getValue().toString();
+                publictransportType = publicTransport.getValue().toString();
 
-                CompactClient cc = new CompactClient();
-                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
+
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -519,6 +937,7 @@ public class Controller {
             if (!cc.checkToken()) {
                 loadPage(event, "fxml/loginPage.fxml");
             } else {
+                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
                 loadPage(event, "fxml/addActivity.fxml");
             }
         }
@@ -596,15 +1015,15 @@ public class Controller {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (mealPortion.getText().isEmpty()) {
+        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter how much vegan meal you had");
             return;
         } else {
             try {
-                int portions = Integer.parseInt(mealPortion.getText());
-                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+                String type = mealTypes.getValue().toString();
+                double portions = Double.parseDouble(amountVegetarianMeal.getText());
             } catch (NumberFormatException e) {
                 AlertHelper
                         .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
@@ -616,6 +1035,8 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
+            cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()),
+                    "Meat", mealTypes.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -629,24 +1050,24 @@ public class Controller {
                             "Please enter the code of yor friend");
             return;
         }
-//         else {
-//            try {
-//                int code = Integer.parseInt(friendCode.getText());
-//                //            new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
-//            } catch (NumberFormatException e) {
-//                AlertHelper
-//                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-//                                "Please enter a number to indicate your friend's code");
-//                return;
-//            }
-//        }
+        //         else {
+        //            try {
+        //                int code = Integer.parseInt(friendCode.getText());
+        //                //new VeganMeal(ClientBuilder.newClient()).sendVeganMeal(portions);
+        //            } catch (NumberFormatException e) {
+        //                AlertHelper
+        //                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+        //                                "Please enter a number to indicate your friend's code");
+        //                return;
+        //            }
+        //        }
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             JSONObject jo = cc.followUser(friendCode.getText());
             if (jo.get("status").toString().equals("Success")) {
-               AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
+                AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
                        "You are now following this person!");
             } else {
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
@@ -659,49 +1080,31 @@ public class Controller {
     }
 
     @FXML
-    private void loadFriends(String[][] friends) {
-        GridPane root = new GridPane();
-        root.setGridLinesVisible(true);
-        final int numCols = 2 ;
-        final int numRows = friends.length ;
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setHgrow(Priority.NEVER);
-            colConst.setPercentWidth(100.0 / numCols);
-            root.getColumnConstraints().add(colConst);
-        }
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            Text text = new Text();
-            text.setText("Name: " + friends[i][0] + "\n" + "Score: " + friends[i][1]);
-            text.setFont(Font.font("Comic Sans MS"));
-            rowConst.setVgrow(Priority.NEVER);
-            rowConst.setPercentHeight(25);
-            root.getRowConstraints().add(rowConst);
-            ImageView image = new ImageView("images/userImage.jpg");
-            image.setFitWidth(117);
-            image.setFitHeight(108);
-            root.add(image, 0, i);
-            root.add(text, 1, i);
-            root.setHalignment(image, HPos.RIGHT);
-            root.setValignment(image, VPos.CENTER);
-
-        }
-
-        ScrollPane scrollPane = new ScrollPane();
-        scrollPane.setContent(root);
-        Stage stage = new Stage();
-        stage.setScene(new Scene(scrollPane, 600, 500));
-        stage.show();
-    }
-
-    @FXML
     private void handleAddLocalProductButtonAction(ActionEvent event) throws IOException {
+        Window owner = addButton.getScene().getWindow();
+        if (productCategory.getValue() == null || productCategory.getValue().toString().isEmpty()) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please choose a product type");
+            return;
+        } else {
+            try {
+                String type = productCategory.getValue().toString();
+                double portions = Double.parseDouble(amountLocalProduct.getText());
+            } catch (NumberFormatException e) {
+                AlertHelper
+                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                                "Please enter a number to indicate the amount in kilograms");
+                return;
+            }
+        }
+
         CompactClient cc = new CompactClient();
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            System.out.print("That's the one!");
+            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),
+                    productCategory.getValue().toString());
             loadPage(event, "fxml/addActivity.fxml");
         }
     }

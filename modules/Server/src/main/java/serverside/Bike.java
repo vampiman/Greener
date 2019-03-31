@@ -68,12 +68,20 @@ public class Bike {
 
         getDbConneciton();
 
+        double toAdd = new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance());
+
         passToken(token, re);
 
-        System.out.println(re.getTotal_Distance());
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Bike = Bike + "
-                + (int)(new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance())) + " WHERE Email = '" + email + "'");
+                + toAdd + " WHERE Email = '" + email + "'");
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
+
+        statistics.increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();
@@ -101,7 +109,7 @@ public class Bike {
         ResultSet rs = st.executeQuery(
                 "SELECT Bike FROM person WHERE Email = '" + email + "'");
         rs.next();
-        int distance = rs.getInt("Bike");
+        double distance = rs.getDouble("Bike");
 
         Resource re = new Resource();
         passToken(token, re);

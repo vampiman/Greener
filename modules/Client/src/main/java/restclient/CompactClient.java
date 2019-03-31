@@ -18,9 +18,9 @@ import javax.ws.rs.core.Response;
 
 public class CompactClient  {
 
-    private Client client;
-    private String credentials;
-    private String token;
+    Client client;
+    String credentials;
+    String token;
 
     /**
      * Constructor for user.
@@ -42,6 +42,24 @@ public class CompactClient  {
         this.token = token;
     }
 
+
+    /**
+     * General get method for most GET requests.
+     * @param webTarget the target which returns a response to GET
+     * @param auth the authentication (token or credentials)
+     * @return custom JSONObject based on request
+     */
+    public JSONObject generalGet(WebTarget webTarget, String auth) {
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+    }
+
     /**
      * Method forms the 'Authorization' header content.
      * @return The 'Authorization' header content
@@ -56,8 +74,6 @@ public class CompactClient  {
             auth = auth + token;
         }
 
-        System.out.println("Token is " + token);
-        System.out.println("Credentials is " + credentials);
         return auth;
     }
 
@@ -136,7 +152,7 @@ public class CompactClient  {
                 .header("Authorization", auth)
                 .post(Entity.json(re));
 
-        return res.readEntity(JSONObject.class).toString();
+        return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
 
@@ -145,18 +161,13 @@ public class CompactClient  {
      * @return Whether it is stored or not as a boolean
      * @throws IOException Error can occur while reading the file
      */
-    public int getHeatConsumption() {
+    public double getHeatConsumption() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/get");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
+        JSONObject jo = generalGet(webTarget, auth);
 
-        adjustToken(jo);
-
-        return (int)jo.get("savedHeatConsumption");
+        return (double)jo.get("savedHeatConsumption");
 
     }
 
@@ -168,7 +179,7 @@ public class CompactClient  {
      * @return JSON object
      */
     public String postPublicTransport(String typeCar,
-                                      String typePublicTransport, int distance) {
+                                      String typePublicTransport, double distance) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setCarType(typeCar);
@@ -188,36 +199,36 @@ public class CompactClient  {
      * @return Whether it is stored or not as a boolean
      * @throws IOException Error can occur while reading the file
      */
-    public JSONObject getPublicTransport() {
+    public double getPublicTransport() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/publictransport/get");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
+        JSONObject jo = generalGet(webTarget, auth);
 
-        adjustToken(jo);
-
-        return jo;
+        return (double)jo.get("savedPublicTransport");
 
     }
 
-    public String getBiker() {
+    /**
+     * Returns the total CO2 saved by biking.
+     * @return total CO2 saved by biking
+     */
+    public double getBiker() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/bike/distance");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
+        JSONObject jo = generalGet(webTarget, auth);
 
-        adjustToken(jo);
-
-        return jo.toJSONString(10);
+        return (double)jo.get("bikeSaved");
     }
 
-    public String postBiker(String vehicleType, int distance) {
+    /**
+     * Posts new bike activity information.
+     * @param vehicleType type of vehicle
+     * @param distance distance traveled
+     * @return the response with the originally sent resource
+     */
+    public String postBiker(String vehicleType, double distance) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setCarType(vehicleType);
@@ -231,20 +242,26 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    /**
+     * Returns the total CO2 saved by using solar panels.
+     * @return total CO2 saved with solar panels
+     */
     public int getSolar() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/solarpanels/percentage");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
+        JSONObject jo = generalGet(webTarget, auth);
 
-        adjustToken(jo);
+        Double savedSolar = (Double)jo.get("savedSolar");
 
-        return (int)jo.get("savedSolar");
+        return savedSolar.intValue();
     }
 
+    /**
+     * Posts latest solar panel activity information.
+     * @param kwhProduced kilowatts-hour produces by solar panels
+     * @return JSON string of the resource containing the input information.
+     */
     public String postSolar(int kwhProduced) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -258,6 +275,11 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class).toJSONString(10);
     }
 
+    /**
+     * Method executes request to follow another user.
+     * @param email friend's email
+     * @return JSONString of resource originally posted
+     */
     public JSONObject followUser(String email) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -270,6 +292,10 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that fetches all user's friends.
+     * @return 2D String array with friends and their scores
+     */
     public String[][] getAllFriends() {
         String auth = formAuthHeader();
 
@@ -285,37 +311,43 @@ public class CompactClient  {
 
         String[][] result = new String[j1.size()][2];
 
-        int i = 0;
-        while(i != j1.size()) {
-            JSONArray arr = j1.getJSONArray(i);
-            result[i][0] = (String)arr.get(0);
-            result[i][1] = (String)arr.get(1);
-            i++;
+        int counter = 0;
+        while (counter != j1.size()) {
+            JSONArray arr = j1.getJSONArray(counter);
+            result[counter][0] = (String)arr.get(0);
+            result[counter][1] = (String)arr.get(1);
+            counter++;
         }
 
         return result;
     }
 
+    /**
+     * Get total CO2 saved by vegan/vegetarian meals.
+     * @return total CO2 saved by eating vegan/vegetarian meals
+     */
     public Double getMealCarbon() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
-
-        adjustToken(jo);
+        JSONObject jo = generalGet(webTarget, auth);
 
         return (Double)jo.get("total_Meals");
     }
 
-    public JSONObject postMeal(Double amountOfMeals, String insteadOf, String iHad) {
+    /**
+     * Post data of latest vegan/vegetarian meal activity.
+     * @param amountOfMeals amount of meals eaten
+     * @param insteadOf food which was substituted
+     * @param ihad the food which was eaten instead of the substituted one
+     * @return the posted JSONObject with activity info
+     */
+    public JSONObject postMeal(Double amountOfMeals, String insteadOf, String ihad) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setTotal_Meals(amountOfMeals);
         re.setMealType(insteadOf);
-        re.setMealType2(iHad);
+        re.setMealType2(ihad);
 
         Response res = client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
@@ -325,20 +357,25 @@ public class CompactClient  {
         return res.readEntity(JSONObject.class);
     }
 
+    /**
+     * Get total CO2 saved by buying local produce.
+     * @return total CO2 saved by buying local produce
+     */
     public Double getLocalProduce() {
         String auth = formAuthHeader();
 
         WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/localproduce/get");
-        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
-        invocationBuilder.header("Authorization", auth);
-        Response response = invocationBuilder.get(Response.class);
-        JSONObject jo = response.readEntity(JSONObject.class);
+        JSONObject jo = generalGet(webTarget, auth);
 
-        adjustToken(jo);
-
-        return (Double)jo.getDouble("total_Produce");
+        return (Double)jo.getDouble("localSaved");
     }
 
+    /**
+     * Posts the latest buying local produce activity information.
+     * @param kilograms of local produce bought
+     * @param type type of food
+     * @return JSONObject Resource originally posted
+     */
     public JSONObject postLocalProduce(Double kilograms, String type) {
         String auth = formAuthHeader();
         Resource re = new Resource();
@@ -352,6 +389,65 @@ public class CompactClient  {
 
         return res.readEntity(JSONObject.class);
     }
+
+    /**
+     * Returns user statistics (of all activities).
+     * @return JSONObject with user statistics
+     */
+    public JSONObject getStats() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/allstats");
+        JSONObject jo = generalGet(webTarget, auth);
+
+        return jo;
+    }
+
+
+    /**
+     * Returns user personal information.
+     * @return JSONObject with user personal information
+     */
+    public JSONObject getPersonalInfo() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/personalinfo");
+        Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
+        invocationBuilder.header("Authorization", auth);
+        Response response = invocationBuilder.get(Response.class);
+        JSONObject jo = response.readEntity(JSONObject.class);
+
+        adjustToken(jo);
+
+        return jo;
+    }
+
+    /**
+     * Returns user's achievements status.
+     * @return user's achievements status
+     */
+    public String getAchievements() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/achievements");
+        JSONObject jo = generalGet(webTarget, auth);
+
+        return jo.get("achievements").toString();
+    }
+
+    /**
+     * Returns user's current level.
+     * @return user's current level
+     */
+    public int getLevel() {
+        String auth = formAuthHeader();
+
+        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/level");
+        JSONObject jo = generalGet(webTarget, auth);
+
+        return (int)jo.get("level");
+    }
+
     /**
      * Method that verifies the token stored in a file.
      * @return true when authentication succeeded, false when failed
@@ -379,19 +475,19 @@ public class CompactClient  {
     }
 
     //FOR TESTING ONLY
-    /**
-     * Main method that simulates the client.
-     *
-     * @param args Input for main
-     */
-    public static void main(String[] args) throws IOException {
-        CompactClient cc = new CompactClient();
-        //        System.out.println(cc.getPublicTransport());
-
-        System.out.println(cc.getHeatConsumption());
-        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
-
-    }
+    //    /**
+    //     * Main method that simulates the client.
+    //     *
+    //     * @param args Input for main
+    //     */
+    //    public static void main(String[] args) throws IOException {
+    //        CompactClient cc = new CompactClient();
+    //        //        System.out.println(cc.getPublicTransport());
+    //
+    //        System.out.println(cc.getHeatConsumption());
+    //        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
+    //        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+    //
+    //    }
 
 }
