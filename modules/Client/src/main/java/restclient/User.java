@@ -5,6 +5,9 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.security.Key;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -12,19 +15,16 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.security.Key;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class User {
+
+    static final Key KEY = Keys.hmacShaKeyFor(
+            "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
+                    .getBytes());
 
     private Client client;
     private String credentials;
     private String token;
-    public static final Key KEY = Keys.hmacShaKeyFor(
-            "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
-                    .getBytes());
-
 
     /**
      * Constructor for user.
@@ -42,6 +42,22 @@ public class User {
                 .compact();
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public String getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(String credentials) {
+        this.credentials = credentials;
+    }
+
     public String getToken() {
         return token;
     }
@@ -49,6 +65,8 @@ public class User {
     public void setToken(String token) {
         this.token = token;
     }
+
+
 
     /**
      * Method carries out the get request to
@@ -67,11 +85,8 @@ public class User {
 
         adjustToken(jo);
 
-        if (token != null) {
-            return true;
-        }
+        return token != null;
 
-        return false;
     }
 
     /**
@@ -107,7 +122,9 @@ public class User {
                 .header("Authorization", "Bearer " + formAuthHeader())
                 .post(Entity.json(resource));
 
-        return res.readEntity(JSONObject.class).toJSONString(10);
+        JSONObject jo = res.readEntity(JSONObject.class);
+        String s = jo.toJSONString(10);
+        return s;
     }
 
     /**
@@ -123,8 +140,6 @@ public class User {
             auth = token;
         }
 
-//        System.out.println("Token is " + token);
-//        System.out.println("Credentials is " + credentials);
         return auth;
     }
 

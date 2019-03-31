@@ -76,10 +76,7 @@ public class SessionHandler {
 
         PreparedStatement ps = dbConnection.prepareStatement(sql);
 
-
-
         Statement st = dbConnection.createStatement();
-
         Statement st2 = dbConnection.createStatement();
 
         ResultSet rs2 = st2.executeQuery("SELECT MAX(ID) FROM person");

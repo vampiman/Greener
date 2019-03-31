@@ -27,9 +27,6 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class JwtVerifier implements ContainerRequestFilter {
 
-    private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
-    private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
-    private Connection dbConnection;
     static final Key KEY = Keys.hmacShaKeyFor(
             "ITSASECRETKEYTOOURLITTLEGREENERAPPANDYOULLNEVERFINDWHATITISBECAUSEITSAWESOME"
                     .getBytes());
@@ -37,6 +34,10 @@ public class JwtVerifier implements ContainerRequestFilter {
     static final Key KEY_VALIDATE = Keys.hmacShaKeyFor(
             "THISISEVENHARDERTHISISTHEKEYTHATONLYSERVERUSESITSSUCHAGREATSECRETITWILLBLOWYOURMIND"
                     .getBytes());
+
+    private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
+    private static final String AUTHORIZATION_HEADER_PREFIX = "Bearer "; // for JWT
+    private Connection dbConnection;
 
     @Override
     public void filter(ContainerRequestContext requestContext) {

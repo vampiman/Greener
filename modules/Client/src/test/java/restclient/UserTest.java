@@ -1,6 +1,8 @@
 package restclient;
 
 import cn.hutool.json.JSONObject;
+import io.jsonwebtoken.Jwts;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,24 +10,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Invocation;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.client.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.when;
+import static restclient.User.KEY;
 
 public class UserTest {
 
     private JSONObject jo;
-
-    public void prepareJson() {
-
-    }
 
     @Mock
     WebTarget target;
@@ -40,22 +39,31 @@ public class UserTest {
     Response response;
 
     @InjectMocks
-    User user;
+    User mockUser;
 
     @Before
     public void setup() {
-        client = mock(Client.class);
-        User user = new User("someEmail", "somePassword");
+        jo = new JSONObject();
+        jo.append("token", "123");
 
+        mockUser = new User("mymail@gmail.com", "pwd");
         client = mock(Client.class);
+        mockUser.setClient(client);
+
         target = mock(WebTarget.class);
         builder = mock(Invocation.Builder.class);
         response = mock(Response.class);
 
-        when(client.target(anyString())).thenReturn(target);
+        when(client.target(any(String.class))).thenReturn(target);
         when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
+        //REGISTER
+        when(builder.post(Entity.json(any()))).thenReturn(response);
+        //LOGIN
         when(builder.get(Response.class)).thenReturn(response);
+
         when(response.readEntity(JSONObject.class)).thenReturn(jo);
+
     }
 
     @Test
@@ -73,18 +81,80 @@ public class UserTest {
     }
 
     @Test
+    public void getCredentials() {
+        User user = new User("someEmail", "somePassword");
+        String hashedPassword = DigestUtils.sha256Hex("somePassword");
+        String expected = Jwts.builder()
+                .claim("Email", "someEmail")
+                .claim("Password", hashedPassword)
+                .signWith(KEY)
+                .compact();
+        Assert.assertEquals(expected, user.getCredentials());
+    }
+
+    @Test
+    public void setCredentials() {
+        User user = new User("someEmail", "somePassword");
+        user.setCredentials("test");
+        Assert.assertEquals("test", user.getCredentials());
+    }
+
+    @Test
+    public void getClient() {
+        User user = new User("someEmail", "somePassword");
+        Client client = ClientBuilder.newClient();
+        user.setClient(client);
+        Assert.assertSame(client, user.getClient());
+    }
+
+    @Test
     public void login() {
+        Assert.assertTrue(mockUser.login(null));
+        Mockito.verify(client).target(any(String.class));
+        Mockito.verify(response).readEntity(JSONObject.class);
     }
 
     @Test
-    public void register() {
+    public void registerCorrect() {
+        mockUser.register("Nat", "mymail@gmail.com", "pwd");
+        Mockito.verify(client).target(any(String.class));
+        Mockito.verify(response).readEntity(JSONObject.class);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void registerWrongMail() {
+        mockUser.register("Nat", "hello", "pwd");
     }
 
     @Test
-    public void formAuthHeader() {
+    public void formAuthHeaderTokenNull() {
+        User user = new User("mail", "123");
+        String auth = user.formAuthHeader();
+        Assert.assertEquals(auth, user.getCredentials());
     }
 
     @Test
-    public void adjustToken() {
+    public void formAuthHeaderTokenNotNull() {
+        User user = new User("mail", "123");
+        user.setToken("token");
+        Assert.assertEquals(user.formAuthHeader(), user.getToken());
+    }
+
+    @Test
+    public void adjustTokenTokenPresent() {
+        User user = new User("", "");
+        JSONObject jo = new JSONObject();
+        jo.append("token", "[[abc]]");
+        user.adjustToken(jo);
+        Assert.assertEquals("abc", user.getToken());
+    }
+
+    @Test
+    public void adjustTokenTokenNotPresent() {
+        User user = new User("", "");
+        JSONObject jo = new JSONObject();
+        jo.append("tok", "abs");
+        user.adjustToken(jo);
+        Assert.assertNull(user.getToken());
     }
 }
