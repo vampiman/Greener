@@ -106,11 +106,15 @@ public class JwtVerifier implements ContainerRequestFilter {
             getDbConnection();
 
             String email = claims.getBody().get("Email").toString();
+            System.out.println(email + " here is the email");
             String password = claims.getBody().get("Password").toString();
+            System.out.println(password + " here is the password");
 
             Statement st = dbConnection.createStatement();
             ResultSet rs = st.executeQuery("SELECT Password FROM person WHERE Email = \""
                     + email + "\"");
+
+            System.out.println(rs.toString());
 
             rs.next();
             String passToCheck = rs.getString("Password");
