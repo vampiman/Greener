@@ -147,7 +147,7 @@ public class CompactClient  {
         re.setCurrentHeatConsumption(currentConsumption);
         re.setEnergyType(energyType);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/heatconsumption/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/heatconsumption/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -164,7 +164,7 @@ public class CompactClient  {
     public double getHeatConsumption() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/heatconsumption/get");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/heatconsumption/get");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (double)jo.get("savedHeatConsumption");
@@ -186,7 +186,7 @@ public class CompactClient  {
         re.setPublicTransportType(typePublicTransport);
         re.setTotal_Distance(distance);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/publictransport/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/publictransport/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -202,7 +202,7 @@ public class CompactClient  {
     public double getPublicTransport() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/publictransport/get");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/publictransport/get");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (double)jo.get("savedPublicTransport");
@@ -216,7 +216,7 @@ public class CompactClient  {
     public double getBiker() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/bike/distance");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/bike/distance");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (double)jo.get("bikeSaved");
@@ -234,7 +234,7 @@ public class CompactClient  {
         re.setCarType(vehicleType);
         re.setTotal_Distance(distance);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/bike/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/bike/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -249,7 +249,7 @@ public class CompactClient  {
     public int getSolar() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/solarpanels/percentage");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/solarpanels/percentage");
         JSONObject jo = generalGet(webTarget, auth);
 
         Double savedSolar = (Double)jo.get("savedSolar");
@@ -267,7 +267,7 @@ public class CompactClient  {
         Resource re = new Resource();
         re.setKwh(kwhProduced);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/solarpanels/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/solarpanels/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -284,7 +284,7 @@ public class CompactClient  {
         String auth = formAuthHeader();
         Resource re = new Resource();
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/friends/follow?user=" + email)
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/friends/follow?user=" + email)
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -299,7 +299,7 @@ public class CompactClient  {
     public String[][] getAllFriends() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/friends/list");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/friends/list");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         invocationBuilder.header("Authorization", auth);
         Response response = invocationBuilder.get(Response.class);
@@ -329,7 +329,7 @@ public class CompactClient  {
     public Double getMealCarbon() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/veganmeal/totalVegan");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/veganmeal/totalVegan");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (Double)jo.get("total_Meals");
@@ -349,7 +349,7 @@ public class CompactClient  {
         re.setMealType(insteadOf);
         re.setMealType2(ihad);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/veganmeal/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/veganmeal/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -364,7 +364,7 @@ public class CompactClient  {
     public Double getLocalProduce() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/localproduce/get");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/localproduce/get");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (Double)jo.getDouble("localSaved");
@@ -382,7 +382,7 @@ public class CompactClient  {
         re.setTotal_Produce(kilograms);
         re.setMealType(type);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/localproduce/post")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/localproduce/post")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", auth)
                 .post(Entity.json(re));
@@ -397,7 +397,7 @@ public class CompactClient  {
     public JSONObject getStats() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/allstats");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/statistics/allstats");
         JSONObject jo = generalGet(webTarget, auth);
 
         return jo;
@@ -411,7 +411,7 @@ public class CompactClient  {
     public JSONObject getPersonalInfo() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/personalinfo");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/statistics/personalinfo");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         invocationBuilder.header("Authorization", auth);
         Response response = invocationBuilder.get(Response.class);
@@ -429,7 +429,7 @@ public class CompactClient  {
     public String getAchievements() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/achievements");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/statistics/achievements");
         JSONObject jo = generalGet(webTarget, auth);
 
         return jo.get("achievements").toString();
@@ -442,7 +442,7 @@ public class CompactClient  {
     public int getLevel() {
         String auth = formAuthHeader();
 
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/statistics/level");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/statistics/level");
         JSONObject jo = generalGet(webTarget, auth);
 
         return (int)jo.get("level");
@@ -485,8 +485,8 @@ public class CompactClient  {
     //        //        System.out.println(cc.getPublicTransport());
     //
     //        System.out.println(cc.getHeatConsumption());
-    //        //cc.getActivityInfo("http://localhost:8080/serverside/webapi/localproduce/get");
-    //        //cc.postActivityInfo("http://localhost:8080/serverside/webapi/localproduce/post");
+    //        //cc.getActivityInfo("http://134.209.120.167:8080/serverside1/webapi/localproduce/get");
+    //        //cc.postActivityInfo("http://134.209.120.167:8080/serverside1/webapi/localproduce/post");
     //
     //    }
 

@@ -77,7 +77,7 @@ public class User {
         if (auth == null) {
             auth = formAuthHeader();
         }
-        WebTarget webTarget = this.client.target("http://localhost:8080/serverside/webapi/session/login");
+        WebTarget webTarget = this.client.target("http://134.209.120.167:8080/serverside1/webapi/session/login");
         Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         invocationBuilder.header("Authorization", "Bearer " + auth);
         Response response = invocationBuilder.get(Response.class);
@@ -118,7 +118,7 @@ public class User {
         String hashedPassword = DigestUtils.sha256Hex(password);
         resource.setPassword(hashedPassword);
 
-        Response res = client.target("http://localhost:8080/serverside/webapi/session/register")
+        Response res = client.target("http://134.209.120.167:8080/serverside1/webapi/session/register")
                 .request(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + formAuthHeader())
                 .post(Entity.json(resource));
