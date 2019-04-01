@@ -147,6 +147,7 @@ public class JwtVerifier implements ContainerRequestFilter {
         String pass = "temporary";
 
         //        Class.forName("com.mysql.jdbc.Driver");
+
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 }
