@@ -30,7 +30,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(File.class)
+@PrepareForTest({File.class, CompactClient.class})
 public class CompactClientTest {
 
     JSONObject toReturn;

@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.when;
 import static restclient.User.KEY;
 
+
 public class UserTest {
 
     private JSONObject jo;
