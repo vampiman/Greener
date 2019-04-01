@@ -307,6 +307,9 @@ public class Controller {
     @FXML
     private TextArea publicBikeLabel;
 
+    @FXML
+    private Text levelField;
+
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -479,6 +482,7 @@ public class Controller {
 
 
         if (youPagePane != null) {
+            levelField.setText("Level: " + cc.getLevel());
             JSONObject details = cc.getPersonalInfo();
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
