@@ -52,25 +52,31 @@ public class JwtVerifier implements ContainerRequestFilter {
                     try {
                         authToken = issueJwt(authToken);
                         if (authToken.equals("ERROR")) {
-                            JSONObject jo = new JSONObject();
-                            jo.append("Error", "Access Denied");
-                            Response res = Response.status(Response.Status.UNAUTHORIZED)
-                                    .entity(jo).build();
-                            requestContext.abortWith(res);
+                            abortMe(requestContext);
                         } else {
-                            System.out.println(authToken + " just the token");
                             requestContext.getHeaders().add("token", authToken);
                         }
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        abortMe(requestContext);
                     }
                 } else {
-                    System.out.println(authToken + email + " token and email");
                     requestContext.getHeaders().add("token", authToken);
                     requestContext.getHeaders().add("email", email);
                 }
             }
         }
+    }
+
+    /**
+     * Method aborts filter in case of an error.
+     * @param rc request context
+     */
+    public void abortMe(ContainerRequestContext rc) {
+        JSONObject jo = new JSONObject();
+        jo.append("Error", "Access Denied");
+        Response res = Response.status(Response.Status.UNAUTHORIZED)
+                .entity(jo).build();
+        rc.abortWith(res);
     }
 
     /**
@@ -87,7 +93,6 @@ public class JwtVerifier implements ContainerRequestFilter {
             return claims.getBody().getSubject();
         } catch (SignatureException | IncorrectClaimException
                 | ExpiredJwtException | MissingClaimException se) {
-            System.out.println(se.getClass());
             return "ERROR";
         }
 
@@ -122,7 +127,6 @@ public class JwtVerifier implements ContainerRequestFilter {
 
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);
-            System.out.println(today.getTime() + " today");
 
             return Jwts.builder()
                     .setSubject(email)
@@ -138,10 +142,9 @@ public class JwtVerifier implements ContainerRequestFilter {
 
     /**
      * Method for initializing the connection with the database server through jdbc.
-     * @throws ClassNotFoundException Class not found error
      * @throws SQLException SQL-related error
      */
-    public void getDbConnection() throws SQLException {
+    private void getDbConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
         String user = "sammy";
         String pass = "temporary";
