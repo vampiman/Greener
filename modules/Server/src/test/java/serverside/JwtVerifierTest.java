@@ -29,6 +29,8 @@
 //import static serverside.JwtVerifier.KEY;
 //import static serverside.JwtVerifier.KEY_VALIDATE;
 //
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest(JwtVerifier.class)
 //public class JwtVerifierTest {
 //    private String correctCredentials, correctToken;
 //
@@ -59,6 +61,8 @@
 //        String pass = "temporary";
 //
 //        try {
+//            PowerMockito.mockStatic(DriverManager.class);
+//            PowerMockito.when(DriverManager.getConnection(url, user, pass)).thenReturn(mockConnection);
 //            mockConnection = mock(Connection.class);
 //            mockStatement = mock(Statement.class);
 //            mockRS = mock(ResultSet.class);

@@ -122,7 +122,7 @@ public class JwtVerifier implements ContainerRequestFilter {
 
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);
-            System.out.println(today.getTime() + "today");
+            System.out.println(today.getTime() + " today");
 
             return Jwts.builder()
                     .setSubject(email)
