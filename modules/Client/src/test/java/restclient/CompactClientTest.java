@@ -16,6 +16,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -68,6 +69,7 @@ public class CompactClientTest {
      */
     @Before
     public void setup() throws Exception {
+        MockitoAnnotations.initMocks(this);
         client = mock(Client.class);
         file = mock(File.class);
         br = mock(BufferedReader.class);
