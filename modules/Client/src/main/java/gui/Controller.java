@@ -7,12 +7,15 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,10 +28,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -271,6 +277,36 @@ public class Controller {
     @FXML
     private Pane ach26;
 
+    @FXML
+    private GridPane addActivityPane;
+
+    @FXML
+    private Button addVeganMealButton;
+
+    @FXML
+    private Button addLocalProductButton;
+
+    @FXML
+    private Button addTemperatureButton;
+
+    @FXML
+    private Button addSolarPanelButton;
+
+    @FXML
+    private Button addPublicTransportButton;
+
+    @FXML
+    private Button addBikeButton;
+
+    @FXML
+    private TextArea veganLocalLabel;
+
+    @FXML
+    private TextArea solarHomeLabel;
+
+    @FXML
+    private TextArea publicBikeLabel;
+
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -450,28 +486,110 @@ public class Controller {
             co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
         }
 
-        if (achievementsGrid != null) {
-            JSONObject info = cc.getStats();
-            //            System.out.println(info.toJSONString(10));
-            ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Vegan Meal",
-                                Double.parseDouble(info.get("total_Meals").toString())),
-                        new PieChart.Data("Public Transport",
-                                Double.parseDouble(info.get("savedPublicTransport").toString())),
-                        new PieChart.Data("Home Temperature",
-                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
-                        new PieChart.Data("Bike",
-                                Double.parseDouble(info.get("bikeSaved").toString())),
-                        new PieChart.Data("Local Product",
-                                Double.parseDouble(info.get("localSaved").toString())),
-                        new PieChart.Data("Solar Panel",
-                                Double.parseDouble(info.get("savedSolar").toString()))
-                );
-            pieChart.setTitle("SCORE DISTRIBUTION");
-            pieChart.setMaxSize(1000, 1000);
-            pieChart.setData(pieChartData);
+        if(addActivityPane != null) {
+            veganLocalLabel.setDisable(true);
+            veganLocalLabel.setStyle("-fx-opacity: 1;");
+            publicBikeLabel.setDisable(true);
+            publicBikeLabel.setStyle("-fx-opacity: 1");
+            solarHomeLabel.setDisable(true);
+            solarHomeLabel.setStyle("-fx-opacity: 1");
+            addVeganMealButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            veganLocalLabel.setText("Eat vegan meal");
+                        }
+                    });
+            addVeganMealButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            veganLocalLabel.setText("");
+                        }
+                    });
+
+            addLocalProductButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            veganLocalLabel.setText("Use local product");
+                        }
+                    });
+            addLocalProductButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            veganLocalLabel.setText("");
+                        }
+                    });
+            addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            solarHomeLabel.setText("Install a solar panel");
+                        }
+                    });
+            addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            solarHomeLabel.setText("");
+                        }
+                    });
+            addTemperatureButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            solarHomeLabel.setText("Decrease the temperature of your home");
+                        }
+                    });
+            addTemperatureButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            solarHomeLabel.setText("");
+                        }
+                    });
+            addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            publicBikeLabel.setText("Use public transportation");
+                        }
+                    });
+            addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            publicBikeLabel.setText("");
+                        }
+                    });
+            addBikeButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            publicBikeLabel.setText("Use bike ");
+                        }
+                    });
+            addBikeButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent e) {
+                            publicBikeLabel.setText("");
+                        }
+                    });
         }
+
+//        if (achievementsGrid != null) {
+//            JSONObject info = cc.getStats();
+//            //            System.out.println(info.toJSONString(10));
+//            ObservableList<PieChart.Data> pieChartData =
+//                FXCollections.observableArrayList(
+//                        new PieChart.Data("Vegan Meal",
+//                                Double.parseDouble(info.get("total_Meals").toString())),
+//                        new PieChart.Data("Public Transport",
+//                                Double.parseDouble(info.get("savedPublicTransport").toString())),
+//                        new PieChart.Data("Home Temperature",
+//                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
+//                        new PieChart.Data("Bike",
+//                                Double.parseDouble(info.get("bikeSaved").toString())),
+//                        new PieChart.Data("Local Product",
+//                                Double.parseDouble(info.get("localSaved").toString())),
+//                        new PieChart.Data("Solar Panel",
+//                                Double.parseDouble(info.get("savedSolar").toString()))
+//                );
+//            pieChart.setTitle("SCORE DISTRIBUTION");
+//            pieChart.setMaxSize(1000, 1000);
+//            pieChart.setData(pieChartData);
+//        }
     }
 
     //    @FXML
@@ -740,7 +858,83 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/activities.fxml");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            BorderPane root = new BorderPane();
+            root.setStyle("-fx-background-color: #91cb3e;");
+            root.setPadding(new Insets(20, 20, 20, 20));
+            Button button = new Button();
+            button.setText("BACK");
+            button.setStyle("-fx-background-color: #000000; -fx-text-fill: #91cb3e;");
+            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
+                    + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
+                    + "-fx-text-fill: #91cb3e;"));
+            button.setOnAction(value ->  {
+                try {
+                    Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
+                            .getResource("fxml/menu.fxml"));
+                    Scene addPageScene = new Scene(addPageParent);
+                    stage.setScene(addPageScene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            button.setLayoutX(250);
+            button.setLayoutY(220);
+            root.setTop(button);
+            JSONObject info = cc.getStats();
+            //            System.out.println(info.toJSONString(10));
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Vegan Meal",
+                                    Double.parseDouble(info.get("total_Meals").toString())),
+                            new PieChart.Data("Public Transport",
+                                    Double.parseDouble(info.get("savedPublicTransport").toString())),
+                            new PieChart.Data("Home Temperature",
+                                    Double.parseDouble(info.get("savedHeatConsumption").toString())),
+                            new PieChart.Data("Bike",
+                                    Double.parseDouble(info.get("bikeSaved").toString())),
+                            new PieChart.Data("Local Product",
+                                    Double.parseDouble(info.get("localSaved").toString())),
+                            new PieChart.Data("Solar Panel",
+                                    Double.parseDouble(info.get("savedSolar").toString()))
+                    );
+
+            final PieChart chart = new PieChart(pieChartData);
+            chart.setLabelsVisible(false);
+            chart.setTitle("SCORE DISTRIBUTION");
+
+            final Label caption = new Label("");
+            caption.setStyle("-fx-font: 20 System;");
+            double total =  0;
+            for (final PieChart.Data data : chart.getData())
+            {
+                total+=data.getPieValue();
+            }
+            final double totalAmount = total;
+            Group chartWithCaption = new Group(chart, caption);
+            for (final PieChart.Data data : chart.getData()) {
+                data.getNode().addEventHandler(MouseEvent.MOUSE_MOVED,
+                        new EventHandler<MouseEvent>() {
+                            @Override public void handle(MouseEvent e) {
+                                Point2D locationInScene = new Point2D(e.getSceneX(), e.getSceneY());
+                                Point2D locationInParent = chartWithCaption.sceneToLocal(locationInScene);
+
+                                caption.relocate(locationInParent.getX()+20, locationInParent.getY());
+
+                                caption.setText(String.valueOf(Math.round((data.getPieValue()/totalAmount)*100))  + "%");
+                            }
+                        });
+                data.setName(data.getName()+ ": " + data.getPieValue() + " kg");
+            }
+            root.setCenter(chartWithCaption);
+            Scene scene = new Scene(root);
+            stage.setWidth(600);
+            stage.setHeight(500);
+
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
