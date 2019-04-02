@@ -1130,4 +1130,64 @@ public class Controller {
         }
     }
 
+    @FXML
+    private void showYouLabel() {
+        youLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideYouLabel() {
+        youLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showActivitiesLabel() {
+        activitiesLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideActivitiesLabel() {
+        activitiesLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddActivityLabel() {
+        addActivityLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddActivityLabel() {
+        addActivityLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showFriendsLabel() {
+        friendsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideFriendsLabel() {
+        friendsLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddFriendLabel() {
+        addFriendLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddFriendLabel() {
+        addFriendLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAchievementsLabel() {
+        achievementsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAchievementsLabel() {
+        achievementsLabel.setVisible(false);
+    }
+
 }
