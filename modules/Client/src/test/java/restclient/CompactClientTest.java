@@ -3,21 +3,19 @@ package restclient;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-//import static org.powermock.api.mockito.PowerMockito.whenNew;
+
+
 
 import cn.hutool.json.JSONObject;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
@@ -69,20 +67,20 @@ public class CompactClientTest {
      */
     @Before
     public void setup() throws Exception {
-        client = mock(Client.class);
-        file = mock(File.class);
-        br = mock(BufferedReader.class);
+        client = Mockito.mock(Client.class);
+        file = Mockito.mock(File.class);
+        br = Mockito.mock(BufferedReader.class);
 
-        when(file.exists()).thenReturn(false);
-        when(br.readLine()).thenReturn(null);
+        Mockito.when(file.exists()).thenReturn(false);
+        Mockito.when(br.readLine()).thenReturn(null);
 
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         ccClient.token = null;
         ccClient.credentials = "";
-        mockTarget = mock(WebTarget.class);
-        mockBuilder = mock(Invocation.Builder.class);
-        mockResponse = mock(Response.class);
+        mockTarget = Mockito.mock(WebTarget.class);
+        mockBuilder = Mockito.mock(Invocation.Builder.class);
+        mockResponse = Mockito.mock(Response.class);
 
 
         //JSONObject returned by server
@@ -98,38 +96,38 @@ public class CompactClientTest {
 
         JSONObject jo1 = new JSONObject();
         jo1.append("Weight", "100");
-        resNoToken = mock(Response.class);
-        when(resNoToken.readEntity(JSONObject.class)).thenReturn(jo1);
-        when(resNoToken.getStatus()).thenReturn(200); //The OK status
+        resNoToken = Mockito.mock(Response.class);
+        Mockito.when(resNoToken.readEntity(JSONObject.class)).thenReturn(jo1);
+        Mockito.when(resNoToken.getStatus()).thenReturn(200); //The OK status
 
         JSONObject jo2 = new JSONObject();
         jo2.append("Weight", "100");
         jo2.append("token", "tok");
-        resToken = mock(Response.class);
-        when(resToken.readEntity(JSONObject.class)).thenReturn(jo2);
-        when(resToken.getStatus()).thenReturn(200); //The OK status
+        resToken = Mockito.mock(Response.class);
+        Mockito.when(resToken.readEntity(JSONObject.class)).thenReturn(jo2);
+        Mockito.when(resToken.getStatus()).thenReturn(200); //The OK status
 
-        builderNoToken = mock(Invocation.Builder.class);
-        when(builderNoToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderNoToken);
-        when(builderNoToken.get(Response.class)).thenReturn(resNoToken);
-        when(builderNoToken.post(Entity.json(jo1))).thenReturn(resNoToken);
+        builderNoToken = Mockito.mock(Invocation.Builder.class);
+        Mockito.when(builderNoToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderNoToken);
+        Mockito.when(builderNoToken.get(Response.class)).thenReturn(resNoToken);
+        Mockito.when(builderNoToken.post(Entity.json(jo1))).thenReturn(resNoToken);
 
-        targetNoToken = mock(WebTarget.class);
-        when(targetNoToken.path(anyString())).thenReturn(targetNoToken);
-        when(targetNoToken.request(MediaType.APPLICATION_JSON))
+        targetNoToken = Mockito.mock(WebTarget.class);
+        Mockito.when(targetNoToken.path(anyString())).thenReturn(targetNoToken);
+        Mockito.when(targetNoToken.request(MediaType.APPLICATION_JSON))
                 .thenReturn(builderNoToken);
-        when(ccClient.client.target("testCompactClient")).thenReturn(targetNoToken);
+        Mockito.when(ccClient.client.target("testCompactClient")).thenReturn(targetNoToken);
 
-        builderToken = mock(Invocation.Builder.class);
-        when(builderToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderToken);
-        when(builderToken.get(Response.class)).thenReturn(resToken);
-        when(builderToken.post(Entity.json(jo1))).thenReturn(resToken);
+        builderToken = Mockito.mock(Invocation.Builder.class);
+        Mockito.when(builderToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderToken);
+        Mockito.when(builderToken.get(Response.class)).thenReturn(resToken);
+        Mockito.when(builderToken.post(Entity.json(jo1))).thenReturn(resToken);
 
-        targetToken = mock(WebTarget.class);
-        when(targetToken.path(anyString())).thenReturn(targetToken);
-        when(targetToken.request(MediaType.APPLICATION_JSON))
+        targetToken = Mockito.mock(WebTarget.class);
+        Mockito.when(targetToken.path(anyString())).thenReturn(targetToken);
+        Mockito.when(targetToken.request(MediaType.APPLICATION_JSON))
                 .thenReturn(builderToken);
-        when(ccClient.client.target("testCompactClientToken")).thenReturn(targetToken);
+        Mockito.when(ccClient.client.target("testCompactClientToken")).thenReturn(targetToken);
 
 
 
@@ -138,10 +136,10 @@ public class CompactClientTest {
 
     @Test
     public void testBuilderSomeRead() throws IOException {
-        br = mock(BufferedReader.class);
-        file = mock(File.class);
-        when(file.exists()).thenReturn(true);
-        when(br.readLine()).thenReturn("abc");
+        br = Mockito.mock(BufferedReader.class);
+        file = Mockito.mock(File.class);
+        Mockito.when(file.exists()).thenReturn(true);
+        Mockito.when(br.readLine()).thenReturn("abc");
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
 

@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.when;
+
 import static restclient.User.KEY;
 
 
@@ -48,22 +48,22 @@ public class UserTest {
         jo.append("token", "123");
 
         mockUser = new User("mymail@gmail.com", "pwd");
-        client = mock(Client.class);
+        client = Mockito.mock(Client.class);
         mockUser.setClient(client);
 
-        target = mock(WebTarget.class);
-        builder = mock(Invocation.Builder.class);
-        response = mock(Response.class);
+        target = Mockito.mock(WebTarget.class);
+        builder = Mockito.mock(Invocation.Builder.class);
+        response = Mockito.mock(Response.class);
 
-        when(client.target(any(String.class))).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
+        Mockito.when(client.target(any(String.class))).thenReturn(target);
+        Mockito.when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        Mockito.when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
         //REGISTER
-        when(builder.post(Entity.json(any()))).thenReturn(response);
+        Mockito.when(builder.post(Entity.json(any()))).thenReturn(response);
         //LOGIN
-        when(builder.get(Response.class)).thenReturn(response);
+        Mockito.when(builder.get(Response.class)).thenReturn(response);
 
-        when(response.readEntity(JSONObject.class)).thenReturn(jo);
+        Mockito.when(response.readEntity(JSONObject.class)).thenReturn(jo);
 
     }
 
