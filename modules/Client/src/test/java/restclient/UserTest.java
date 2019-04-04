@@ -158,4 +158,5 @@ public class UserTest {
         user.adjustToken(jo);
         Assert.assertNull(user.getToken());
     }
+
 }
