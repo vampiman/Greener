@@ -51,7 +51,9 @@ import javafx.util.Duration;
 import restclient.CompactClient;
 import restclient.User;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -336,8 +338,14 @@ public class Controller {
                 return;
             }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postBiker(transportType.getValue().toString(),
@@ -459,7 +467,9 @@ public class Controller {
 
     @FXML
     private void initialize() throws IOException {
-        CompactClient cc = new CompactClient();
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
 
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -629,8 +639,14 @@ public class Controller {
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/menu.fxml");
@@ -740,8 +756,14 @@ public class Controller {
 
     @FXML
     private void handleBackToMenuAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/menu.fxml");
@@ -750,8 +772,14 @@ public class Controller {
 
     @FXML
     private void handleAch1Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements1.fxml");
@@ -760,8 +788,14 @@ public class Controller {
 
     @FXML
     private void handleAch2Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements2.fxml");
@@ -770,8 +804,14 @@ public class Controller {
 
     @FXML
     private void handleAch3Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements3.fxml");
@@ -858,8 +898,14 @@ public class Controller {
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -944,8 +990,14 @@ public class Controller {
 
     @FXML
     protected void handleAddFriendsButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addFriends.fxml");
@@ -954,8 +1006,14 @@ public class Controller {
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements1.fxml");
@@ -965,8 +1023,14 @@ public class Controller {
     @FXML
     protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
 
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             String[][] friends = cc.getAllFriends();
@@ -976,8 +1040,14 @@ public class Controller {
 
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/mainLogin.fxml");
         } else {
             loadPage(event, "fxml/you.fxml");
@@ -986,8 +1056,14 @@ public class Controller {
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -1037,8 +1113,14 @@ public class Controller {
 
     @FXML
     private void handleVegetarianMealButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/veganMeal.fxml");
@@ -1047,8 +1129,14 @@ public class Controller {
 
     @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/publicTransport.fxml");
@@ -1057,8 +1145,14 @@ public class Controller {
 
     @FXML
     private void handleTemperatureButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/temperature.fxml");
@@ -1067,8 +1161,14 @@ public class Controller {
 
     @FXML
     private void handleSolarPanelButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/solarPanel.fxml");
@@ -1077,8 +1177,14 @@ public class Controller {
 
     @FXML
     private void handleBikeButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/bike.fxml");
@@ -1087,8 +1193,14 @@ public class Controller {
 
     @FXML
     private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/localProduct.fxml");
@@ -1131,8 +1243,14 @@ public class Controller {
                 return;
             }
 
-            CompactClient cc = new CompactClient();
-            if (!cc.checkToken()) {
+            File file = new File("test.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            CompactClient cc = new CompactClient(file, br);
+
+            File toRead = new File("test.txt");
+            BufferedReader got = new BufferedReader(new FileReader(toRead));
+            User usr = new User("", "");
+            if (!cc.checkToken(toRead, got, usr)) {
                 loadPage(event, "fxml/loginPage.fxml");
             } else {
                 cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
@@ -1165,7 +1283,9 @@ public class Controller {
                 int after = Integer.parseInt(afterTemperature.getText());
                 String typeOfEnergy = (String) energyType.getValue();
 
-                CompactClient cc = new CompactClient();
+                File file = new File("test.txt");
+                BufferedReader br = new BufferedReader(new FileReader(file));
+                CompactClient cc = new CompactClient(file, br);
                 cc.postHeatConsumption(before, after, typeOfEnergy);
             } catch (NumberFormatException e) {
                 AlertHelper
@@ -1174,8 +1294,14 @@ public class Controller {
                 return;
             }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -1201,8 +1327,14 @@ public class Controller {
                 return;
             }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
@@ -1229,8 +1361,14 @@ public class Controller {
                 return;
             }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()),
@@ -1259,8 +1397,14 @@ public class Controller {
         //                return;
         //            }
         //        }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             JSONObject jo = cc.followUser(friendCode.getText());
@@ -1297,8 +1441,14 @@ public class Controller {
             }
         }
 
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),

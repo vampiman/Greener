@@ -25,19 +25,16 @@ public class CompactClient  {
     /**
      * Constructor for user.
      */
-    public CompactClient() throws IOException {
+    public CompactClient(File file, BufferedReader br) throws IOException {
         this.client = ClientBuilder.newClient();
         String token = "";
-        File file = new File("test.txt");
+//        File file = new File("test.txt");
         boolean fileExists = file.exists();
 
         if (fileExists) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
 
-            String st;
-            while ((st = br.readLine()) != null) {
-                token = st;
-            }
+
+            token = br.readLine();
         }
         this.token = token;
     }
@@ -140,7 +137,7 @@ public class CompactClient  {
      * @return JSON Response as a String
      */
     public String postHeatConsumption(int averageConsumption, int currentConsumption,
-                                          String energyType) {
+                                      String energyType) {
         String auth = formAuthHeader();
         Resource re = new Resource();
         re.setAverageHeatConsumption(averageConsumption);
@@ -453,13 +450,13 @@ public class CompactClient  {
      * @return true when authentication succeeded, false when failed
      * @throws IOException in case the file is not found/unable to be opened or read.
      */
-    public boolean checkToken() throws IOException {
+    public boolean checkToken(File gotFile, BufferedReader br, User user) throws IOException {
         String token = "";
-        File file = new File("test.txt");
+        File file = gotFile;
         boolean fileExists = file.exists();
 
         if (fileExists) {
-            BufferedReader br = new BufferedReader(new FileReader(file));
+//            BufferedReader br = new BufferedReader(new FileReader(file));
 
             String st;
             while ((st = br.readLine()) != null) {
@@ -467,7 +464,7 @@ public class CompactClient  {
             }
         }
 
-        User user = new User("", "");
+//        User user = new User("", "");
         if (user.login(token)) {
             return true;
         }

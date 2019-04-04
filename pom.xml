@@ -160,6 +160,26 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <check>
+                        <instrumentation>
+                            <excludes>
+                                <exclude>**/gui/**</exclude>
+                            </excludes>
+                        </instrumentation>
+                        <formats>
+                            <format>html</format>
+                            <format>xml</format>
+                        </formats>
+                    </check>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -182,10 +202,21 @@
                 <artifactId>cobertura-maven-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
-                    <formats>
-                        <format>html</format>
-                        <format>xml</format>
-                    </formats>
+                    <check>
+                        <instrumentation>
+                            <excludes>
+                                <exclude>**/gui/**</exclude>
+                            </excludes>
+                            <ignores>
+                                <ignore>android/support/v4/**/*.class</ignore>
+                                <ignore>com/actionbarsherlock/**/*.class</ignore>
+                            </ignores>
+                        </instrumentation>
+                        <formats>
+                            <format>html</format>
+                            <format>xml</format>
+                        </formats>
+                    </check>
                 </configuration>
             </plugin>
 

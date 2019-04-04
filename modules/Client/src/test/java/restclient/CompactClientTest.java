@@ -5,7 +5,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
+//import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import cn.hutool.json.JSONObject;
 
@@ -16,7 +16,6 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -28,10 +27,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(CompactClient.class)
+//@RunWith(PowerMockRunner.class)
+//@PrepareForTest({File.class, BufferedReader.class})
 public class CompactClientTest {
 
     JSONObject toReturn;
@@ -69,14 +69,14 @@ public class CompactClientTest {
      */
     @Before
     public void setup() throws Exception {
-        MockitoAnnotations.initMocks(this);
         client = mock(Client.class);
         file = mock(File.class);
         br = mock(BufferedReader.class);
 
+        when(file.exists()).thenReturn(false);
+        when(br.readLine()).thenReturn(null);
 
-
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         ccClient.token = null;
         ccClient.credentials = "";
@@ -136,7 +136,18 @@ public class CompactClientTest {
     }
 
 
+    @Test
+    public void testBuilderSomeRead() throws IOException {
+        br = mock(BufferedReader.class);
+        file = mock(File.class);
+        when(file.exists()).thenReturn(true);
+        when(br.readLine()).thenReturn("abc");
+        ccClient = new CompactClient(file, br);
+        ccClient.client = client;
 
+
+        Assert.assertEquals("abc", ccClient.token);
+    }
 
     /**
      * Tests the equality between an arbitrary
@@ -226,7 +237,7 @@ public class CompactClientTest {
 
     @Test
     public void getHeatConsumptionTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -239,7 +250,7 @@ public class CompactClientTest {
 
     @Test
     public void getBikeTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -252,7 +263,7 @@ public class CompactClientTest {
 
     @Test
     public void getMealsTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -265,7 +276,7 @@ public class CompactClientTest {
 
     @Test
     public void getLocalTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -278,7 +289,7 @@ public class CompactClientTest {
 
     @Test
     public void getSolarTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -291,7 +302,7 @@ public class CompactClientTest {
 
     @Test
     public void getTransportTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -304,7 +315,7 @@ public class CompactClientTest {
 
     @Test
     public void postVeganTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
@@ -314,7 +325,7 @@ public class CompactClientTest {
         re.setTotal_Meals(1.0);
 
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -326,12 +337,12 @@ public class CompactClientTest {
 
     @Test
     public void postLocalTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -343,11 +354,11 @@ public class CompactClientTest {
 
     @Test
     public void postSolarTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -359,11 +370,11 @@ public class CompactClientTest {
 
     @Test
     public void postTransportTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -376,11 +387,11 @@ public class CompactClientTest {
 
     @Test
     public void postHeatTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -393,11 +404,11 @@ public class CompactClientTest {
 
     @Test
     public void postBikeTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -410,11 +421,11 @@ public class CompactClientTest {
 
     @Test
     public void followUserTest() throws Exception {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -426,7 +437,7 @@ public class CompactClientTest {
 
     @Test
     public void getStatsTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -439,7 +450,7 @@ public class CompactClientTest {
 
     @Test
     public void getPersonalTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -452,7 +463,7 @@ public class CompactClientTest {
 
     @Test
     public void getAchievementsTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
@@ -465,7 +476,7 @@ public class CompactClientTest {
 
     @Test
     public void getLevelTest() throws IOException {
-        ccClient = new CompactClient();
+        ccClient = new CompactClient(file, br);
         ccClient.client = client;
 
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
