@@ -5,7 +5,6 @@ import cn.hutool.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -28,7 +27,7 @@ public class CompactClient  {
     public CompactClient(File file, BufferedReader br) throws IOException {
         this.client = ClientBuilder.newClient();
         String token = "";
-//        File file = new File("test.txt");
+        //        File file = new File("test.txt");
         boolean fileExists = file.exists();
 
         if (fileExists) {
@@ -456,15 +455,16 @@ public class CompactClient  {
         boolean fileExists = file.exists();
 
         if (fileExists) {
-//            BufferedReader br = new BufferedReader(new FileReader(file));
+            //            BufferedReader br = new BufferedReader(new FileReader(file));
 
-            String st;
-            while ((st = br.readLine()) != null) {
-                token = st;
-            }
+            String st = br.readLine();
+            token = st;
+            //            while ((st = br.readLine()) != null) {
+            //                token = st;
+            //            }
         }
 
-//        User user = new User("", "");
+        //        User user = new User("", "");
         if (user.login(token)) {
             return true;
         }

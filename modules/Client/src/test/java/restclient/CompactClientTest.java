@@ -4,8 +4,6 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.any;
 
-
-
 import cn.hutool.json.JSONObject;
 
 import org.junit.Assert;
@@ -38,6 +36,9 @@ public class CompactClientTest {
     BufferedReader br;
 
     @Mock
+    User user;
+
+    @Mock
     File file;
 
     @Mock
@@ -67,6 +68,7 @@ public class CompactClientTest {
      */
     @Before
     public void setup() throws Exception {
+        user = Mockito.mock(User.class);
         client = Mockito.mock(Client.class);
         file = Mockito.mock(File.class);
         br = Mockito.mock(BufferedReader.class);
@@ -484,4 +486,26 @@ public class CompactClientTest {
 
         Assert.assertTrue(ccClient.getLevel() == 5);
     }
+
+    @Test
+    public void checkTokenTestFileExists() throws IOException {
+        Mockito.when(file.exists()).thenReturn(true);
+        Mockito.when(br.readLine()).thenReturn(null);
+        Mockito.when(user.login(null)).thenReturn(true);
+        ccClient = new CompactClient(file, br);
+        ccClient.client = client;
+
+        Assert.assertEquals(true, ccClient.checkToken(file, br, user));
+    }
+
+    @Test
+    public void checkTokenTestFileDoesNotExists() throws IOException {
+        Mockito.when(file.exists()).thenReturn(false);
+        Mockito.when(user.login(anyString())).thenReturn(false);
+        ccClient = new CompactClient(file, br);
+        ccClient.client = client;
+
+        Assert.assertEquals(false, ccClient.checkToken(file, br, user));
+    }
+
 }
