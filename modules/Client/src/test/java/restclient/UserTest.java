@@ -116,6 +116,13 @@ public class UserTest {
     }
 
     @Test
+    public void loginNotNull() {
+        Assert.assertTrue(mockUser.login("Something"));
+        Mockito.verify(client).target(any(String.class));
+        Mockito.verify(response).readEntity(JSONObject.class);
+    }
+
+    @Test
     public void registerCorrect() {
         mockUser.register("Nat", "mymail@gmail.com", "pwd");
         Mockito.verify(client).target(any(String.class));
@@ -158,5 +165,6 @@ public class UserTest {
         user.adjustToken(jo);
         Assert.assertNull(user.getToken());
     }
+
 
 }

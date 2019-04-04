@@ -1,9 +1,11 @@
 package restclient;
 
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Matchers.any;
 
+import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
 
 import org.junit.Assert;
@@ -34,6 +36,12 @@ public class CompactClientTest {
 
     @Mock
     BufferedReader br;
+
+    @Mock
+    JSONArray array;
+
+    @Mock
+    JSONObject mockJson;
 
     @Mock
     User user;
@@ -68,6 +76,8 @@ public class CompactClientTest {
      */
     @Before
     public void setup() throws Exception {
+        array = Mockito.mock(JSONArray.class);
+        mockJson = Mockito.mock(JSONObject.class);
         user = Mockito.mock(User.class);
         client = Mockito.mock(Client.class);
         file = Mockito.mock(File.class);
@@ -506,6 +516,28 @@ public class CompactClientTest {
         ccClient.client = client;
 
         Assert.assertEquals(false, ccClient.checkToken(file, br, user));
+    }
+
+    @Test
+    public void getAllFriendsTest() throws IOException {
+        ccClient = new CompactClient(file, br);
+        ccClient.client = client;
+
+        Mockito.when(client.target(anyString())).thenReturn(mockTarget);
+        Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
+        Mockito.when(mockBuilder.get(Response.class)).thenReturn(mockResponse);
+        Mockito.when(mockResponse.readEntity(JSONObject.class)).thenReturn(mockJson);
+        Mockito.when(mockJson.getJSONArray("friends")).thenReturn(array);
+        Mockito.when(array.size()).thenReturn(1);
+        Mockito.when(array.getJSONArray(anyInt())).thenReturn(array);
+        Mockito.when(array.get(0)).thenReturn("SomeName");
+        Mockito.when(array.get(1)).thenReturn("SomeScore");
+
+        String[][] result = ccClient.getAllFriends();
+
+        Assert.assertEquals("SomeName", result[0][0]);
+        Assert.assertEquals("SomeScore", result[0][1]);
+
     }
 
 }

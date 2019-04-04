@@ -28,6 +28,7 @@
 
 .label {
     visibility: hidden;
+    -fx-background-color: transparent;
 }
 
 .button {
@@ -35,8 +36,8 @@
     -fx-pref-width: 100;
     -fx-border-radius: 100;
     -fx-background-radius: 100;
-    -fx-background-color: #91CB3E;
-    -fx-border-color:  #124A11;
+    -fx-background-color: radial-gradient(center 95% 20%, radius 40%, #97ec54, #91cb3e);
+    -fx-border-color: #124A11;
 }
 
 .button:hover {
@@ -44,7 +45,7 @@
     -fx-scale-y: 1.2;
 }
 
-#youButton:hover {
+#youButton:hover #youLabel{
     -fx-scale-x: 1.2;
     -fx-scale-y: 1.2;
 }

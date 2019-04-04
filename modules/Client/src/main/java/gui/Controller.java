@@ -326,7 +326,7 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the number of kilometers which you travelled");
             return;
-        } else {
+        }
             try {
                 Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
                 String typeOfTransport = transportType.getValue().toString();
@@ -337,7 +337,20 @@ public class Controller {
                                         + "double number to indicate number of kilometers you go");
                 return;
             }
+
+        if(Double.parseDouble(bikeKilometers.getText()) <= 10) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid Input!",
+                            "Please enter a "
+                                    + "number of kilometres bigger than 10!");
+            return;
+        } else if(Double.parseDouble(bikeKilometers.getText()) >= 5000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wait a second!",
+                            "We think that amount should be lower than 5000!");
+            return;
         }
+
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         CompactClient cc = new CompactClient(file, br);
@@ -1239,25 +1252,33 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the type of public transport");
             return;
-        } else if (kilometers.getText().isEmpty()) {
+        }
+
+        try {
+            numberOfKilometers = Double.parseDouble(kilometers.getText());
+            typeOfCar = carType.getValue().toString();
+            publictransportType = publicTransport.getValue().toString();
+
+
+        } catch (NumberFormatException e) {
             AlertHelper
-                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter the number of kilometers which you travelled");
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a "
+                                    + "double number to indicate number of kilometers you go");
             return;
-        } else {
-            try {
-                numberOfKilometers = Double.parseDouble(kilometers.getText());
-                typeOfCar = carType.getValue().toString();
-                publictransportType = publicTransport.getValue().toString();
+        }
 
-
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a "
-                                        + "double number to indicate number of kilometers you go");
-                return;
-            }
+        if (Double.parseDouble(kilometers.getText()) <= 10) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
+                            "Please enter a number of kilometres bigger than 10");
+            return;
+        } else if (Double.parseDouble(kilometers.getText()) > 20000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Slow down!",
+                            "Please input values lower than 20000!");
+            return;
+        }
 
             File file = new File("test.txt");
             BufferedReader br = new BufferedReader(new FileReader(file));
@@ -1272,7 +1293,7 @@ public class Controller {
                 cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
                 loadPage(event, "fxml/addActivity.fxml");
             }
-        }
+
     }
 
     @FXML
@@ -1283,7 +1304,24 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature before decreasing");
             return;
-        } else if (afterTemperature.getText().isEmpty()) {
+        }
+        try {
+            int before = Integer.parseInt(beforeTemperature.getText());
+            int after = Integer.parseInt(afterTemperature.getText());
+            String typeOfEnergy = (String) energyType.getValue();
+
+            File file = new File("test.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            CompactClient cc = new CompactClient(file, br);
+            cc.postHeatConsumption(before, after, typeOfEnergy);
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a double number to indicate your home's temperature");
+            return;
+        }
+
+        if (afterTemperature.getText().isEmpty()) {
             Controller.AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
@@ -1293,22 +1331,24 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter your energy type");
             return;
-        } else {
-            try {
-                int before = Integer.parseInt(beforeTemperature.getText());
-                int after = Integer.parseInt(afterTemperature.getText());
-                String typeOfEnergy = (String) energyType.getValue();
-
-                File file = new File("test.txt");
-                BufferedReader br = new BufferedReader(new FileReader(file));
-                CompactClient cc = new CompactClient(file, br);
-                cc.postHeatConsumption(before, after, typeOfEnergy);
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double number to indicate your home's temperature");
-                return;
-            }
+        } else if (Double.parseDouble(beforeTemperature.getText()) <= 0 ||
+                Double.parseDouble(afterTemperature.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid value!",
+                            "Please input values higher than 0!");
+            return;
+        } else if (Double.parseDouble(beforeTemperature.getText())
+                - Double.parseDouble(afterTemperature.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid values!",
+                            "Difference between the values can't be lower than 0!");
+            return;
+        } else if (Double.parseDouble(beforeTemperature.getText())
+                - Double.parseDouble(afterTemperature.getText()) >= 20000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Difference too big",
+                            "Difference too big, are you heating a whole hotel?");
+            return;
         }
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -1332,16 +1372,28 @@ public class Controller {
                     Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the total kWh generated by your solar panels!");
             return;
-        } else {
-            try {
-                Double percentage = Double.parseDouble(electricityAmount.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double "
-                                        + "number to indicate your electricity percentage");
-                return;
-            }
+        }
+        try {
+            Double percentage = Double.parseDouble(electricityAmount.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a double "
+                                    + "number to indicate your electricity percentage");
+            return;
+        }
+
+        if(Double.parseDouble(electricityAmount.getText()) <= 0) {
+            AlertHelper
+                .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
+                        "Number of kWh can't be negative or 0!");
+        return;
+        } else if (Double.parseDouble(electricityAmount.getText()) > 50000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Over 50000 kilowatts!",
+                            "Are you powering up a factory? If you don't, please input "
+                                    + "a value lower than 50000 kilowatts");
+            return;
         }
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
@@ -1364,19 +1416,33 @@ public class Controller {
         if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter how much vegan meal you had");
+                            "Please enter the amount of kilograms!");
             return;
-        } else {
-            try {
-                String type = mealTypes.getValue().toString();
-                double portions = Double.parseDouble(amountVegetarianMeal.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate your meal portion");
-                return;
-            }
         }
+
+        try {
+            String type = mealTypes.getValue().toString();
+            double portions = Double.parseDouble(amountVegetarianMeal.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a number to indicate your meal portion!");
+            return;
+        }
+
+        if (Double.parseDouble(amountVegetarianMeal.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid Field!",
+                            "Kilograms can't be negative or 0!");
+            return;
+        } else if (Double.parseDouble(amountVegetarianMeal.getText()) > 20) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Lower than 20 kg!",
+                            "As long as you are not a bear, we think that amount is a bit "
+                                    + "too big!");
+            return;
+        }
+
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         CompactClient cc = new CompactClient(file, br);
@@ -1445,16 +1511,29 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please choose a product type");
             return;
-        } else {
-            try {
-                String type = productCategory.getValue().toString();
-                double portions = Double.parseDouble(amountLocalProduct.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate the amount in kilograms");
-                return;
-            }
+        }
+
+        try {
+            String type = productCategory.getValue().toString();
+            double portions = Double.parseDouble(amountLocalProduct.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a number to indicate the amount in kilograms");
+            return;
+        }
+
+        if (Double.parseDouble(amountLocalProduct.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Kilograms can't be negative!");
+            return;
+        } else if (Double.parseDouble(amountLocalProduct.getText()) > 100) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Kilograms over 100!",
+                            "We know you love local, but please input a value lower "
+                                    + "than 100 kilograms");
+            return;
         }
 
         File file = new File("test.txt");
@@ -1493,5 +1572,66 @@ public class Controller {
             alert.show();
         }
     }
+
+    @FXML
+    private void showYouLabel() {
+        youLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideYouLabel() {
+        youLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showActivitiesLabel() {
+        activitiesLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideActivitiesLabel() {
+        activitiesLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddActivityLabel() {
+        addActivityLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddActivityLabel() {
+        addActivityLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showFriendsLabel() {
+        friendsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideFriendsLabel() {
+        friendsLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddFriendLabel() {
+        addFriendLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddFriendLabel() {
+        addFriendLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAchievementsLabel() {
+        achievementsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAchievementsLabel() {
+        achievementsLabel.setVisible(false);
+    }
+
 
 }
