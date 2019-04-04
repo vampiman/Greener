@@ -182,7 +182,7 @@ public class JwtVerifierTest {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        when(mockMM.get("Authorization")).thenReturn(Collections.singletonList(incorrectCredentials));
+        when(mockMM.get("Authorization")).thenReturn(Collections.singletonList(correctCredentials));
         jv.filter(mockRC);
 
         ArgumentCaptor<Response> argumentCaptor = ArgumentCaptor.forClass(Response.class);
