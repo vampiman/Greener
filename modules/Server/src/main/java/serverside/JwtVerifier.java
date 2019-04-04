@@ -52,21 +52,18 @@ public class JwtVerifier implements ContainerRequestFilter {
                     try {
                         authToken = issueJwt(authToken);
                         if (authToken.equals("ERROR")) {
-                            System.out.println("hello");
                             JSONObject jo = new JSONObject();
                             jo.append("Error", "Access Denied");
                             Response res = Response.status(Response.Status.UNAUTHORIZED)
                                     .entity(jo).build();
                             requestContext.abortWith(res);
                         } else {
-                            System.out.println(authToken + " just the token");
                             requestContext.getHeaders().add("token", authToken);
                         }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println(authToken + email + " token and email");
                     requestContext.getHeaders().add("token", authToken);
                     requestContext.getHeaders().add("email", email);
                 }
@@ -88,7 +85,6 @@ public class JwtVerifier implements ContainerRequestFilter {
             return claims.getBody().getSubject();
         } catch (SignatureException | IncorrectClaimException
                 | ExpiredJwtException | MissingClaimException se) {
-            System.out.println(se.getClass());
             return "ERROR";
         }
 
@@ -123,7 +119,6 @@ public class JwtVerifier implements ContainerRequestFilter {
 
             Calendar today = Calendar.getInstance();
             today.set(Calendar.HOUR, today.get(Calendar.HOUR) + 1);
-            System.out.println(today.getTime() + "today");
 
             return Jwts.builder()
                     .setSubject(email)
