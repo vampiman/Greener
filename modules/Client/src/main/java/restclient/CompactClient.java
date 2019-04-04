@@ -473,6 +473,86 @@ public class CompactClient  {
         }
         return false;
     }
+    
+        /**
+     * Create a string of bits for the achievements.
+     * When a bit is set to 1, the user achieved and achievement.
+     */
+    public void setAchievements() {
+        StringBuilder bits = new StringBuilder("000000000000000000000000000");
+//        if (count(getAllFriends()) > 10){
+//            bits.setCharAt(0, '1');
+//        }
+//        if (getAllFriends() > 50){
+//            bits.setCharAt(1, '1');
+//        }
+//        if (getAllFriends() > 100){
+//            bits.setCharAt(2, '1');
+//        }
+        if (getLevel() > 10) {
+            bits.setCharAt(6, '1');
+        }
+        if (getLevel() > 50) {
+            bits.setCharAt(7, '1');
+        }
+        if (getLevel() > 100) {
+            bits.setCharAt(8, '1');
+        }
+        if (getBiker() > 10) {
+            bits.setCharAt(9, '1');
+        }
+        if (getBiker() > 50) {
+            bits.setCharAt(10, '1');
+        }
+        if (getBiker() > 100) {
+            bits.setCharAt(11, '1');
+        }
+        if (getPublicTransport() > 10) {
+            bits.setCharAt(12, '1');
+        }
+        if (getPublicTransport() > 50) {
+            bits.setCharAt(13, '1');
+        }
+        if (getPublicTransport() > 100) {
+            bits.setCharAt(14, '1');
+        }
+        if (getSolar() > 10) {
+            bits.setCharAt(15, '1');
+        }
+        if (getSolar() > 50) {
+            bits.setCharAt(16, '1');
+        }
+        if (getSolar() > 100) {
+            bits.setCharAt(17, '1');
+        }
+        if (getHeatConsumption() > 10) {
+            bits.setCharAt(18, '1');
+        }
+        if (getHeatConsumption() > 50) {
+            bits.setCharAt(19, '1');
+        }
+        if (getHeatConsumption() > 100) {
+            bits.setCharAt(20, '1');
+        }
+        if (getMealCarbon() > 10) {
+            bits.setCharAt(21, '1');
+        }
+        if (getMealCarbon() > 50) {
+            bits.setCharAt(22, '1');
+        }
+        if (getMealCarbon() > 100) {
+            bits.setCharAt(23, '1');
+        }
+        if (getLocalProduce() > 10) {
+            bits.setCharAt(24, '1');
+        }
+        if (getLocalProduce() > 50) {
+            bits.setCharAt(25, '1');
+        }
+        if (getLocalProduce() > 100) {
+            bits.setCharAt(26, '1');
+        }
+    }
 
     //FOR TESTING ONLY
     //    /**
