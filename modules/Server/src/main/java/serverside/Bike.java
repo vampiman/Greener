@@ -81,7 +81,6 @@ public class Bike {
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
 
-        statistics.increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();

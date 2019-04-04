@@ -81,7 +81,7 @@ public class SessionHandler {
 
         PreparedStatement ps = dbConnection.prepareStatement(sql);
 
-        Statement st = dbConnection.createStatement();
+        //        Statement st = dbConnection.createStatement();
         Statement st2 = dbConnection.createStatement();
 
         ResultSet rs2 = st2.executeQuery("SELECT MAX(ID) FROM person");
@@ -96,22 +96,23 @@ public class SessionHandler {
 
         ps.executeUpdate();
 
-        //        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
-        //                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
-        //                + "Bike, Solar_panels, Local_produce, "
-        //                + "Lowering_home_temperature, Public_transport) \n"
-        //                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \""
-        //                + sr.getPassword()
-        //                + "\", \"" + sr.getName()
-        //                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
-        //                + "\"0\", \"0\", \"0\");");
 
-        st.close();
+        //        st.close();
         ps.close();
         rs2.close();
         dbConnection.close();
         return sr;
     }
+
+    //        st.executeUpdate("INSERT INTO person(ID, Email, Password, "
+    //                + "Name, Friend_code, CO_2_saved, \n" + "Vegan_meal, "
+    //                + "Bike, Solar_panels, Local_produce, "
+    //                + "Lowering_home_temperature, Public_transport) \n"
+    //                + "VALUES (\"" + (id + 1) + "\", \"" + sr.getEmail() + "\", \""
+    //                + sr.getPassword()
+    //                + "\", \"" + sr.getName()
+    //                + "\", \"" + inviteGenerator() + "\", \"0\", \"0\", \"0\", \"0\",\n"
+    //                + "\"0\", \"0\", \"0\");");
 
     /**
      * Method returns a SessionResource with a valid token
