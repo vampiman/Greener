@@ -170,26 +170,26 @@ public class StatisticsTest {
     }
 
     /**
-     * Method for testing the update level request, and not needing any update.
+     * Method for testing the update level request, followed by a successful update.
      */
     @Test
-    public void updateLevelTrue() {
+    public void updateLevelFalse() {
         try {
             when(mockResultSet.getInt("Level")).thenReturn(1);
-            Assert.assertTrue(stats.updateLevel(150.0, "nat@gmail.com"));
+            Assert.assertFalse(stats.updateLevel(150.0, "nat@gmail.com"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Method for testing the update level request, followed by a successful update.
+     * Method for testing the update level request, and not needing any update.
      */
     @Test
-    public void updateLevelFalse() {
+    public void updateLevelTrue() {
         try {
             when(mockResultSet.getInt("Level")).thenReturn(2);
-            Assert.assertFalse(stats.updateLevel(150.0, "nat@gmail.com"));
+            Assert.assertTrue(stats.updateLevel(150.0, "nat@gmail.com"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
