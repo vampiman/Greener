@@ -70,14 +70,14 @@ public class Friends {
             return sr;
         }
 
-        int friendId = rs.getInt("ID");
-        String friend = rs.getString("Email");
-
         sql = "SELECT ID FROM person WHERE Email = ?";
 
         ps = dbConnection.prepareStatement(sql);
 
         ps.setString(1, email);
+
+        int friendId = rs.getInt("ID");
+        String friend = rs.getString("Email");
 
         rs = ps.executeQuery();
         rs.next();

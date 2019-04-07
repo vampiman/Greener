@@ -66,7 +66,8 @@ public class PublicTransportTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
 
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
-        Mockito.when(ccMock.publicTransportCalculator(anyString(), anyString(), anyDouble())).thenReturn(1.0);
+        Mockito.when(ccMock.publicTransportCalculator(anyString(),
+                anyString(), anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
@@ -90,7 +91,8 @@ public class PublicTransportTest {
         resource.setTotal_Distance(1.0);
         publicTransport.postData(resource, "token", "email");
 
-        Assert.assertEquals(1, publicTransport.postData(resource, "token", "email").getTotal_Distance().intValue());
+        Assert.assertEquals(1, publicTransport.postData(resource,
+                "token", "email").getTotal_Distance().intValue());
     }
 
     /**
@@ -108,19 +110,27 @@ public class PublicTransportTest {
         Assert.assertEquals(1, resource.getSavedPublicTransport().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        PublicTransport publicTrans = new PublicTransport();
         Resource res = new Resource();
-        b.passToken("token", res);
+        publicTrans.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        PublicTransport publicTrans = new PublicTransport();
         Resource res = new Resource();
-        b.passToken(null, res);
+        publicTrans.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

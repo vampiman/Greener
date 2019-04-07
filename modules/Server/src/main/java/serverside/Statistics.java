@@ -234,10 +234,10 @@ public class Statistics {
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        int result = rs.getInt("CO_2_saved");
+        final int result = rs.getInt("CO_2_saved");
+        dbConnection.close();
         ps.close();
         rs.close();
-        dbConnection.close();
         return result;
     }
 
@@ -262,13 +262,13 @@ public class Statistics {
 
         int currentLevel = rs.getInt("Level");
 
-        if (co2saved / 150 == currentLevel) {
+        if ((co2saved / 150) + 1 == currentLevel) {
             return true;
         }
 
         sql = "UPDATE person SET Level = ? WHERE Email = ?";
         ps = dbConnection.prepareStatement(sql);
-        ps.setInt(1, (int)(co2saved / 150) + 1);
+        ps.setInt(1, (int)((co2saved / 150) + 1));
         ps.setString(2, email);
 
         ps.executeUpdate();

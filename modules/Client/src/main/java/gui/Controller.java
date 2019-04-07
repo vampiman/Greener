@@ -7,12 +7,15 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.geometry.VPos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,10 +28,13 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -45,7 +51,9 @@ import javafx.util.Duration;
 import restclient.CompactClient;
 import restclient.User;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -271,6 +279,39 @@ public class Controller {
     @FXML
     private Pane ach26;
 
+    @FXML
+    private GridPane addActivityPane;
+
+    @FXML
+    private Button addVeganMealButton;
+
+    @FXML
+    private Button addLocalProductButton;
+
+    @FXML
+    private Button addTemperatureButton;
+
+    @FXML
+    private Button addSolarPanelButton;
+
+    @FXML
+    private Button addPublicTransportButton;
+
+    @FXML
+    private Button addBikeButton;
+
+    @FXML
+    private TextArea veganLocalLabel;
+
+    @FXML
+    private TextArea solarHomeLabel;
+
+    @FXML
+    private TextArea publicBikeLabel;
+
+    @FXML
+    private Text levelField;
+
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -285,20 +326,39 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the number of kilometers which you travelled");
             return;
-        } else {
-            try {
-                Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
-                String typeOfTransport = transportType.getValue().toString();
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a "
-                                        + "double number to indicate number of kilometers you go");
-                return;
-            }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        try {
+            Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
+            String typeOfTransport = transportType.getValue().toString();
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a "
+                                    + "double number to indicate number of kilometers you go");
+            return;
+        }
+
+        if (Double.parseDouble(bikeKilometers.getText()) <= 10) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid Input!",
+                            "Please enter a "
+                                    + "number of kilometres bigger than 10!");
+            return;
+        } else if (Double.parseDouble(bikeKilometers.getText()) >= 5000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wait a second!",
+                            "We think that amount should be lower than 5000!");
+            return;
+        }
+
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postBiker(transportType.getValue().toString(),
@@ -420,7 +480,9 @@ public class Controller {
 
     @FXML
     private void initialize() throws IOException {
-        CompactClient cc = new CompactClient();
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
 
         if (todaysTip != null) {
             Scanner scanner = new Scanner(new File("tips.txt"));
@@ -443,6 +505,7 @@ public class Controller {
 
 
         if (youPagePane != null) {
+            levelField.setText("Level: " + cc.getLevel());
             JSONObject details = cc.getPersonalInfo();
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
@@ -450,28 +513,116 @@ public class Controller {
             co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
         }
 
-        if (achievementsGrid != null) {
-            JSONObject info = cc.getStats();
-            //            System.out.println(info.toJSONString(10));
-            ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Vegan Meal",
-                                Double.parseDouble(info.get("total_Meals").toString())),
-                        new PieChart.Data("Public Transport",
-                                Double.parseDouble(info.get("savedPublicTransport").toString())),
-                        new PieChart.Data("Home Temperature",
-                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
-                        new PieChart.Data("Bike",
-                                Double.parseDouble(info.get("bikeSaved").toString())),
-                        new PieChart.Data("Local Product",
-                                Double.parseDouble(info.get("localSaved").toString())),
-                        new PieChart.Data("Solar Panel",
-                                Double.parseDouble(info.get("savedSolar").toString()))
-                );
-            pieChart.setTitle("SCORE DISTRIBUTION");
-            pieChart.setMaxSize(1000, 1000);
-            pieChart.setData(pieChartData);
+        if (addActivityPane != null) {
+            veganLocalLabel.setDisable(true);
+            veganLocalLabel.setStyle("-fx-opacity: 1;");
+            publicBikeLabel.setDisable(true);
+            publicBikeLabel.setStyle("-fx-opacity: 1");
+            solarHomeLabel.setDisable(true);
+            solarHomeLabel.setStyle("-fx-opacity: 1");
+            addVeganMealButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            veganLocalLabel.setText("Eat vegan meal");
+                        }
+                    });
+            addVeganMealButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            veganLocalLabel.setText("");
+                        }
+                    });
+
+            addLocalProductButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            veganLocalLabel.setText("Use local product");
+                        }
+                    });
+            addLocalProductButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            veganLocalLabel.setText("");
+                        }
+                    });
+            addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            solarHomeLabel.setText("Install a solar panel");
+                        }
+                    });
+            addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            solarHomeLabel.setText("");
+                        }
+                    });
+            addTemperatureButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            solarHomeLabel.setText("Decrease the temperature of your home");
+                        }
+                    });
+            addTemperatureButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            solarHomeLabel.setText("");
+                        }
+                    });
+            addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            publicBikeLabel.setText("Use public transportation");
+                        }
+                    });
+            addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            publicBikeLabel.setText("");
+                        }
+                    });
+            addBikeButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            publicBikeLabel.setText("Use bike ");
+                        }
+                    });
+            addBikeButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
+                    new EventHandler<MouseEvent>() {
+                        @Override public void handle(MouseEvent event) {
+                            publicBikeLabel.setText("");
+                        }
+                    });
         }
+
+        //        if (achievementsGrid != null) {
+        //            JSONObject info = cc.getStats();
+        //            //            System.out.println(info.toJSONString(10));
+        //            ObservableList<PieChart.Data> pieChartData =
+        //                FXCollections.observableArrayList(
+        //                        new PieChart.Data("Vegan Meal",
+        //                                Double.parseDouble(info
+        //                                .get("total_Meals").toString())),
+        //                        new PieChart.Data("Public Transport",
+        //                                Double.parseDouble(info
+        //                                .get("savedPublicTransport").toString())),
+        //                        new PieChart.Data("Home Temperature",
+        //                                Double.parseDouble(info
+        //                                .get("savedHeatConsumption").toString())),
+        //                        new PieChart.Data("Bike",
+        //                                Double.parseDouble(info
+        //                                .get("bikeSaved").toString())),
+        //                        new PieChart.Data("Local Product",
+        //                                Double.parseDouble(info
+        //                                .get("localSaved").toString())),
+        //                        new PieChart.Data("Solar Panel",
+        //                                Double.parseDouble(info
+        //                                .get("savedSolar").toString()))
+        //                );
+        //            pieChart.setTitle("SCORE DISTRIBUTION");
+        //            pieChart.setMaxSize(1000, 1000);
+        //            pieChart.setData(pieChartData);
+        //        }
     }
 
     //    @FXML
@@ -507,8 +658,14 @@ public class Controller {
 
     @FXML
     private void loadMenuPage(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/menu.fxml");
@@ -618,8 +775,14 @@ public class Controller {
 
     @FXML
     private void handleBackToMenuAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/menu.fxml");
@@ -628,8 +791,14 @@ public class Controller {
 
     @FXML
     private void handleAch1Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements1.fxml");
@@ -638,8 +807,14 @@ public class Controller {
 
     @FXML
     private void handleAch2Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements2.fxml");
@@ -648,8 +823,14 @@ public class Controller {
 
     @FXML
     private void handleAch3Action(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements3.fxml");
@@ -736,18 +917,116 @@ public class Controller {
 
     @FXML
     protected void handleActivitiesButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            loadPage(event, "fxml/activities.fxml");
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            BorderPane root = new BorderPane();
+            root.setStyle("-fx-background-color: #91cb3e;");
+            root.setPadding(new Insets(20, 20, 20, 20));
+            Button button = new Button();
+            button.setText("BACK");
+            button.setStyle("-fx-background-color: #000000; -fx-text-fill: #91cb3e;");
+            button.setOnMouseEntered(e -> button.setStyle("-fx-background-color: "
+                    + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
+            button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
+                    + "-fx-text-fill: #91cb3e;"));
+            button.setOnAction(value ->  {
+                try {
+                    Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
+                            .getResource("fxml/menu.fxml"));
+                    Scene addPageScene = new Scene(addPageParent);
+                    stage.setScene(addPageScene);
+                    stage.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            button.setLayoutX(250);
+            button.setLayoutY(220);
+            root.setTop(button);
+            JSONObject info = cc.getStats();
+            //            System.out.println(info.toJSONString(10));
+            ObservableList<PieChart.Data> pieChartData =
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Vegan Meal",
+                                    Double.parseDouble(
+                                            info.get("total_Meals").toString())),
+                            new PieChart.Data("Public Transport",
+                                    Double.parseDouble(
+                                            info.get("savedPublicTransport").toString())),
+                            new PieChart.Data("Home Temperature",
+                                    Double.parseDouble(
+                                            info.get("savedHeatConsumption").toString())),
+                            new PieChart.Data("Bike",
+                                    Double.parseDouble(
+                                            info.get("bikeSaved").toString())),
+                            new PieChart.Data("Local Product",
+                                    Double.parseDouble(
+                                            info.get("localSaved").toString())),
+                            new PieChart.Data("Solar Panel",
+                                    Double.parseDouble(
+                                            info.get("savedSolar").toString()))
+                    );
+
+            final PieChart chart = new PieChart(pieChartData);
+            chart.setLabelsVisible(false);
+            chart.setTitle("SCORE DISTRIBUTION");
+
+            final Label caption = new Label("");
+            caption.setStyle("-fx-font: 20 System;");
+            double total =  0;
+            for (final PieChart.Data data : chart.getData()) {
+                total += data.getPieValue();
+            }
+            final double totalAmount = total;
+            Group chartWithCaption = new Group(chart, caption);
+            for (final PieChart.Data data : chart.getData()) {
+                data.getNode().addEventHandler(MouseEvent.MOUSE_MOVED,
+                        new EventHandler<MouseEvent>() {
+                            @Override public void handle(MouseEvent event) {
+                                Point2D locationInScene =
+                                        new Point2D(event.getSceneX(), event.getSceneY());
+                                Point2D locationInParent =
+                                        chartWithCaption.sceneToLocal(locationInScene);
+
+                                caption.relocate(
+                                        locationInParent.getX() + 20,
+                                        locationInParent.getY());
+
+                                caption.setText(String.valueOf(Math
+                                        .round((data.getPieValue() / totalAmount) * 100))  + "%");
+                            }
+                        });
+                data.setName(data.getName() + ": " + data.getPieValue() + " kg");
+            }
+            root.setCenter(chartWithCaption);
+            Scene scene = new Scene(root);
+            stage.setWidth(600);
+            stage.setHeight(500);
+
+            stage.setScene(scene);
+            stage.show();
         }
     }
 
     @FXML
     protected void handleAddFriendsButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addFriends.fxml");
@@ -756,8 +1035,14 @@ public class Controller {
 
     @FXML
     protected void handleAchievementsButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/achievements1.fxml");
@@ -767,8 +1052,14 @@ public class Controller {
     @FXML
     protected void handleFriendsButtonAction(ActionEvent event) throws IOException {
 
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             String[][] friends = cc.getAllFriends();
@@ -778,8 +1069,14 @@ public class Controller {
 
     @FXML
     protected void handleYouButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/mainLogin.fxml");
         } else {
             loadPage(event, "fxml/you.fxml");
@@ -788,8 +1085,14 @@ public class Controller {
 
     @FXML
     protected void handleAddActivityButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -839,8 +1142,14 @@ public class Controller {
 
     @FXML
     private void handleVegetarianMealButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/veganMeal.fxml");
@@ -849,8 +1158,14 @@ public class Controller {
 
     @FXML
     private void handlePublicTransportButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/publicTransport.fxml");
@@ -859,8 +1174,14 @@ public class Controller {
 
     @FXML
     private void handleTemperatureButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/temperature.fxml");
@@ -869,8 +1190,14 @@ public class Controller {
 
     @FXML
     private void handleSolarPanelButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/solarPanel.fxml");
@@ -879,8 +1206,14 @@ public class Controller {
 
     @FXML
     private void handleBikeButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/bike.fxml");
@@ -889,8 +1222,14 @@ public class Controller {
 
     @FXML
     private void handleLocalProductButtonAction(ActionEvent event) throws IOException {
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/localProduct.fxml");
@@ -913,34 +1252,48 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the type of public transport");
             return;
-        } else if (kilometers.getText().isEmpty()) {
-            AlertHelper
-                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter the number of kilometers which you travelled");
-            return;
-        } else {
-            try {
-                numberOfKilometers = Double.parseDouble(kilometers.getText());
-                typeOfCar = carType.getValue().toString();
-                publictransportType = publicTransport.getValue().toString();
-
-
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a "
-                                        + "double number to indicate number of kilometers you go");
-                return;
-            }
-
-            CompactClient cc = new CompactClient();
-            if (!cc.checkToken()) {
-                loadPage(event, "fxml/loginPage.fxml");
-            } else {
-                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
-                loadPage(event, "fxml/addActivity.fxml");
-            }
         }
+
+        try {
+            numberOfKilometers = Double.parseDouble(kilometers.getText());
+            typeOfCar = carType.getValue().toString();
+            publictransportType = publicTransport.getValue().toString();
+
+
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a "
+                                    + "double number to indicate number of kilometers you go");
+            return;
+        }
+
+        if (Double.parseDouble(kilometers.getText()) <= 10) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
+                            "Please enter a number of kilometres bigger than 10");
+            return;
+        } else if (Double.parseDouble(kilometers.getText()) > 20000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Slow down!",
+                            "Please input values lower than 20000!");
+            return;
+        }
+
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
+            loadPage(event, "fxml/addActivity.fxml");
+        }
+
     }
 
     @FXML
@@ -951,7 +1304,24 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature before decreasing");
             return;
-        } else if (afterTemperature.getText().isEmpty()) {
+        }
+        try {
+            int before = Integer.parseInt(beforeTemperature.getText());
+            int after = Integer.parseInt(afterTemperature.getText());
+            String typeOfEnergy = (String) energyType.getValue();
+
+            File file = new File("test.txt");
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            CompactClient cc = new CompactClient(file, br);
+            cc.postHeatConsumption(before, after, typeOfEnergy);
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a double number to indicate your home's temperature");
+            return;
+        }
+
+        if (afterTemperature.getText().isEmpty()) {
             Controller.AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
@@ -961,23 +1331,33 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter your energy type");
             return;
-        } else {
-            try {
-                int before = Integer.parseInt(beforeTemperature.getText());
-                int after = Integer.parseInt(afterTemperature.getText());
-                String typeOfEnergy = (String) energyType.getValue();
-
-                CompactClient cc = new CompactClient();
-                cc.postHeatConsumption(before, after, typeOfEnergy);
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double number to indicate your home's temperature");
-                return;
-            }
+        } else if (Double.parseDouble(beforeTemperature.getText()) <= 0
+                || Double.parseDouble(afterTemperature.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid value!",
+                            "Please input values higher than 0!");
+            return;
+        } else if (Double.parseDouble(beforeTemperature.getText())
+                - Double.parseDouble(afterTemperature.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid values!",
+                            "Difference between the values can't be lower than 0!");
+            return;
+        } else if (Double.parseDouble(beforeTemperature.getText())
+                - Double.parseDouble(afterTemperature.getText()) >= 20000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Difference too big",
+                            "Difference too big, are you heating a whole hotel?");
+            return;
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             loadPage(event, "fxml/addActivity.fxml");
@@ -992,19 +1372,37 @@ public class Controller {
                     Alert.AlertType.ERROR, owner, "Unfilled field!",
                     "Please enter the total kWh generated by your solar panels!");
             return;
-        } else {
-            try {
-                Double percentage = Double.parseDouble(electricityAmount.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a double "
-                                        + "number to indicate your electricity percentage");
-                return;
-            }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        try {
+            Double percentage = Double.parseDouble(electricityAmount.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a double "
+                                    + "number to indicate your electricity percentage");
+            return;
+        }
+
+        if (Double.parseDouble(electricityAmount.getText()) <= 0) {
+            AlertHelper
+                .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
+                        "Number of kWh can't be negative or 0!");
+            return;
+        } else if (Double.parseDouble(electricityAmount.getText()) > 50000) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Over 50000 kilowatts!",
+                            "Are you powering up a factory? If you don't, please input "
+                                    + "a value lower than 50000 kilowatts");
+            return;
+        }
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
@@ -1018,21 +1416,41 @@ public class Controller {
         if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter how much vegan meal you had");
+                            "Please enter the amount of kilograms!");
             return;
-        } else {
-            try {
-                String type = mealTypes.getValue().toString();
-                double portions = Double.parseDouble(amountVegetarianMeal.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate your meal portion");
-                return;
-            }
         }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+
+        try {
+            String type = mealTypes.getValue().toString();
+            double portions = Double.parseDouble(amountVegetarianMeal.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a number to indicate your meal portion!");
+            return;
+        }
+
+        if (Double.parseDouble(amountVegetarianMeal.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid Field!",
+                            "Kilograms can't be negative or 0!");
+            return;
+        } else if (Double.parseDouble(amountVegetarianMeal.getText()) > 20) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Lower than 20 kg!",
+                            "As long as you are not a bear, we think that amount is a bit "
+                                    + "too big!");
+            return;
+        }
+
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postMeal(Double.parseDouble(amountVegetarianMeal.getText()),
@@ -1061,8 +1479,14 @@ public class Controller {
         //                return;
         //            }
         //        }
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             JSONObject jo = cc.followUser(friendCode.getText());
@@ -1087,20 +1511,39 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please choose a product type");
             return;
-        } else {
-            try {
-                String type = productCategory.getValue().toString();
-                double portions = Double.parseDouble(amountLocalProduct.getText());
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a number to indicate the amount in kilograms");
-                return;
-            }
         }
 
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
+        try {
+            String type = productCategory.getValue().toString();
+            double portions = Double.parseDouble(amountLocalProduct.getText());
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a number to indicate the amount in kilograms");
+            return;
+        }
+
+        if (Double.parseDouble(amountLocalProduct.getText()) <= 0) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Kilograms can't be negative!");
+            return;
+        } else if (Double.parseDouble(amountLocalProduct.getText()) > 100) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Kilograms over 100!",
+                            "We know you love local, but please input a value lower "
+                                    + "than 100 kilograms");
+            return;
+        }
+
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
+
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),
@@ -1129,5 +1572,66 @@ public class Controller {
             alert.show();
         }
     }
+
+    @FXML
+    private void showYouLabel() {
+        youLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideYouLabel() {
+        youLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showActivitiesLabel() {
+        activitiesLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideActivitiesLabel() {
+        activitiesLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddActivityLabel() {
+        addActivityLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddActivityLabel() {
+        addActivityLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showFriendsLabel() {
+        friendsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideFriendsLabel() {
+        friendsLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAddFriendLabel() {
+        addFriendLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAddFriendLabel() {
+        addFriendLabel.setVisible(false);
+    }
+
+    @FXML
+    private void showAchievementsLabel() {
+        achievementsLabel.setVisible(true);
+    }
+
+    @FXML
+    private void hideAchievementsLabel() {
+        achievementsLabel.setVisible(false);
+    }
+
 
 }
