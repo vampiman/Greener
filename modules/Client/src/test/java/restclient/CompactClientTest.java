@@ -16,17 +16,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+
 
 //@RunWith(PowerMockRunner.class)
 //@PrepareForTest({File.class, BufferedReader.class})
@@ -120,7 +119,8 @@ public class CompactClientTest {
         Mockito.when(resToken.getStatus()).thenReturn(200); //The OK status
 
         builderNoToken = Mockito.mock(Invocation.Builder.class);
-        Mockito.when(builderNoToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderNoToken);
+        Mockito.when(builderNoToken.header(eq("Authorization"),
+                eq("Bearer "))).thenReturn(builderNoToken);
         Mockito.when(builderNoToken.get(Response.class)).thenReturn(resNoToken);
         Mockito.when(builderNoToken.post(Entity.json(jo1))).thenReturn(resNoToken);
 
@@ -131,7 +131,8 @@ public class CompactClientTest {
         Mockito.when(ccClient.client.target("testCompactClient")).thenReturn(targetNoToken);
 
         builderToken = Mockito.mock(Invocation.Builder.class);
-        Mockito.when(builderToken.header(eq("Authorization"), eq("Bearer "))).thenReturn(builderToken);
+        Mockito.when(builderToken.header(eq("Authorization"),
+                eq("Bearer "))).thenReturn(builderToken);
         Mockito.when(builderToken.get(Response.class)).thenReturn(resToken);
         Mockito.when(builderToken.post(Entity.json(jo1))).thenReturn(resToken);
 
@@ -145,9 +146,12 @@ public class CompactClientTest {
 
     }
 
-
+    /**
+     * Test constructor when reading something.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
-    public void testBuilderSomeRead() throws IOException {
+    public void testConstructorSomeRead() throws IOException {
         br = Mockito.mock(BufferedReader.class);
         file = Mockito.mock(File.class);
         Mockito.when(file.exists()).thenReturn(true);
@@ -245,6 +249,10 @@ public class CompactClientTest {
         Assert.assertNotEquals(j2.toJSONString(10), j1.toJSONString(10));
     }
 
+    /**
+     * Method for testing the GET for the Heat Consumption feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getHeatConsumptionTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -258,6 +266,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, (int)ccClient.getHeatConsumption());
     }
 
+    /**
+     * Method for testing the GET for the Bike feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getBikeTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -271,6 +283,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, (int)ccClient.getBiker());
     }
 
+    /**
+     * Method for testing the GET for the Vegan Meal feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getMealsTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -284,6 +300,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, ccClient.getMealCarbon().intValue());
     }
 
+    /**
+     * Method for testing the GET for the Local Product feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getLocalTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -297,6 +317,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, ccClient.getLocalProduce().intValue());
     }
 
+    /**
+     * Method for testing the GET for the Solar Panel feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getSolarTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -310,6 +334,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, ccClient.getSolar());
     }
 
+    /**
+     * Method for testing the GET for the Public Transport feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getTransportTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -323,6 +351,10 @@ public class CompactClientTest {
         Assert.assertEquals(100, (int)ccClient.getPublicTransport());
     }
 
+    /**
+     * Method for testing the Post for the Vegan Meal feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postVeganTest() throws Exception {
         ccClient = new CompactClient(file, br);
@@ -335,7 +367,7 @@ public class CompactClientTest {
         re.setTotal_Meals(1.0);
 
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -345,6 +377,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.postMeal(1.0,"Dairy","Meat").equals(toReturn));
     }
 
+    /**
+     * Method for testing the Post for the Local Product feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postLocalTest() throws Exception {
         ccClient = new CompactClient(file, br);
@@ -352,7 +388,7 @@ public class CompactClientTest {
         Resource re = new Resource();
 
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -362,13 +398,17 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.postLocalProduce(5.0,"Meat").equals(toReturn));
     }
 
+    /**
+     * Method for testing the Post for the Solar Panels feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postSolarTest() throws Exception {
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -378,13 +418,17 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.postSolar(100).equals(toReturn.toJSONString(10)));
     }
 
+    /**
+     * Method for testing the Post for the Public Transport feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postTransportTest() throws Exception {
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -395,13 +439,17 @@ public class CompactClientTest {
                 "Public", 5.0).equals(toReturn.toJSONString(10)));
     }
 
+    /**
+     * Method for testing the Post for the Heat Consumption feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postHeatTest() throws Exception {
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -412,13 +460,17 @@ public class CompactClientTest {
                 50, "Electric").equals(toReturn.toJSONString(10)));
     }
 
+    /**
+     * Method for testing the Post for the Bike feature.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void postBikeTest() throws Exception {
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -429,13 +481,17 @@ public class CompactClientTest {
                 100).equals(toReturn.toJSONString(10)));
     }
 
+    /**
+     * Method for testing the request for following another user.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void followUserTest() throws Exception {
         ccClient = new CompactClient(file, br);
         ccClient.client = client;
         Resource re = new Resource();
 
-//        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+        //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
         Mockito.when(client.target(anyString())).thenReturn(mockTarget);
         Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
@@ -445,6 +501,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.followUser("email").equals(toReturn));
     }
 
+    /**
+     * Method for testing the request for getting User stats.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getStatsTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -458,6 +518,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.getStats().equals(toReturn));
     }
 
+    /**
+     * Method for testing the request for getting User personal info.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getPersonalTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -471,6 +535,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.getPersonalInfo().equals(toReturn));
     }
 
+    /**
+     * Method for testing the request for getting User achievements.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getAchievementsTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -484,6 +552,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.getAchievements().equals("000"));
     }
 
+    /**
+     * Method for testing the request for getting User Level.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getLevelTest() throws IOException {
         ccClient = new CompactClient(file, br);
@@ -497,6 +569,10 @@ public class CompactClientTest {
         Assert.assertTrue(ccClient.getLevel() == 5);
     }
 
+    /**
+     * Method for testing the checkToken function when the File exists.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void checkTokenTestFileExists() throws IOException {
         Mockito.when(file.exists()).thenReturn(true);
@@ -508,6 +584,10 @@ public class CompactClientTest {
         Assert.assertEquals(true, ccClient.checkToken(file, br, user));
     }
 
+    /**
+     * Method for testing the checkToken function when the File doesn't exists.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void checkTokenTestFileDoesNotExists() throws IOException {
         Mockito.when(file.exists()).thenReturn(false);
@@ -518,6 +598,10 @@ public class CompactClientTest {
         Assert.assertEquals(false, ccClient.checkToken(file, br, user));
     }
 
+    /**
+     * Method for testing the request for getting the list of friends.
+     * @throws IOException Possible error with regard to file reading.
+     */
     @Test
     public void getAllFriendsTest() throws IOException {
         ccClient = new CompactClient(file, br);

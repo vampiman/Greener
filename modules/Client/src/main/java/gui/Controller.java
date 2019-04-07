@@ -327,24 +327,24 @@ public class Controller {
                             "Please enter the number of kilometers which you travelled");
             return;
         }
-            try {
-                Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
-                String typeOfTransport = transportType.getValue().toString();
-            } catch (NumberFormatException e) {
-                AlertHelper
-                        .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                                "Please enter a "
-                                        + "double number to indicate number of kilometers you go");
-                return;
-            }
+        try {
+            Double numberOfKilometers = Double.parseDouble(bikeKilometers.getText());
+            String typeOfTransport = transportType.getValue().toString();
+        } catch (NumberFormatException e) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
+                            "Please enter a "
+                                    + "double number to indicate number of kilometers you go");
+            return;
+        }
 
-        if(Double.parseDouble(bikeKilometers.getText()) <= 10) {
+        if (Double.parseDouble(bikeKilometers.getText()) <= 10) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Invalid Input!",
                             "Please enter a "
                                     + "number of kilometres bigger than 10!");
             return;
-        } else if(Double.parseDouble(bikeKilometers.getText()) >= 5000) {
+        } else if (Double.parseDouble(bikeKilometers.getText()) >= 5000) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Wait a second!",
                             "We think that amount should be lower than 5000!");
@@ -1280,19 +1280,19 @@ public class Controller {
             return;
         }
 
-            File file = new File("test.txt");
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            CompactClient cc = new CompactClient(file, br);
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
 
-            File toRead = new File("test.txt");
-            BufferedReader got = new BufferedReader(new FileReader(toRead));
-            User usr = new User("", "");
-            if (!cc.checkToken(toRead, got, usr)) {
-                loadPage(event, "fxml/loginPage.fxml");
-            } else {
-                cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
-                loadPage(event, "fxml/addActivity.fxml");
-            }
+        File toRead = new File("test.txt");
+        BufferedReader got = new BufferedReader(new FileReader(toRead));
+        User usr = new User("", "");
+        if (!cc.checkToken(toRead, got, usr)) {
+            loadPage(event, "fxml/loginPage.fxml");
+        } else {
+            cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
+            loadPage(event, "fxml/addActivity.fxml");
+        }
 
     }
 
@@ -1331,8 +1331,8 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter your energy type");
             return;
-        } else if (Double.parseDouble(beforeTemperature.getText()) <= 0 ||
-                Double.parseDouble(afterTemperature.getText()) <= 0) {
+        } else if (Double.parseDouble(beforeTemperature.getText()) <= 0
+                || Double.parseDouble(afterTemperature.getText()) <= 0) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Invalid value!",
                             "Please input values higher than 0!");
@@ -1383,11 +1383,11 @@ public class Controller {
             return;
         }
 
-        if(Double.parseDouble(electricityAmount.getText()) <= 0) {
+        if (Double.parseDouble(electricityAmount.getText()) <= 0) {
             AlertHelper
                 .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
                         "Number of kWh can't be negative or 0!");
-        return;
+            return;
         } else if (Double.parseDouble(electricityAmount.getText()) > 50000) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Over 50000 kilowatts!",

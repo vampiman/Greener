@@ -1,5 +1,10 @@
 package serverside;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,13 +15,13 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Statistics.class)
@@ -37,6 +42,9 @@ public class StatisticsTest {
     @InjectMocks
     Statistics stats;
 
+    /**
+     * Method for preparing the mocks.
+     */
     @Before
     public void setUp() {
         stats = new Statistics();
@@ -53,7 +61,8 @@ public class StatisticsTest {
         mockResultSet = mock(ResultSet.class);
 
         try {
-            PowerMockito.when(DriverManager.getConnection(url, user, pass)).thenReturn(mockConnection);
+            PowerMockito.when(DriverManager.getConnection(url, user, pass))
+                    .thenReturn(mockConnection);
             when(mockPrepStatement.executeQuery()).thenReturn(mockResultSet);
             when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPrepStatement);
             when(mockConnection.createStatement()).thenReturn(mockStatement);
@@ -64,6 +73,9 @@ public class StatisticsTest {
         }
     }
 
+    /**
+     * Method for testing the request for total CO2Saved.
+     */
     @Test
     public void totalSaved() {
         Resource re = new Resource();
@@ -77,6 +89,9 @@ public class StatisticsTest {
         }
     }
 
+    /**
+     * Method for testing the request for user stats.
+     */
     @Test
     public void getStats() {
         Resource re = new Resource();
@@ -94,6 +109,9 @@ public class StatisticsTest {
         }
     }
 
+    /**
+     * Method for testing the request for user personal info.
+     */
     @Test
     public void getPersonalInfo() {
         try {
@@ -109,17 +127,24 @@ public class StatisticsTest {
         }
     }
 
+    /**
+     * Method for testing the request for user achievements.
+     */
     @Test
     public void getAchievements() {
         try {
             when(mockResultSet.getString("Achievements")).thenReturn("111111111111111111111111111");
-            Assert.assertEquals("111111111111111111111111111", stats.getAchievements("nat@gmail.com")
+            Assert.assertEquals("111111111111111111111111111",
+                    stats.getAchievements("nat@gmail.com")
                     .getAchievements());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method for testing the request for user level.
+     */
     @Test
     public void getLevel() {
         try {
@@ -131,16 +156,22 @@ public class StatisticsTest {
 
     }
 
+    /**
+     * Method for testing the request for increasing co2saved.
+     */
     @Test
     public void increaseScore() {
         try {
-            when(mockResultSet.getInt(("CO_2_saved"))).thenReturn(1);
+            when(mockResultSet.getInt("CO_2_saved")).thenReturn(1);
             Assert.assertEquals(1, stats.increaseScore(1.0, "nat@gmail.com"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method for testing the update level request, and not needing any update.
+     */
     @Test
     public void updateLevelTrue() {
         try {
@@ -151,6 +182,9 @@ public class StatisticsTest {
         }
     }
 
+    /**
+     * Method for testing the update level request, followed by a successful update.
+     */
     @Test
     public void updateLevelFalse() {
         try {

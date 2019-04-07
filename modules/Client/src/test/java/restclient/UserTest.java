@@ -1,5 +1,10 @@
 package restclient;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+
+import static restclient.User.KEY;
+
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,22 +15,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import javax.ws.rs.client.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
-import static restclient.User.KEY;
+
+
+
+
 
 
 public class UserTest {
-
-    private JSONObject jo;
 
     @Mock
     WebTarget target;
@@ -42,6 +47,11 @@ public class UserTest {
     @InjectMocks
     User mockUser;
 
+    private JSONObject jo;
+
+    /**
+     * Method for preparing the mocks.
+     */
     @Before
     public void setup() {
         jo = new JSONObject();
@@ -67,6 +77,9 @@ public class UserTest {
 
     }
 
+    /**
+     * Method that tests the "token" field getter.
+     */
     @Test
     public void getToken() {
         User user = new User("someEmail", "somePassword");
@@ -74,6 +87,9 @@ public class UserTest {
         Assert.assertEquals("abc", user.getToken());
     }
 
+    /**
+     * Method that tests the "token" field setter.
+     */
     @Test
     public void setToken() {
         User user = new User("someEmail", "somePassword");
@@ -81,6 +97,9 @@ public class UserTest {
         Assert.assertEquals("def", user.getToken());
     }
 
+    /**
+     * Method that tests the "credentials" field getter.
+     */
     @Test
     public void getCredentials() {
         User user = new User("someEmail", "somePassword");
@@ -93,6 +112,9 @@ public class UserTest {
         Assert.assertEquals(expected, user.getCredentials());
     }
 
+    /**
+     * Method that tests the "credentials" field setter.
+     */
     @Test
     public void setCredentials() {
         User user = new User("someEmail", "somePassword");
@@ -100,6 +122,9 @@ public class UserTest {
         Assert.assertEquals("test", user.getCredentials());
     }
 
+    /**
+     * Method that tests the "client" field getter.
+     */
     @Test
     public void getClient() {
         User user = new User("someEmail", "somePassword");
@@ -108,6 +133,9 @@ public class UserTest {
         Assert.assertSame(client, user.getClient());
     }
 
+    /**
+     * Method that tests the login request with null token.
+     */
     @Test
     public void login() {
         Assert.assertTrue(mockUser.login(null));
@@ -115,6 +143,9 @@ public class UserTest {
         Mockito.verify(response).readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that tests the login request with a token.
+     */
     @Test
     public void loginNotNull() {
         Assert.assertTrue(mockUser.login("Something"));
@@ -122,6 +153,9 @@ public class UserTest {
         Mockito.verify(response).readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that tests the register request.
+     */
     @Test
     public void registerCorrect() {
         mockUser.register("Nat", "mymail@gmail.com", "pwd");
@@ -129,11 +163,17 @@ public class UserTest {
         Mockito.verify(response).readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that tests the wrong email register request.
+     */
     @Test(expected = IllegalArgumentException.class)
     public void registerWrongMail() {
         mockUser.register("Nat", "hello", "pwd");
     }
 
+    /**
+     * Method that tests the formAuth with a null token.
+     */
     @Test
     public void formAuthHeaderTokenNull() {
         User user = new User("mail", "123");
@@ -141,6 +181,9 @@ public class UserTest {
         Assert.assertEquals(auth, user.getCredentials());
     }
 
+    /**
+     * Method that tests the formAuth with a non-null token.
+     */
     @Test
     public void formAuthHeaderTokenNotNull() {
         User user = new User("mail", "123");
@@ -148,6 +191,9 @@ public class UserTest {
         Assert.assertEquals(user.formAuthHeader(), user.getToken());
     }
 
+    /**
+     * Method that tests the adjustToken with a token.
+     */
     @Test
     public void adjustTokenTokenPresent() {
         User user = new User("", "");
@@ -157,6 +203,9 @@ public class UserTest {
         Assert.assertEquals("abc", user.getToken());
     }
 
+    /**
+     * Method that tests the adjustToken with a missing token.
+     */
     @Test
     public void adjustTokenTokenNotPresent() {
         User user = new User("", "");

@@ -109,19 +109,27 @@ public class SolarPanelsTest {
         Assert.assertEquals(1, rs.getSavedSolar().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        SolarPanels solar = new SolarPanels();
         Resource res = new Resource();
-        b.passToken("token", res);
+        solar.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        SolarPanels solar = new SolarPanels();
         Resource res = new Resource();
-        b.passToken(null, res);
+        solar.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

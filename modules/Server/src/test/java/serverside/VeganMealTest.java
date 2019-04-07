@@ -16,7 +16,12 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 @RunWith(PowerMockRunner.class)
@@ -100,19 +105,27 @@ public class VeganMealTest {
         Assert.assertEquals(resource.getTotal_Meals().intValue(), 1);
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        VeganMeal vegan = new VeganMeal();
         Resource res = new Resource();
-        b.passToken("token", res);
+        vegan.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        VeganMeal vegan = new VeganMeal();
         Resource res = new Resource();
-        b.passToken(null, res);
+        vegan.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }
