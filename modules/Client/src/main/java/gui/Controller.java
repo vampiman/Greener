@@ -1,5 +1,6 @@
 package gui;
 
+//import restclient.CompactClient;
 import cn.hutool.json.JSONObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -280,7 +281,7 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter type of your transportation");
             return;
-        }  else if (bikeKilometers.getText().isEmpty()) {
+        } else if (bikeKilometers.getText().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the number of kilometers which you travelled");
@@ -302,7 +303,7 @@ public class Controller {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postBiker(transportType.getValue().toString(),
-                    (int)Double.parseDouble(bikeKilometers.getText()));
+                    (int) Double.parseDouble(bikeKilometers.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -314,8 +315,8 @@ public class Controller {
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        final int numCols = 2 ;
-        final int numRows = friends.length + 1 ;
+        final int numCols = 2;
+        final int numRows = friends.length + 1;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setHgrow(Priority.NEVER);
@@ -359,7 +360,7 @@ public class Controller {
                         + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
                 button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
                         + "-fx-text-fill: #91cb3e;"));
-                button.setOnAction(value ->  {
+                button.setOnAction(value -> {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
                                 .getResource("fxml/menu.fxml"));
@@ -385,8 +386,8 @@ public class Controller {
     private void loadFriends(String[][] friends) {
         GridPane root = new GridPane();
         root.setGridLinesVisible(true);
-        final int numCols = 2 ;
-        final int numRows = friends.length ;
+        final int numCols = 2;
+        final int numRows = friends.length;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setHgrow(Priority.NEVER);
@@ -435,7 +436,6 @@ public class Controller {
         }
 
 
-
         if (menuPane != null) {
             JSONObject details = cc.getPersonalInfo();
             nameLabel.setText("Hello " + details.get("userName").toString());
@@ -454,20 +454,20 @@ public class Controller {
             JSONObject info = cc.getStats();
             //            System.out.println(info.toJSONString(10));
             ObservableList<PieChart.Data> pieChartData =
-                FXCollections.observableArrayList(
-                        new PieChart.Data("Vegan Meal",
-                                Double.parseDouble(info.get("total_Meals").toString())),
-                        new PieChart.Data("Public Transport",
-                                Double.parseDouble(info.get("savedPublicTransport").toString())),
-                        new PieChart.Data("Home Temperature",
-                                Double.parseDouble(info.get("savedHeatConsumption").toString())),
-                        new PieChart.Data("Bike",
-                                Double.parseDouble(info.get("bikeSaved").toString())),
-                        new PieChart.Data("Local Product",
-                                Double.parseDouble(info.get("localSaved").toString())),
-                        new PieChart.Data("Solar Panel",
-                                Double.parseDouble(info.get("savedSolar").toString()))
-                );
+                    FXCollections.observableArrayList(
+                            new PieChart.Data("Vegan Meal",
+                                    Double.parseDouble(info.get("total_Meals").toString())),
+                            new PieChart.Data("Public Transport",
+                                    Double.parseDouble(info.get("savedPublicTransport").toString())),
+                            new PieChart.Data("Home Temperature",
+                                    Double.parseDouble(info.get("savedHeatConsumption").toString())),
+                            new PieChart.Data("Bike",
+                                    Double.parseDouble(info.get("bikeSaved").toString())),
+                            new PieChart.Data("Local Product",
+                                    Double.parseDouble(info.get("localSaved").toString())),
+                            new PieChart.Data("Solar Panel",
+                                    Double.parseDouble(info.get("savedSolar").toString()))
+                    );
             pieChart.setTitle("SCORE DISTRIBUTION");
             pieChart.setMaxSize(1000, 1000);
             pieChart.setData(pieChartData);
@@ -656,9 +656,22 @@ public class Controller {
         }
     }
 
+//    private void loadAchievements(int page, Stage appStage){
+//        for (int i = 0; i <= 27; i++){
+//            String str = "ach" + i;
+//
+//
+//
+//            Scene scene = appStage.getScene();
+//            Pane pane = (Pane) scene.lookup("#" + str);
+//            pane.setOpacity(0.2);
+//        }
+//    }
+
+
     private void loadAchievements(int page, Stage appStage) {
-        int start = 0;
-        int end = 0;
+        int start;
+        int end;
         switch (page) {
             case 1:
                 start = 0;
@@ -678,6 +691,9 @@ public class Controller {
                 break;
         }
 
+//        CompactClient c = new CompactClient();
+//        c.setAchievements();
+
         Scene scene = appStage.getScene();
 
         String bits = "000000000000000000000000000";
@@ -692,6 +708,7 @@ public class Controller {
             }
         }
     }
+
 
     @FXML
     private void handleSignUpPersonalAction(ActionEvent event) throws IOException {
@@ -798,7 +815,7 @@ public class Controller {
 
     @FXML
     public void handleExitButtonAction(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
 
     }
 
@@ -1007,7 +1024,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
+            cc.postSolar((int) Double.parseDouble(electricityAmount.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -1015,7 +1032,7 @@ public class Controller {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
+        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter how much vegan meal you had");
@@ -1068,7 +1085,7 @@ public class Controller {
             JSONObject jo = cc.followUser(friendCode.getText());
             if (jo.get("status").toString().equals("Success")) {
                 AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
-                       "You are now following this person!");
+                        "You are now following this person!");
             } else {
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
                         jo.get("status").toString());
@@ -1113,10 +1130,11 @@ public class Controller {
 
         /**
          * The method which gives alert with a specific message.
+         *
          * @param alertType the type of the alert
-         * @param owner the owner of the alert
-         * @param title the title of the alert
-         * @param message the message of the alert
+         * @param owner     the owner of the alert
+         * @param title     the title of the alert
+         * @param message   the message of the alert
          */
 
         public static void showAlert(Alert.AlertType alertType,
