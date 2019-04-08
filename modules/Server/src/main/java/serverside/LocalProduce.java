@@ -10,6 +10,7 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -40,6 +41,17 @@ public class LocalProduce {
     }
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "JSON" media type.
      *
@@ -50,19 +62,21 @@ public class LocalProduce {
     @GET
     @Path("get")
     @Produces(MediaType.APPLICATION_JSON)
-
-    public Resource getData() throws ClassNotFoundException, SQLException {
+    public Resource getData(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
         Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'");
+        ResultSet rs = st.executeQuery("SELECT Local_produce "
+                + "FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int produce = rs.getInt("Local_produce");
+        Double produce = rs.getDouble("Local_produce");
 
         Resource lp = new Resource();
-        lp.setTotal_Produce(produce);
+        passToken(token, lp);
+        lp.setLocalSaved(produce);
 
         st.close();
         dbConnection.close();
@@ -90,17 +104,32 @@ public class LocalProduce {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postData(Resource lp) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource lp, @HeaderParam("Token") String token,
+                             @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        System.out.println(lp.getTotal_Produce());
+        double toAdd = new CarbonCalculator(2).localproduce_Calculator(lp.getTotal_Produce(),
+                                                                                lp.getMealType());
+
+        passToken(token, lp);
+
         Statement st = dbConnection.createStatement();
         st.executeUpdate(
-                "UPDATE person SET produce = produce"
-                        + lp.getTotal_Produce() + "WHERE Name = 'Robert'");
+                "UPDATE person SET Local_produce = Local_produce + "
+                        + toAdd + " WHERE Email = '" + email + "'");
+
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
 
         st.close();
         dbConnection.close();
+
+        return lp;
     }
 
     //    public Response postData(JSONObject jo) {

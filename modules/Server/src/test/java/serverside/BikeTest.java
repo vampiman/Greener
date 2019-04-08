@@ -1,6 +1,9 @@
 package serverside;
 
+import static org.mockito.Matchers.anyDouble;
+import static org.mockito.Matchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,8 +26,13 @@ import java.sql.Statement;
 @PrepareForTest(Bike.class)
 public class BikeTest {
 
+
+    @Mock
+    private CarbonCalculator ccMock;
     @Mock
     private Connection mockConnection;
+    @Mock
+    private Statistics mockStatistics;
     @Mock
     private Statement mockStatement;
     @Mock
@@ -41,6 +49,8 @@ public class BikeTest {
         mockConnection = Mockito.mock(Connection.class);
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
+        mockStatistics = Mockito.mock(Statistics.class);
+        ccMock = Mockito.mock(CarbonCalculator.class);
     }
 
     /**
@@ -49,7 +59,7 @@ public class BikeTest {
      * @throws SQLException SQL-related error
      */
     @Test
-    public void postData() throws ClassNotFoundException, SQLException {
+    public void postData() throws Exception {
         bike = new Bike();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager.getConnection(
@@ -57,10 +67,18 @@ public class BikeTest {
                 "sammy",
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
+        Mockito.when(ccMock.bike(anyString(), anyDouble())).thenReturn(1.0);
+        whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
+        Mockito.when(mockStatistics.increaseScore(0.0, "email")).thenReturn(1);
+        Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
 
         Resource re = new Resource();
-        re.setTotal_Distance(1);
-        bike.postData(re);
+        re.setTotal_Distance(1.0);
+        re.setCarType("Hybrid");
+
+
+        Assert.assertEquals(1, bike.postData(re, "token", "email").getTotal_Distance().intValue());
     }
 
     /**
@@ -80,16 +98,33 @@ public class BikeTest {
                         "sammy","temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Mockito.when(mockStatement.executeQuery(
-                "SELECT Bike FROM person WHERE Name = 'Robert'")).thenReturn(rs);
-        Mockito.when(rs.getInt("Bike")).thenReturn(1);
+                anyString())).thenReturn(rs);
+        Mockito.when(rs.getDouble("Bike")).thenReturn(1.0);
         Mockito.when(rs.next()).thenReturn(true);
 
-        Resource rs = bike.getAll();
+        Resource rs = bike.getAll("token", "someEmail");
 
-        Assert.assertEquals(rs.getTotal_Distance(), 1);
+        Assert.assertEquals(rs.getTotal_Distance().intValue(), 1);
 
         //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
+    }
+
 }
 
     /*

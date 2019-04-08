@@ -11,6 +11,7 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -21,7 +22,6 @@ import javax.ws.rs.core.MediaType;
  */
 @Path("bike")
 @Singleton
-@javax.annotation.Resource
 public class Bike {
 
     private Connection dbConnection;
@@ -44,24 +44,49 @@ public class Bike {
     //        return Response.status(Response.Status.OK).entity(jo).build(); }
 
     /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
+
+    /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on riding a bike from the client.
      * */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-
-    public void postData(Resource re) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postData(Resource re, @HeaderParam("Token") String token,
+                         @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
-        System.out.println(re.getTotal_Distance());
+        double toAdd = new CarbonCalculator(2).bike(re.getCarType(), re.getTotal_Distance());
+
+        passToken(token, re);
+
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Distance = Distance + "
-                + re.getTotal_Distance() + " WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Bike = Bike + "
+                + toAdd + " WHERE Email = '" + email + "'");
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
+
+        statistics.increaseScore(toAdd, email);
 
         st.close();
         dbConnection.close();
+
+        return re;
     }
 
 
@@ -75,18 +100,19 @@ public class Bike {
     @GET
     @Path("distance")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll() throws ClassNotFoundException, SQLException {
+    public Resource getAll(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
 
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(
-                "SELECT Bike FROM person WHERE Name = 'Robert'");
+                "SELECT Bike FROM person WHERE Email = '" + email + "'");
         rs.next();
-        int distance = rs.getInt("Bike");
+        double distance = rs.getDouble("Bike");
 
         Resource re = new Resource();
-
+        passToken(token, re);
         re.setTotal_Distance(distance);
 
         st.close();

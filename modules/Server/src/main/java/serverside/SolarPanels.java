@@ -1,7 +1,5 @@
 package serverside;
 
-import cn.hutool.json.JSONObject;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,6 +8,7 @@ import java.sql.Statement;
 import javax.inject.Singleton;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -33,8 +32,19 @@ public class SolarPanels {
         String user = "sammy";
         String pass = "temporary";
 
-        //Class.forName("com.mysql.jdbc.Driver");
+        //        Class.forName("com.mysql.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
+    }
+
+    /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
     }
 
     /**
@@ -46,18 +56,32 @@ public class SolarPanels {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postAmount(Resource re) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postAmount(Resource re, @HeaderParam("Token") String token,
+                           @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
-        System.out.println(re.getTotal_Percentage());
+        int toAdd = (int)(new CarbonCalculator(2).solarPanel(re.getKwh()));
+
+        passToken(token, re);
+
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Percentage = Percentage + "
-                + re.getTotal_Percentage() + " WHERE Name = 'Robert'");
+        st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
+                + toAdd + " WHERE Email = '" + email + "'");
+
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(toAdd, email);
+        statistics.updateLevel(co2, email);
 
         st.close();
         dbConnection.close();
 
+
+        return re;
     }
 
     /**
@@ -71,24 +95,26 @@ public class SolarPanels {
     @GET
     @Path("percentage")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAmount() throws ClassNotFoundException, SQLException {
+    public Resource getAmount(@HeaderParam("Token") String token,
+                              @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
 
         getDbConnection();
 
+
         Statement st = dbConnection.createStatement();
         ResultSet rs = st.executeQuery(
-                "SELECT Solar_panels FROM person WHERE Name = 'Robert'");
+                "SELECT Solar_panels FROM person WHERE Email = '" + email + "'");
 
         rs.next();
-        int percentage = rs.getInt("Solar_panels");
+        Double points = rs.getDouble("Solar_panels");
 
         Resource re = new Resource();
-
-        re.setTotal_Percentage(percentage);
+        passToken(token, re);
+        re.setSavedSolar(points);
 
         st.close();
         dbConnection.close();
-        JSONObject jo = new JSONObject();
         st.close();
         dbConnection.close();
         return re;

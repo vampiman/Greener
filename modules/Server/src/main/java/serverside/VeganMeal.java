@@ -4,19 +4,19 @@ import cn.hutool.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.inject.Singleton;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-
 
 @Path("veganmeal")
 @Singleton
@@ -38,6 +38,16 @@ public class VeganMeal {
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
+    /**
+     * Method used to pass the generated token as a parameter (if there is one).
+     * @param token sent from the Authentication service
+     * @param res Resource which transports the token
+     */
+    public void passToken(String token, Resource res) {
+        if (token != null) {
+            res.setToken(token);
+        }
+    }
 
     /**
      * Endpoint /veganmeal/post that modifies the number of eaten vegan meals in
@@ -48,18 +58,43 @@ public class VeganMeal {
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void postIt(Resource re) throws ClassNotFoundException, SQLException {
+    @Produces(MediaType.APPLICATION_JSON)
+    public Resource postIt(Resource re, @HeaderParam("Token") String token,
+                           @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
 
-        System.out.println(re.getTotal_Meals());
-        Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Vegan_meal = Vegan_meal + "
-                + re.getTotal_Meals() + " WHERE Name = 'Robert'");
+        PreparedStatement preparedStatement = null;
 
-        st.close();
+        String sql = "UPDATE person SET Vegan_meal = Vegan_meal + ? WHERE Email = ?";
+
+        preparedStatement = dbConnection.prepareStatement(sql);
+
+        passToken(token, re);
+
+        CarbonCalculator cc = new CarbonCalculator(2);
+
+        Double insteadOf = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType());
+
+        Double ihad = cc.veganmeal_Calculator(re.getTotal_Meals(), re.getMealType2());
+
+
+        preparedStatement.setDouble(1, insteadOf - ihad);
+        preparedStatement.setString(2, email);
+        preparedStatement.executeUpdate();
+
+
+        Statistics statistics = new Statistics();
+
+        int co2 = statistics.increaseScore(insteadOf - ihad, email);
+        statistics.updateLevel(co2, email);
+
+
+
+        preparedStatement.close();
         dbConnection.close();
 
-
+        return re;
     }
 
 
@@ -73,27 +108,30 @@ public class VeganMeal {
     @GET
     @Path("totalVegan")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAll() throws ClassNotFoundException, SQLException {
-
-
+    public Resource getAll(@HeaderParam("Token") String token, @HeaderParam("Email") String email)
+            throws ClassNotFoundException, SQLException {
         getDbConnection();
 
+        String sql = "SELECT Vegan_meal FROM person WHERE Email = ?";
 
-        Statement st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Vegan_meal FROM person WHERE Name = 'Robert'");
+        PreparedStatement preparedStatement = dbConnection.prepareStatement(sql);
+
+        preparedStatement.setString(1, email);
+
+        ResultSet rs = preparedStatement.executeQuery();
 
         rs.next();
-        int total = rs.getInt("Vegan_meal");
+        Double total = rs.getDouble("Vegan_meal");
 
         Resource re = new Resource();
-
+        passToken(token, re);
         re.setTotal_Meals(total);
 
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         JSONObject jo = new JSONObject();
         jo.put("total", total);
-        st.close();
+        preparedStatement.close();
         dbConnection.close();
         return re;
 

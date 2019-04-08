@@ -1,0 +1,145 @@
+#loginButton{
+	-fx-background-color: #91cb3e;
+}
+
+#loginButton:hover{
+	-fx-background-color: linear-gradient( #91cb3e, #ffffff);
+}
+
+#sign_up_personal{
+	-fx-background-color:  #91cb3e;
+}
+
+#sign_up_personal:hover{
+	-fx-background-color: linear-gradient( #91cb3e, grey);
+}
+
+#addActivityButton{
+	-fx-background-color: #000000;
+}
+
+#addActivityButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#signUpButton{
+	-fx-background-color: #000000;
+}
+
+#signUpButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#backButton{
+	-fx-background-color: #000000;
+}
+
+#backButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#addButton{
+	-fx-background-color: #000000;
+}
+
+#addButton:hover{
+	-fx-background-color: linear-gradient(#000000, grey);
+}
+
+#addVeganMealButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addVeganMealButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addSolarPanelButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addSolarPanelButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addPublicTransportButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addPublicTransportButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addBikeButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addBikeButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addLocalProductButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addLocalProductButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#addTemperatureButton{
+	-fx-background-color: #ffffff;
+	-fx-background-radius: 100px;
+}
+
+#addTemperatureButton:hover{
+	-fx-background-color: linear-gradient(#ffffff, #ebf8ee);
+	-fx-background-radius: 30px;
+}
+
+#signupName {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#email {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#rePassword {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+#password {
+	-fx-border-color: grey;
+	-fx-border-width: 0 0 1 0;
+	-fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+	-fx-background-color:  #91cb3e;
+	-fx-opacity: 0.9;
+
+}
+.tab-label .text {
+	-fx-rotate: 90;
+
+}
+#personal, #network ,#score{
+-fx-background-color: linear-gradient(to right, rgb(145, 203, 62) 0%, rgb(57, 116, 27) 26%, rgb(145, 203, 62) 100%);
+}
+

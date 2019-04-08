@@ -1,8 +1,11 @@
 package serverside;
 
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -24,6 +28,13 @@ import java.sql.Statement;
 @PrepareForTest(HeatConsumption.class)
 
 public class HeatConsumptionTest {
+
+
+    @Mock
+    private CarbonCalculator ccMock;
+
+    @Mock
+    private Statistics mockStatistics;
 
     @Mock
     private Connection mockConnection;
@@ -42,22 +53,28 @@ public class HeatConsumptionTest {
      * @throws SQLException SQL error
      */
     @Before
-    public void setUp() throws SQLException {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         mockConnection = mock(Connection.class);
         mockStatement = mock(Statement.class);
         rs = mock(ResultSet.class);
+        ccMock = mock(CarbonCalculator.class);
+        mockStatistics = mock(Statistics.class);
 
         mockStatic(DriverManager.class);
         when(DriverManager.getConnection(
                 "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                 "sammy", "temporary")).thenReturn(mockConnection);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
+        whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
+        Mockito.when(ccMock.homeHeatConsumptionSaved(anyDouble(), anyDouble(), anyString())).thenReturn(1);
+        whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
+        Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
+        Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
 
         when(mockStatement.executeQuery(
-                "SELECT Lowering_home_temperature "
-                        + "FROM person WHERE Name = 'Robert'")).thenReturn(rs);
-        when(rs.getInt("Lowering_home_temperature")).thenReturn(100);
+                anyString())).thenReturn(rs);
+        when(rs.getDouble("Lowering_home_temperature")).thenReturn(1.0);
         when(rs.next()).thenReturn(true);
     }
 
@@ -71,8 +88,11 @@ public class HeatConsumptionTest {
     public void postHeatConsumption() throws SQLException, ClassNotFoundException {
         heatConsumption = new HeatConsumption();
         Resource resource = new Resource();
-        resource.setTotal_heatConsumption(100);
-        heatConsumption.postData(resource);
+        resource.setCurrentHeatConsumption(1);
+        resource.setAverageHeatConsumption(1);
+
+        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getCurrentHeatConsumption());
+        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getAverageHeatConsumption());
     }
 
     /**
@@ -85,9 +105,25 @@ public class HeatConsumptionTest {
     @Test
     public void getHeatConsumption() throws SQLException, ClassNotFoundException {
         heatConsumption = new HeatConsumption();
-        Resource resource = heatConsumption.getData();
+        Resource resource = heatConsumption.getData("token", "email");
 
-        Assert.assertEquals(resource.getTotal_heatConsumption(), 100);
+        Assert.assertEquals(1, resource.getSavedHeatConsumption().intValue());
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }
 

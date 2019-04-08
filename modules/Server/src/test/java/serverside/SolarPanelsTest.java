@@ -1,6 +1,9 @@
 package serverside;
 
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -24,7 +27,10 @@ import java.sql.Statement;
 @PrepareForTest(SolarPanels.class)
 public class SolarPanelsTest {
 
-
+    @Mock
+    private CarbonCalculator ccMock;
+    @Mock
+    private Statistics mockStatistics;
     @Mock
     private Connection mockConnection;
     @Mock
@@ -43,6 +49,8 @@ public class SolarPanelsTest {
         mockConnection = Mockito.mock(Connection.class);
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
+        mockStatistics = Mockito.mock(Statistics.class);
+        ccMock = Mockito.mock(CarbonCalculator.class);
 
     }
 
@@ -53,7 +61,7 @@ public class SolarPanelsTest {
      * @throws ClassNotFoundException Class not found error
      */
     @Test
-    public void postAmount() throws SQLException, ClassNotFoundException {
+    public void postAmount() throws Exception {
         solarPanels = new SolarPanels();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
@@ -61,9 +69,16 @@ public class SolarPanelsTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
+        Mockito.when(ccMock.solarPanel(anyDouble())).thenReturn(1.0);
+        whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
+        Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
+        Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
         Resource re = new Resource();
         re.setTotal_Percentage(1);
-        solarPanels.postAmount(re);
+
+
+        Assert.assertEquals(1, solarPanels.postAmount(re,"token", "email").getTotal_Percentage());
 
     }
 
@@ -84,13 +99,29 @@ public class SolarPanelsTest {
 
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Mockito.when(mockStatement
-                .executeQuery("SELECT Solar_panels FROM person WHERE Name = 'Robert'"))
+                .executeQuery(anyString()))
                 .thenReturn(rs);
 
-        Mockito.when(rs.getInt("Solar_panels")).thenReturn(1);
+        Mockito.when(rs.getDouble("Solar_panels")).thenReturn(1.0);
         Mockito.when(rs.next()).thenReturn(true);
-        Resource rs = solarPanels.getAmount();
+        Resource rs = solarPanels.getAmount("token", "email");
 
-        Assert.assertEquals(rs.getTotal_Percentage(), 1);
+        Assert.assertEquals(1, rs.getSavedSolar().intValue());
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }

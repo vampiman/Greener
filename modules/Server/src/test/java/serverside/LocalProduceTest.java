@@ -1,6 +1,10 @@
 package serverside;
 
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import javax.ws.rs.HeaderParam;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,6 +28,10 @@ import java.sql.Statement;
 @PrepareForTest(LocalProduce.class)
 public class LocalProduceTest {
 
+    @Mock
+    private CarbonCalculator ccMock;
+    @Mock
+    private Statistics mockStatistics;
     @Mock
     private Connection mockConnection;
     @Mock
@@ -42,6 +51,8 @@ public class LocalProduceTest {
         mockConnection = Mockito.mock(Connection.class);
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
+        ccMock = mock(CarbonCalculator.class);
+        mockStatistics = mock(Statistics.class);
     }
 
     /**
@@ -52,7 +63,7 @@ public class LocalProduceTest {
      */
 
     @Test
-    public void postData() throws SQLException, ClassNotFoundException {
+    public void postData() throws Exception {
         localProduce = new LocalProduce();
         mockStatic(DriverManager.class);
         Mockito.when(DriverManager
@@ -60,9 +71,18 @@ public class LocalProduceTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+
+        whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
+        Mockito.when(ccMock.localproduce_Calculator(anyDouble(), anyString())).thenReturn(1.0);
+        whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
+        Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
+        Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
+
         Resource lp = new Resource();
-        lp.setTotal_Produce(1);
-        localProduce.postData(lp);
+        lp.setTotal_Produce(1.0);
+
+
+        Assert.assertEquals(1, localProduce.postData(lp, "token", "email").getTotal_Produce().intValue());
     }
 
     /**
@@ -82,14 +102,29 @@ public class LocalProduceTest {
 
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
         Mockito.when(mockStatement
-                .executeQuery("SELECT Local_produce FROM person WHERE Name = 'Robert'"))
+                .executeQuery(anyString()))
                 .thenReturn(rs);
 
-        Mockito.when(rs.getInt("Local_produce")).thenReturn(1);
+        Mockito.when(rs.getDouble("Local_produce")).thenReturn(1.0);
         Mockito.when(rs.next()).thenReturn(true);
 
-        Resource rs = localProduce.getData();
 
-        Assert.assertEquals(rs.getTotal_Produce(), 1);
+        Assert.assertEquals(1, localProduce.getData("token", "email").getLocalSaved().intValue());
+    }
+
+    @Test
+    public void testPassTokenEqual() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken("token", res);
+        Assert.assertEquals("token", res.getToken());
+    }
+
+    @Test
+    public void testPassTokenNull() {
+        Bike b = new Bike();
+        Resource res = new Resource();
+        b.passToken(null, res);
+        Assert.assertNull(res.getToken());
     }
 }
