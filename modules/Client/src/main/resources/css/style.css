@@ -135,11 +135,11 @@
 	-fx-opacity: 0.9;
 
 }
-.tab-label .text {
-	-fx-rotate: 90;
+#personal, #network, #score{
+	-fx-background-color:   #91cb3e;
+	-fx-border-color: #397128;
+	-fx-border-radius: 20px;
+	-fx-border-width: 2px;
 
-}
-#personal, #network ,#score{
--fx-background-color: linear-gradient(to right, rgb(145, 203, 62) 0%, rgb(57, 116, 27) 26%, rgb(145, 203, 62) 100%);
 }
 

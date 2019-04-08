@@ -190,6 +190,8 @@ public class Controller {
 
     @FXML
     private Label nameLabel;
+    @FXML
+    private Label userName;
 
     @FXML
     private GridPane menuPane;
@@ -445,7 +447,7 @@ public class Controller {
 //
 //        if (youPagePane != null) {
 //            JSONObject details = cc.getPersonalInfo();
-//            usernameField.setText( details.get("userName").toString());
+//            userName.setText("Hi:"+ details.get("userName").toString());
 //            noOfFriendsField.setText(details.get("friendsNo").toString());
 //            emailField.setText( details.get("email").toString());
 //            co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
@@ -939,7 +941,7 @@ public class Controller {
                 loadPage(event, "fxml/loginPage.fxml");
             } else {
                 cc.postPublicTransport(typeOfCar, publictransportType, numberOfKilometers);
-
+                showConfirmation(event);
                 loadPage(event, "fxml/addActivity.fxml");
             }
         }
@@ -982,6 +984,7 @@ public class Controller {
         if (!cc.checkToken()) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
+            showConfirmation(event);
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -1010,6 +1013,7 @@ public class Controller {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
+            showConfirmation(event);
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -1102,15 +1106,16 @@ public class Controller {
             }
         }
 
-        CompactClient cc = new CompactClient();
-        if (!cc.checkToken()) {
-            loadPage(event, "fxml/loginPage.fxml");
-        } else {
-            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),
-                    productCategory.getValue().toString());
+//        CompactClient cc = new CompactClient();
+//        if (!cc.checkToken()) {
+//            loadPage(event, "fxml/loginPage.fxml");
+//        } else {
+//            cc.postLocalProduce(Double.parseDouble(amountLocalProduct.getText()),
+//                    productCategory.getValue().toString());
+            showConfirmation(event);
             loadPage(event, "fxml/addActivity.fxml");
         }
-    }
+
 
     public static class AlertHelper {
 
@@ -1139,20 +1144,27 @@ public class Controller {
         alert.setHeaderText("Your activity is added successfully");
         ButtonType addActivity = new ButtonType("Continue");
         ButtonType statistics = new ButtonType("Statistics");
+        ButtonType menu = new ButtonType("Home Page");
 
         alert.getButtonTypes().clear();
 
-        alert.getButtonTypes().addAll(addActivity, statistics);
+        alert.getButtonTypes().addAll(addActivity, statistics,menu);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == statistics) {
             try {
-                loadPage(event, "fxml/you.fxml");
+                loadPage(event, "fxml/activities.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }else if (result.isPresent() && result.get() == addActivity) {
             try {
                 loadPage(event, "fxml/addActivity.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else if (result.isPresent() && result.get() == menu) {
+            try {
+                loadPage(event, "fxml/menu.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
