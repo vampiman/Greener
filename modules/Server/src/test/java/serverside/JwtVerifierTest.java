@@ -182,7 +182,12 @@ public class JwtVerifierTest {
         when(mockMM.get("Authorization")).thenReturn(Collections.singletonList(correctCredentials));
         jv.filter(mockRC);
 
-        ArgumentCaptor<Response> argumentCaptor = ArgumentCaptor.forClass(Response.class);
-        verify(mockRC).abortWith(argumentCaptor.capture());
+//        ArgumentCaptor<Response> argumentCaptor = ArgumentCaptor.forClass(Response.class);
+//        verify(mockRC).abortWith(argumentCaptor.capture());
+        try {
+            verify(mockStatement).executeQuery(any(String.class));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
