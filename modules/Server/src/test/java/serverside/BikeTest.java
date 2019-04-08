@@ -16,7 +16,11 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Bike.class)
@@ -33,8 +37,6 @@ public class BikeTest {
     private Statement mockStatement;
     @Mock
     private ResultSet rs;
-    @Mock
-    private PreparedStatement mockPrepared;
     @InjectMocks
     private Bike bike;
 
@@ -48,7 +50,6 @@ public class BikeTest {
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
         mockStatistics = Mockito.mock(Statistics.class);
-        mockPrepared = Mockito.mock(PreparedStatement.class);
         ccMock = Mockito.mock(CarbonCalculator.class);
     }
 
@@ -111,19 +112,28 @@ public class BikeTest {
         //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }
 
+
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        Bike bike = new Bike();
         Resource res = new Resource();
-        b.passToken("token", res);
+        bike.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        Bike bike = new Bike();
         Resource res = new Resource();
-        b.passToken(null, res);
+        bike.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 

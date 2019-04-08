@@ -26,8 +26,7 @@ public class PublicTransport {
 
     /**
      * Method used to create an connection with the database.
-     *
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found error
      */
 
@@ -43,9 +42,8 @@ public class PublicTransport {
 
     /**
      * Method used to pass the generated token as a parameter (if there is one).
-     *
      * @param token sent from the Authentication service
-     * @param res   Resource which transports the token
+     * @param res Resource which transports the token
      */
     public void passToken(String token, Resource res) {
         if (token != null) {
@@ -57,9 +55,8 @@ public class PublicTransport {
      * Endpoint /publictransport/get that returns the
      * amount of kilometers travelled with public
      * transport.
-     *
      * @return kilometers travelled with public transport
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found error
      */
     @GET
@@ -90,9 +87,8 @@ public class PublicTransport {
     /**
      * Endpoint /publictransport/post that
      * handles the POST-requests from the client.
-     *
      * @param re which has the information which needs to be placed in the database.
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found
      */
     @POST
@@ -100,7 +96,7 @@ public class PublicTransport {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Resource postData(Resource re, @HeaderParam("Token") String token,
-                             @HeaderParam("Email") String email)
+                         @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
         getDbConnection();
 
@@ -109,16 +105,13 @@ public class PublicTransport {
                 re.getTotal_Distance());
 
 
+
         passToken(token, re);
 
         Statement st = dbConnection.createStatement();
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
-        st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Public_transport FROM person"
-                + " WHERE Email = '" + email + "'");
-        rs.next();
 
         Statistics statistics = new Statistics();
 

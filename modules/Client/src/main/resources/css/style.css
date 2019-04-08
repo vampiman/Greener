@@ -130,4 +130,30 @@
 	-fx-background-color: transparent;
 }
 
+.text-area {
+	-fx-control-inner-background:#91cb3e;
+	-fx-background-color:  #91cb3e;
+	-fx-border-width: 0;
+	-fx-focus-color: transparent;
+}
+
+.text-area *.text {
+	-fx-text-alignment: center;
+}
+
+#solarHomeLabel .scroll-pane {
+	-fx-hbar-policy: never;
+	-fx-vbar-policy: never;
+}
+
+#publicBikeLabel .scroll-pane {
+	-fx-hbar-policy: never;
+	-fx-vbar-policy: never;
+}
+
+#veganLocalLabel .scroll-pane {
+	-fx-hbar-policy: never;
+	-fx-vbar-policy: never;
+}
+
 

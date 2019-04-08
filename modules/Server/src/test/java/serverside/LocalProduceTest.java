@@ -17,8 +17,11 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-//import javax.ws.rs.HeaderParam;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(LocalProduce.class)
@@ -34,8 +37,6 @@ public class LocalProduceTest {
     private Statement mockStatement;
     @Mock
     private ResultSet rs;
-    @Mock
-    private PreparedStatement mockPrepared;
 
     @InjectMocks
     private LocalProduce localProduce;
@@ -50,7 +51,6 @@ public class LocalProduceTest {
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
         ccMock = mock(CarbonCalculator.class);
-        mockPrepared = Mockito.mock(PreparedStatement.class);
         mockStatistics = mock(Statistics.class);
     }
 
@@ -113,19 +113,27 @@ public class LocalProduceTest {
         Assert.assertEquals(1, localProduce.getData("token", "email").getLocalSaved().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        LocalProduce local = new LocalProduce();
         Resource res = new Resource();
-        b.passToken("token", res);
+        local.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        LocalProduce local = new LocalProduce();
         Resource res = new Resource();
-        b.passToken(null, res);
-        Assert.assertNull(res.getToken());
+        local.passToken(null, res);
+        Assert.assertEquals(null, res.getToken());
     }
 }

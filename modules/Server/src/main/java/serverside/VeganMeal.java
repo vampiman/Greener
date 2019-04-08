@@ -84,20 +84,12 @@ public class VeganMeal {
         preparedStatement.executeUpdate();
 
 
-        sql = "SELECT Vegan_meal FROM person WHERE Email = ?";
-
-        preparedStatement = dbConnection.prepareStatement(sql);
-
-        preparedStatement.setString(1, email);
-
-        ResultSet rs = preparedStatement.executeQuery();
-        rs.next();
-
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(insteadOf - ihad, email);
         statistics.updateLevel(co2, email);
         statistics.updateVeganAch(email);
+
 
 
         preparedStatement.close();

@@ -1,29 +1,8 @@
 package serverside;
 
-import cn.hutool.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.ws.rs.client.*;
-import javax.ws.rs.core.Form;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.sql.Connection;
-import java.sql.Statement;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.powermock.api.mockito.PowerMockito.mockStatic;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 public class CarbonCalculatorTest {
 
@@ -31,50 +10,50 @@ public class CarbonCalculatorTest {
     /**
      *  Test for the electricity consumption.
      */
-//    @Test
-//    public void electricityTestDefault() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(8220, (int)calc.electricity(100,0));
-//        Assert.assertEquals(3728, (int)calckg.electricity(100, 0));
-//    }
-//
-//    /**
-//     *  Test for the Gas consumption.
-//     */
-//    @Test
-//    public void naturalGasTestDefault() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(10235, (int)calc.naturalGas(100,0));
-//        Assert.assertEquals(4642, (int)calckg.naturalGas(100, 0));
-//    }
-//
-//    /**
-//     *  Test for fuel Oil consumption.
-//     */
-//    @Test
-//    public void fuelOilTestDefault() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(9320, (int)calc.fuelOil(100,0));
-//        Assert.assertEquals(4227, (int)calckg.fuelOil(100, 0));
-//    }
-//
-//    /**
-//     *  Test for propane consumption.
-//     */
-//    @Test
-//    public void propaneTestDefault() {
-//        CarbonCalculator calc = new CarbonCalculator(1);
-//        CarbonCalculator calckg = new CarbonCalculator(2);
-//
-//        Assert.assertEquals(5291, (int)calc.propane(100,0));
-//        Assert.assertEquals(2400, (int)calckg.propane(100, 0));
-//    }
+    //    @Test
+    //    public void electricityTestDefault() {
+    //        CarbonCalculator calc = new CarbonCalculator(1);
+    //        CarbonCalculator calckg = new CarbonCalculator(2);
+    //
+    //        Assert.assertEquals(8220, (int)calc.electricity(100,0));
+    //        Assert.assertEquals(3728, (int)calckg.electricity(100, 0));
+    //    }
+    //
+    //    /**
+    //     *  Test for the Gas consumption.
+    //     */
+    //    @Test
+    //    public void naturalGasTestDefault() {
+    //        CarbonCalculator calc = new CarbonCalculator(1);
+    //        CarbonCalculator calckg = new CarbonCalculator(2);
+    //
+    //        Assert.assertEquals(10235, (int)calc.naturalGas(100,0));
+    //        Assert.assertEquals(4642, (int)calckg.naturalGas(100, 0));
+    //    }
+    //
+    //    /**
+    //     *  Test for fuel Oil consumption.
+    //     */
+    //    @Test
+    //    public void fuelOilTestDefault() {
+    //        CarbonCalculator calc = new CarbonCalculator(1);
+    //        CarbonCalculator calckg = new CarbonCalculator(2);
+    //
+    //        Assert.assertEquals(9320, (int)calc.fuelOil(100,0));
+    //        Assert.assertEquals(4227, (int)calckg.fuelOil(100, 0));
+    //    }
+    //
+    //    /**
+    //     *  Test for propane consumption.
+    //     */
+    //    @Test
+    //    public void propaneTestDefault() {
+    //        CarbonCalculator calc = new CarbonCalculator(1);
+    //        CarbonCalculator calckg = new CarbonCalculator(2);
+    //
+    //        Assert.assertEquals(5291, (int)calc.propane(100,0));
+    //        Assert.assertEquals(2400, (int)calckg.propane(100, 0));
+    //    }
 
     /**
      *  Test for personal vehicle CO2 emissions.
@@ -117,7 +96,7 @@ public class CarbonCalculatorTest {
      * Test for veganmeal CO2 emissions type 1 (fruit).
      */
     @Test
-    public void Veganmeal_CalculatorTest1() {
+    public void veganmealCalculatorTest1() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(11, (int) calc.veganmeal_Calculator(10, "Fruit"));
@@ -127,7 +106,7 @@ public class CarbonCalculatorTest {
      * Test for veganmeal CO2 emissions type 2 (dairy).
      */
     @Test
-    public void Veganmeal_CalculatorTest2() {
+    public void veganmealCalculatorTest2() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(7, (int) calc.veganmeal_Calculator(1, "Dairy"));
@@ -137,7 +116,7 @@ public class CarbonCalculatorTest {
      * Test for veganmeal CO2 emissions type 3 (vegetables).
      */
     @Test
-    public void Veganmeal_CalculatorTest3() {
+    public void veganmealCalculatorTest3() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(2, (int) calc.veganmeal_Calculator(1, "Vegetables"));
@@ -147,24 +126,27 @@ public class CarbonCalculatorTest {
      * Test for veganmeal CO2 emissions type 4 (meat).
      */
     @Test
-    public void Veganmeal_CalculatorTest4() {
+    public void veganmealCalculatorTest4() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(21, (int) calc.veganmeal_Calculator(1, "Meat"));
     }
 
+    /**
+     * Test for veganmeal CO2 emissions type 5 (eggs).
+     */
     @Test
-    public void Veganmeal_CalculatorEggsTest() {
+    public void veganmealCalculatorEggsTest() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(48, (int) (calc.veganmeal_Calculator(1, "Eggs")*10));
+        Assert.assertEquals(48, (int) (calc.veganmeal_Calculator(1, "Eggs") * 10));
     }
 
     /**
      * Test for veganmeal CO2 emissions, case when the type is illegal.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void Veganmeal_wrongType() {
+    public void veganmealWrongType() {
         new CarbonCalculator(1).veganmeal_Calculator(100, "Something else");
     }
 
@@ -173,17 +155,17 @@ public class CarbonCalculatorTest {
      * Test for localproduce CO2 emissions type 1 (fruit).
      */
     @Test
-    public void Localproduce_CalculatorTest1() {
+    public void localproduce_CalculatorTest1() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(77, (int) (calc.localproduce_Calculator(10, "Fruit")*100));
+        Assert.assertEquals(77, (int) (calc.localproduce_Calculator(10, "Fruit") * 100));
     }
 
     /**
      * Test for localproduce CO2 emissions type 2 (dairy).
      */
     @Test
-    public void Localproduce_CalculatorTest2() {
+    public void localproduceCalculatorTest2() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(5, (int) calc.localproduce_Calculator(10, "Dairy"));
@@ -193,24 +175,27 @@ public class CarbonCalculatorTest {
      * Test for localproduce CO2 emissions type 3 (vegetables).
      */
     @Test
-    public void Localproduce_CalculatorTest3() {
+    public void localproduceCalculatorTest3() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
-        Assert.assertEquals(14, (int) (calc.localproduce_Calculator(10, "Vegetables")*10));
+        Assert.assertEquals(14, (int) (calc.localproduce_Calculator(10, "Vegetables") * 10));
     }
 
     /**
      * Test for localproduce CO2 emissions type 4 (meat).
      */
     @Test
-    public void Localproduce_CalculatorTest4() {
+    public void localproduceCalculatorTest4() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(14, (int) calc.localproduce_Calculator(10, "Meat"));
     }
 
+    /**
+     * Test for localproduce CO2 emissions type 4 (eggs).
+     */
     @Test
-    public void Localproduce_CalculatorEggs() {
+    public void localproduceCalculatorEggs() {
         CarbonCalculator calc = new CarbonCalculator(1);
 
         Assert.assertEquals(33, (int) calc.localproduce_Calculator(100, "Eggs"));
@@ -220,7 +205,7 @@ public class CarbonCalculatorTest {
      * Test for localproduce CO2 emissions, case when the type is illegal.
      */
     @Test(expected = IllegalArgumentException.class)
-    public void Localproduce_wrongType() {
+    public void localproduce_wrongType() {
         new CarbonCalculator(1).localproduce_Calculator(100, "Something else");
     }
 
@@ -289,6 +274,11 @@ public class CarbonCalculatorTest {
                 484 / 52.177 * 0.45359237, 0.2);
     }
 
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the intercity bus option is correct in relation to the website
+     * from which the API is used.
+     */
     @Test
     public void publicTransportCalculatorFossilIntercityBusTest() throws Exception {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -299,6 +289,11 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(16, (int)calc.publicTransportCalculator(carType, pt, 100));
     }
 
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the subway option is correct in relation to the website
+     * from which the API is used.
+     */
     @Test
     public void publicTransportCalculatorFossilSubwayTest() throws Exception {
         CarbonCalculator calc = new CarbonCalculator(1);
@@ -309,6 +304,11 @@ public class CarbonCalculatorTest {
         Assert.assertEquals(11, (int)calc.publicTransportCalculator(carType, pt, 100));
     }
 
+    /**
+     * Tests if the calculations of the saved carbon dioxide of
+     * the train option is correct in relation to the website
+     * from which the API is used.
+     */
     @Test
     public void publicTransportCalculatorFossilTrainTest() throws Exception {
         CarbonCalculator calc = new CarbonCalculator(1);

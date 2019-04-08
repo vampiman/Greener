@@ -29,8 +29,7 @@ public class HeatConsumption {
 
     /**
      * Method used to create an connection with the database.
-     *
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found error
      */
 
@@ -45,9 +44,8 @@ public class HeatConsumption {
 
     /**
      * Method used to pass the generated token as a parameter (if there is one).
-     *
      * @param token sent from the Authentication service
-     * @param res   Resource which transports the token
+     * @param res Resource which transports the token
      */
     public void passToken(String token, Resource res) {
         if (token != null) {
@@ -58,9 +56,8 @@ public class HeatConsumption {
     /**
      * Endpoint /heatconsumption/get that returns information
      * about the heat consumption of the user.
-     *
      * @return integer from database
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found error
      */
     @GET
@@ -90,9 +87,8 @@ public class HeatConsumption {
 
     /**
      * Handles the POST-requests from the client.
-     *
      * @param re which has the information which needs to be placed in the database.
-     * @throws SQLException           SQL error
+     * @throws SQLException SQL error
      * @throws ClassNotFoundException Class not found error
      */
     @POST
@@ -117,11 +113,6 @@ public class HeatConsumption {
                 + "= Lowering_home_temperature + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
-
-        st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Lowering_home_temperature FROM person "
-                + "WHERE Email = '" + email + "'");
-        rs.next();
 
         Statistics statistics = new Statistics();
 

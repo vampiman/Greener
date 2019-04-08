@@ -8,6 +8,7 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *  Class implementing a carbon footprint calculator that takes in consideration
@@ -457,12 +458,16 @@ public class CarbonCalculator {
         Client client = ClientBuilder.newClient();
         WebTarget wt = client.target("http://carbonfootprint.c2es.org/api/footprint");
 
-        JSONObject resp = wt.request(MediaType.APPLICATION_JSON)
+        Response resp = wt.request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(form, MediaType.APPLICATION_FORM_URLENCODED_TYPE),
-                        JSONObject.class);
+                        Response.class);
 
-        double result = resp.getByPath("data.footprint", Double.class);
-        return result;
+
+
+        String result = resp.readEntity(String.class);
+
+        JSONObject jo = new JSONObject(result);
+        return jo.getByPath("data.footprint", Double.class);
     }
 
     /**

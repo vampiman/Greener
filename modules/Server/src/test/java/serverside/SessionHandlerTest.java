@@ -1,5 +1,9 @@
 package serverside;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,11 +14,13 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(SessionHandler.class)
@@ -34,6 +40,9 @@ public class SessionHandlerTest {
     @InjectMocks
     SessionHandler sessionHandler;
 
+    /**
+     * Method for preparing the mocks.
+     */
     @Before
     public void setUp() {
         sessionHandler = new SessionHandler();
@@ -50,7 +59,8 @@ public class SessionHandlerTest {
         mockResultSet = mock(ResultSet.class);
 
         try {
-            PowerMockito.when(DriverManager.getConnection(url, user, pass)).thenReturn(mockConnection);
+            PowerMockito.when(DriverManager.getConnection(url, user, pass))
+                    .thenReturn(mockConnection);
             when(mockConnection.prepareStatement(any(String.class))).thenReturn(mockPrepStatement);
             when(mockConnection.createStatement()).thenReturn(mockStatement);
             when(mockStatement.executeQuery(any(String.class))).thenReturn(mockResultSet);
@@ -61,13 +71,19 @@ public class SessionHandlerTest {
         }
     }
 
+    /**
+     * Test for invite code generator.
+     */
     @Test
     public void inviteGenerator() {
-        String a = new SessionHandler().inviteGenerator();
+        String ab = new SessionHandler().inviteGenerator();
 
-        Assert.assertEquals(15, a.length());
+        Assert.assertEquals(15, ab.length());
     }
 
+    /**
+     * Test for the register method.
+     */
     @Test
     public void register() {
         SessionResource sr = new SessionResource();

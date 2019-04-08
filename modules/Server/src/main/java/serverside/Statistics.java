@@ -16,13 +16,13 @@ import javax.ws.rs.core.MediaType;
 public class Statistics {
 
     private Connection dbConnection;
+
     private StringBuilder bits = new StringBuilder("000000000000000000000000");
 
     /**
      * Method for initializing the connection with the database server through jdbc.
-     *
      * @throws ClassNotFoundException Class not found error
-     * @throws SQLException           SQL-related error
+     * @throws SQLException SQL-related error
      */
     public void getDbConnection() throws SQLException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
@@ -35,10 +35,9 @@ public class Statistics {
 
     /**
      * Returns total CO2 saved by the user.
-     *
      * @param email user's email
      * @return resource (JSON) with total CO2 saved
-     * @throws SQLException           in case of e.g. wrong SQL syntax
+     * @throws SQLException in case of e.g. wrong SQL syntax
      * @throws ClassNotFoundException in case of class not found
      */
     @GET
@@ -64,7 +63,6 @@ public class Statistics {
 
     /**
      * Returns statistics of CO2 saved by all activities.
-     *
      * @param email user's email
      * @return JSON with CO2 saved by individual activities
      * @throws SQLException in case of e.g. wrong SQL syntax
@@ -102,7 +100,6 @@ public class Statistics {
 
     /**
      * Returns user's personal information.
-     *
      * @param email user's email
      * @return JSONObject with personal information
      * @throws SQLException in case of e.g. wrong SQL syntax
@@ -149,7 +146,6 @@ public class Statistics {
 
     /**
      * Returns user's achievements status.
-     *
      * @param email user's email
      * @return JSONObject with achievements (string of bits)
      * @throws SQLException in case of e.g. wrong SQL syntax
@@ -173,6 +169,9 @@ public class Statistics {
         Resource re = new Resource();
         re.setAchievements(achievements);
 
+        updateScoreAch(email);
+        updateFriendsAch(email);
+
         dbConnection.close();
         ps.close();
         rs.close();
@@ -182,7 +181,6 @@ public class Statistics {
 
     /**
      * Returns user's current level.
-     *
      * @param email user's email
      * @return Resource with user's current level
      * @throws SQLException in case of e.g. wrong SQL syntax
@@ -216,9 +214,8 @@ public class Statistics {
 
     /**
      * Adds latest quantity of CO2 saved to produce current total.
-     *
      * @param co2saved CO2 in kg saved by latest activity
-     * @param email    user's email
+     * @param email user's email
      * @return new amount of CO2 saved
      * @throws SQLException in case of e.g. wrong SQL syntax
      */
@@ -242,18 +239,17 @@ public class Statistics {
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        int result = rs.getInt("CO_2_saved");
+        final int result = rs.getInt("CO_2_saved");
+        dbConnection.close();
         ps.close();
         rs.close();
-        dbConnection.close();
         return result;
     }
 
     /**
      * Returns true if current level does not have to be changed, false otherwise.
-     *
      * @param co2saved latest CO2 saving
-     * @param email    user's email
+     * @param email user's email
      * @return true if level was correct, false otherwise
      * @throws SQLException in case of e.g. wrong SQL syntax
      */
@@ -271,13 +267,13 @@ public class Statistics {
 
         int currentLevel = rs.getInt("Level");
 
-        if (co2saved / 150 == currentLevel) {
+        if ((co2saved / 150) + 1 == currentLevel) {
             return true;
         }
 
         sql = "UPDATE person SET Level = ? WHERE Email = ?";
         ps = dbConnection.prepareStatement(sql);
-        ps.setInt(1, (int) (co2saved / 150) + 1);
+        ps.setInt(1, (int)((co2saved / 150) + 1));
         ps.setString(2, email);
 
         ps.executeUpdate();
@@ -288,7 +284,6 @@ public class Statistics {
 
         return false;
     }
-
 
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
@@ -319,8 +314,10 @@ public class Statistics {
         ResultSet rs1 = ps.executeQuery();
         rs1.next();
 
-        double currentFriends = rs.getDouble("User_email");
-        final String initial = rs1.getString("Achievements");
+        double currentFriends = rs.getDouble("COUNT(User_email)");
+        String initial = rs1.getString("Achievements");
+
+        bits = new StringBuilder(initial);
 
         if (currentFriends > 100) {
             bits.setCharAt(0, '1');
@@ -331,7 +328,9 @@ public class Statistics {
             bits.setCharAt(1, '1');
         } else if (currentFriends > 10) {
             bits.setCharAt(0, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -371,6 +370,8 @@ public class Statistics {
         double currentAch = rs.getDouble("CO_2_saved");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(3, '1');
             bits.setCharAt(4, '1');
@@ -380,7 +381,9 @@ public class Statistics {
             bits.setCharAt(4, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(3, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -420,6 +423,8 @@ public class Statistics {
         double currentAch = rs.getDouble("Bike");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(9, '1');
             bits.setCharAt(10, '1');
@@ -429,7 +434,9 @@ public class Statistics {
             bits.setCharAt(10, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(9, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -469,6 +476,8 @@ public class Statistics {
         double currentAch = rs.getDouble("Public_transport");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(12, '1');
             bits.setCharAt(13, '1');
@@ -478,7 +487,9 @@ public class Statistics {
             bits.setCharAt(13, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(12, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -522,6 +533,8 @@ public class Statistics {
 
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(15, '1');
             bits.setCharAt(16, '1');
@@ -531,7 +544,9 @@ public class Statistics {
             bits.setCharAt(16, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(15, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -572,6 +587,8 @@ public class Statistics {
         double currentAch = rs.getDouble("Lowering_home_temperature");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(18, '1');
             bits.setCharAt(19, '1');
@@ -581,7 +598,9 @@ public class Statistics {
             bits.setCharAt(19, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(18, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -621,6 +640,8 @@ public class Statistics {
         double currentAch = rs.getDouble("Vegan_meal");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
 
         if (currentAch > 100) {
             bits.setCharAt(21, '1');
@@ -631,7 +652,9 @@ public class Statistics {
             bits.setCharAt(22, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(21, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
 
         String string = new String(bits);
@@ -672,6 +695,8 @@ public class Statistics {
         double currentAch = rs.getDouble("Local_produce");
         final String initial = rs.getString("Achievements");
 
+        bits = new StringBuilder(initial);
+
         if (currentAch > 100) {
             bits.setCharAt(6, '1');
             bits.setCharAt(7, '1');
@@ -681,7 +706,9 @@ public class Statistics {
             bits.setCharAt(7, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(6, '1');
-        } else return false;
+        } else {
+            return false;
+        }
 
         String string = new String(bits);
 
@@ -698,20 +725,5 @@ public class Statistics {
 
         return true;
     }
-
-    //    /**
-    //     * Main method to test achievements.
-    //     *
-    //     * @param args for achievements
-    //     */
-    //    public static void main(String[] args) {
-    //        Statistics st = new Statistics();
-    //        System.out.println(st.bits);
-    //        try {
-    //            st.updateSolarAch(200, "jaron@yahoo.nl");
-    //        } catch (SQLException e) {
-    //            e.printStackTrace();
-    //        }
-    //    }
 
 }
