@@ -31,7 +31,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -209,67 +208,67 @@ public class Controller {
     private GridPane youPagePane;
 
     @FXML
-    private Pane ach0;
+    private ImageView ach0;
     @FXML
-    private Pane ach1;
+    private ImageView ach1;
     @FXML
-    private Pane ach2;
+    private ImageView ach2;
 
     @FXML
-    private Pane ach3;
+    private ImageView ach3;
     @FXML
-    private Pane ach4;
+    private ImageView ach4;
     @FXML
-    private Pane ach5;
+    private ImageView ach5;
 
     @FXML
-    private Pane ach6;
+    private ImageView ach6;
     @FXML
-    private Pane ach7;
+    private ImageView ach7;
     @FXML
-    private Pane ach8;
+    private ImageView ach8;
 
     @FXML
-    private Pane ach9;
+    private ImageView ach9;
     @FXML
-    private Pane ach10;
+    private ImageView ach10;
     @FXML
-    private Pane ach11;
+    private ImageView ach11;
 
     @FXML
-    private Pane ach12;
+    private ImageView ach12;
     @FXML
-    private Pane ach13;
+    private ImageView ach13;
     @FXML
-    private Pane ach14;
+    private ImageView ach14;
 
     @FXML
-    private Pane ach15;
+    private ImageView ach15;
     @FXML
-    private Pane ach16;
+    private ImageView ach16;
     @FXML
-    private Pane ach17;
+    private ImageView ach17;
 
     @FXML
-    private Pane ach18;
+    private ImageView ach18;
     @FXML
-    private Pane ach19;
+    private ImageView ach19;
     @FXML
-    private Pane ach20;
+    private ImageView ach20;
 
     @FXML
-    private Pane ach21;
+    private ImageView ach21;
     @FXML
-    private Pane ach22;
+    private ImageView ach22;
     @FXML
-    private Pane ach23;
+    private ImageView ach23;
 
     @FXML
-    private Pane ach24;
+    private ImageView ach24;
     @FXML
-    private Pane ach25;
+    private ImageView ach25;
     @FXML
-    private Pane ach26;
+    private ImageView ach26;
 
 
     @FXML
@@ -674,7 +673,7 @@ public class Controller {
                 break;
             default:
                 start = 0;
-                end = 0;
+                end = 26;
                 break;
         }
 
@@ -687,8 +686,8 @@ public class Controller {
             if (cond) {
                 String str = "ach" + i;
 
-                Pane pane = (Pane) scene.lookup("#" + str);
-                pane.setOpacity(0.2);
+                ImageView view = (ImageView) scene.lookup("#" + str);
+                view.setOpacity(0.2);
             }
         }
     }
