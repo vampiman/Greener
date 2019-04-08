@@ -32,6 +32,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="16.0" text="Cryo-Chamber Owner" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -47,6 +48,7 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
+            <Label layoutX="65.0" text="Sub-0" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -59,6 +61,7 @@
                   <Image url="@../images/bronze.png" />
                </image>
             </ImageView>
+            <Label layoutX="17.0" text="Avocado Has Taste! " />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -71,6 +74,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="27.0" text="Winter Has Come!" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -92,14 +96,6 @@
             <Insets left="20.0" right="20.0" />
          </GridPane.margin>
       </Label>
-      <Label prefHeight="64.0" prefWidth="203.0" stylesheets="@../css/achievements.css" text="Local Produce" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
-         <font>
-            <Font size="24.0" />
-         </font>
-         <GridPane.margin>
-            <Insets left="20.0" right="20.0" />
-         </GridPane.margin>
-      </Label>
    <Button fx:id="achMenu1" mnemonicParsing="false" onAction="#handleBackToMenuAction" prefHeight="25.0" prefWidth="600.0" stylesheets="@../css/achievements.css" text="Menu" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
       <font>
          <Font size="12.0" />
@@ -112,6 +108,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="17.0" text="Real Methane Threat" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -124,42 +121,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
-         </children>
-         <GridPane.margin>
-            <Insets bottom="10.0" left="20.0" right="20.0" />
-         </GridPane.margin>
-      </Pane>
-      <Pane id="lightPane" prefHeight="200.0" prefWidth="200.0" styleClass="lightPane" stylesheets="@../css/achievements.css" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-            <ImageView fx:id="ach24" fitHeight="87.0" fitWidth="123.0" layoutX="35.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/bronze.png" />
-               </image>
-            </ImageView>
-         </children>
-         <GridPane.margin>
-            <Insets left="20.0" right="20.0" />
-         </GridPane.margin>
-      </Pane>
-      <Pane id="lightPane" prefHeight="200.0" prefWidth="200.0" styleClass="lightPane" stylesheets="@../css/achievements.css" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <children>
-            <ImageView fx:id="ach25" fitHeight="87.0" fitWidth="123.0" layoutX="35.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/silver.png" />
-               </image>
-            </ImageView>
-         </children>
-         <GridPane.margin>
-            <Insets left="20.0" right="20.0" />
-         </GridPane.margin>
-      </Pane>
-      <Pane id="bottomPane" prefHeight="200.0" prefWidth="200.0" styleClass="lightPane" stylesheets="@../css/achievements.css" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <children>
-            <ImageView fx:id="ach26" fitHeight="87.0" fitWidth="123.0" layoutX="35.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/gold.png" />
-               </image>
-            </ImageView>
+            <Label layoutX="43.0" text="Viva Fauna!" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />

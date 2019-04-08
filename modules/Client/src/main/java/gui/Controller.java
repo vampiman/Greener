@@ -264,14 +264,6 @@ public class Controller {
     private ImageView ach23;
 
     @FXML
-    private ImageView ach24;
-    @FXML
-    private ImageView ach25;
-    @FXML
-    private ImageView ach26;
-
-
-    @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
         if (transportType.getValue() == null) {
@@ -669,17 +661,17 @@ public class Controller {
                 break;
             case 3:
                 start = 18;
-                end = 26;
+                end = 23;
                 break;
             default:
                 start = 0;
-                end = 26;
+                end = 23;
                 break;
         }
 
         Scene scene = appStage.getScene();
 
-        String bits = "000000000000000000000000000";
+        String bits = "000000000000000000000000";
         for (int i = start; i <= end; i++) {
             char charc = bits.charAt(i);
             boolean cond = charc == '0';

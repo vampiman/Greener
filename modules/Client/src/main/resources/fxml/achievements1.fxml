@@ -32,6 +32,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="18.0" text="Blossoming Influencer" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -47,6 +48,7 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
+            <Label layoutX="9.0" text="Guy Who Knows A Guy" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -59,6 +61,7 @@
                   <Image url="@../images/bronze.png" />
                </image>
             </ImageView>
+            <Label layoutX="17.0" text="Basic Carbon Fighter" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -71,6 +74,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="45.0" text="NetworKing" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -84,7 +88,7 @@
             <Insets left="20.0" right="20.0" />
          </GridPane.margin>
       </Label>
-      <Label prefHeight="64.0" prefWidth="224.0" stylesheets="@../css/achievements.css" text="Competing" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+      <Label prefHeight="64.0" prefWidth="224.0" stylesheets="@../css/achievements.css" text="Total Score" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="24.0" />
          </font>
@@ -92,7 +96,7 @@
             <Insets left="20.0" right="20.0" />
          </GridPane.margin>
       </Label>
-      <Label prefHeight="64.0" prefWidth="203.0" stylesheets="@../css/achievements.css" text="Total score" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
+      <Label prefHeight="64.0" prefWidth="203.0" stylesheets="@../css/achievements.css" text="Local Produce" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="BOTTOM" GridPane.vgrow="ALWAYS">
          <font>
             <Font size="24.0" />
          </font>
@@ -112,6 +116,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="49.0" text="Car-what?" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -124,6 +129,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="39.0" text="Earth Saviour" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -136,6 +142,7 @@
                   <Image url="@../images/bronze.png" />
                </image>
             </ImageView>
+            <Label layoutX="26.0" text="In-sourcing Activist" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -148,6 +155,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="19.0" text="Favourite Neighbour" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -160,6 +168,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="6.0" text="Within Walking Distance" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />

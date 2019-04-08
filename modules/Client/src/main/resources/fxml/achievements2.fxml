@@ -32,6 +32,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="24.0" text="No Helper Wheels!" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -47,6 +48,7 @@
                   <Rectangle2D />
                </viewport>
             </ImageView>
+            <Label layoutX="26.0" text="Moving Your Body" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -59,6 +61,7 @@
                   <Image url="@../images/bronze.png" />
                </image>
             </ImageView>
+            <Label layoutX="25.0" text="No Parking! Nice." />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -71,6 +74,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="31.0" text="Lance Armstrong" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -112,6 +116,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="21.0" text="Who Needs a Car?" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -124,6 +129,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="16.0" text="No Car, No CarBon!" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
@@ -136,6 +142,7 @@
                   <Image url="@../images/bronze.png" />
                </image>
             </ImageView>
+            <Label layoutX="10.0" text="It's Not Just For Tanning" textAlignment="CENTER" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -148,6 +155,7 @@
                   <Image url="@../images/silver.png" />
                </image>
             </ImageView>
+            <Label layoutX="20.0" layoutY="5.0" text="I've Got The Power!" />
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" />
@@ -160,6 +168,7 @@
                   <Image url="@../images/gold.png" />
                </image>
             </ImageView>
+            <Label layoutX="33.0" text="Elon Approves!" />
          </children>
          <GridPane.margin>
             <Insets bottom="10.0" left="20.0" right="20.0" />
