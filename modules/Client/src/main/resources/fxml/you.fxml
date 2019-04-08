@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -49,7 +50,7 @@
                   </ImageView>
                </graphic>
                <content>
-                  <AnchorPane opacity="0.9" prefHeight="241.0" prefWidth="569.0" style="-fx-background-color: #91cb3e;">
+                  <AnchorPane prefHeight="241.0" prefWidth="575.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
                         <Text layoutX="266.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
                            <font>
@@ -69,7 +70,13 @@
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                     </children></AnchorPane>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <effect>
+                        <InnerShadow blurType="TWO_PASS_BOX" />
+                     </effect></AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="network">
@@ -81,7 +88,7 @@
                   </ImageView>
                </graphic>
                <content>
-                  <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;">
+                  <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
                         <Text layoutX="226.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Network" textAlignment="CENTER" wrappingWidth="147.5673828125">
                            <font>
@@ -92,7 +99,10 @@
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                     </children></AnchorPane>
+                     </children>
+                     <effect>
+                        <InnerShadow />
+                     </effect></AnchorPane>
                </content>
             </Tab>
             <Tab fx:id="score">
@@ -104,7 +114,7 @@
                   </ImageView>
                </graphic>
                <content>
-                  <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e;">
+                  <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
                         <Text layoutX="232.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C02 saved (kg)">
                            <font>
@@ -115,7 +125,10 @@
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                     </children></AnchorPane>
+                     </children>
+                     <effect>
+                        <InnerShadow />
+                     </effect></AnchorPane>
                </content>
             </Tab>
          </tabs>
