@@ -76,13 +76,11 @@ public class SolarPanels {
                 + " WHERE Email = '" + email + "'");
         rs.next();
 
-        double solarScore = rs.getDouble("Solar_panels");
-
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
-        statistics.updateSolarAch(solarScore, email);
+        statistics.updateSolarAch(email);
 
         st.close();
         dbConnection.close();

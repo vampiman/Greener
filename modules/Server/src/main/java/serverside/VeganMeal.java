@@ -93,14 +93,11 @@ public class VeganMeal {
         ResultSet rs = preparedStatement.executeQuery();
         rs.next();
 
-        double veganScore = rs.getDouble("Vegan_meal");
-
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(insteadOf - ihad, email);
         statistics.updateLevel(co2, email);
-        statistics.updateVeganAch(veganScore, email);
-
+        statistics.updateVeganAch(email);
 
 
         preparedStatement.close();

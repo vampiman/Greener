@@ -292,12 +292,12 @@ public class Statistics {
 
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
-     * @param co2saved co2 saved
+     *
      * @param email users email
      * @return a boolean
      * @throws SQLException when sql syntax is incorrect
      */
-    public boolean updateFriendsAch(double co2saved, String email) throws SQLException {
+    public boolean updateFriendsAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -352,12 +352,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateScoreAch(double co2saved, String email) throws SQLException {
+    public boolean updateScoreAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -402,12 +401,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateBikeAch(double co2saved, String email) throws SQLException {
+    public boolean updateBikeAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -452,12 +450,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateTransportAch(double co2saved, String email) throws SQLException {
+    public boolean updateTransportAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -502,12 +499,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateSolarAch(double co2saved, String email) throws SQLException {
+    public boolean updateSolarAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -557,12 +553,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateHeatAch(double co2saved, String email) throws SQLException {
+    public boolean updateHeatAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -607,12 +602,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateVeganAch(double co2saved, String email) throws SQLException {
+    public boolean updateVeganAch(String email) throws SQLException {
 
         getDbConnection();
 
@@ -659,12 +653,11 @@ public class Statistics {
     /**
      * Returns true if the current achievements has to be changed, false otherwise.
      *
-     * @param co2saved amount of co2 saved
-     * @param email    email of the current user
+     * @param email email of the current user
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateLocalAch(double co2saved, String email) throws SQLException {
+    public boolean updateLocalAch(String email) throws SQLException {
 
         getDbConnection();
 

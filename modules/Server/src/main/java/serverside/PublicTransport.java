@@ -26,7 +26,8 @@ public class PublicTransport {
 
     /**
      * Method used to create an connection with the database.
-     * @throws SQLException SQL error
+     *
+     * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found error
      */
 
@@ -42,8 +43,9 @@ public class PublicTransport {
 
     /**
      * Method used to pass the generated token as a parameter (if there is one).
+     *
      * @param token sent from the Authentication service
-     * @param res Resource which transports the token
+     * @param res   Resource which transports the token
      */
     public void passToken(String token, Resource res) {
         if (token != null) {
@@ -55,8 +57,9 @@ public class PublicTransport {
      * Endpoint /publictransport/get that returns the
      * amount of kilometers travelled with public
      * transport.
+     *
      * @return kilometers travelled with public transport
-     * @throws SQLException SQL error
+     * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found error
      */
     @GET
@@ -87,8 +90,9 @@ public class PublicTransport {
     /**
      * Endpoint /publictransport/post that
      * handles the POST-requests from the client.
+     *
      * @param re which has the information which needs to be placed in the database.
-     * @throws SQLException SQL error
+     * @throws SQLException           SQL error
      * @throws ClassNotFoundException Class not found
      */
     @POST
@@ -96,14 +100,13 @@ public class PublicTransport {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Resource postData(Resource re, @HeaderParam("Token") String token,
-                         @HeaderParam("Email") String email)
+                             @HeaderParam("Email") String email)
             throws SQLException, ClassNotFoundException {
         getDbConnection();
 
         double toAdd = new CarbonCalculator(2).publicTransportCalculator(re.getCarType(),
                 re.getPublicTransportType(),
                 re.getTotal_Distance());
-
 
 
         passToken(token, re);
@@ -117,13 +120,11 @@ public class PublicTransport {
                 + " WHERE Email = '" + email + "'");
         rs.next();
 
-        double transportScore = rs.getDouble("Public_transport");
-
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
-        statistics.updateTransportAch(transportScore, email);
+        statistics.updateTransportAch(email);
 
 
         dbConnection.close();

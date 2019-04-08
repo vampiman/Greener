@@ -42,8 +42,9 @@ public class LocalProduce {
 
     /**
      * Method used to pass the generated token as a parameter (if there is one).
+     *
      * @param token sent from the Authentication service
-     * @param res Resource which transports the token
+     * @param res   Resource which transports the token
      */
     public void passToken(String token, Resource res) {
         if (token != null) {
@@ -111,7 +112,7 @@ public class LocalProduce {
         getDbConnection();
 
         double toAdd = new CarbonCalculator(2).localproduce_Calculator(lp.getTotal_Produce(),
-                                                                                lp.getMealType());
+                lp.getMealType());
 
         passToken(token, lp);
 
@@ -121,17 +122,15 @@ public class LocalProduce {
                         + toAdd + " WHERE Email = '" + email + "'");
 
         st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person" 
+        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person"
                 + " WHERE Email = '" + email + "'");
         rs.next();
-
-        double localScore = rs.getDouble("Local_produce");
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
-        statistics.updateLocalAch(localScore, email);
+        statistics.updateLocalAch(email);
 
         st.close();
         dbConnection.close();

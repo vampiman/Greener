@@ -69,7 +69,7 @@ public class VeganMealTest {
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
-        Mockito.when(mockStatistics.updateVeganAch(anyDouble(), anyString())).thenReturn(true);
+        Mockito.when(mockStatistics.updateVeganAch(anyString())).thenReturn(true);
 
         Resource re = new Resource();
         re.setMealType("Meat");

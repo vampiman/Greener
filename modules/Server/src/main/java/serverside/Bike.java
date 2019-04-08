@@ -45,8 +45,9 @@ public class Bike {
 
     /**
      * Method used to pass the generated token as a parameter (if there is one).
+     *
      * @param token sent from the Authentication service
-     * @param res Resource which transports the token
+     * @param res   Resource which transports the token
      */
     public void passToken(String token, Resource res) {
         if (token != null) {
@@ -57,13 +58,13 @@ public class Bike {
     /**
      * Method handling HTTP POST requests. It accepts the JSON
      * file containing information on riding a bike from the client.
-     * */
+     */
     @POST
     @Path("post")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Resource postData(Resource re, @HeaderParam("Token") String token,
-                         @HeaderParam("Email") String email)
+                             @HeaderParam("Email") String email)
             throws ClassNotFoundException, SQLException {
 
         getDbConneciton();
@@ -83,14 +84,12 @@ public class Bike {
         ResultSet rs = st.executeQuery("SELECT Bike FROM person WHERE Email = '" + email + "'");
         rs.next();
 
-        double bikeScore = rs.getDouble("Bike");
-
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
-        statistics.updateBikeAch(bikeScore, email);
+        statistics.updateBikeAch(email);
 
         statistics.increaseScore(toAdd, email);
 
@@ -103,10 +102,10 @@ public class Bike {
 
     /**
      * Endpoint /bike/distance that returns the total cycled distance.
+     *
      * @return Total distance of cycled distance
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException
-     *
      */
     @GET
     @Path("distance")
@@ -133,8 +132,6 @@ public class Bike {
         dbConnection.close();
         return re;
     }
-
-
 
 
     //public Response postData(JSONObject jo) {

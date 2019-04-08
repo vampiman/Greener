@@ -168,8 +168,12 @@ public class StatisticsTest {
     @Test
     public void updateLevelAchTrue() {
         try {
-            when(mockResultSet.getInt("Level")).thenReturn(1);
-            Assert.assertTrue(stats.updateScoreAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Level")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Level")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Level")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -192,8 +196,12 @@ public class StatisticsTest {
     @Test
     public void updateBikeAchTrue() {
         try {
-            when(mockResultSet.getInt("Bike")).thenReturn(1);
-            Assert.assertTrue(stats.updateBikeAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Bike")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateBikeAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Bike")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateBikeAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Bike")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateBikeAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -206,8 +214,12 @@ public class StatisticsTest {
     @Test
     public void updateTransportAchTrue() {
         try {
-            when(mockResultSet.getInt("Public_transport")).thenReturn(1);
-            Assert.assertTrue(stats.updateTransportAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Public_transport")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateTransportAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Public_transport")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateTransportAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Public_transport")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateTransportAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -220,8 +232,12 @@ public class StatisticsTest {
     @Test
     public void updateSolarAchTrue() {
         try {
-            when(mockResultSet.getInt("Solar_panels")).thenReturn(1);
-            Assert.assertTrue(stats.updateSolarAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Solar_panels")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateSolarAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Solar_panels")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateSolarAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Solar_panels")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateSolarAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -234,8 +250,12 @@ public class StatisticsTest {
     @Test
     public void updateHeatAchTrue() {
         try {
-            when(mockResultSet.getInt("Lowering_home_temperature")).thenReturn(1);
-            Assert.assertTrue(stats.updateHeatAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateHeatAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateHeatAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateHeatAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -248,8 +268,12 @@ public class StatisticsTest {
     @Test
     public void updateVeganAchTrue() {
         try {
-            when(mockResultSet.getInt("Vegan_meal")).thenReturn(1);
-            Assert.assertTrue(stats.updateVeganAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Vegan_meal")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateVeganAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Vegan_meal")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateVeganAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Vegan_meal")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateVeganAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -262,8 +286,12 @@ public class StatisticsTest {
     @Test
     public void updateLoacalAchTrue() {
         try {
-            when(mockResultSet.getInt("Local_produce")).thenReturn(1);
-            Assert.assertTrue(stats.updateLocalAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Local_produce")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateLocalAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Local_produce")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateLocalAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("Local_produce")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateLocalAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -276,8 +304,12 @@ public class StatisticsTest {
     @Test
     public void updateFriendsAchTrue() {
         try {
-            when(mockResultSet.getInt("User_email")).thenReturn(1);
-            Assert.assertTrue(stats.updateFriendsAch(150.0, "jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("User_email")).thenReturn(11.0);
+            Assert.assertTrue(stats.updateFriendsAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("User_email")).thenReturn(51.0);
+            Assert.assertTrue(stats.updateFriendsAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("User_email")).thenReturn(101.0);
+            Assert.assertTrue(stats.updateFriendsAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
