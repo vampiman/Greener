@@ -656,17 +656,17 @@ public class Controller {
         }
     }
 
-//    private void loadAchievements(int page, Stage appStage){
-//        for (int i = 0; i <= 27; i++){
-//            String str = "ach" + i;
-//
-//
-//
-//            Scene scene = appStage.getScene();
-//            Pane pane = (Pane) scene.lookup("#" + str);
-//            pane.setOpacity(0.2);
-//        }
-//    }
+    //    private void loadAchievements(int page, Stage appStage){
+    //        for (int i = 0; i <= 27; i++){
+    //            String str = "ach" + i;
+    //
+    //
+    //
+    //            Scene scene = appStage.getScene();
+    //            Pane pane = (Pane) scene.lookup("#" + str);
+    //            pane.setOpacity(0.2);
+    //        }
+    //    }
 
 
     private void loadAchievements(int page, Stage appStage) {
@@ -691,8 +691,8 @@ public class Controller {
                 break;
         }
 
-//        CompactClient c = new CompactClient();
-//        c.setAchievements();
+        //        CompactClient c = new CompactClient();
+        //        c.setAchievements();
 
         Scene scene = appStage.getScene();
 

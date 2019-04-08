@@ -121,7 +121,8 @@ public class LocalProduce {
                         + toAdd + " WHERE Email = '" + email + "'");
 
         st = dbConnection.createStatement();
-        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '" + email + "'");
+        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person" 
+                + " WHERE Email = '" + email + "'");
         rs.next();
 
         double localScore = rs.getDouble("Local_produce");

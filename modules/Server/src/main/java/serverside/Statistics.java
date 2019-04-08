@@ -290,6 +290,13 @@ public class Statistics {
     }
 
 
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     * @param co2saved co2 saved
+     * @param email users email
+     * @return a boolean
+     * @throws SQLException when sql syntax is incorrect
+     */
     public boolean updateFriendsAch(double co2saved, String email) throws SQLException {
 
         getDbConnection();
@@ -313,7 +320,7 @@ public class Statistics {
         rs1.next();
 
         double currentFriends = rs.getDouble("User_email");
-        String initial = rs1.getString("Achievements");
+            String initial = rs1.getString("Achievements");
 
         if (currentFriends > 100) {
             bits.setCharAt(0, '1');
@@ -504,7 +511,7 @@ public class Statistics {
 
         getDbConnection();
 
-//        bits = new StringBuilder()
+        //        bits = new StringBuilder()
 
         String sql = "SELECT Solar_panels, Achievements FROM person WHERE Email = ?";
 
@@ -699,19 +706,19 @@ public class Statistics {
         return !bits.equals(initial);
     }
 
-    /**
-     * Main method to test achievements.
-     *
-     * @param args for achievements
-     */
-    public static void main(String[] args) {
-        Statistics s = new Statistics();
-        System.out.println(s.bits);
-        try {
-            s.updateSolarAch(200, "jaron@yahoo.nl");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    //    /**
+    //     * Main method to test achievements.
+    //     *
+    //     * @param args for achievements
+    //     */
+    //    public static void main(String[] args) {
+    //        Statistics st = new Statistics();
+    //        System.out.println(st.bits);
+    //        try {
+    //            st.updateSolarAch(200, "jaron@yahoo.nl");
+    //        } catch (SQLException e) {
+    //            e.printStackTrace();
+    //        }
+    //    }
 
 }
