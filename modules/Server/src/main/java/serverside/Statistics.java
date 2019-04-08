@@ -331,7 +331,7 @@ public class Statistics {
             bits.setCharAt(1, '1');
         } else if (currentFriends > 10) {
             bits.setCharAt(0, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -346,7 +346,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -368,7 +368,7 @@ public class Statistics {
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        int currentAch = rs.getInt("CO_2_saved");
+        double currentAch = rs.getDouble("CO_2_saved");
         final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
@@ -380,7 +380,7 @@ public class Statistics {
             bits.setCharAt(4, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(3, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -395,7 +395,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -429,7 +429,7 @@ public class Statistics {
             bits.setCharAt(10, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(9, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -444,7 +444,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -478,7 +478,7 @@ public class Statistics {
             bits.setCharAt(13, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(12, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -493,7 +493,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -531,7 +531,7 @@ public class Statistics {
             bits.setCharAt(16, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(15, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -547,7 +547,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -581,7 +581,7 @@ public class Statistics {
             bits.setCharAt(19, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(18, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -596,7 +596,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -631,7 +631,7 @@ public class Statistics {
             bits.setCharAt(22, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(21, '1');
-        }
+        } else return false;
 
 
         String string = new String(bits);
@@ -647,7 +647,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     /**
@@ -681,7 +681,7 @@ public class Statistics {
             bits.setCharAt(7, '1');
         } else if (currentAch > 10) {
             bits.setCharAt(6, '1');
-        }
+        } else return false;
 
         String string = new String(bits);
 
@@ -696,7 +696,7 @@ public class Statistics {
         ps.close();
         rs.close();
 
-        return !bits.equals(initial);
+        return true;
     }
 
     //    /**

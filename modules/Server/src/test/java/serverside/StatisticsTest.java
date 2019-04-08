@@ -166,36 +166,30 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateLevelAchTrue() {
+    public void updateScoreAch() {
         try {
-            when(mockResultSet.getDouble("Level")).thenReturn(11.0);
+            when(mockResultSet.getDouble("CO_2_saved")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateScoreAch("jaron@yahoo.nl"));
+            when(mockResultSet.getDouble("CO_2_saved")).thenReturn(11.0);
             Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
-            when(mockResultSet.getDouble("Level")).thenReturn(51.0);
+            when(mockResultSet.getDouble("CO_2_saved")).thenReturn(51.0);
             Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
-            when(mockResultSet.getDouble("Level")).thenReturn(101.0);
+            when(mockResultSet.getDouble("CO_2_saved")).thenReturn(101.0);
             Assert.assertTrue(stats.updateScoreAch("jaron@yahoo.nl"));
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    //    @Test
-    //    public void updateLevelAchFalse() {
-    //        try {
-    //            when(mockResultSet.getInt(0));
-    //            Assert.assertFalse(stats.updateLevelAch(0.0, "jaron@yahoo.nl"));
-    //        } catch (SQLException e) {
-    //            e.printStackTrace();
-    //        }
-    //    }
-
     /**
      * Test the achievements for Bike.
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateBikeAchTrue() {
+    public void updateBikeAch() {
         try {
+            when(mockResultSet.getDouble("Bike")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateBikeAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Bike")).thenReturn(11.0);
             Assert.assertTrue(stats.updateBikeAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Bike")).thenReturn(51.0);
@@ -212,8 +206,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateTransportAchTrue() {
+    public void updateTransportAch() {
         try {
+            when(mockResultSet.getDouble("Public_transport")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateTransportAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Public_transport")).thenReturn(11.0);
             Assert.assertTrue(stats.updateTransportAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Public_transport")).thenReturn(51.0);
@@ -230,8 +226,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateSolarAchTrue() {
+    public void updateSolarAch() {
         try {
+            when(mockResultSet.getDouble("Solar_panels")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateSolarAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Solar_panels")).thenReturn(11.0);
             Assert.assertTrue(stats.updateSolarAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Solar_panels")).thenReturn(51.0);
@@ -248,8 +246,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateHeatAchTrue() {
+    public void updateHeatAch() {
         try {
+            when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateHeatAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(11.0);
             Assert.assertTrue(stats.updateHeatAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(51.0);
@@ -266,8 +266,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateVeganAchTrue() {
+    public void updateVeganAch() {
         try {
+            when(mockResultSet.getDouble("Vegan_meal")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateVeganAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Vegan_meal")).thenReturn(11.0);
             Assert.assertTrue(stats.updateVeganAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Vegan_meal")).thenReturn(51.0);
@@ -284,8 +286,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateLoacalAchTrue() {
+    public void updateLoacalAch() {
         try {
+            when(mockResultSet.getDouble("Local_produce")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateLocalAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Local_produce")).thenReturn(11.0);
             Assert.assertTrue(stats.updateLocalAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("Local_produce")).thenReturn(51.0);
@@ -302,8 +306,10 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateFriendsAchTrue() {
+    public void updateFriendsAch() {
         try {
+            when(mockResultSet.getDouble("User_email")).thenReturn(10.0);
+            Assert.assertFalse(stats.updateFriendsAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("User_email")).thenReturn(11.0);
             Assert.assertTrue(stats.updateFriendsAch("jaron@yahoo.nl"));
             when(mockResultSet.getDouble("User_email")).thenReturn(51.0);
