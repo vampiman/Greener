@@ -3,6 +3,7 @@ package gui;
 import cn.hutool.json.JSONObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
@@ -42,6 +44,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -109,7 +112,16 @@ public class Controller {
     private ChoiceBox carType;
 
     @FXML
-    private Text todaysTip;
+    private GridPane todaysTip;
+
+    @FXML
+    private GridPane todaysTip2;
+
+    @FXML
+    private Text todaysTipText;
+
+    @FXML
+    private Text tip;
 
     @FXML
     private TextField friendCode;
@@ -516,15 +528,56 @@ public class Controller {
         CompactClient cc = new CompactClient(file, br);
 
         if (todaysTip != null) {
+            Image image = new Image("images/cloud.png");
+            ImageView view = new ImageView(image);
+            view.setFitHeight(170);
+            view.setFitWidth(200);
+            view.setOpacity(0.3);
+            ImageView view2 = new ImageView(image);
+            view2.setFitHeight(170);
+            view2.setFitWidth(200);
+            view2.setOpacity(0.3);
+            todaysTip.getChildren().add(view);
+            todaysTip2.getChildren().add(view2);
             Scanner scanner = new Scanner(new File("tips.txt"));
             List<String> lines = new ArrayList<String>();
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
             }
+            tip.toFront();
+            todaysTipText.toFront();
             Random rn = new Random();
             int randomNum = (rn.nextInt() & Integer.MAX_VALUE) % lines.size();
             String text = lines.get(randomNum);
-            todaysTip.setText(text);
+            todaysTipText.setText(text);
+            Rectangle rectangle = new Rectangle(1000, 0);
+            PathTransition transition = new PathTransition();
+            transition.setNode(todaysTip);
+            transition.setDuration(Duration.seconds(40));
+            transition.setPath(rectangle);
+            transition.setCycleCount(1);
+            PathTransition transition2 = new PathTransition();
+            transition2.setNode(todaysTip2);
+            transition2.setDuration(Duration.seconds(40));
+            transition2.setPath(rectangle);
+            transition2.setCycleCount(1);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(20), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(20), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(40), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(40), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(60), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(60), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(80), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(80), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(100), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(100), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(120), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(120), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(140), e -> transition.stop())
+            );
+            transition.play();
+            timeline.play();
         }
 
 

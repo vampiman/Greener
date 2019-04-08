@@ -146,7 +146,7 @@ public class Friends {
         rs.next();
 
 
-        String[][] friends = new String[rs.getInt("COUNT(Friend_email)")][2];
+        String[][] friends = new String[rs.getInt("COUNT(Friend_email)") + 1][2];
 
         rs = st.executeQuery("SELECT Friend_email FROM friends WHERE User_email = '" + email + "'");
 
@@ -165,6 +165,14 @@ public class Friends {
             counter++;
         }
 
+        rs = st.executeQuery("SELECT Name, CO_2_saved FROM person WHERE Email = '" + email + "'");
+        rs.next();
+
+        friends[friends.length - 1][0] = rs.getString("Name");
+        friends[friends.length - 1][1] = rs.getString("CO_2_saved");
+
+        quickSort(friends, 0, friends.length - 1);
+
         SessionResource sr = new SessionResource();
         sr.setFriends(friends);
 
@@ -174,4 +182,55 @@ public class Friends {
         return sr;
     }
 
+    public void quickSort(String[][] toSort,int low,int high) {
+        if(low >= high)
+            return;
+
+        int pivot = high;
+        int left = low;
+        int right = high - 1;
+
+
+        while(left <= right) {
+            while(left <= right && Double.parseDouble(toSort[left][1]) > Double.parseDouble(toSort[pivot][1])) {
+                left++;
+            }
+            while(left <= right && Double.parseDouble(toSort[right][1]) < Double.parseDouble(toSort[pivot][1])) {
+                right--;
+            }
+
+            if(left <= right) {
+                String[] aux = toSort[left];
+                toSort[left] = toSort[right];
+                toSort[right] = aux;
+                left++;
+                right--;
+            }
+        }
+
+        String[] aux = toSort[left];
+        toSort[left] = toSort[pivot];
+        toSort[pivot] = aux;
+
+        quickSort(toSort, low, left - 1);
+        quickSort(toSort, left + 1, high);
+
+
+    }
+
+    public static void main(String[] args) {
+        String[][] toSort = new String[4][2];
+
+        toSort[0][1] = "3";
+        toSort[1][1] = "1";
+        toSort[2][1] = "1";
+        toSort[3][1] = "5";
+
+        new Friends().quickSort(toSort, 0, toSort.length - 1);
+
+        for(String[] i : toSort) {
+            System.out.println(i[1]);
+        }
+
+    }
 }
