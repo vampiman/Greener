@@ -217,67 +217,67 @@ public class Controller {
     private GridPane youPagePane;
 
     @FXML
-    private Pane ach0;
+    private ImageView ach0;
     @FXML
-    private Pane ach1;
+    private ImageView ach1;
     @FXML
-    private Pane ach2;
+    private ImageView ach2;
 
     @FXML
-    private Pane ach3;
+    private ImageView ach3;
     @FXML
-    private Pane ach4;
+    private ImageView ach4;
     @FXML
-    private Pane ach5;
+    private ImageView ach5;
 
     @FXML
-    private Pane ach6;
+    private ImageView ach6;
     @FXML
-    private Pane ach7;
+    private ImageView ach7;
     @FXML
-    private Pane ach8;
+    private ImageView ach8;
 
     @FXML
-    private Pane ach9;
+    private ImageView ach9;
     @FXML
-    private Pane ach10;
+    private ImageView ach10;
     @FXML
-    private Pane ach11;
+    private ImageView ach11;
 
     @FXML
-    private Pane ach12;
+    private ImageView ach12;
     @FXML
-    private Pane ach13;
+    private ImageView ach13;
     @FXML
-    private Pane ach14;
+    private ImageView ach14;
 
     @FXML
-    private Pane ach15;
+    private ImageView ach15;
     @FXML
-    private Pane ach16;
+    private ImageView ach16;
     @FXML
-    private Pane ach17;
+    private ImageView ach17;
 
     @FXML
-    private Pane ach18;
+    private ImageView ach18;
     @FXML
-    private Pane ach19;
+    private ImageView ach19;
     @FXML
-    private Pane ach20;
+    private ImageView ach20;
 
     @FXML
-    private Pane ach21;
+    private ImageView ach21;
     @FXML
-    private Pane ach22;
+    private ImageView ach22;
     @FXML
-    private Pane ach23;
+    private ImageView ach23;
 
     @FXML
-    private Pane ach24;
+    private ImageView ach24;
     @FXML
-    private Pane ach25;
+    private ImageView ach25;
     @FXML
-    private Pane ach26;
+    private ImageView ach26;
 
     @FXML
     private GridPane addActivityPane;
@@ -371,6 +371,7 @@ public class Controller {
     private void loadFriends(ActionEvent event, String[][] friends) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color: #91cb3e;");
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -389,23 +390,7 @@ public class Controller {
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setVgrow(Priority.NEVER);
-            if (i >= 1) {
-                rowConst.setPrefHeight(143);
-                root.getRowConstraints().add(rowConst);
-                Text text = new Text();
-                text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
-                        + friends[i - 1][1]);
-                ImageView image = new ImageView("images/human.png");
-                image.setPreserveRatio(true);
-                image.setFitWidth(117);
-                image.setFitHeight(108);
-                root.add(image, 0, i);
-                root.add(text, 1, i);
-                root.setHalignment(image, HPos.RIGHT);
-                root.setValignment(image, VPos.CENTER);
-                root.setStyle("-fx-background-color: #91cb3e;");
-                root.setHgap(40); //horizontal gap in pixels
-            } else {
+            if (i < 1) {
                 rowConst.setPrefHeight(71);
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
@@ -434,7 +419,53 @@ public class Controller {
                 button.setLayoutY(220);
                 root.add(button, 0, i);
                 root.setMargin(button, new Insets(5, 0, 0, 20));
+            } else {
+                if(numRows>3) {
+                    rowConst.setPrefHeight(143);
+                    root.getRowConstraints().add(rowConst);
+                    Text text = new Text();
+                    text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
+                            + friends[i - 1][1]);
+                    ImageView image = new ImageView("images/human.png");
+                    image.setPreserveRatio(true);
+                    image.setFitWidth(117);
+                    image.setFitHeight(108);
+                    root.add(image, 0, i);
+                    root.add(text, 1, i);
+                    root.setHalignment(image, HPos.RIGHT);
+                    root.setValignment(image, VPos.CENTER);
+                    root.setStyle("-fx-background-color: #91cb3e;");
+                    root.setHgap(40); //horizontal gap in pixels
+                }
             }
+        }
+        if(friends.length==2 || friends.length==1 || friends.length == 0) {
+            for(int i=0; i<friends.length; i++) {
+                RowConstraints rowConst = new RowConstraints();
+                rowConst.setVgrow(Priority.NEVER);
+                rowConst.setPrefHeight(143);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("Name: " + friends[i][0] + "\n" + "CO2 Saved: "
+                        + friends[i][1]);
+                ImageView image = new ImageView("images/human.png");
+                image.setPreserveRatio(true);
+                image.setFitWidth(117);
+                image.setFitHeight(108);
+                root.add(image, 0, i+1);
+                root.add(text, 1, i+1);
+                root.setHalignment(image, HPos.RIGHT);
+                root.setValignment(image, VPos.CENTER);
+                root.setStyle("-fx-background-color: #91cb3e;");
+                root.setHgap(40); //horizontal gap in pixels
+            }
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPrefHeight(429-143*friends.length);
+            rowConst.setVgrow(Priority.NEVER);
+            Pane pane = new Pane();
+            pane.setStyle("-fx-background-color: #91cb3e;");
+            root.getRowConstraints().add(rowConst);
+            root.add(pane, 1, friends.length+1);
         }
         scrollPane.setContent(root);
         stage.setScene(new Scene(scrollPane, 600, 500));
@@ -861,15 +892,15 @@ public class Controller {
 
         Scene scene = appStage.getScene();
 
-        String bits = "000000000000000000000000000";
+        String bits = "010000000100000000100000000";
         for (int i = start; i <= end; i++) {
             char charc = bits.charAt(i);
             boolean cond = charc == '0';
             if (cond) {
                 String str = "ach" + i;
 
-                Pane pane = (Pane) scene.lookup("#" + str);
-                pane.setOpacity(0.2);
+                ImageView view = (ImageView) scene.lookup("#" + str);
+                view.setOpacity(0.2);
             }
         }
     }
@@ -1008,11 +1039,7 @@ public class Controller {
                 data.setName(data.getName() + ": " + data.getPieValue() + " kg");
             }
             root.setCenter(chartWithCaption);
-            Scene scene = new Scene(root);
-            stage.setWidth(600);
-            stage.setHeight(500);
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root, 600, 500));
             stage.show();
         }
     }
