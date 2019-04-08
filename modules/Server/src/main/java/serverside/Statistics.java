@@ -320,7 +320,7 @@ public class Statistics {
         rs1.next();
 
         double currentFriends = rs.getDouble("User_email");
-            String initial = rs1.getString("Achievements");
+        final String initial = rs1.getString("Achievements");
 
         if (currentFriends > 100) {
             bits.setCharAt(0, '1');
@@ -370,7 +370,7 @@ public class Statistics {
         rs.next();
 
         int currentAch = rs.getInt("CO_2_saved");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(3, '1');
@@ -420,7 +420,7 @@ public class Statistics {
         rs.next();
 
         double currentAch = rs.getDouble("Bike");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(9, '1');
@@ -470,7 +470,7 @@ public class Statistics {
         rs.next();
 
         double currentAch = rs.getDouble("Public_transport");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(12, '1');
@@ -524,7 +524,7 @@ public class Statistics {
         double currentAch = rs.getDouble("Solar_panels");
 
 
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(15, '1');
@@ -575,7 +575,7 @@ public class Statistics {
         rs.next();
 
         double currentAch = rs.getDouble("Lowering_home_temperature");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(18, '1');
@@ -625,7 +625,7 @@ public class Statistics {
         rs.next();
 
         double currentAch = rs.getDouble("Vegan_meal");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
 
         if (currentAch > 100) {
@@ -677,7 +677,7 @@ public class Statistics {
         rs.next();
 
         double currentAch = rs.getDouble("Local_produce");
-        String initial = rs.getString("Achievements");
+        final String initial = rs.getString("Achievements");
 
         if (currentAch > 100) {
             bits.setCharAt(6, '1');

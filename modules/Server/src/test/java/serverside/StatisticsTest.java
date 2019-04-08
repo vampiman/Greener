@@ -268,4 +268,18 @@ public class StatisticsTest {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Test the achievements for Local produce.
+     * Should return True when achievements is changed, false otherwise
+     */
+    @Test
+    public void updateFriendsAchTrue() {
+        try {
+            when(mockResultSet.getInt("User_email")).thenReturn(1);
+            Assert.assertTrue(stats.updateFriendsAch(150.0, "jaron@yahoo.nl"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
