@@ -1,7 +1,6 @@
 package restclient;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -473,4 +472,25 @@ public class CompactClientTest {
 
         Assert.assertTrue(ccClient.getLevel() == 5);
     }
+
+    //    @Test
+    //    public void setAchievementsTest()throws Exception {
+    //
+    //        ccClient = new CompactClient();
+    //        ccClient.client = client;
+    //        Resource re = new Resource();
+    //
+    //        re.setAchievements("000000000000000000000000000");
+    //        re.setTotal_Meals(100.0);
+    //
+    //
+    //        whenNew(Resource.class).withAnyArguments().thenReturn(re);
+    //        Mockito.when(client.target(anyString())).thenReturn(mockTarget);
+    //        Mockito.when(mockTarget.request(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
+    //        Mockito.when(mockBuilder.header(any(), any())).thenReturn(mockBuilder);
+    //        Mockito.when(mockBuilder.post(any())).thenReturn(mockResponse);
+    //        Mockito.when(mockResponse.readEntity(JSONObject.class)).thenReturn(toReturn);
+    //
+    //        Assert.assertEquals('1',re.setAchievements("000000000000000000000000000").charAt(18));
+    //    }
 }

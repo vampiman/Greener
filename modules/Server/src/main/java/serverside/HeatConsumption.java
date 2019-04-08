@@ -114,10 +114,18 @@ public class HeatConsumption {
                 + toAdd + " WHERE Email = '" + email + "'");
 
 
+        st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Lowering_home_temperature FROM person "
+                + "WHERE Email = '" + email + "'");
+        rs.next();
+
+        double homeScore = rs.getDouble("Lowering_home_temperature");
+
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateHeatAch(homeScore, email);
 
         st.close();
         dbConnection.close();

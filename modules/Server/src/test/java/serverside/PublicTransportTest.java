@@ -18,11 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(PublicTransport.class)
@@ -43,6 +39,9 @@ public class PublicTransportTest {
     @Mock
     private ResultSet rs;
 
+    @Mock
+    private PreparedStatement mockPrepared;
+
     @InjectMocks
     private PublicTransport publicTransport;
 
@@ -56,6 +55,7 @@ public class PublicTransportTest {
         mockConnection = mock(Connection.class);
         mockStatement = mock(Statement.class);
         rs = mock(ResultSet.class);
+        mockPrepared = Mockito.mock(PreparedStatement.class);
         ccMock = mock(CarbonCalculator.class);
         mockStatistics = mock(Statistics.class);
 
@@ -89,7 +89,9 @@ public class PublicTransportTest {
         Resource resource = new Resource();
         resource.setTotal_Distance(1.0);
         publicTransport.postData(resource, "token", "email");
-
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         Assert.assertEquals(1, publicTransport.postData(resource, "token", "email").getTotal_Distance().intValue());
     }
 

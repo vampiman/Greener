@@ -120,11 +120,17 @@ public class LocalProduce {
                 "UPDATE person SET Local_produce = Local_produce + "
                         + toAdd + " WHERE Email = '" + email + "'");
 
+        st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Local_produce FROM person WHERE Email = '" + email + "'");
+        rs.next();
+
+        double localScore = rs.getDouble("Local_produce");
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateLocalAch(localScore, email);
 
         st.close();
         dbConnection.close();

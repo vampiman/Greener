@@ -16,11 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(Bike.class)
@@ -37,6 +33,8 @@ public class BikeTest {
     private Statement mockStatement;
     @Mock
     private ResultSet rs;
+    @Mock
+    private PreparedStatement mockPrepared;
     @InjectMocks
     private Bike bike;
 
@@ -50,6 +48,7 @@ public class BikeTest {
         mockStatement = Mockito.mock(Statement.class);
         rs = Mockito.mock(ResultSet.class);
         mockStatistics = Mockito.mock(Statistics.class);
+        mockPrepared = Mockito.mock(PreparedStatement.class);
         ccMock = Mockito.mock(CarbonCalculator.class);
     }
 
@@ -67,6 +66,9 @@ public class BikeTest {
                 "sammy",
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        Mockito.when(mockStatement.executeQuery(anyString())).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.bike(anyString(), anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);

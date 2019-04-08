@@ -71,11 +71,18 @@ public class SolarPanels {
         st.executeUpdate("UPDATE person SET Solar_panels = Solar_panels + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
+        st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Solar_panels FROM person"
+                + " WHERE Email = '" + email + "'");
+        rs.next();
+
+        double solarScore = rs.getDouble("Solar_panels");
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateSolarAch(solarScore, email);
 
         st.close();
         dbConnection.close();

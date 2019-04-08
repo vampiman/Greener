@@ -18,11 +18,7 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 @RunWith(PowerMockRunner.class)
 @PrepareForTest(HeatConsumption.class)
@@ -45,6 +41,9 @@ public class HeatConsumptionTest {
     @Mock
     private ResultSet rs;
 
+    @Mock
+    private PreparedStatement mockPrepared;
+
     @InjectMocks
     private HeatConsumption heatConsumption;
 
@@ -59,6 +58,7 @@ public class HeatConsumptionTest {
         mockStatement = mock(Statement.class);
         rs = mock(ResultSet.class);
         ccMock = mock(CarbonCalculator.class);
+        mockPrepared = Mockito.mock(PreparedStatement.class);
         mockStatistics = mock(Statistics.class);
 
         mockStatic(DriverManager.class);
@@ -66,6 +66,9 @@ public class HeatConsumptionTest {
                 "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                 "sammy", "temporary")).thenReturn(mockConnection);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.homeHeatConsumptionSaved(anyDouble(), anyDouble(), anyString())).thenReturn(1);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);

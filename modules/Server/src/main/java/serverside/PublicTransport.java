@@ -112,11 +112,18 @@ public class PublicTransport {
         st.executeUpdate("UPDATE person SET Public_transport = Public_transport + "
                 + toAdd + " WHERE Email = '" + email + "'");
 
+        st = dbConnection.createStatement();
+        ResultSet rs = st.executeQuery("SELECT Public_transport FROM person"
+                + " WHERE Email = '" + email + "'");
+        rs.next();
+
+        double transportScore = rs.getDouble("Public_transport");
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateTransportAch(transportScore, email);
 
 
         dbConnection.close();

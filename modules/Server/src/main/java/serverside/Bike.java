@@ -73,13 +73,24 @@ public class Bike {
         passToken(token, re);
 
         Statement st = dbConnection.createStatement();
-        st.executeUpdate("UPDATE person SET Bike = Bike + "
-                + toAdd + " WHERE Email = '" + email + "'");
+
+        //        st.executeUpdate("UPDATE person SET Bike = Bike + "
+        //                + toAdd + " WHERE Email = '" + email + "'");
+        //        if (getAll(token, email)>10){
+        //            st.executeUpdate("UPDATE person SET Achievements = ");
+        //        }
+
+        ResultSet rs = st.executeQuery("SELECT Bike FROM person WHERE Email = '" + email + "'");
+        rs.next();
+
+        double bikeScore = rs.getDouble("Bike");
+
 
         Statistics statistics = new Statistics();
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateBikeAch(bikeScore, email);
 
         statistics.increaseScore(toAdd, email);
 
