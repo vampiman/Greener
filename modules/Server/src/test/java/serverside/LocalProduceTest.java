@@ -83,7 +83,8 @@ public class LocalProduceTest {
         lp.setTotal_Produce(1.0);
 
 
-        Assert.assertEquals(1, localProduce.postData(lp, "token", "email").getTotal_Produce().intValue());
+        Assert.assertEquals(1, localProduce.postData(lp,
+                "token", "email").getTotal_Produce().intValue());
     }
 
     /**

@@ -324,6 +324,39 @@ public class Controller {
     @FXML
     private Text levelField;
 
+    @FXML
+    private GridPane addActivityPane;
+
+    @FXML
+    private Button addVeganMealButton;
+
+    @FXML
+    private Button addLocalProductButton;
+
+    @FXML
+    private Button addTemperatureButton;
+
+    @FXML
+    private Button addSolarPanelButton;
+
+    @FXML
+    private Button addPublicTransportButton;
+
+    @FXML
+    private Button addBikeButton;
+
+    @FXML
+    private TextArea veganLocalLabel;
+
+    @FXML
+    private TextArea solarHomeLabel;
+
+    @FXML
+    private TextArea publicBikeLabel;
+
+    @FXML
+    private Text levelField;
+
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {

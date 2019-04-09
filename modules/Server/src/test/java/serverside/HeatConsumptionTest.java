@@ -92,8 +92,10 @@ public class HeatConsumptionTest {
         resource.setCurrentHeatConsumption(1);
         resource.setAverageHeatConsumption(1);
 
-        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getCurrentHeatConsumption());
-        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getAverageHeatConsumption());
+        Assert.assertEquals(1, heatConsumption.postData(resource,
+                "token", "email").getCurrentHeatConsumption());
+        Assert.assertEquals(1, heatConsumption.postData(resource,
+                "token", "email").getAverageHeatConsumption());
     }
 
     /**
