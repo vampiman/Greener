@@ -1,13 +1,29 @@
 {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #7ac640;
     -fx-font-family: Futura;
 }
 
 .button {
-    -fx-background-color: #C1DFF0;
-    -fx-opacity: 40%;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    -fx-opacity: 45%;
 }
 
 .button:hover {
     -fx-opacity: 80%;
+}
+
+.lightPane {
+    -fx-background-color: #f3f3f3;
+}
+
+.label {
+    -fx-background-color: #f3f3f3;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+    -fx-background-radius: 10px 10px 0px 0px;
+}
+
+#bottomPane {
+    -fx-background-radius: 0px 0px 10px 10px;
 }

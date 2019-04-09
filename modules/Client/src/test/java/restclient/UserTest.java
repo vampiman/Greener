@@ -1,5 +1,10 @@
 package restclient;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+
+import static restclient.User.KEY;
+
 import cn.hutool.json.JSONObject;
 import io.jsonwebtoken.Jwts;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -10,21 +15,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import javax.ws.rs.client.*;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.when;
-import static restclient.User.KEY;
+
+
+
+
+
+
 
 public class UserTest {
-
-    private JSONObject jo;
 
     @Mock
     WebTarget target;
@@ -41,31 +47,39 @@ public class UserTest {
     @InjectMocks
     User mockUser;
 
+    private JSONObject jo;
+
+    /**
+     * Method for preparing the mocks.
+     */
     @Before
     public void setup() {
         jo = new JSONObject();
         jo.append("token", "123");
 
         mockUser = new User("mymail@gmail.com", "pwd");
-        client = mock(Client.class);
+        client = Mockito.mock(Client.class);
         mockUser.setClient(client);
 
-        target = mock(WebTarget.class);
-        builder = mock(Invocation.Builder.class);
-        response = mock(Response.class);
+        target = Mockito.mock(WebTarget.class);
+        builder = Mockito.mock(Invocation.Builder.class);
+        response = Mockito.mock(Response.class);
 
-        when(client.target(any(String.class))).thenReturn(target);
-        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
+        Mockito.when(client.target(any(String.class))).thenReturn(target);
+        Mockito.when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        Mockito.when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
         //REGISTER
-        when(builder.post(Entity.json(any()))).thenReturn(response);
+        Mockito.when(builder.post(Entity.json(any()))).thenReturn(response);
         //LOGIN
-        when(builder.get(Response.class)).thenReturn(response);
+        Mockito.when(builder.get(Response.class)).thenReturn(response);
 
-        when(response.readEntity(JSONObject.class)).thenReturn(jo);
+        Mockito.when(response.readEntity(JSONObject.class)).thenReturn(jo);
 
     }
 
+    /**
+     * Method that tests the "token" field getter.
+     */
     @Test
     public void getToken() {
         User user = new User("someEmail", "somePassword");
@@ -73,6 +87,9 @@ public class UserTest {
         Assert.assertEquals("abc", user.getToken());
     }
 
+    /**
+     * Method that tests the "token" field setter.
+     */
     @Test
     public void setToken() {
         User user = new User("someEmail", "somePassword");
@@ -80,6 +97,9 @@ public class UserTest {
         Assert.assertEquals("def", user.getToken());
     }
 
+    /**
+     * Method that tests the "credentials" field getter.
+     */
     @Test
     public void getCredentials() {
         User user = new User("someEmail", "somePassword");
@@ -92,6 +112,9 @@ public class UserTest {
         Assert.assertEquals(expected, user.getCredentials());
     }
 
+    /**
+     * Method that tests the "credentials" field setter.
+     */
     @Test
     public void setCredentials() {
         User user = new User("someEmail", "somePassword");
@@ -99,6 +122,9 @@ public class UserTest {
         Assert.assertEquals("test", user.getCredentials());
     }
 
+    /**
+     * Method that tests the "client" field getter.
+     */
     @Test
     public void getClient() {
         User user = new User("someEmail", "somePassword");
@@ -107,13 +133,32 @@ public class UserTest {
         Assert.assertSame(client, user.getClient());
     }
 
+    /**
+     * Method that tests the login request with null token.
+     */
     @Test
     public void login() {
         Assert.assertTrue(mockUser.login(null));
+
+        jo.append("tok", "abs");
+        mockUser.setToken(null);
         Mockito.verify(client).target(any(String.class));
         Mockito.verify(response).readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that tests the login request with a token.
+     */
+    @Test
+    public void loginNotNull() {
+        Assert.assertTrue(mockUser.login("Something"));
+        Mockito.verify(client).target(any(String.class));
+        Mockito.verify(response).readEntity(JSONObject.class);
+    }
+
+    /**
+     * Method that tests the register request.
+     */
     @Test
     public void registerCorrect() {
         mockUser.register("Nat", "mymail@gmail.com", "pwd");
@@ -121,11 +166,17 @@ public class UserTest {
         Mockito.verify(response).readEntity(JSONObject.class);
     }
 
+    /**
+     * Method that tests the wrong email register request.
+     */
     @Test(expected = IllegalArgumentException.class)
     public void registerWrongMail() {
         mockUser.register("Nat", "hello", "pwd");
     }
 
+    /**
+     * Method that tests the formAuth with a null token.
+     */
     @Test
     public void formAuthHeaderTokenNull() {
         User user = new User("mail", "123");
@@ -133,6 +184,9 @@ public class UserTest {
         Assert.assertEquals(auth, user.getCredentials());
     }
 
+    /**
+     * Method that tests the formAuth with a non-null token.
+     */
     @Test
     public void formAuthHeaderTokenNotNull() {
         User user = new User("mail", "123");
@@ -140,6 +194,9 @@ public class UserTest {
         Assert.assertEquals(user.formAuthHeader(), user.getToken());
     }
 
+    /**
+     * Method that tests the adjustToken with a token.
+     */
     @Test
     public void adjustTokenTokenPresent() {
         User user = new User("", "");
@@ -149,12 +206,31 @@ public class UserTest {
         Assert.assertEquals("abc", user.getToken());
     }
 
+    /**
+     * Method that tests the adjustToken with a missing token.
+     */
     @Test
     public void adjustTokenTokenNotPresent() {
+        User user = new User("", "");
+        JSONObject jo = new JSONObject();
+        jo.append("tok", "abs");
+        user.setToken("1");
+        user.adjustToken(jo);
+        Assert.assertEquals("1", user.getToken());
+    }
+
+    /**
+     * Method that tests the adjustToken with a missing token
+     * but something existing.
+     */
+    @Test
+    public void adjustTokenTokenNotPresentSecond() {
         User user = new User("", "");
         JSONObject jo = new JSONObject();
         jo.append("tok", "abs");
         user.adjustToken(jo);
         Assert.assertNull(user.getToken());
     }
+
+
 }

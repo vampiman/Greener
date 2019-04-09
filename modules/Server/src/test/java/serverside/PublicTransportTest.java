@@ -20,6 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,6 +34,9 @@ public class PublicTransportTest {
 
     @Mock
     private Statistics mockStatistics;
+
+    @Mock
+    private PreparedStatement mockPrepared;
 
     @Mock
     private Connection mockConnection;
@@ -58,6 +62,7 @@ public class PublicTransportTest {
         rs = mock(ResultSet.class);
         ccMock = mock(CarbonCalculator.class);
         mockStatistics = mock(Statistics.class);
+        mockPrepared = mock(PreparedStatement.class);
 
         mockStatic(DriverManager.class);
         when(DriverManager.getConnection(
@@ -66,7 +71,8 @@ public class PublicTransportTest {
         when(mockConnection.createStatement()).thenReturn(mockStatement);
 
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
-        Mockito.when(ccMock.publicTransportCalculator(anyString(), anyString(), anyDouble())).thenReturn(1.0);
+        Mockito.when(ccMock.publicTransportCalculator(anyString(),
+                anyString(), anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
@@ -89,8 +95,13 @@ public class PublicTransportTest {
         Resource resource = new Resource();
         resource.setTotal_Distance(1.0);
         publicTransport.postData(resource, "token", "email");
-
-        Assert.assertEquals(1, publicTransport.postData(resource, "token", "email").getTotal_Distance().intValue());
+        Mockito.when(mockConnection.prepareStatement(anyString())).thenReturn(mockPrepared);
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
+        Assert.assertEquals(1, publicTransport
+                .postData(resource, "token", "email")
+                .getTotal_Distance().intValue());
     }
 
     /**
@@ -108,19 +119,27 @@ public class PublicTransportTest {
         Assert.assertEquals(1, resource.getSavedPublicTransport().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        PublicTransport publicTrans = new PublicTransport();
         Resource res = new Resource();
-        b.passToken("token", res);
+        publicTrans.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        PublicTransport publicTrans = new PublicTransport();
         Resource res = new Resource();
-        b.passToken(null, res);
+        publicTrans.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

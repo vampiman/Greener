@@ -16,7 +16,12 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 @RunWith(PowerMockRunner.class)
@@ -59,13 +64,18 @@ public class VeganMealTest {
         Mockito.when(DriverManager
                 .getConnection(
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
-                "sammy","temporary")).thenReturn(mockConnection);
+                        "sammy","temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.prepareStatement(anyString())).thenReturn(mockPrepared);
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.veganmeal_Calculator(anyDouble(), anyString())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
+        Mockito.when(mockStatistics.updateVeganAch(anyString())).thenReturn(true);
+
         Resource re = new Resource();
         re.setMealType("Meat");
         re.setMealType2("Dairy");
@@ -100,19 +110,27 @@ public class VeganMealTest {
         Assert.assertEquals(resource.getTotal_Meals().intValue(), 1);
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        VeganMeal vegan = new VeganMeal();
         Resource res = new Resource();
-        b.passToken("token", res);
+        vegan.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        VeganMeal vegan = new VeganMeal();
         Resource res = new Resource();
-        b.passToken(null, res);
+        vegan.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

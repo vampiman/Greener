@@ -67,6 +67,9 @@ public class BikeTest {
                 "sammy",
                 "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        Mockito.when(mockStatement.executeQuery(anyString())).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.bike(anyString(), anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
@@ -109,19 +112,28 @@ public class BikeTest {
         //Mockito.verify(mockConnection.createStatement(), Mockito.times(1));
     }
 
+
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        Bike bike = new Bike();
         Resource res = new Resource();
-        b.passToken("token", res);
+        bike.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        Bike bike = new Bike();
         Resource res = new Resource();
-        b.passToken(null, res);
+        bike.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 
