@@ -139,6 +139,9 @@ public class UserTest {
     @Test
     public void login() {
         Assert.assertTrue(mockUser.login(null));
+
+        jo.append("tok", "abs");
+        mockUser.setToken(null);
         Mockito.verify(client).target(any(String.class));
         Mockito.verify(response).readEntity(JSONObject.class);
     }
@@ -208,6 +211,20 @@ public class UserTest {
      */
     @Test
     public void adjustTokenTokenNotPresent() {
+        User user = new User("", "");
+        JSONObject jo = new JSONObject();
+        jo.append("tok", "abs");
+        user.setToken("1");
+        user.adjustToken(jo);
+        Assert.assertEquals("1", user.getToken());
+    }
+
+    /**
+     * Method that tests the adjustToken with a missing token
+     * but something existing.
+     */
+    @Test
+    public void adjustTokenTokenNotPresentSecond() {
         User user = new User("", "");
         JSONObject jo = new JSONObject();
         jo.append("tok", "abs");

@@ -79,7 +79,7 @@ public class Friends {
         ps.setString(1, email);
 
         int friendId = rs.getInt("ID");
-        String friend = rs.getString("Email");
+        final String friend = rs.getString("Email");
 
         rs = ps.executeQuery();
         rs.next();
@@ -192,8 +192,9 @@ public class Friends {
      * @param high last index
      */
     public void quickSort(String[][] toSort, int low, int high) {
-        if (low >= high)
+        if (low >= high) {
             return;
+        }
 
         int pivot = high;
         int left = low;
@@ -201,10 +202,12 @@ public class Friends {
 
 
         while (left <= right) {
-            while (left <= right && Double.parseDouble(toSort[left][1]) > Double.parseDouble(toSort[pivot][1])) {
+            while (left <= right && Double.parseDouble(
+                    toSort[left][1]) > Double.parseDouble(toSort[pivot][1])) {
                 left++;
             }
-            while (left <= right && Double.parseDouble(toSort[right][1]) < Double.parseDouble(toSort[pivot][1])) {
+            while (left <= right && Double.parseDouble(
+                    toSort[right][1]) < Double.parseDouble(toSort[pivot][1])) {
                 right--;
             }
 
@@ -227,19 +230,19 @@ public class Friends {
 
     }
 
-//    public static void main(String[] args) {
-//        String[][] toSort = new String[4][2];
-//
-//        toSort[0][1] = "3";
-//        toSort[1][1] = "1";
-//        toSort[2][1] = "1";
-//        toSort[3][1] = "5";
-//
-//        new Friends().quickSort(toSort, 0, toSort.length - 1);
-//
-//        for (String[] i : toSort) {
-//            System.out.println(i[1]);
-//        }
-//
-//    }
+    //    public static void main(String[] args) {
+    //        String[][] toSort = new String[4][2];
+    //
+    //        toSort[0][1] = "3";
+    //        toSort[1][1] = "1";
+    //        toSort[2][1] = "1";
+    //        toSort[3][1] = "5";
+    //
+    //        new Friends().quickSort(toSort, 0, toSort.length - 1);
+    //
+    //        for (String[] i : toSort) {
+    //            System.out.println(i[1]);
+    //        }
+    //
+    //    }
 }

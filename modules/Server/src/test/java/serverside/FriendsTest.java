@@ -1,7 +1,6 @@
 package serverside;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -172,15 +171,15 @@ public class FriendsTest {
     public void sortReversedWithDuplicates() {
         String[][] toSort = new String[4][2];
 
-        toSort[0][1] = "3";
+        toSort[0][1] = "1";
         toSort[1][1] = "1";
-        toSort[2][1] = "1";
-        toSort[3][1] = "5";
+        toSort[2][1] = "5";
+        toSort[3][1] = "4";
 
         new Friends().quickSort(toSort, 0, toSort.length - 1);
 
         Assert.assertEquals("5", toSort[0][1]);
-        Assert.assertEquals("3", toSort[1][1]);
+        Assert.assertEquals("4", toSort[1][1]);
         Assert.assertEquals("1", toSort[2][1]);
         Assert.assertEquals("1", toSort[3][1]);
     }

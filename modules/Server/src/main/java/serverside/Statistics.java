@@ -298,7 +298,7 @@ public class Statistics {
 
         PreparedStatement ps = null;
 
-        String sql = "SELECT COUNT(User_email) FROM friends WHERE User_email = '" + email + "'";
+        String sql = "SELECT COUNT(User_email) FROM friends WHERE User_email = ?";
 
         ps = dbConnection.prepareStatement(sql);
         ps.setString(1, email);
@@ -319,14 +319,14 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentFriends > 100) {
+        if (currentFriends > 25) {
             bits.setCharAt(0, '1');
             bits.setCharAt(1, '1');
             bits.setCharAt(2, '1');
-        } else if (currentFriends > 50) {
+        } else if (currentFriends > 10) {
             bits.setCharAt(0, '1');
             bits.setCharAt(1, '1');
-        } else if (currentFriends > 10) {
+        } else if (currentFriends > 3) {
             bits.setCharAt(0, '1');
         } else {
             return false;
@@ -372,14 +372,14 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 1500) {
             bits.setCharAt(3, '1');
             bits.setCharAt(4, '1');
             bits.setCharAt(5, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 500) {
             bits.setCharAt(3, '1');
             bits.setCharAt(4, '1');
-        } else if (currentAch > 10) {
+        } else if (currentAch > 100) {
             bits.setCharAt(3, '1');
         } else {
             return false;
@@ -425,7 +425,7 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 150) {
             bits.setCharAt(9, '1');
             bits.setCharAt(10, '1');
             bits.setCharAt(11, '1');
@@ -478,11 +478,11 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 150) {
             bits.setCharAt(12, '1');
             bits.setCharAt(13, '1');
             bits.setCharAt(14, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 75) {
             bits.setCharAt(12, '1');
             bits.setCharAt(13, '1');
         } else if (currentAch > 10) {
@@ -535,14 +535,14 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 1000) {
             bits.setCharAt(15, '1');
             bits.setCharAt(16, '1');
             bits.setCharAt(17, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 250) {
             bits.setCharAt(15, '1');
             bits.setCharAt(16, '1');
-        } else if (currentAch > 10) {
+        } else if (currentAch > 100) {
             bits.setCharAt(15, '1');
         } else {
             return false;
@@ -589,14 +589,14 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 300) {
             bits.setCharAt(18, '1');
             bits.setCharAt(19, '1');
             bits.setCharAt(20, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 150) {
             bits.setCharAt(18, '1');
             bits.setCharAt(19, '1');
-        } else if (currentAch > 10) {
+        } else if (currentAch > 50) {
             bits.setCharAt(18, '1');
         } else {
             return false;
@@ -643,14 +643,14 @@ public class Statistics {
         bits = new StringBuilder(initial);
 
 
-        if (currentAch > 100) {
+        if (currentAch > 500) {
             bits.setCharAt(21, '1');
             bits.setCharAt(22, '1');
             bits.setCharAt(23, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 250) {
             bits.setCharAt(21, '1');
             bits.setCharAt(22, '1');
-        } else if (currentAch > 10) {
+        } else if (currentAch > 75) {
             bits.setCharAt(21, '1');
         } else {
             return false;
@@ -697,11 +697,11 @@ public class Statistics {
 
         bits = new StringBuilder(initial);
 
-        if (currentAch > 100) {
+        if (currentAch > 250) {
             bits.setCharAt(6, '1');
             bits.setCharAt(7, '1');
             bits.setCharAt(8, '1');
-        } else if (currentAch > 50) {
+        } else if (currentAch > 100) {
             bits.setCharAt(6, '1');
             bits.setCharAt(7, '1');
         } else if (currentAch > 10) {

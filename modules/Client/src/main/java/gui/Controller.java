@@ -59,12 +59,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
+
+    private static DecimalFormat decim = new DecimalFormat(".##");
 
     @FXML
     private TextField nameField;
@@ -324,39 +327,6 @@ public class Controller {
     @FXML
     private Text levelField;
 
-    @FXML
-    private GridPane addActivityPane;
-
-    @FXML
-    private Button addVeganMealButton;
-
-    @FXML
-    private Button addLocalProductButton;
-
-    @FXML
-    private Button addTemperatureButton;
-
-    @FXML
-    private Button addSolarPanelButton;
-
-    @FXML
-    private Button addPublicTransportButton;
-
-    @FXML
-    private Button addBikeButton;
-
-    @FXML
-    private TextArea veganLocalLabel;
-
-    @FXML
-    private TextArea solarHomeLabel;
-
-    @FXML
-    private TextArea publicBikeLabel;
-
-    @FXML
-    private Text levelField;
-
 
     @FXML
     private void handleAddBikeButtonAction(ActionEvent event) throws IOException {
@@ -470,7 +440,7 @@ public class Controller {
                     root.getRowConstraints().add(rowConst);
                     Text text = new Text();
                     text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
-                            + friends[i - 1][1]);
+                            + decim.format(Double.parseDouble(friends[i - 1][1])));
                     ImageView image = new ImageView("images/human.png");
                     image.setPreserveRatio(true);
                     image.setFitWidth(117);
@@ -624,7 +594,8 @@ public class Controller {
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
             emailField.setText("Email: " + details.get("email").toString());
-            co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
+            co2Field.setText("C02 saved (kg): "
+                    + decim.format(Double.parseDouble(details.get("co2Saved").toString())));
         }
 
         if (addActivityPane != null) {
@@ -977,7 +948,7 @@ public class Controller {
                 break;
             case 3:
                 start = 18;
-                end = 26;
+                end = 23;
                 break;
             default:
                 start = 0;
@@ -1058,7 +1029,7 @@ public class Controller {
         if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             BorderPane root = new BorderPane();
             root.setStyle("-fx-background-color: #91cb3e;");
             root.setPadding(new Insets(20, 20, 20, 20));
@@ -1089,22 +1060,28 @@ public class Controller {
                     FXCollections.observableArrayList(
                             new PieChart.Data("Vegan Meal",
                                     Double.parseDouble(
-                                            info.get("total_Meals").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("total_Meals").toString())))),
                             new PieChart.Data("Public Transport",
                                     Double.parseDouble(
-                                            info.get("savedPublicTransport").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedPublicTransport").toString())))),
                             new PieChart.Data("Home Temperature",
                                     Double.parseDouble(
-                                            info.get("savedHeatConsumption").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedHeatConsumption").toString())))),
                             new PieChart.Data("Bike",
                                     Double.parseDouble(
-                                            info.get("bikeSaved").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("bikeSaved").toString())))),
                             new PieChart.Data("Local Product",
                                     Double.parseDouble(
-                                            info.get("localSaved").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("localSaved").toString())))),
                             new PieChart.Data("Solar Panel",
                                     Double.parseDouble(
-                                            info.get("savedSolar").toString()))
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedSolar").toString()))))
                     );
 
             final PieChart chart = new PieChart(pieChartData);
@@ -1166,6 +1143,8 @@ public class Controller {
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         CompactClient cc = new CompactClient(file, br);
+
+        cc.getAchievements();
 
         File toRead = new File("test.txt");
         BufferedReader got = new BufferedReader(new FileReader(toRead));
@@ -1427,6 +1406,13 @@ public class Controller {
     @FXML
     private void handleAddTemperatureButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
+        if (energyType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter your energy type");
+            return;
+        }
+
         if (beforeTemperature.getText().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
@@ -1445,7 +1431,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                            "Please enter a double number to indicate your home's temperature");
+                            "Please enter an integer number to indicate your home's temperature");
             return;
         }
 
@@ -1453,11 +1439,6 @@ public class Controller {
             Controller.AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
-            return;
-        } else if (energyType.getValue() == null) {
-            AlertHelper
-                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter your energy type");
             return;
         } else if (Double.parseDouble(beforeTemperature.getText()) <= 0
                 || Double.parseDouble(afterTemperature.getText()) <= 0) {

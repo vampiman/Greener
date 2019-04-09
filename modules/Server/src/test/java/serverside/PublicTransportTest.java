@@ -99,7 +99,9 @@ public class PublicTransportTest {
         Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
         Mockito.when(rs.next()).thenReturn(true);
         Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
-        Assert.assertEquals(1, publicTransport.postData(resource, "token", "email").getTotal_Distance().intValue());
+        Assert.assertEquals(1, publicTransport
+                .postData(resource, "token", "email")
+                .getTotal_Distance().intValue());
     }
 
     /**
