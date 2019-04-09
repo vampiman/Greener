@@ -69,6 +69,9 @@ public class SolarPanelsTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        Mockito.when(mockStatement.executeQuery(anyString())).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.solarPanel(anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);

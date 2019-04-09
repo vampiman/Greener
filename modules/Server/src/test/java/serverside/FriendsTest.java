@@ -66,7 +66,7 @@ public class FriendsTest {
             when(mockStatement.executeQuery(any(String.class))).thenReturn(mockResultSet);
             when(mockPrepStatement.executeUpdate()).thenReturn(1);
             when(mockPrepStatement.executeQuery()).thenReturn(mockResultSet);
-            when(mockResultSet.getInt(any(String.class))).thenReturn(1);
+            when(mockResultSet.getInt(any(String.class))).thenReturn(0);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,7 +141,9 @@ public class FriendsTest {
     public void getAllFriends() throws Exception {
         try {
             SessionResource re = friends.getAllFriends("nat@gmail.com");
-            Assert.assertEquals(null ,re.getFriends()[0][0]);
+            when(mockResultSet.getString("CO_2_saved")).thenReturn("1");
+            when(mockResultSet.getInt(any(String.class))).thenReturn(1);
+            Assert.assertEquals(1 ,re.getFriends().length);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -153,11 +155,48 @@ public class FriendsTest {
     @Test
     public void getAllFriendsRsNext() {
         try {
+
             when(mockResultSet.next()).thenReturn(true).thenReturn(true).thenReturn(false);
             SessionResource re = friends.getAllFriends("nat@gmail.com");
             Assert.assertEquals(1 ,re.getFriends().length);
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Test for the quicksort method reversed duplicate inputs.
+     */
+    @Test
+    public void sortReversedWithDuplicates() {
+        String[][] toSort = new String[4][2];
+
+        toSort[0][1] = "1";
+        toSort[1][1] = "1";
+        toSort[2][1] = "5";
+        toSort[3][1] = "4";
+
+        new Friends().quickSort(toSort, 0, toSort.length - 1);
+
+        Assert.assertEquals("5", toSort[0][1]);
+        Assert.assertEquals("4", toSort[1][1]);
+        Assert.assertEquals("1", toSort[2][1]);
+        Assert.assertEquals("1", toSort[3][1]);
+    }
+
+    /**
+     * Test for the quicksort method with one input.
+     */
+    @Test
+    public void sortOne() {
+        String[][] toSort = new String[1][2];
+
+        toSort[0][1] = "3";
+
+
+        new Friends().quickSort(toSort, 0, toSort.length - 1);
+
+        Assert.assertEquals("3", toSort[0][1]);
+
     }
 }

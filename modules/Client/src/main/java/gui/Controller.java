@@ -3,6 +3,7 @@ package gui;
 import cn.hutool.json.JSONObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
+import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,6 +31,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
@@ -42,6 +44,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -56,12 +59,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
 public class Controller {
+
+    private static DecimalFormat decim = new DecimalFormat(".##");
 
     @FXML
     private TextField nameField;
@@ -109,7 +115,16 @@ public class Controller {
     private ChoiceBox carType;
 
     @FXML
-    private Text todaysTip;
+    private GridPane todaysTip;
+
+    @FXML
+    private GridPane todaysTip2;
+
+    @FXML
+    private Text todaysTipText;
+
+    @FXML
+    private Text tip;
 
     @FXML
     private TextField friendCode;
@@ -217,67 +232,67 @@ public class Controller {
     private GridPane youPagePane;
 
     @FXML
-    private Pane ach0;
+    private ImageView ach0;
     @FXML
-    private Pane ach1;
+    private ImageView ach1;
     @FXML
-    private Pane ach2;
+    private ImageView ach2;
 
     @FXML
-    private Pane ach3;
+    private ImageView ach3;
     @FXML
-    private Pane ach4;
+    private ImageView ach4;
     @FXML
-    private Pane ach5;
+    private ImageView ach5;
 
     @FXML
-    private Pane ach6;
+    private ImageView ach6;
     @FXML
-    private Pane ach7;
+    private ImageView ach7;
     @FXML
-    private Pane ach8;
+    private ImageView ach8;
 
     @FXML
-    private Pane ach9;
+    private ImageView ach9;
     @FXML
-    private Pane ach10;
+    private ImageView ach10;
     @FXML
-    private Pane ach11;
+    private ImageView ach11;
 
     @FXML
-    private Pane ach12;
+    private ImageView ach12;
     @FXML
-    private Pane ach13;
+    private ImageView ach13;
     @FXML
-    private Pane ach14;
+    private ImageView ach14;
 
     @FXML
-    private Pane ach15;
+    private ImageView ach15;
     @FXML
-    private Pane ach16;
+    private ImageView ach16;
     @FXML
-    private Pane ach17;
+    private ImageView ach17;
 
     @FXML
-    private Pane ach18;
+    private ImageView ach18;
     @FXML
-    private Pane ach19;
+    private ImageView ach19;
     @FXML
-    private Pane ach20;
+    private ImageView ach20;
 
     @FXML
-    private Pane ach21;
+    private ImageView ach21;
     @FXML
-    private Pane ach22;
+    private ImageView ach22;
     @FXML
-    private Pane ach23;
+    private ImageView ach23;
 
     @FXML
-    private Pane ach24;
+    private ImageView ach24;
     @FXML
-    private Pane ach25;
+    private ImageView ach25;
     @FXML
-    private Pane ach26;
+    private ImageView ach26;
 
     @FXML
     private GridPane addActivityPane;
@@ -321,7 +336,7 @@ public class Controller {
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter type of your transportation");
             return;
-        }  else if (bikeKilometers.getText().isEmpty()) {
+        } else if (bikeKilometers.getText().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the number of kilometers which you travelled");
@@ -362,7 +377,7 @@ public class Controller {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
             cc.postBiker(transportType.getValue().toString(),
-                    (int)Double.parseDouble(bikeKilometers.getText()));
+                    (int) Double.parseDouble(bikeKilometers.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -371,11 +386,12 @@ public class Controller {
     private void loadFriends(ActionEvent event, String[][] friends) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         GridPane root = new GridPane();
+        root.setStyle("-fx-background-color: #91cb3e;");
         ScrollPane scrollPane = new ScrollPane();
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        final int numCols = 2 ;
-        final int numRows = friends.length + 1 ;
+        final int numCols = 2;
+        final int numRows = friends.length + 1;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setHgrow(Priority.NEVER);
@@ -389,23 +405,7 @@ public class Controller {
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConst = new RowConstraints();
             rowConst.setVgrow(Priority.NEVER);
-            if (i >= 1) {
-                rowConst.setPrefHeight(143);
-                root.getRowConstraints().add(rowConst);
-                Text text = new Text();
-                text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
-                        + friends[i - 1][1]);
-                ImageView image = new ImageView("images/human.png");
-                image.setPreserveRatio(true);
-                image.setFitWidth(117);
-                image.setFitHeight(108);
-                root.add(image, 0, i);
-                root.add(text, 1, i);
-                root.setHalignment(image, HPos.RIGHT);
-                root.setValignment(image, VPos.CENTER);
-                root.setStyle("-fx-background-color: #91cb3e;");
-                root.setHgap(40); //horizontal gap in pixels
-            } else {
+            if (i < 1) {
                 rowConst.setPrefHeight(71);
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
@@ -419,7 +419,7 @@ public class Controller {
                         + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
                 button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
                         + "-fx-text-fill: #91cb3e;"));
-                button.setOnAction(value ->  {
+                button.setOnAction(value -> {
                     try {
                         Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
                                 .getResource("fxml/menu.fxml"));
@@ -434,7 +434,53 @@ public class Controller {
                 button.setLayoutY(220);
                 root.add(button, 0, i);
                 root.setMargin(button, new Insets(5, 0, 0, 20));
+            } else {
+                if (numRows > 3) {
+                    rowConst.setPrefHeight(143);
+                    root.getRowConstraints().add(rowConst);
+                    Text text = new Text();
+                    text.setText("Name: " + friends[i - 1][0] + "\n" + "CO2 Saved: "
+                            + decim.format(Double.parseDouble(friends[i - 1][1])));
+                    ImageView image = new ImageView("images/human.png");
+                    image.setPreserveRatio(true);
+                    image.setFitWidth(117);
+                    image.setFitHeight(108);
+                    root.add(image, 0, i);
+                    root.add(text, 1, i);
+                    root.setHalignment(image, HPos.RIGHT);
+                    root.setValignment(image, VPos.CENTER);
+                    root.setStyle("-fx-background-color: #91cb3e;");
+                    root.setHgap(40); //horizontal gap in pixels
+                }
             }
+        }
+        if (friends.length == 2 || friends.length == 1 || friends.length == 0) {
+            for (int i = 0; i < friends.length; i++) {
+                RowConstraints rowConst = new RowConstraints();
+                rowConst.setVgrow(Priority.NEVER);
+                rowConst.setPrefHeight(143);
+                root.getRowConstraints().add(rowConst);
+                Text text = new Text();
+                text.setText("Name: " + friends[i][0] + "\n" + "CO2 Saved: "
+                        + friends[i][1]);
+                ImageView image = new ImageView("images/human.png");
+                image.setPreserveRatio(true);
+                image.setFitWidth(117);
+                image.setFitHeight(108);
+                root.add(image, 0, i + 1);
+                root.add(text, 1, i + 1);
+                root.setHalignment(image, HPos.RIGHT);
+                root.setValignment(image, VPos.CENTER);
+                root.setStyle("-fx-background-color: #91cb3e;");
+                root.setHgap(40); //horizontal gap in pixels
+            }
+            RowConstraints rowConst = new RowConstraints();
+            rowConst.setPrefHeight(429 - 143 * friends.length);
+            rowConst.setVgrow(Priority.NEVER);
+            Pane pane = new Pane();
+            pane.setStyle("-fx-background-color: #91cb3e;");
+            root.getRowConstraints().add(rowConst);
+            root.add(pane, 1, friends.length + 1);
         }
         scrollPane.setContent(root);
         stage.setScene(new Scene(scrollPane, 600, 500));
@@ -445,8 +491,8 @@ public class Controller {
     private void loadFriends(String[][] friends) {
         GridPane root = new GridPane();
         root.setGridLinesVisible(true);
-        final int numCols = 2 ;
-        final int numRows = friends.length ;
+        final int numCols = 2;
+        final int numRows = friends.length;
         for (int i = 0; i < numCols; i++) {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setHgrow(Priority.NEVER);
@@ -485,24 +531,62 @@ public class Controller {
         CompactClient cc = new CompactClient(file, br);
 
         if (todaysTip != null) {
+            Image image = new Image("images/cloud.png");
+            ImageView view = new ImageView(image);
+            view.setFitHeight(170);
+            view.setFitWidth(200);
+            view.setOpacity(0.3);
+            ImageView view2 = new ImageView(image);
+            view2.setFitHeight(170);
+            view2.setFitWidth(200);
+            view2.setOpacity(0.3);
+            todaysTip.getChildren().add(view);
+            todaysTip2.getChildren().add(view2);
             Scanner scanner = new Scanner(new File("tips.txt"));
             List<String> lines = new ArrayList<String>();
             while (scanner.hasNextLine()) {
                 lines.add(scanner.nextLine());
             }
+            tip.toFront();
+            todaysTipText.toFront();
             Random rn = new Random();
             int randomNum = (rn.nextInt() & Integer.MAX_VALUE) % lines.size();
             String text = lines.get(randomNum);
-            todaysTip.setText(text);
+            todaysTipText.setText(text);
+            Rectangle rectangle = new Rectangle(1000, 0);
+            PathTransition transition = new PathTransition();
+            transition.setNode(todaysTip);
+            transition.setDuration(Duration.seconds(40));
+            transition.setPath(rectangle);
+            transition.setCycleCount(1);
+            PathTransition transition2 = new PathTransition();
+            transition2.setNode(todaysTip2);
+            transition2.setDuration(Duration.seconds(40));
+            transition2.setPath(rectangle);
+            transition2.setCycleCount(1);
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.seconds(20), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(20), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(40), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(40), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(60), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(60), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(80), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(80), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(100), e -> transition.stop()),
+                    new KeyFrame(Duration.seconds(100), e -> transition2.play()),
+                    new KeyFrame(Duration.seconds(120), e -> transition2.stop()),
+                    new KeyFrame(Duration.seconds(120), e -> transition.play()),
+                    new KeyFrame(Duration.seconds(140), e -> transition.stop())
+            );
+            transition.play();
+            timeline.play();
         }
-
-
 
         if (menuPane != null) {
             JSONObject details = cc.getPersonalInfo();
             nameLabel.setText("Hello " + details.get("userName").toString());
         }
-
 
         if (youPagePane != null) {
             levelField.setText("Level: " + cc.getLevel());
@@ -510,7 +594,8 @@ public class Controller {
             usernameField.setText("Username: " + details.get("userName").toString());
             noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
             emailField.setText("Email: " + details.get("email").toString());
-            co2Field.setText("C02 saved (kg): " + details.get("co2Saved").toString());
+            co2Field.setText("C02 saved (kg): "
+                    + decim.format(Double.parseDouble(details.get("co2Saved").toString())));
         }
 
         if (addActivityPane != null) {
@@ -522,74 +607,86 @@ public class Controller {
             solarHomeLabel.setStyle("-fx-opacity: 1");
             addVeganMealButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             veganLocalLabel.setText("Eat vegan meal");
                         }
                     });
             addVeganMealButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             veganLocalLabel.setText("");
                         }
                     });
 
             addLocalProductButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             veganLocalLabel.setText("Use local product");
                         }
                     });
             addLocalProductButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             veganLocalLabel.setText("");
                         }
                     });
             addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             solarHomeLabel.setText("Install a solar panel");
                         }
                     });
             addSolarPanelButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             solarHomeLabel.setText("");
                         }
                     });
             addTemperatureButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             solarHomeLabel.setText("Decrease the temperature of your home");
                         }
                     });
             addTemperatureButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             solarHomeLabel.setText("");
                         }
                     });
             addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             publicBikeLabel.setText("Use public transportation");
                         }
                     });
             addPublicTransportButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             publicBikeLabel.setText("");
                         }
                     });
             addBikeButton.addEventHandler(MouseEvent.MOUSE_ENTERED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             publicBikeLabel.setText("Use bike ");
                         }
                     });
             addBikeButton.addEventHandler(MouseEvent.MOUSE_EXITED_TARGET,
                     new EventHandler<MouseEvent>() {
-                        @Override public void handle(MouseEvent event) {
+                        @Override
+                        public void handle(MouseEvent event) {
                             publicBikeLabel.setText("");
                         }
                     });
@@ -837,7 +934,7 @@ public class Controller {
         }
     }
 
-    private void loadAchievements(int page, Stage appStage) {
+    private void loadAchievements(int page, Stage appStage) throws IOException {
         int start = 0;
         int end = 0;
         switch (page) {
@@ -851,7 +948,7 @@ public class Controller {
                 break;
             case 3:
                 start = 18;
-                end = 26;
+                end = 23;
                 break;
             default:
                 start = 0;
@@ -860,16 +957,21 @@ public class Controller {
         }
 
         Scene scene = appStage.getScene();
+        File file = new File("test.txt");
+        BufferedReader br = new BufferedReader(new FileReader(file));
+        CompactClient cc = new CompactClient(file, br);
 
-        String bits = "000000000000000000000000000";
+        String bits = cc.getAchievements();
+
+        //        String bits = "010000000100000000100000000";
         for (int i = start; i <= end; i++) {
             char charc = bits.charAt(i);
             boolean cond = charc == '0';
             if (cond) {
                 String str = "ach" + i;
 
-                Pane pane = (Pane) scene.lookup("#" + str);
-                pane.setOpacity(0.2);
+                ImageView view = (ImageView) scene.lookup("#" + str);
+                view.setOpacity(0.2);
             }
         }
     }
@@ -927,7 +1029,7 @@ public class Controller {
         if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            final Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             BorderPane root = new BorderPane();
             root.setStyle("-fx-background-color: #91cb3e;");
             root.setPadding(new Insets(20, 20, 20, 20));
@@ -938,7 +1040,7 @@ public class Controller {
                     + "linear-gradient(#000000, grey); -fx-text-fill: #91cb3e"));
             button.setOnMouseExited(e -> button.setStyle("-fx-background-color: #000000; "
                     + "-fx-text-fill: #91cb3e;"));
-            button.setOnAction(value ->  {
+            button.setOnAction(value -> {
                 try {
                     Parent addPageParent = FXMLLoader.load(getClass().getClassLoader()
                             .getResource("fxml/menu.fxml"));
@@ -958,22 +1060,28 @@ public class Controller {
                     FXCollections.observableArrayList(
                             new PieChart.Data("Vegan Meal",
                                     Double.parseDouble(
-                                            info.get("total_Meals").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("total_Meals").toString())))),
                             new PieChart.Data("Public Transport",
                                     Double.parseDouble(
-                                            info.get("savedPublicTransport").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedPublicTransport").toString())))),
                             new PieChart.Data("Home Temperature",
                                     Double.parseDouble(
-                                            info.get("savedHeatConsumption").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedHeatConsumption").toString())))),
                             new PieChart.Data("Bike",
                                     Double.parseDouble(
-                                            info.get("bikeSaved").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("bikeSaved").toString())))),
                             new PieChart.Data("Local Product",
                                     Double.parseDouble(
-                                            info.get("localSaved").toString())),
+                                            decim.format(Double.parseDouble(
+                                            info.get("localSaved").toString())))),
                             new PieChart.Data("Solar Panel",
                                     Double.parseDouble(
-                                            info.get("savedSolar").toString()))
+                                            decim.format(Double.parseDouble(
+                                            info.get("savedSolar").toString()))))
                     );
 
             final PieChart chart = new PieChart(pieChartData);
@@ -982,7 +1090,7 @@ public class Controller {
 
             final Label caption = new Label("");
             caption.setStyle("-fx-font: 20 System;");
-            double total =  0;
+            double total = 0;
             for (final PieChart.Data data : chart.getData()) {
                 total += data.getPieValue();
             }
@@ -991,7 +1099,8 @@ public class Controller {
             for (final PieChart.Data data : chart.getData()) {
                 data.getNode().addEventHandler(MouseEvent.MOUSE_MOVED,
                         new EventHandler<MouseEvent>() {
-                            @Override public void handle(MouseEvent event) {
+                            @Override
+                            public void handle(MouseEvent event) {
                                 Point2D locationInScene =
                                         new Point2D(event.getSceneX(), event.getSceneY());
                                 Point2D locationInParent =
@@ -1002,17 +1111,13 @@ public class Controller {
                                         locationInParent.getY());
 
                                 caption.setText(String.valueOf(Math
-                                        .round((data.getPieValue() / totalAmount) * 100))  + "%");
+                                        .round((data.getPieValue() / totalAmount) * 100)) + "%");
                             }
                         });
                 data.setName(data.getName() + ": " + data.getPieValue() + " kg");
             }
             root.setCenter(chartWithCaption);
-            Scene scene = new Scene(root);
-            stage.setWidth(600);
-            stage.setHeight(500);
-
-            stage.setScene(scene);
+            stage.setScene(new Scene(root, 600, 500));
             stage.show();
         }
     }
@@ -1038,6 +1143,8 @@ public class Controller {
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         CompactClient cc = new CompactClient(file, br);
+
+        cc.getAchievements();
 
         File toRead = new File("test.txt");
         BufferedReader got = new BufferedReader(new FileReader(toRead));
@@ -1101,7 +1208,7 @@ public class Controller {
 
     @FXML
     public void handleExitButtonAction(ActionEvent event) {
-        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
+        ((Stage) (((Button) event.getSource()).getScene().getWindow())).close();
 
     }
 
@@ -1299,6 +1406,13 @@ public class Controller {
     @FXML
     private void handleAddTemperatureButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
+        if (energyType.getValue() == null) {
+            AlertHelper
+                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
+                            "Please enter your energy type");
+            return;
+        }
+
         if (beforeTemperature.getText().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
@@ -1317,7 +1431,7 @@ public class Controller {
         } catch (NumberFormatException e) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Wrong input type!",
-                            "Please enter a double number to indicate your home's temperature");
+                            "Please enter an integer number to indicate your home's temperature");
             return;
         }
 
@@ -1325,11 +1439,6 @@ public class Controller {
             Controller.AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the temperature after decreasing");
-            return;
-        } else if (energyType.getValue() == null) {
-            AlertHelper
-                    .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
-                            "Please enter your energy type");
             return;
         } else if (Double.parseDouble(beforeTemperature.getText()) <= 0
                 || Double.parseDouble(afterTemperature.getText()) <= 0) {
@@ -1385,8 +1494,8 @@ public class Controller {
 
         if (Double.parseDouble(electricityAmount.getText()) <= 0) {
             AlertHelper
-                .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
-                        "Number of kWh can't be negative or 0!");
+                    .showAlert(Alert.AlertType.ERROR, owner, "Invalid field!",
+                            "Number of kWh can't be negative or 0!");
             return;
         } else if (Double.parseDouble(electricityAmount.getText()) > 50000) {
             AlertHelper
@@ -1405,7 +1514,7 @@ public class Controller {
         if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
         } else {
-            cc.postSolar((int)Double.parseDouble(electricityAmount.getText()));
+            cc.postSolar((int) Double.parseDouble(electricityAmount.getText()));
             loadPage(event, "fxml/addActivity.fxml");
         }
     }
@@ -1413,7 +1522,7 @@ public class Controller {
     @FXML
     private void handleAddVeganMealButtonAction(ActionEvent event) throws IOException {
         Window owner = addButton.getScene().getWindow();
-        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty() ) {
+        if (mealTypes.getValue() == null || mealTypes.getValue().toString().isEmpty()) {
             AlertHelper
                     .showAlert(Alert.AlertType.ERROR, owner, "Unfilled field!",
                             "Please enter the amount of kilograms!");
@@ -1492,7 +1601,7 @@ public class Controller {
             JSONObject jo = cc.followUser(friendCode.getText());
             if (jo.get("status").toString().equals("Success")) {
                 AlertHelper.showAlert(Alert.AlertType.CONFIRMATION, owner, "Success",
-                       "You are now following this person!");
+                        "You are now following this person!");
             } else {
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Not possible!",
                         jo.get("status").toString());
@@ -1556,10 +1665,11 @@ public class Controller {
 
         /**
          * The method which gives alert with a specific message.
+         *
          * @param alertType the type of the alert
-         * @param owner the owner of the alert
-         * @param title the title of the alert
-         * @param message the message of the alert
+         * @param owner     the owner of the alert
+         * @param title     the title of the alert
+         * @param message   the message of the alert
          */
 
         public static void showAlert(Alert.AlertType alertType,

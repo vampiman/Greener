@@ -20,6 +20,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,6 +34,9 @@ public class PublicTransportTest {
 
     @Mock
     private Statistics mockStatistics;
+
+    @Mock
+    private PreparedStatement mockPrepared;
 
     @Mock
     private Connection mockConnection;
@@ -58,6 +62,7 @@ public class PublicTransportTest {
         rs = mock(ResultSet.class);
         ccMock = mock(CarbonCalculator.class);
         mockStatistics = mock(Statistics.class);
+        mockPrepared = mock(PreparedStatement.class);
 
         mockStatic(DriverManager.class);
         when(DriverManager.getConnection(
@@ -90,9 +95,13 @@ public class PublicTransportTest {
         Resource resource = new Resource();
         resource.setTotal_Distance(1.0);
         publicTransport.postData(resource, "token", "email");
-
-        Assert.assertEquals(1, publicTransport.postData(resource,
-                "token", "email").getTotal_Distance().intValue());
+        Mockito.when(mockConnection.prepareStatement(anyString())).thenReturn(mockPrepared);
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
+        Assert.assertEquals(1, publicTransport
+                .postData(resource, "token", "email")
+                .getTotal_Distance().intValue());
     }
 
     /**

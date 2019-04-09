@@ -117,6 +117,7 @@ public class PublicTransport {
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateTransportAch(email);
 
 
         dbConnection.close();

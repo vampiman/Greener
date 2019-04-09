@@ -490,28 +490,22 @@ public class CarbonCalculator {
 
         double sort = 0;
 
-        switch (type) {
-            case "Fruit":
-                //fruit
-                sort = 1.1;
-                break;
-            case "Dairy":
-                //dairy
-                sort = 7.7;
-                break;
-            case "Vegetables":
-                //vegetables
-                sort = 2.0;
-                break;
-            case "Meat":
-                //meat
-                sort = 21.3;
-                break;
-            case "Eggs":
-                sort = 4.8;
-                break;
-            default:
-                throw new IllegalArgumentException("Please insert a valid type of Food!");
+        if (type.equals("Fruit")) {
+            //fruit
+            sort = 1.1;
+        } else if (type.equals("Dairy")) {
+            //dairy
+            sort = 7.7;
+        } else if (type.equals("Vegetables")) {
+            //vegetables
+            sort = 2.0;
+        } else if (type.equals("Meat")) {
+            //meat
+            sort = 21.3;
+        } else if (type.equals("Eggs")) {
+            sort = 4.8;
+        } else {
+            throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
         return amount * sort;
     }
@@ -528,35 +522,30 @@ public class CarbonCalculator {
 
         double sort = 0;
 
-        switch (type) {
-            case "Fruit":
-                //fruit
-                sort = 1.1 * 0.07;
-                break;
-            case "Dairy":
-                //dairy
-                sort = 7.7 * 0.07;
-                break;
-            case "Vegetables":
-                //vegetables
-                sort = 2.0 * 0.07;
-                break;
-            case "Meat":
-                //meat
-                sort = 21.3 * 0.07;
-                break;
-            case "Eggs":
-                sort = 4.8 * 0.07;
-                break;
-            default:
-                throw new IllegalArgumentException("Please insert a valid type of Food!");
+        if (type.equals("Fruit")) {
+            //fruit
+            sort = 1.1 * 0.07;
+        } else if (type.equals("Dairy")) {
+            //dairy
+            sort = 7.7 * 0.07;
+        } else if (type.equals("Vegetables")) {
+            //vegetables
+            sort = 2.0 * 0.07;
+        } else if (type.equals("Meat")) {
+            //meat
+            sort = 21.3 * 0.07;
+        } else if (type.equals("Eggs")) {
+            sort = 4.8 * 0.07;
+        } else {
+            throw new IllegalArgumentException("Please insert a valid type of Food!");
         }
+
         return amount * sort;
     }
 
-    public static void main(String[] args) {
-        CarbonCalculator cc = new CarbonCalculator(2);
-        System.out.println(cc.bike("Hybrid", 1));
-    }
+    //    public static void main(String[] args) {
+    //        CarbonCalculator cc = new CarbonCalculator(2);
+    //        System.out.println(cc.bike("Hybrid", 1));
+    //    }
 
 }

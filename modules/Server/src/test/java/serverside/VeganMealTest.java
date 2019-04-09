@@ -64,13 +64,18 @@ public class VeganMealTest {
         Mockito.when(DriverManager
                 .getConnection(
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
-                "sammy","temporary")).thenReturn(mockConnection);
+                        "sammy","temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.prepareStatement(anyString())).thenReturn(mockPrepared);
+        Mockito.when(mockPrepared.executeQuery()).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.veganmeal_Calculator(anyDouble(), anyString())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
+        Mockito.when(mockStatistics.updateVeganAch(anyString())).thenReturn(true);
+
         Resource re = new Resource();
         re.setMealType("Meat");
         re.setMealType2("Dairy");

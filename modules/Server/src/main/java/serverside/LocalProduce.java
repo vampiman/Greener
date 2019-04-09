@@ -125,6 +125,7 @@ public class LocalProduce {
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateLocalAch(email);
 
         st.close();
         dbConnection.close();
