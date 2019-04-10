@@ -172,10 +172,5 @@
             </Text>
          </children>
       </Pane>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
-         <image>
-            <Image url="@../images/sunny.gif" />
-         </image>
-      </ImageView>
    </children>
 </GridPane>

@@ -3,7 +3,6 @@ package gui;
 import cn.hutool.json.JSONObject;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +30,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import javafx.scene.input.MouseEvent;
@@ -44,7 +42,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Screen;
@@ -288,13 +285,6 @@ public class Controller {
     private ImageView ach23;
 
     @FXML
-    private ImageView ach24;
-    @FXML
-    private ImageView ach25;
-    @FXML
-    private ImageView ach26;
-
-    @FXML
     private GridPane addActivityPane;
 
     @FXML
@@ -375,11 +365,11 @@ public class Controller {
         User usr = new User("", "");
         if (!cc.checkToken(toRead, got, usr)) {
             loadPage(event, "fxml/loginPage.fxml");
-        } else {
-            cc.postBiker(transportType.getValue().toString(),
-                    (int) Double.parseDouble(bikeKilometers.getText()));
-            loadPage(event, "fxml/addActivity.fxml");
+            return;
         }
+        cc.postBiker(transportType.getValue().toString(),
+                (int) Double.parseDouble(bikeKilometers.getText()));
+        loadPage(event, "fxml/addActivity.fxml");
     }
 
     @FXML
@@ -529,19 +519,7 @@ public class Controller {
         File file = new File("test.txt");
         BufferedReader br = new BufferedReader(new FileReader(file));
         CompactClient cc = new CompactClient(file, br);
-
         if (todaysTip != null) {
-            Image image = new Image("images/cloud.png");
-            ImageView view = new ImageView(image);
-            view.setFitHeight(170);
-            view.setFitWidth(200);
-            view.setOpacity(0.3);
-            ImageView view2 = new ImageView(image);
-            view2.setFitHeight(170);
-            view2.setFitWidth(200);
-            view2.setOpacity(0.3);
-            todaysTip.getChildren().add(view);
-            todaysTip2.getChildren().add(view2);
             Scanner scanner = new Scanner(new File("tips.txt"));
             List<String> lines = new ArrayList<String>();
             while (scanner.hasNextLine()) {
@@ -553,41 +531,11 @@ public class Controller {
             int randomNum = (rn.nextInt() & Integer.MAX_VALUE) % lines.size();
             String text = lines.get(randomNum);
             todaysTipText.setText(text);
-            Rectangle rectangle = new Rectangle(1000, 0);
-            PathTransition transition = new PathTransition();
-            transition.setNode(todaysTip);
-            transition.setDuration(Duration.seconds(40));
-            transition.setPath(rectangle);
-            transition.setCycleCount(1);
-            PathTransition transition2 = new PathTransition();
-            transition2.setNode(todaysTip2);
-            transition2.setDuration(Duration.seconds(40));
-            transition2.setPath(rectangle);
-            transition2.setCycleCount(1);
-            Timeline timeline = new Timeline(
-                    new KeyFrame(Duration.seconds(20), e -> transition.stop()),
-                    new KeyFrame(Duration.seconds(20), e -> transition2.play()),
-                    new KeyFrame(Duration.seconds(40), e -> transition2.stop()),
-                    new KeyFrame(Duration.seconds(40), e -> transition.play()),
-                    new KeyFrame(Duration.seconds(60), e -> transition.stop()),
-                    new KeyFrame(Duration.seconds(60), e -> transition2.play()),
-                    new KeyFrame(Duration.seconds(80), e -> transition2.stop()),
-                    new KeyFrame(Duration.seconds(80), e -> transition.play()),
-                    new KeyFrame(Duration.seconds(100), e -> transition.stop()),
-                    new KeyFrame(Duration.seconds(100), e -> transition2.play()),
-                    new KeyFrame(Duration.seconds(120), e -> transition2.stop()),
-                    new KeyFrame(Duration.seconds(120), e -> transition.play()),
-                    new KeyFrame(Duration.seconds(140), e -> transition.stop())
-            );
-            transition.play();
-            timeline.play();
         }
-
         if (menuPane != null) {
             JSONObject details = cc.getPersonalInfo();
             nameLabel.setText("Hello " + details.get("userName").toString());
         }
-
         if (youPagePane != null) {
             levelField.setText("Level: " + cc.getLevel());
             JSONObject details = cc.getPersonalInfo();
@@ -691,35 +639,6 @@ public class Controller {
                         }
                     });
         }
-
-        //        if (achievementsGrid != null) {
-        //            JSONObject info = cc.getStats();
-        //            //            System.out.println(info.toJSONString(10));
-        //            ObservableList<PieChart.Data> pieChartData =
-        //                FXCollections.observableArrayList(
-        //                        new PieChart.Data("Vegan Meal",
-        //                                Double.parseDouble(info
-        //                                .get("total_Meals").toString())),
-        //                        new PieChart.Data("Public Transport",
-        //                                Double.parseDouble(info
-        //                                .get("savedPublicTransport").toString())),
-        //                        new PieChart.Data("Home Temperature",
-        //                                Double.parseDouble(info
-        //                                .get("savedHeatConsumption").toString())),
-        //                        new PieChart.Data("Bike",
-        //                                Double.parseDouble(info
-        //                                .get("bikeSaved").toString())),
-        //                        new PieChart.Data("Local Product",
-        //                                Double.parseDouble(info
-        //                                .get("localSaved").toString())),
-        //                        new PieChart.Data("Solar Panel",
-        //                                Double.parseDouble(info
-        //                                .get("savedSolar").toString()))
-        //                );
-        //            pieChart.setTitle("SCORE DISTRIBUTION");
-        //            pieChart.setMaxSize(1000, 1000);
-        //            pieChart.setData(pieChartData);
-        //        }
     }
 
     //    @FXML
@@ -952,7 +871,7 @@ public class Controller {
                 break;
             default:
                 start = 0;
-                end = 0;
+                end = 23;
                 break;
         }
 
