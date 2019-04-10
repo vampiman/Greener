@@ -22,7 +22,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="message" layoutX="14.0" layoutY="135.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="Sign up to Greener and save the nature !" textFill="WHITE" wrapText="true">
+            <Label fx:id="message" layoutX="14.0" layoutY="135.0" minHeight="-Infinity" minWidth="-Infinity" prefWidth="200.0" text="Sign up to Greener and save the nature!" textFill="WHITE" wrapText="true">
                <font>
                   <Font size="16.0" />
                </font>
