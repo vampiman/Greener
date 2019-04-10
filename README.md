@@ -32,6 +32,25 @@ Run `maven install` ([Intellij](https://www.jetbrains.com/help/idea/2016.3/getti
 **Checkstyle**:  
 Run `maven site`
 
+# Project Setup
+For the setup of this project you will need to install the following:
+- [GlassFish 5.0 - Full Platform](https://javaee.github.io/glassfish/download)
+- [MySQL](https://dev.mysql.com/downloads/windows/installer/8.0.html)
+
+Furthermore you need to have a working version of [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+Also, you need to have a User 'sammy' with Password 'temporary'. You can see how that's done [here](https://dev.mysql.com/doc/refman/8.0/en/creating-accounts.html).
+
+After installing, you should download and import the project into your Intellij IDE.
+You should add this as a maven project.
+Once you're set up, run 'maven install' and 'maven site'.
+After you can set up GlassFish as follows:
+Edit Configurations... -> Add New Configuration -> GlassFish Server -> Local
+Set Server Domain to Domain1
+Go to Deployment, Add Artifact... and set to Server:war exploded
+You can start the server.
+Once the server is running, you can start the application by running main.
+
+
 # Irem Ugurlu
 **(4851625, iugurlu)**
 
