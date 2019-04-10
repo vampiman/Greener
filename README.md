@@ -1,4 +1,5 @@
 # Index
+- [Project Setup](#project-setup)
 - [Irem Ugurlu](#irem-ugurlu)
 - [Jaron Rosenberg](#jaron-rosenberg)
 - [Natalia Struharova](#natalia-struharova)
