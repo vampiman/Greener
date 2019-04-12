@@ -36,7 +36,7 @@
             <Label layoutX="18.0" text="Blossoming Influencer" />
             <Label layoutX="37.0" layoutY="24.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="Get 50 friends" />
+                  <Tooltip text="Get 10 friends" />
                </tooltip>
             </Label>
          </children>
@@ -57,7 +57,7 @@
             <Label layoutX="9.0" text="Guy Who Knows A Guy" />
             <Label layoutX="38.0" layoutY="23.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="Get 10 friends" />
+                  <Tooltip text="Get 3 friends" />
                </tooltip>
             </Label>
          </children>
@@ -93,7 +93,7 @@
             <Label layoutX="45.0" text="NetworKing" />
             <Label layoutX="37.0" layoutY="24.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="Get 100 friends" />
+                  <Tooltip text="Get 25 friends" />
                </tooltip>
             </Label>
          </children>
@@ -158,7 +158,7 @@
             <Label layoutX="39.0" text="Earth Saviour" />
             <Label layoutX="35.0" layoutY="24.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="Get 1000 points" />
+                  <Tooltip text="Get 1500 points" />
                </tooltip>
             </Label>
          </children>
@@ -176,7 +176,7 @@
             <Label layoutX="26.0" text="In-sourcing Activist" />
             <Label layoutX="35.0" layoutY="23.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="By 10 local products" />
+                  <Tooltip text="By 10 points" />
                </tooltip>
             </Label>
          </children>
@@ -194,7 +194,7 @@
             <Label layoutX="19.0" text="Favourite Neighbour" />
             <Label layoutX="35.0" layoutY="24.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="By 50 local products" />
+                  <Tooltip text="By 100 points" />
                </tooltip>
             </Label>
          </children>
@@ -212,7 +212,7 @@
             <Label layoutX="6.0" text="Within Walking Distance" />
             <Label layoutX="35.0" layoutY="24.0" opacity="0.0" prefHeight="81.0" prefWidth="88.0" text="Label">
                <tooltip>
-                  <Tooltip text="By 100 local products" />
+                  <Tooltip autoHide="true" text="By 250 points" />
                </tooltip>
             </Label>
          </children>
