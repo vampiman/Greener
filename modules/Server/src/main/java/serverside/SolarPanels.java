@@ -76,6 +76,7 @@ public class SolarPanels {
 
         int co2 = statistics.increaseScore(toAdd, email);
         statistics.updateLevel(co2, email);
+        statistics.updateSolarAch(email);
 
         st.close();
         dbConnection.close();

@@ -88,6 +88,7 @@ public class VeganMeal {
 
         int co2 = statistics.increaseScore(insteadOf - ihad, email);
         statistics.updateLevel(co2, email);
+        statistics.updateVeganAch(email);
 
 
 

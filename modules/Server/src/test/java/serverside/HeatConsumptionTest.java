@@ -67,7 +67,8 @@ public class HeatConsumptionTest {
                 "sammy", "temporary")).thenReturn(mockConnection);
         when(mockConnection.createStatement()).thenReturn(mockStatement);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
-        Mockito.when(ccMock.homeHeatConsumptionSaved(anyDouble(), anyDouble(), anyString())).thenReturn(1);
+        Mockito.when(ccMock.homeHeatConsumptionSaved(anyDouble(),
+                anyDouble(), anyString())).thenReturn(1);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
         Mockito.when(mockStatistics.increaseScore(anyDouble(), anyString())).thenReturn(1);
         Mockito.when(mockStatistics.updateLevel(anyDouble(), anyString())).thenReturn(true);
@@ -91,8 +92,10 @@ public class HeatConsumptionTest {
         resource.setCurrentHeatConsumption(1);
         resource.setAverageHeatConsumption(1);
 
-        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getCurrentHeatConsumption());
-        Assert.assertEquals(1, heatConsumption.postData(resource, "token", "email").getAverageHeatConsumption());
+        Assert.assertEquals(1, heatConsumption.postData(resource,
+                "token", "email").getCurrentHeatConsumption());
+        Assert.assertEquals(1, heatConsumption.postData(resource,
+                "token", "email").getAverageHeatConsumption());
     }
 
     /**
@@ -110,19 +113,28 @@ public class HeatConsumptionTest {
         Assert.assertEquals(1, resource.getSavedHeatConsumption().intValue());
     }
 
+
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        HeatConsumption heat = new HeatConsumption();
         Resource res = new Resource();
-        b.passToken("token", res);
+        heat.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        HeatConsumption heat = new HeatConsumption();
         Resource res = new Resource();
-        b.passToken(null, res);
+        heat.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

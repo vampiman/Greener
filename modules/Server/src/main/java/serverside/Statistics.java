@@ -17,6 +17,8 @@ public class Statistics {
 
     private Connection dbConnection;
 
+    private StringBuilder bits = new StringBuilder("000000000000000000000000");
+
     /**
      * Method for initializing the connection with the database server through jdbc.
      * @throws ClassNotFoundException Class not found error
@@ -167,6 +169,9 @@ public class Statistics {
         Resource re = new Resource();
         re.setAchievements(achievements);
 
+        updateScoreAch(email);
+        updateFriendsAch(email);
+
         dbConnection.close();
         ps.close();
         rs.close();
@@ -234,10 +239,10 @@ public class Statistics {
         ResultSet rs = ps.executeQuery();
         rs.next();
 
-        int result = rs.getInt("CO_2_saved");
+        final int result = rs.getInt("CO_2_saved");
+        dbConnection.close();
         ps.close();
         rs.close();
-        dbConnection.close();
         return result;
     }
 
@@ -262,13 +267,13 @@ public class Statistics {
 
         int currentLevel = rs.getInt("Level");
 
-        if (co2saved / 150 == currentLevel) {
+        if ((co2saved / 150) + 1 == currentLevel) {
             return true;
         }
 
         sql = "UPDATE person SET Level = ? WHERE Email = ?";
         ps = dbConnection.prepareStatement(sql);
-        ps.setInt(1, (int)(co2saved / 150) + 1);
+        ps.setInt(1, (int)((co2saved / 150) + 1));
         ps.setString(2, email);
 
         ps.executeUpdate();
@@ -278,6 +283,447 @@ public class Statistics {
         rs.close();
 
         return false;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email users email
+     * @return a boolean
+     * @throws SQLException when sql syntax is incorrect
+     */
+    public boolean updateFriendsAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        PreparedStatement ps = null;
+
+        String sql = "SELECT COUNT(User_email) FROM friends WHERE User_email = ?";
+
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        String sql1 = "SELECT Achievements FROM person WHERE email = ?";
+
+        ps = dbConnection.prepareStatement(sql1);
+        ps.setString(1, email);
+        ResultSet rs1 = ps.executeQuery();
+        rs1.next();
+
+        double currentFriends = rs.getDouble("COUNT(User_email)");
+        String initial = rs1.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentFriends > 25) {
+            bits.setCharAt(0, '1');
+            bits.setCharAt(1, '1');
+            bits.setCharAt(2, '1');
+        } else if (currentFriends > 10) {
+            bits.setCharAt(0, '1');
+            bits.setCharAt(1, '1');
+        } else if (currentFriends > 3) {
+            bits.setCharAt(0, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateScoreAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT CO_2_saved, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("CO_2_saved");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 1500) {
+            bits.setCharAt(3, '1');
+            bits.setCharAt(4, '1');
+            bits.setCharAt(5, '1');
+        } else if (currentAch > 500) {
+            bits.setCharAt(3, '1');
+            bits.setCharAt(4, '1');
+        } else if (currentAch > 100) {
+            bits.setCharAt(3, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateBikeAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT Bike, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Bike");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 150) {
+            bits.setCharAt(9, '1');
+            bits.setCharAt(10, '1');
+            bits.setCharAt(11, '1');
+        } else if (currentAch > 50) {
+            bits.setCharAt(9, '1');
+            bits.setCharAt(10, '1');
+        } else if (currentAch > 10) {
+            bits.setCharAt(9, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateTransportAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT Public_transport, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Public_transport");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 150) {
+            bits.setCharAt(12, '1');
+            bits.setCharAt(13, '1');
+            bits.setCharAt(14, '1');
+        } else if (currentAch > 75) {
+            bits.setCharAt(12, '1');
+            bits.setCharAt(13, '1');
+        } else if (currentAch > 10) {
+            bits.setCharAt(12, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateSolarAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        //        bits = new StringBuilder()
+
+        String sql = "SELECT Solar_panels, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Solar_panels");
+
+
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 1000) {
+            bits.setCharAt(15, '1');
+            bits.setCharAt(16, '1');
+            bits.setCharAt(17, '1');
+        } else if (currentAch > 250) {
+            bits.setCharAt(15, '1');
+            bits.setCharAt(16, '1');
+        } else if (currentAch > 100) {
+            bits.setCharAt(15, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateHeatAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT Lowering_home_temperature, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Lowering_home_temperature");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 300) {
+            bits.setCharAt(18, '1');
+            bits.setCharAt(19, '1');
+            bits.setCharAt(20, '1');
+        } else if (currentAch > 150) {
+            bits.setCharAt(18, '1');
+            bits.setCharAt(19, '1');
+        } else if (currentAch > 50) {
+            bits.setCharAt(18, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateVeganAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT Vegan_meal, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Vegan_meal");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+
+        if (currentAch > 500) {
+            bits.setCharAt(21, '1');
+            bits.setCharAt(22, '1');
+            bits.setCharAt(23, '1');
+        } else if (currentAch > 250) {
+            bits.setCharAt(21, '1');
+            bits.setCharAt(22, '1');
+        } else if (currentAch > 75) {
+            bits.setCharAt(21, '1');
+        } else {
+            return false;
+        }
+
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
+    }
+
+    /**
+     * Returns true if the current achievements has to be changed, false otherwise.
+     *
+     * @param email email of the current user
+     * @return boolean
+     * @throws SQLException in case of incorrect syntax
+     */
+    public boolean updateLocalAch(String email) throws SQLException {
+
+        getDbConnection();
+
+        String sql = "SELECT Local_produce, Achievements FROM person WHERE Email = ?";
+
+        PreparedStatement ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+
+        double currentAch = rs.getDouble("Local_produce");
+        final String initial = rs.getString("Achievements");
+
+        bits = new StringBuilder(initial);
+
+        if (currentAch > 250) {
+            bits.setCharAt(6, '1');
+            bits.setCharAt(7, '1');
+            bits.setCharAt(8, '1');
+        } else if (currentAch > 100) {
+            bits.setCharAt(6, '1');
+            bits.setCharAt(7, '1');
+        } else if (currentAch > 10) {
+            bits.setCharAt(6, '1');
+        } else {
+            return false;
+        }
+
+        String string = new String(bits);
+
+        sql = "UPDATE person SET Achievements = ? WHERE Email = ?";
+        ps = dbConnection.prepareStatement(sql);
+        ps.setString(1, string);
+        ps.setString(2, email);
+
+        ps.executeUpdate();
+
+        dbConnection.close();
+        ps.close();
+        rs.close();
+
+        return true;
     }
 
 }

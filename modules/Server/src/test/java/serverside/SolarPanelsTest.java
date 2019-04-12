@@ -69,6 +69,9 @@ public class SolarPanelsTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
+        Mockito.when(mockStatement.executeQuery(anyString())).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.solarPanel(anyDouble())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
@@ -109,19 +112,27 @@ public class SolarPanelsTest {
         Assert.assertEquals(1, rs.getSavedSolar().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        SolarPanels solar = new SolarPanels();
         Resource res = new Resource();
-        b.passToken("token", res);
+        solar.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        SolarPanels solar = new SolarPanels();
         Resource res = new Resource();
-        b.passToken(null, res);
+        solar.passToken(null, res);
         Assert.assertNull(res.getToken());
     }
 }

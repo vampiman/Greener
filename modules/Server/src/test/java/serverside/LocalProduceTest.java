@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import javax.ws.rs.HeaderParam;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -71,7 +70,9 @@ public class LocalProduceTest {
                         "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false",
                         "sammy", "temporary")).thenReturn(mockConnection);
         Mockito.when(mockConnection.createStatement()).thenReturn(mockStatement);
-
+        Mockito.when(mockStatement.executeQuery(anyString())).thenReturn(rs);
+        Mockito.when(rs.next()).thenReturn(true);
+        Mockito.when(rs.getDouble(anyString())).thenReturn(1.0);
         whenNew(CarbonCalculator.class).withAnyArguments().thenReturn(ccMock);
         Mockito.when(ccMock.localproduce_Calculator(anyDouble(), anyString())).thenReturn(1.0);
         whenNew(Statistics.class).withAnyArguments().thenReturn(mockStatistics);
@@ -82,7 +83,8 @@ public class LocalProduceTest {
         lp.setTotal_Produce(1.0);
 
 
-        Assert.assertEquals(1, localProduce.postData(lp, "token", "email").getTotal_Produce().intValue());
+        Assert.assertEquals(1, localProduce.postData(lp,
+                "token", "email").getTotal_Produce().intValue());
     }
 
     /**
@@ -112,19 +114,27 @@ public class LocalProduceTest {
         Assert.assertEquals(1, localProduce.getData("token", "email").getLocalSaved().intValue());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * non-null token.
+     */
     @Test
     public void testPassTokenEqual() {
-        Bike b = new Bike();
+        LocalProduce local = new LocalProduce();
         Resource res = new Resource();
-        b.passToken("token", res);
+        local.passToken("token", res);
         Assert.assertEquals("token", res.getToken());
     }
 
+    /**
+     * Method for testing the passToken function with a
+     * null token.
+     */
     @Test
     public void testPassTokenNull() {
-        Bike b = new Bike();
+        LocalProduce local = new LocalProduce();
         Resource res = new Resource();
-        b.passToken(null, res);
-        Assert.assertNull(res.getToken());
+        local.passToken(null, res);
+        Assert.assertEquals(null, res.getToken());
     }
 }
