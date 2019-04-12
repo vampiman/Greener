@@ -719,7 +719,12 @@ public class Controller {
 
         User user = new User(email.getText(), password.getText());
         try {
-            user.register(signupName.getText(), email.getText(), password.getText());
+            if (user.register(signupName.getText(), email.getText(), password.getText())
+                    == null) {
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Invalid Sign-up!",
+                        "This email is already registered.");
+                return;
+            }
         } catch (IllegalArgumentException e) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
                     e.getMessage());
@@ -926,7 +931,12 @@ public class Controller {
 
         User user = new User(email.getText(), password.getText());
         try {
-            user.register(signupName.getText(), email.getText(), password.getText());
+            if (user.register(signupName.getText(), email.getText(), password.getText())
+                    == null) {
+                AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Invalid Sign-up!",
+                        "This email is already registered.");
+                return;
+            };
         } catch (IllegalArgumentException e) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
                     e.getMessage());

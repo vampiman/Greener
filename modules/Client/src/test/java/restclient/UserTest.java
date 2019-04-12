@@ -3,6 +3,7 @@ package restclient;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 
+import static org.mockito.Mockito.when;
 import static restclient.User.KEY;
 
 import cn.hutool.json.JSONObject;
@@ -65,15 +66,15 @@ public class UserTest {
         builder = Mockito.mock(Invocation.Builder.class);
         response = Mockito.mock(Response.class);
 
-        Mockito.when(client.target(any(String.class))).thenReturn(target);
-        Mockito.when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
-        Mockito.when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
+        when(client.target(any(String.class))).thenReturn(target);
+        when(target.request(MediaType.APPLICATION_JSON)).thenReturn(builder);
+        when(builder.header(eq("Authorization"), any(String.class))).thenReturn(builder);
         //REGISTER
-        Mockito.when(builder.post(Entity.json(any()))).thenReturn(response);
+        when(builder.post(Entity.json(any()))).thenReturn(response);
         //LOGIN
-        Mockito.when(builder.get(Response.class)).thenReturn(response);
+        when(builder.get(Response.class)).thenReturn(response);
 
-        Mockito.when(response.readEntity(JSONObject.class)).thenReturn(jo);
+        when(response.readEntity(JSONObject.class)).thenReturn(jo);
 
     }
 
@@ -161,9 +162,23 @@ public class UserTest {
      */
     @Test
     public void registerCorrect() {
+        when(response.getStatus()).thenReturn(200);
+
         mockUser.register("Nat", "mymail@gmail.com", "pwd");
         Mockito.verify(client).target(any(String.class));
         Mockito.verify(response).readEntity(JSONObject.class);
+    }
+
+    /**
+     * Method that tests the register request.
+     */
+    @Test
+    public void registerNull() {
+        when(response.getStatus()).thenReturn(500);
+        Assert.assertNull(
+                mockUser.register("Nat", "mymail@gmail.com", "pwd"));
+        Mockito.verify(client).target(any(String.class));
+        Mockito.verify(response).getStatus();
     }
 
     /**

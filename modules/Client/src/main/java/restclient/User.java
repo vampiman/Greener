@@ -123,6 +123,9 @@ public class User {
                 .header("Authorization", "Bearer " + formAuthHeader())
                 .post(Entity.json(resource));
 
+        if (res.getStatus() != 200) {
+            return null;
+        }
         JSONObject jo = res.readEntity(JSONObject.class);
         String joString = jo.toJSONString(10);
         return joString;
