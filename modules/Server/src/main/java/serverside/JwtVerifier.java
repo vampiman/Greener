@@ -202,7 +202,7 @@ public class JwtVerifier implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) {
-        if (requestContext.getUriInfo().getPath().contains("/")) {
+        if (!requestContext.getUriInfo().getPath().contains("register")) {
             List<String> authHeader = requestContext.getHeaders().get(AUTHORIZATION_HEADER_KEY);
             if (authHeader != null && authHeader.size() > 0) {
                 String authToken = authHeader.get(0);
