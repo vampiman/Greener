@@ -32,7 +32,7 @@ public class Friends {
         String user = "sammy";
         String pass = "temporary";
 
-        //Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 

@@ -96,7 +96,7 @@ public class StatisticsTest {
      * Method for testing the request for user stats.
      */
     @Test
-    public void getStats() {
+    public void getStats() throws ClassNotFoundException {
         Resource re = new Resource();
         re.setTotal_Meals(1.1);
         re.setBikeSaved(2.2);
@@ -116,7 +116,7 @@ public class StatisticsTest {
      * Method for testing the request for user personal info.
      */
     @Test
-    public void getPersonalInfo() {
+    public void getPersonalInfo() throws ClassNotFoundException {
         try {
             when(mockResultSet.getString(eq("Name"))).thenReturn("Nat");
             when(mockResultSet.getDouble(eq("CO_2_saved"))).thenReturn(1.2);
@@ -134,7 +134,7 @@ public class StatisticsTest {
      * Method for testing the request for user achievements.
      */
     @Test
-    public void getAchievements() {
+    public void getAchievements() throws ClassNotFoundException {
         try {
             when(mockResultSet.getString("Achievements")).thenReturn("111111111111111111111111111");
             Assert.assertEquals("111111111111111111111111111",
@@ -149,7 +149,7 @@ public class StatisticsTest {
      * Method for testing the request for user level.
      */
     @Test
-    public void getLevel() {
+    public void getLevel() throws ClassNotFoundException {
         try {
             when(mockResultSet.getInt("Level")).thenReturn(1);
             Assert.assertEquals(1, stats.getLevel("nat@gmail.com").getLevel());
@@ -163,7 +163,7 @@ public class StatisticsTest {
      * Method for testing the request for increasing co2saved.
      */
     @Test
-    public void increaseScore() {
+    public void increaseScore() throws ClassNotFoundException {
         try {
             when(mockResultSet.getInt("CO_2_saved")).thenReturn(1);
             Assert.assertEquals(1, stats.increaseScore(1.0, "nat@gmail.com"));
@@ -176,7 +176,7 @@ public class StatisticsTest {
      * Method for testing the update level request, followed by a successful update.
      */
     @Test
-    public void updateLevelFalse() {
+    public void updateLevelFalse() throws ClassNotFoundException {
         try {
             when(mockResultSet.getInt("Level")).thenReturn(1);
             Assert.assertFalse(stats.updateLevel(150.0, "nat@gmail.com"));
@@ -189,7 +189,7 @@ public class StatisticsTest {
      * Method for testing the update level request, and not needing any update.
      */
     @Test
-    public void updateLevelTrue() {
+    public void updateLevelTrue() throws ClassNotFoundException {
         try {
             when(mockResultSet.getInt("Level")).thenReturn(2);
             Assert.assertTrue(stats.updateLevel(150.0, "nat@gmail.com"));
@@ -203,7 +203,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateScoreAch() {
+    public void updateScoreAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("CO_2_saved")).thenReturn(10.0);
             Assert.assertFalse(stats.updateScoreAch("jaron@yahoo.nl"));
@@ -223,7 +223,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateBikeAch() {
+    public void updateBikeAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Bike")).thenReturn(10.0);
             Assert.assertFalse(stats.updateBikeAch("jaron@yahoo.nl"));
@@ -243,7 +243,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateTransportAch() {
+    public void updateTransportAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Public_transport")).thenReturn(10.0);
             Assert.assertFalse(stats.updateTransportAch("jaron@yahoo.nl"));
@@ -264,7 +264,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateSolarAch() {
+    public void updateSolarAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Solar_panels")).thenReturn(10.0);
             Assert.assertFalse(stats.updateSolarAch("jaron@yahoo.nl"));
@@ -284,7 +284,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateHeatAch() {
+    public void updateHeatAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Lowering_home_temperature")).thenReturn(5.0);
             Assert.assertFalse(stats.updateHeatAch("jaron@yahoo.nl"));
@@ -304,7 +304,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateVeganAch() {
+    public void updateVeganAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Vegan_meal")).thenReturn(10.0);
             Assert.assertFalse(stats.updateVeganAch("jaron@yahoo.nl"));
@@ -324,7 +324,7 @@ public class StatisticsTest {
      * Should return True when achievements is changed, false otherwise
      */
     @Test
-    public void updateLocalAch() {
+    public void updateLocalAch() throws ClassNotFoundException {
         try {
             when(mockResultSet.getDouble("Local_produce")).thenReturn(10.0);
             Assert.assertFalse(stats.updateLocalAch("jaron@yahoo.nl"));
