@@ -37,6 +37,7 @@ Intellij:
 For the setup of this project you will need to install the following:
 - [GlassFish 5.0 - Full Platform](https://javaee.github.io/glassfish/download)
 - [MySQL](https://dev.mysql.com/downloads/windows/installer/8.0.html) (MySQL Workbench is preffered for Project Management,)
+- [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ## Database Creation
 - You  need to create a User 'sammy' with Password 'temporary' for your database. 
@@ -91,14 +92,13 @@ CREATE TABLE `friends` (
 - After installing, you should download and import the project into your Intellij IDE.
 - You should add this as a maven project.
 - Once you're set up, run 'maven clean' and 'maven install'.
-- You will you can set up GlassFish as follows:
-- Edit Configurations... -> Add New Configuration ( the '+' button in the upper left corner) -> GlassFish Server -> Local
-- If it is the first time you use Glassfish you will have to click 'Configure.' and navigate to the location where you downloaded the Glassfish Server files.
+- You will have to set up GlassFish as follows:
+- Edit Configurations... -> Add New Configuration ( the '+' button in the upper left corner) -> GlassFish Server -> Local, if it is the first time you use Glassfish you will have to click 'Configure.' and navigate to the location where you downloaded the Glassfish Server files.
 - Set Server Domain to domain1
-- Go to Deployment tab of your configuration, Add Artifact... and set to Server:war
+- Go to Deployment tab of your configuration, Add Artifact..('+' button on the right)->Artifact and set to Server:war
 - You can start the server.
-- Make sure that your database process is running.
-- Once the server is running, you can start the application by running the Main class from the Client module (modules/Client/src/main/java/gui/Main.java).
+- **Make sure** that your database process is running, and you have created the user 'sammy' and the tables accordingly.
+- **Once the server is running**, you can start the application by running the Main class from the Client module (modules/Client/src/main/java/gui/Main.java).
 
 # Irem Ugurlu
 **(4851625, iugurlu)**
