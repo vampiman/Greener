@@ -45,7 +45,7 @@ For the setup of this project you will need to install the following:
 ## Database Creation
 - You  need to create a User 'sammy' with Password 'temporary' for your database. 
 
-Run the following scripts on the database or create the user through Mysql Workbench(easier) :
+Create a new user by running the following scripts on the database or create the user through Mysql Workbench(easier) :
 
 CREATE USER 'sammy'@'localhost' IDENTIFIED BY 'temporary';
 
@@ -55,7 +55,7 @@ FLUSH PRIVILEGES;
 <!--- You can see how that's done [here](https://dev.mysql.com/doc/refman/8.0/en/creating-accounts.html).-->
 - Don't forget to create the user 'sammy', as mentioned above
 - Create a new database named 'greener'.
-- Create a table named 'person' with the following DDL script:
+- In this database, create a table named 'person' with the following DDL script:
 
 CREATE TABLE `person` (
   `ID` double NOT NULL,
@@ -78,7 +78,7 @@ CREATE TABLE `person` (
   UNIQUE KEY `Friend_code_UNIQUE` (`Friend_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
 
-- Create a table 'friends' with the following DDL script:
+- In this database, create a table 'friends' with the following DDL script:
 
 CREATE TABLE `friends` (
   `ID` int(11) NOT NULL,
@@ -97,19 +97,19 @@ CREATE TABLE `friends` (
 - You should add this as a maven project.
 - Once you're set up, run 'maven clean' and 'maven install'.
 - You will have to set up GlassFish as follows:
-- Edit Configurations... -> Add New Configuration ( the '+' button in the upper left corner) -> GlassFish Server -> Local, if it is the first time you use Glassfish you will have to click 'Configure.' and navigate to the location where you downloaded the Glassfish Server files.
+- On the left of the 'Run' button of Intellij, there is a dropdown to select the run configuration, click on it then head to Edit Configurations... -> Add New Configuration ( the '+' button in the upper left corner of the window) -> GlassFish Server -> Local, if it is the first time you use Glassfish you will have to click 'Configure.' at the top of this window and navigate to the location where you downloaded the Glassfish Server files.
 - Set JRE to 1.8 in this window
 - Set Server Domain to domain1 in this window
 - Go to Deployment tab of your configuration window, Add Artifact..('+' button on the right)->Artifact and set to Server:war
-- You can start the server.
+- You can start the server by clicking run now.
 - **Make sure** that your database process is running, and you have created the user 'sammy' and the tables accordingly.
 - **Once the server is running**, you can start the application by running the Main class from the Client module (modules/Client/src/main/java/gui/Main.java).
 
 ## Getting the test coverage
-- Run "mvn site" then check targer/site/cobertura in the Server module for the Server coverage and in the Client module for the Client coverage for the html with the coverage.
+- Run "mvn site" then check targer/site/cobertura in the Server module for the Server coverage and in the Client module for the Client coverage.
 
 ## Getting the checkstyle report
-- Run "mvn checkstyle:checkstyle" and check the site file for the checkstyle-result.xml or just use the Intellij Checkstyle plug-in
+- Run "mvn checkstyle:checkstyle" and check the site file of each module for the checkstyle-result.xml or just use the Intellij Checkstyle plug-in.
 
 # Irem Ugurlu
 **(4851625, iugurlu)**
