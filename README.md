@@ -1,3 +1,6 @@
+# Greener
+'Greener' is a Java-based Desktop application designed to give the users insight into ways of reducing their CO2 emissions and encouraging them to do so by providing proper carbon calculations, the possibility of sharing their struggle for the environment with others and using gamification techniques to make the use of the application enjoyable. 
+
 # Index
 - [Project Setup](#project-setup)
 - [Irem Ugurlu](#irem-ugurlu)
@@ -88,17 +91,25 @@ CREATE TABLE `friends` (
 
 ## Server Setup
 
+- **Don't forget** to go to File -> Project Structure.. and select jdk 1.8
 - Furthermore you need to have a working version of [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) and add it as a project sdk by going to File -> Project Structure -> Project SDK (select New.).
 - After installing, you should download and import the project into your Intellij IDE.
 - You should add this as a maven project.
 - Once you're set up, run 'maven clean' and 'maven install'.
 - You will have to set up GlassFish as follows:
 - Edit Configurations... -> Add New Configuration ( the '+' button in the upper left corner) -> GlassFish Server -> Local, if it is the first time you use Glassfish you will have to click 'Configure.' and navigate to the location where you downloaded the Glassfish Server files.
-- Set Server Domain to domain1
-- Go to Deployment tab of your configuration, Add Artifact..('+' button on the right)->Artifact and set to Server:war
+- Set JRE to 1.8 in this window
+- Set Server Domain to domain1 in this window
+- Go to Deployment tab of your configuration window, Add Artifact..('+' button on the right)->Artifact and set to Server:war
 - You can start the server.
 - **Make sure** that your database process is running, and you have created the user 'sammy' and the tables accordingly.
 - **Once the server is running**, you can start the application by running the Main class from the Client module (modules/Client/src/main/java/gui/Main.java).
+
+## Getting the test coverage
+- Run "mvn site" then check targer/site/cobertura in the Server module for the Server coverage and in the Client module for the Client coverage for the html with the coverage.
+
+## Getting the checkstyle report
+- Run "mvn checkstyle:checkstyle" and check the site file for the checkstyle-result.xml or just use the Intellij Checkstyle plug-in
 
 # Irem Ugurlu
 **(4851625, iugurlu)**

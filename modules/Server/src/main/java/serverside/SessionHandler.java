@@ -44,12 +44,12 @@ public class SessionHandler {
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException SQL-related error
      */
-    public void getDbConnection() throws SQLException {
+    public void getDbConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
         String user = "sammy";
         String pass = "temporary";
 
-        //        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -67,7 +67,8 @@ public class SessionHandler {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public SessionResource register(@HeaderParam("token") String token,
-                                    SessionResource sr) throws SQLException {
+                                    SessionResource sr) throws SQLException,
+                                    ClassNotFoundException {
         sr.setToken(token);
 
         getDbConnection();

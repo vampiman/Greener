@@ -290,8 +290,9 @@ public class JwtVerifier implements ContainerRequestFilter {
                     .signWith(KEY_VALIDATE)
                     .compact();
 
-        } catch (SignatureException | ExpiredJwtException
-                | MissingClaimException | IncorrectClaimException se) {
+        } catch (SignatureException
+                | ExpiredJwtException | MissingClaimException
+                | IncorrectClaimException | ClassNotFoundException se) {
             return "ERROR";
         }
     }
@@ -301,12 +302,12 @@ public class JwtVerifier implements ContainerRequestFilter {
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException SQL-related error
      */
-    public void getDbConnection() throws SQLException {
+    public void getDbConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
         String user = "sammy";
         String pass = "temporary";
 
-        //        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 }

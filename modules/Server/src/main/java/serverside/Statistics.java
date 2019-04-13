@@ -24,12 +24,12 @@ public class Statistics {
      * @throws ClassNotFoundException Class not found error
      * @throws SQLException SQL-related error
      */
-    public void getDbConnection() throws SQLException {
+    public void getDbConnection() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/greener?autoReconnect=true&useSSL=false";
         String user = "sammy";
         String pass = "temporary";
 
-        //        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         dbConnection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -70,7 +70,8 @@ public class Statistics {
     @GET
     @Path("allstats")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getStats(@HeaderParam("Email") String email) throws SQLException {
+    public Resource getStats(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
         Resource re = new Resource();
 
         getDbConnection();
@@ -107,7 +108,8 @@ public class Statistics {
     @GET
     @Path("personalinfo")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getPersonalInfo(@HeaderParam("Email") String email) throws SQLException {
+    public Resource getPersonalInfo(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
         getDbConnection();
 
         PreparedStatement preparedStatement = null;
@@ -153,7 +155,8 @@ public class Statistics {
     @GET
     @Path("achievements")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getAchievements(@HeaderParam("Email") String email) throws SQLException {
+    public Resource getAchievements(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
         getDbConnection();
 
         String sql = "SELECT Achievements FROM person WHERE Email = ?";
@@ -188,7 +191,8 @@ public class Statistics {
     @GET
     @Path("level")
     @Produces(MediaType.APPLICATION_JSON)
-    public Resource getLevel(@HeaderParam("Email") String email) throws SQLException {
+    public Resource getLevel(@HeaderParam("Email") String email)
+            throws SQLException, ClassNotFoundException {
         getDbConnection();
 
         String sql = "SELECT Level FROM person WHERE Email = ?";
@@ -219,7 +223,8 @@ public class Statistics {
      * @return new amount of CO2 saved
      * @throws SQLException in case of e.g. wrong SQL syntax
      */
-    public int increaseScore(double co2saved, String email) throws SQLException {
+    public int increaseScore(double co2saved, String email)
+            throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -253,7 +258,8 @@ public class Statistics {
      * @return true if level was correct, false otherwise
      * @throws SQLException in case of e.g. wrong SQL syntax
      */
-    public boolean updateLevel(double co2saved, String email) throws SQLException {
+    public boolean updateLevel(double co2saved, String email)
+            throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -292,7 +298,7 @@ public class Statistics {
      * @return a boolean
      * @throws SQLException when sql syntax is incorrect
      */
-    public boolean updateFriendsAch(String email) throws SQLException {
+    public boolean updateFriendsAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -355,7 +361,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateScoreAch(String email) throws SQLException {
+    public boolean updateScoreAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -408,7 +414,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateBikeAch(String email) throws SQLException {
+    public boolean updateBikeAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -461,7 +467,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateTransportAch(String email) throws SQLException {
+    public boolean updateTransportAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -514,7 +520,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateSolarAch(String email) throws SQLException {
+    public boolean updateSolarAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -572,7 +578,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateHeatAch(String email) throws SQLException {
+    public boolean updateHeatAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -625,7 +631,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateVeganAch(String email) throws SQLException {
+    public boolean updateVeganAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 
@@ -680,7 +686,7 @@ public class Statistics {
      * @return boolean
      * @throws SQLException in case of incorrect syntax
      */
-    public boolean updateLocalAch(String email) throws SQLException {
+    public boolean updateLocalAch(String email) throws SQLException, ClassNotFoundException {
 
         getDbConnection();
 

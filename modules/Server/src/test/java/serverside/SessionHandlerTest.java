@@ -85,7 +85,7 @@ public class SessionHandlerTest {
      * Test for the register method.
      */
     @Test
-    public void register() {
+    public void register() throws ClassNotFoundException {
         SessionResource sr = new SessionResource();
         try {
             SessionResource result = sessionHandler.register("token", sr);
