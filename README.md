@@ -38,7 +38,7 @@ Intellij:
 
 # Project Setup
 For the setup of this project you will need to install the following:
-- [GlassFish 5.0 - Full Platform](https://javaee.github.io/glassfish/download)
+- [GlassFish 5.0 - Full Platform](https://javaee.github.io/glassfish/download) (just download it and remember the file where you put it)
 - [MySQL](https://dev.mysql.com/downloads/windows/installer/8.0.html) (MySQL Workbench is preffered for Project Management,)
 - [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
