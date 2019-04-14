@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane fx:id="youPagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #91cb3e;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<GridPane fx:id="youPagePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="600.0" style="-fx-background-color: #91cb3e;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.4000244140625" minWidth="10.0" percentWidth="0.0" prefWidth="236.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="195.199951171875" minWidth="10.0" percentWidth="100.0" prefWidth="128.8" />
@@ -39,7 +39,7 @@
             </Button>
          </children></AnchorPane>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #91cb3e;" GridPane.columnIndex="2" />
-      <TabPane prefHeight="200.0" prefWidth="200.0" style="-fx-tab-min-width: 173px; -fx-tab-max-width: 175px; -fx-tab-min-height: 75px; -fx-tab-max-height: 200px;" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TabPane prefHeight="523.0" prefWidth="600.0" style="-fx-tab-min-width: 178; -fx-tab-max-width: 178; -fx-tab-min-height: 80px; -fx-tab-max-height: 200px;" tabClosingPolicy="UNAVAILABLE" tabMaxHeight="10.0" tabMaxWidth="10.0" tabMinHeight="1.0" tabMinWidth="1.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
          <tabs>
             <Tab fx:id="personal">
                <graphic>
@@ -52,25 +52,24 @@
                <content>
                   <AnchorPane fx:id="personalPane" prefHeight="241.0" prefWidth="575.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
-                        <Text layoutX="266.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name">
-                           <font>
-                              <Font name="System Bold" size="23.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="269.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="usernameField" layoutX="257.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="userName">
+                        <Text fx:id="usernameField" layoutX="209.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="userName" textAlignment="CENTER" wrappingWidth="177.103515625">
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                        <Text fx:id="emailField" layoutX="274.0" layoutY="216.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER">
+                        <Text fx:id="emailField" layoutX="219.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="email" textAlignment="CENTER" wrappingWidth="155.3330078125">
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                        <Label  layoutX="258.0" layoutY="45.0" opacity="0.0" prefHeight="29.0" prefWidth="89.0" text="Label" />
+                        <Label layoutX="264.0" layoutY="52.0" prefHeight="28.0" prefWidth="67.0" text="NAME">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="264.0" layoutY="147.0" text="EMAIL">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -91,16 +90,14 @@
                <content>
                   <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
-                        <Text layoutX="226.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Your Network" textAlignment="CENTER" wrappingWidth="147.5673828125">
-                           <font>
-                              <Font size="19.0" />
-                           </font>
-                        </Text>
-                        <Text fx:id="noOfFriendsField" layoutX="236.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numOfFriends">
+                        <Text fx:id="noOfFriendsField" layoutX="160.0" layoutY="138.0" strokeType="OUTSIDE" strokeWidth="0.0" text="numOfFriends" textAlignment="CENTER" wrappingWidth="280.58935546875">
                            <font>
                               <Font size="19.0" />
                            </font></Text>
-                        <Label  layoutX="216.0" layoutY="75.0" opacity="0.0" prefHeight="29.0" prefWidth="180.0" text="Label" />
+                        <Label layoutX="184.0" layoutY="82.0" prefHeight="29.0" prefWidth="232.0" text="NUMBER OF FRIENDS" textAlignment="CENTER">
+                           <font>
+                              <Font size="22.0" />
+                           </font></Label>
                      </children>
                      <effect>
                         <InnerShadow />
@@ -118,15 +115,25 @@
                <content>
                   <AnchorPane opacity="0.9" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #91cb3e; -fx-background-radius: 20px;">
                      <children>
-                        <Text layoutX="232.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="C02 saved (kg)">
+                        <Text layoutX="208.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO2 SAVED (KG)">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="co2Field" layoutX="205.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="178.7626953125">
+                           <font>
+                              <Font size="19.0" />
+                           </font></Text>
+                        <Text layoutX="262.0" layoutY="171.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LEVEL">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="levelField" layoutX="212.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textAlignment="CENTER" wrappingWidth="165.669921875">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Text>
-                        <Text fx:id="co2Field" layoutX="282.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                           <font>
-                              <Font size="19.0" />
-                           </font></Text>
                      </children>
                      <effect>
                         <InnerShadow />
@@ -135,13 +142,13 @@
             </Tab>
          </tabs>
          <opaqueInsets>
-            <Insets />
+            <Insets top="20.0" />
          </opaqueInsets>
          <padding>
-            <Insets bottom="3.0" left="5.0" right="3.0" />
+            <Insets bottom="3.0" left="3.0" right="3.0" />
          </padding>
       </TabPane>
-      <Label fx:id="userName" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="460.0" style="-fx-background-color: #ebf8ee; -fx-background-radius: 30;" text="Hi userName" GridPane.columnIndex="1">
+      <Label fx:id="userName" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="460.0" style="-fx-background-color: #ebf8ee; -fx-background-radius: 30;" GridPane.columnIndex="1">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>

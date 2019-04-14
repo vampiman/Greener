@@ -44,6 +44,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -215,6 +216,9 @@ public class Controller {
 
     @FXML
     private Text usernameField;
+
+    @FXML
+    private Label userName;
 
     @FXML
     private Text noOfFriendsField;
@@ -400,6 +404,7 @@ public class Controller {
                 root.getRowConstraints().add(rowConst);
                 Text text = new Text();
                 text.setText("SCOREBOARD");
+                text.setTextAlignment(TextAlignment.CENTER);
                 text.setFont(Font.font("System Bold", 30));
                 root.add(text, 1, i);
                 Button button = new Button();
@@ -537,13 +542,13 @@ public class Controller {
             nameLabel.setText("Hello " + details.get("userName").toString());
         }
         if (youPagePane != null) {
-            levelField.setText("Level: " + cc.getLevel());
+            levelField.setText("" + cc.getLevel());
             JSONObject details = cc.getPersonalInfo();
-            usernameField.setText("Username: " + details.get("userName").toString());
-            noOfFriendsField.setText("Number of friends: " + details.get("friendsNo").toString());
-            emailField.setText("Email: " + details.get("email").toString());
-            co2Field.setText("C02 saved (kg): "
-                    + decim.format(Double.parseDouble(details.get("co2Saved").toString())));
+            userName.setText(details.get("userName").toString() + "'s page");
+            usernameField.setText(details.get("userName").toString());
+            noOfFriendsField.setText(details.get("friendsNo").toString());
+            emailField.setText(details.get("email").toString());
+            co2Field.setText(decim.format(Double.parseDouble(details.get("co2Saved").toString())));
         }
 
         if (addActivityPane != null) {
@@ -936,7 +941,7 @@ public class Controller {
                 AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Invalid Sign-up!",
                         "This email is already registered.");
                 return;
-            };
+            }
         } catch (IllegalArgumentException e) {
             AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Sign-up Error!",
                     e.getMessage());
